@@ -31,7 +31,10 @@
 | Express vs HapiJS                                        | A rediscuter lorsqu'on aura besoin d'exposer une API                                                                              | X            |
 | Rétrospective tech avec tableau tech                     | Avoir au moins un tableau tech pour identifier la dette tech                                                                      | X            |
 | Structure du dossier d'historisation                     | voir structure ci-dessous                                                                                                         | X            |
-
+| Utilisation du Linter                                    | ESLint ?                                                                                                                          |              |
+| Formatage                                                | Prettier ?                                                                                                                        |              |
+| Axios ou Got                                             | Axios car CACH + SIBE ont une préférence, SEFR et DUMO s'alignent                                                                 | X            |
+| Déclenchement des Crons Transform/Load                   | Schedules tasks avec une durée                                                                                                    |              |
 
 # Questions à poser et à réfléchir en équipe
 
