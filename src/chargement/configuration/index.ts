@@ -1,26 +1,24 @@
 import { Module } from "../../shared/module";
-import { createControllerContainer } from "./controller.container";
-import { createRouters } from "./router.container";
 import { createUsecasesContainer } from "./usecase.container";
 import { createRepositoriesContainer } from "./repositories.container";
 import { createStoringContainer } from "./storing.container";
+import { createCronsContainer } from "./cron.container";
+import { configure } from "../../configuration/configuration";
 
-export function createTransformationModule(): Module {
-	const storing = createStoringContainer();
+export function createChargementModule(): Module {
+	const configuration = configure();
+	const storing = createStoringContainer(configuration);
 	const repositories = createRepositoriesContainer();
 	const usecases = createUsecasesContainer(repositories);
-	const controllers = createControllerContainer(usecases);
-	const routers = createRouters(controllers);
+	const crons = createCronsContainer(usecases);
 
 	return {
-		configuration: {},
-		controllers,
-		crons: {},
+		configuration,
+		crons,
 		gateways: {
 			repositories,
 			storing
 		},
-		routers,
 		usecases,
 	};
 }

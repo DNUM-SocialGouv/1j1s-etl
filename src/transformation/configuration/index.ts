@@ -2,16 +2,18 @@ import { Module } from "../../shared/module";
 import { createUsecasesContainer } from "./usecase.container";
 import { createRepositoriesContainer } from "./repositories.container";
 import { createStoringContainer } from "./storing.container";
-import { createCronContainer } from "./cron.container";
+import { createCronsContainer } from "./cron.container";
+import { configure } from "../../configuration/configuration";
 
 export function createTransformationModule(): Module {
+	const configuration = configure();
 	const storing = createStoringContainer();
 	const repositories = createRepositoriesContainer();
 	const usecases = createUsecasesContainer(repositories);
-	const crons = createCronContainer();
+	const crons = createCronsContainer();
 
 	return {
-		configuration: {},
+		configuration,
 		crons,
 		gateways: {
 			repositories,

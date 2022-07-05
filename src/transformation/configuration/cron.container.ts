@@ -1,6 +1,6 @@
 import { CronsContainer } from "../infrastructure/cron";
 
-export function createCronContainer(): CronsContainer {
+export function createCronsContainer(): CronsContainer {
 	return {
 		TransformWelcomeToTheJungle: {}
 	};
