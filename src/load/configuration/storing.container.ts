@@ -1,8 +1,10 @@
-import { StoringContainer } from "../infrastructure/gateway/storing";
-import { MinioStorageClient } from "../infrastructure/gateway/storing/minio-storage.client";
 import * as Minio from "minio";
 
-export function createStoringContainer(): StoringContainer {
+import { Configuration } from "../../configuration/configuration";
+import { MinioStorageClient } from "../infrastructure/gateway/storing/minio-storage.client";
+import { StoringContainer } from "../infrastructure/gateway/storing";
+
+export function createStoringContainer(configuration: Configuration): StoringContainer {
 	const minioclient = new Minio.Client({
 		endPoint: process.env.MINIO_URL!,
 		port: 443,

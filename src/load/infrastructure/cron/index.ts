@@ -1,2 +1,2 @@
-export interface CronContainer {
+export interface CronsContainer {
 }

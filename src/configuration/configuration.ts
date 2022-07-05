@@ -14,14 +14,16 @@ function getOrDefault(key: string, defaultValue: string): string {
 	return process.env[key]!;
 }
 
+export type Configuration = {
+	MINIO_URL: string,
+	MINIO_ACCESS_KEY: string,
+	MINIO_SECRET_KEY: string
+};
+
 export function configure(): Configuration {
 	return {
-		APPLICATION_ADDRESS: getOrDefault("APPLICATION_ADDRESS", '127.0.0.1'),
-		APPLICATION_PORT: Number(getOrError("APPLICATION_PORT"))
-	}
-}
-
-export type Configuration = {
-	APPLICATION_ADDRESS: string;
-	APPLICATION_PORT: number;
+		MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
+		MINIO_SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
+		MINIO_URL: getOrError("MINIO_URL")
+	};
 }

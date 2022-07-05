@@ -1,5 +1,5 @@
-import { CronContainer } from "../infrastructure/cron";
+import { CronsContainer } from "../infrastructure/cron";
 
-export function createCronContainer(): CronContainer {
+export function createCronsContainer(): CronsContainer {
 	return {};
 }
