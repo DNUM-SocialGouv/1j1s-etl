@@ -28,7 +28,7 @@
 | Interface vs Type                                        | Interface à implémenter et Type pour un objet sans comportement                                                                   | X            |
 | Stratégie de test                                        | Tests unitaires, tests de caractérisation pour les tests d'intégration, suivi du coverage (à chaque merge sur main)               | X            |
 | Librairie(s) de test                                     | Mocha / Chai / Sinon                                                                                                              | X            |
-| Express vs HapiJS                                        | A discuter Lundi                                                                                                                  ||
+| Express vs HapiJS                                        | A rediscuter lorsqu'on aura besoin d'exposer une API                                                                              | X            |
 | Rétrospective tech avec tableau tech                     | Avoir au moins un tableau tech pour identifier la dette tech                                                                      | X            |
 | Structure du dossier d'historisation                     | voir structure ci-dessous                                                                                                         | X            |
 

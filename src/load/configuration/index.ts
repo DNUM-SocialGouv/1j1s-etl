@@ -15,7 +15,7 @@ export function createTransformationModule(): Module {
 	return {
 		configuration: {},
 		controllers,
-		cron: {},
+		crons: {},
 		gateways: {
 			repositories,
 			storing
