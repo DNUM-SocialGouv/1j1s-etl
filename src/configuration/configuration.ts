@@ -1,17 +1,20 @@
 function getOrError(key: string): string {
-	if (!process.env[key]) {
+	const environmentVariable = process.env[key];
+
+	if (!environmentVariable) {
 		throw new Error();
 	}
 
-	return process.env[key]!;
+	return environmentVariable;
 }
 
 function getOrDefault(key: string, defaultValue: string): string {
-	if (!process.env[key]) {
+	const environmentVariable = process.env[key];
+	if (!environmentVariable) {
 		return defaultValue;
 	}
 
-	return process.env[key]!;
+	return environmentVariable;
 }
 
 export type Configuration = {
@@ -24,6 +27,6 @@ export function configure(): Configuration {
 	return {
 		MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 		MINIO_SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
-		MINIO_URL: getOrError("MINIO_URL")
+		MINIO_URL: getOrDefault("MINIO_URL", "http://some.url")
 	};
 }

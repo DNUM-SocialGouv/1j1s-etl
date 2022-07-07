@@ -1,3 +1,3 @@
-export interface Usecase<T> {
-	execute(...args: Array<any>): Promise<T>;
+export interface Usecase {
+	execute<T>(...args: Array<object | string | number>): Promise<T>;
 }

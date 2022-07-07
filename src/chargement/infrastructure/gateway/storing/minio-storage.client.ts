@@ -1,5 +1,5 @@
-import { StorageClient } from "../../../../shared/gateway/storage-client";
-import * as Minio from 'minio';
+import { StorageClient } from "@shared/gateway/storage-client";
+import * as Minio from "minio";
 
 export class MinioStorageClient implements StorageClient {
 	constructor(private readonly minioClient: Minio.Client) {
@@ -18,8 +18,8 @@ export class MinioStorageClient implements StorageClient {
 		await this.minioClient.fGetObject(bucketName, objectName, targetFilePath);
 	}
 
-	async listObjectsFromBucket(bucketName: string): Promise<void> {
-		const stream = await this.minioClient.listObjects(bucketName, 'history/', true);
+	listObjectsFromBucket(bucketName: string): void {
+		const stream = this.minioClient.listObjects(bucketName, "history/", true);
 		stream.on("data", (item) => console.info(item));
 	}
 
@@ -27,7 +27,7 @@ export class MinioStorageClient implements StorageClient {
 		await this.minioClient.fPutObject(bucketName, objectName, sourceFile);
 	}
 
-	async setBucketLifecycle(bucketName: string, rule: any): Promise<void> {
+	async setBucketLifecycle(bucketName: string, rule: object): Promise<void> {
 		await this.minioClient.setBucketLifecycle(bucketName, {
 			Rule: [{
 				Expiration: {
@@ -47,7 +47,9 @@ export class MinioStorageClient implements StorageClient {
 					Prefix: "diff/",
 				},
 				Status: "Enabled"
-			}]
+			},
+				rule
+			]
 		});
 	}
 }
