@@ -9,7 +9,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.prod.json",
     "lint": "eslint src test",
-    "start": "node build/src/start.js",
     "test": "mocha"
   },
   "repository": {
