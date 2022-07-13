@@ -8,6 +8,6 @@ describe("MinioStorageClientTest", () => {
 
 		it("Test faux à défaut", () => {
 			expect(false).to.be.true;
-		})
-	})
+		});
+	});
 });

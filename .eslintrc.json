@@ -15,12 +15,19 @@
     ],
     "rules": {
         "@typescript-eslint/explicit-function-return-type": "error",
-        "@typescript-eslint/no-explicit-any": "error"
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/unbound-method": "off",
+        "quotes": ["error", "double"],
+        "semi": "error",
+        "complexity": ["error", 10],
+        "max-depth": ["error", 2]
     },
-    "overrides": [{
-        "files": ["./**/minio-storage.client.test.ts"],
-        "rules": {
-            "@typescript-eslint/unbound-method": "off"
+    "overrides": [
+        {
+            "files": ["./src/**/infrastructure/cron/**/*.cron.ts"],
+            "rules": {
+                "@typescript-eslint/no-unused-vars": "off"
+            }
         }
-    }]
+    ]
 }
