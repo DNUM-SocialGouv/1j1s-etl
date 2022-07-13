@@ -1,5 +1,5 @@
 import chai from "chai";
-import sinonChai from 'sinon-chai';
+import sinonChai from "sinon-chai";
 import { createStubInstance, SinonStubbedInstance, SinonStubbedMember, StubbableType } from "sinon";
 import chaiAsPromised from "chai-as-promised";
 
@@ -12,8 +12,8 @@ export function stubClass<T> (
 	constructor: StubbableType<T>,
 	overrides?: { [K in keyof T]?: SinonStubbedMember<T[K]> }
 ): StubbedClass<T> {
-	const stub = createStubInstance<T>(constructor, overrides)
-	return stub as unknown as StubbedClass<T>
+	const stub = createStubInstance<T>(constructor, overrides);
+	return stub as unknown as StubbedClass<T>;
 }
 
 export const expect = chai.expect;

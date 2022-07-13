@@ -1,5 +1,5 @@
 import { StorageClient } from "@shared/gateway/storage-client";
-import * as Minio from 'minio';
+import * as Minio from "minio";
 
 export class MinioStorageClient implements StorageClient {
 	constructor(private readonly minioClient: Minio.Client) {
@@ -19,7 +19,7 @@ export class MinioStorageClient implements StorageClient {
 	}
 
 	listObjectsFromBucket(bucketName: string): void {
-		const stream = this.minioClient.listObjects(bucketName, 'history/', true);
+		const stream = this.minioClient.listObjects(bucketName, "history/", true);
 		stream.on("data", (item) => console.info(item));
 	}
 
