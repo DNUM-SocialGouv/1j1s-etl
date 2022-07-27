@@ -1,2 +1,2 @@
-clockHelloWork: node build/src/transformation/infrastructure/cron/hello-world.cron.js
+clockHelloWork: npm run cli:transformation -- -a transform -f hello
 web: node build/src/start.js
