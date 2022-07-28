@@ -4,16 +4,22 @@ import sinon from "sinon";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@configuration/configuration";
-import { EcritureFluxErreur } from "@shared/gateway/storage.client";
+import {
+	ContentParserRepository,
+} from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/storage.client";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/storage/node-file-system.client";
-import { UuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
 import { MinioStorageClient } from "@transformation/infrastructure/gateway/storage/minio-storage.client";
+import { UuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
 
-const localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 const fluxName = "fluxName";
+let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let fileContent: string;
 let fileNameIncludingPath: string;
+let latestStoredFileNameIncludingPath: string;
+
 let configuration: StubbedType<Configuration>;
+let contentParserRepository: StubbedType<ContentParserRepository>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidClient>;
 let minioStub: StubbedClass<Client>;
@@ -26,7 +32,9 @@ describe("MinioStorageClientTest", () => {
 
 		minioStub = stubClass(Client);
 		configuration = stubInterface<Configuration>(sinon);
-		configuration.MINIO_BUCKET_NAME = "raw";
+		configuration.MINIO_RAW_BUCKET_NAME = "raw";
+		configuration.MINIO_JSON_BUCKET_NAME = "json";
+		contentParserRepository = stubInterface<ContentParserRepository>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 		uuidClient = stubInterface<UuidClient>(sinon);
 		uuidClient.generate.returns("d184b5b1-75ad-44f0-8fe7-7c55208bf26c");
@@ -34,7 +42,8 @@ describe("MinioStorageClientTest", () => {
 			configuration,
 			minioStub,
 			fileSystemClient,
-			uuidClient
+			uuidClient,
+			contentParserRepository,
 		);
 	});
 
@@ -47,7 +56,7 @@ describe("MinioStorageClientTest", () => {
 			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, fileContent);
 			expect(minioStub.fPutObject).to.have.been.calledOnce;
 			expect(minioStub.fPutObject).to.have.been.calledWith(
-				configuration.MINIO_BUCKET_NAME,
+				configuration.MINIO_JSON_BUCKET_NAME,
 				fileNameIncludingPath,
 				localFileNameIncludingPath
 			);
@@ -82,6 +91,92 @@ describe("MinioStorageClientTest", () => {
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
+		});
+	});
+
+	context("Lorsque je récupère le contenu d'un fichier", () => {
+		beforeEach(() => {
+			latestStoredFileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+			configuration = stubInterface<Configuration>(sinon);
+			configuration.MINIO_RAW_BUCKET_NAME = "raw";
+
+			uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
+			localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
+
+			minioStub.fGetObject.resolves();
+			fileContent = "<root><title>Titre offre de stage</title><description>Description offre de stage</description></root>";
+			fileSystemClient.read.resolves(fileContent);
+			contentParserRepository.parse.resolves({
+				root: {
+					title: "Titre offre de stage",
+					description: "Description offre de stage",
+				},
+			});
+		});
+
+		it("je récupère le contenu du fichier", async () => {
+			const result = await storageClient.recupererContenu(fileNameIncludingPath);
+
+			expect(result).to.eql({
+				root: {
+					title: "Titre offre de stage",
+					description: "Description offre de stage",
+				},
+			});
+			expect(uuidClient.generate).to.have.been.calledOnce;
+			expect(minioStub.fGetObject).to.have.been.calledOnce;
+			expect(minioStub.fGetObject).to.have.been.calledWith(
+				configuration.MINIO_RAW_BUCKET_NAME,
+				latestStoredFileNameIncludingPath,
+				localFileNameIncludingPath
+			);
+			expect(fileSystemClient.read).to.have.been.calledOnce;
+			expect(fileSystemClient.read).to.have.been.calledWith(localFileNameIncludingPath);
+			expect(contentParserRepository.parse).to.have.been.calledOnce;
+			expect(contentParserRepository.parse).to.have.been.calledWith(fileContent);
+			expect(fileSystemClient.delete).to.have.been.calledOnce;
+			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
+		});
+	});
+
+	context("Lorsque je récupère le contenu d'un fichier qui n'existe pas", () => {
+		beforeEach(() => {
+			latestStoredFileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+			configuration = stubInterface<Configuration>(sinon);
+			configuration.MINIO_RAW_BUCKET_NAME = "raw";
+
+			uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
+			localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
+
+			minioStub.fGetObject.rejects(new Error("Oops! Something went wrong !"));
+		});
+
+		it("je lance une erreur de lecture", async () => {
+			await expect(storageClient.recupererContenu(fileNameIncludingPath)).to.be.rejectedWith(
+				RecupererContenuErreur,
+				"Une erreur de lecture est survenue lors de la récupération du contenu"
+			);
+		});
+	});
+
+	context("Lorsque je ne réussis pas à lire le contenu d'un fichier", () => {
+		beforeEach(() => {
+			latestStoredFileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+			configuration = stubInterface<Configuration>(sinon);
+			configuration.MINIO_RAW_BUCKET_NAME = "raw";
+
+			uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
+			localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
+
+			minioStub.fGetObject.resolves();
+			contentParserRepository.parse.rejects(new Error("Oops! Something went wrong !"));
+		});
+
+		it("je lance une erreur de lecture", async () => {
+			await expect(storageClient.recupererContenu(fileNameIncludingPath)).to.be.rejectedWith(
+				RecupererContenuErreur,
+				"Une erreur de lecture est survenue lors de la récupération du contenu"
+			);
 		});
 	});
 });

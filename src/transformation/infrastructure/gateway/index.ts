@@ -1,9 +1,9 @@
 import { StorageClient } from "@shared/gateway/storage.client";
-import { XmlFluxRepository } from "@transformation/infrastructure/gateway/repository/xml-flux.repository";
+import { XmlContentParserRepository } from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
 
 export type GatewayContainer = {
 	repositories: {
-		fluxRepository: XmlFluxRepository
+		fluxRepository: XmlContentParserRepository
 	};
 	storages: {
 		storageClient: StorageClient

@@ -4,7 +4,7 @@ export interface ContentParserRepository {
 	parse<T>(xmlContent: string | Buffer): Promise<T>;
 }
 
-export class XmlParserContentRepository implements ContentParserRepository {
+export class XmlContentParserRepository implements ContentParserRepository {
 	constructor(private readonly parser: XMLParser,) {
 	}
 

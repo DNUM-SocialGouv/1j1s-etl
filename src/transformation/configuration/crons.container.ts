@@ -8,9 +8,7 @@ export type CronContainer = {
 }
 
 export class CronContainerFactory {
-	static create(
-		configuration: Configuration,
-	): CronContainer {
+	static create(configuration: Configuration): CronContainer {
 		const helloWorldLogger = LoggerFactory.create(configuration);
 
 		return {
