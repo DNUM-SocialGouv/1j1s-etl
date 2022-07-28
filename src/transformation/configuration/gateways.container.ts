@@ -5,7 +5,7 @@ import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { MinioStorageClient } from "@transformation/infrastructure/gateway/storage/minio-storage.client";
 import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/storage/node-file-system.client";
 import { NodeUuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
-import { XmlFluxRepository } from "@transformation/infrastructure/gateway/repository/xml-flux.repository";
+import { XmlContentParserRepository } from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
@@ -20,7 +20,7 @@ export class GatewayContainerFactory {
 
 		return {
 			repositories: {
-				fluxRepository: new XmlFluxRepository()
+				fluxRepository: new XmlContentParserRepository(),
 			},
 			storages: {
 				storageClient: new MinioStorageClient(configuration, minioClient, fileSystemClient, uuidClient),

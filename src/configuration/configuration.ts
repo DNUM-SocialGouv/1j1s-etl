@@ -16,9 +16,10 @@ export type Configuration = {
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
 	CRON_TIMEZONE: string
 	MINIO_ACCESS_KEY: string
-	MINIO_BUCKET_NAME: string
 	MINIO_HISTORY_DIRECTORY_NAME: string
 	MINIO_PORT: number
+	MINIO_JSON_BUCKET_NAME: string
+	MINIO_RAW_BUCKET_NAME: string
 	MINIO_SECRET_KEY: string
 	MINIO_URL: string
 	TEMPORARY_DIRECTORY_PATH: string
@@ -26,8 +27,9 @@ export type Configuration = {
 
 export class ConfigurationFactory {
 	static create(): Configuration {
-		const { toBoolean, getOrError, getOrDefault } = ConfigurationFactory;
-		const DEFAULT_BUCKET_NAME_FOR_HISTORY = "raw";
+		const { getOrError, getOrDefault } = ConfigurationFactory;
+		const DEFAULT_RAW_BUCKET_NAME = "raw";
+		const DEFAULT_JSON_BUCKET_NAME = "json";
 		const DEFAULT_MINIO_PORT = "9000";
 
 		return {
@@ -35,9 +37,10 @@ export class ConfigurationFactory {
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 			CRON_TIMEZONE: getOrError("CRON_TIMEZONE"),
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
-			MINIO_BUCKET_NAME: getOrDefault("MINIO_BUCKET_NAME", DEFAULT_BUCKET_NAME_FOR_HISTORY),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
+			MINIO_JSON_BUCKET_NAME: getOrDefault("MINIO_JSON_BUCKET_NAME", DEFAULT_JSON_BUCKET_NAME),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
+			MINIO_RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
 			MINIO_SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 			MINIO_URL: getOrError("MINIO_URL"),
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
