@@ -23,7 +23,7 @@ export class MinioStorageClient implements StorageClient {
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);
 			await this.minioClient.fPutObject(
-				this.configuration.MINIO_BUCKET_NAME,
+				this.configuration.MINIO_RAW_BUCKET_NAME,
 				filePath,
 				localFileNameIncludingPath
 			);
