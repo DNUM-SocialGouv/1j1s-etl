@@ -1,6 +1,6 @@
 export type ConfigurationFlux = {
 	dossierHistorisation: string;
-	extension: string;
+	extensionFichierBrut: string;
+	extensionFichierJson: string;
 	nom: string;
-	url: string;
 }
