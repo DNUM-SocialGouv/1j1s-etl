@@ -5,7 +5,7 @@ type Commands = { [p: string]: unknown, a: string, f: string, _: (string | numbe
 export class YargsConfiguration {
 	static create(): Commands {
 		const actionChoices = ["transform"];
-		const fluxChoices = ["hello"];
+		const fluxChoices = ["jobteaser"];
 
 		const options = {
 			a: {

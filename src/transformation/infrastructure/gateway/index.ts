@@ -1,11 +1,16 @@
+import { Client } from "minio";
+
 import { StorageClient } from "@shared/gateway/storage.client";
-import { XmlContentParserRepository } from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
+import {
+	ContentParserRepository,
+} from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
 
 export type GatewayContainer = {
 	repositories: {
-		fluxRepository: XmlContentParserRepository
+		contentParserRepository: ContentParserRepository
 	};
 	storages: {
+		minioClient: Client
 		storageClient: StorageClient
 	};
 }

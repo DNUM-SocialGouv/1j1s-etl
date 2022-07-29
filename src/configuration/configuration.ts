@@ -5,16 +5,18 @@ export type CronConfiguration = {
 	CRON_RUN_ON_INIT: boolean
 	CRON_TIME: string
 	DIRECTORY_NAME: string
-	FILE_EXTENSION: string
 	FLUX_URL: string
+	JSON_FILE_EXTENSION: string
 	LOGGER_LOG_LEVEL: LogLevel
 	NAME: string
+	RAW_FILE_EXTENSION: string
 }
 
 export type Configuration = {
 	APPLICATION_LOGGER_NAME: string
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
 	CRON_TIMEZONE: string
+	JOBTEASER: CronConfiguration
 	MINIO_ACCESS_KEY: string
 	MINIO_HISTORY_DIRECTORY_NAME: string
 	MINIO_PORT: number
@@ -27,7 +29,7 @@ export type Configuration = {
 
 export class ConfigurationFactory {
 	static create(): Configuration {
-		const { getOrError, getOrDefault } = ConfigurationFactory;
+		const { toBoolean, getOrError, getOrDefault } = ConfigurationFactory;
 		const DEFAULT_RAW_BUCKET_NAME = "raw";
 		const DEFAULT_JSON_BUCKET_NAME = "json";
 		const DEFAULT_MINIO_PORT = "9000";
@@ -36,6 +38,17 @@ export class ConfigurationFactory {
 			APPLICATION_LOGGER_NAME: getOrDefault("APPLICATION_LOGGER_NAME", "application"),
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 			CRON_TIMEZONE: getOrError("CRON_TIMEZONE"),
+			JOBTEASER: {
+				CRON_ENABLED: toBoolean(getOrError("JOBTEASER_CRON_ENABLED")),
+				CRON_RUN_ON_INIT: toBoolean(getOrError("JOBTEASER_CRON_RUN_ON_INIT")),
+				CRON_TIME: getOrError("JOBTEASER_CRON_TIME"),
+				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
+				FLUX_URL: getOrError("JOBTEASER_FLUX_URL"),
+				JSON_FILE_EXTENSION: getOrError("JOBTEASER_JSON_FILE_EXTENSION"),
+				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
+				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
+				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
+			},
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 			MINIO_JSON_BUCKET_NAME: getOrDefault("MINIO_JSON_BUCKET_NAME", DEFAULT_JSON_BUCKET_NAME),
