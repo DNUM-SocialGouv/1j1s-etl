@@ -1,4 +1,5 @@
 import { Client } from "minio";
+import { XMLParser } from "fast-xml-parser";
 
 import { Configuration } from "@configuration/configuration";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
@@ -17,13 +18,16 @@ export class GatewayContainerFactory {
 			endPoint: configuration.MINIO_URL,
 		});
 		const uuidClient = new NodeUuidClient();
+		const xmlParser = new XMLParser({ trimValues: true });
+		const contentParserRepository = new XmlContentParserRepository(xmlParser);
 
 		return {
 			repositories: {
-				fluxRepository: new XmlContentParserRepository(),
+				contentParserRepository,
 			},
 			storages: {
-				storageClient: new MinioStorageClient(configuration, minioClient, fileSystemClient, uuidClient),
+				minioClient,
+				storageClient: new MinioStorageClient(configuration, minioClient, fileSystemClient, uuidClient, contentParserRepository),
 			},
 		};
 	}

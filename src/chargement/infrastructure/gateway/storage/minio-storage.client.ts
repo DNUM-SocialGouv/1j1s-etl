@@ -1,7 +1,7 @@
 import { Client } from "minio";
 
-import { EcritureFluxErreur, StorageClient } from "@shared/gateway/storage.client";
 import { Configuration } from "@configuration/configuration";
+import { EcritureFluxErreur, StorageClient } from "@shared/gateway/storage.client";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/storage/node-file-system.client";
 import { UuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
 
@@ -15,6 +15,10 @@ export class MinioStorageClient implements StorageClient {
 		private readonly uuidClient: UuidClient
 	) {
 	}
+
+	recupererContenu<T>(sourcefilePath: string): Promise<T> {
+        throw new Error("Method not implemented.");
+    }
 
 	async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
 		const fileName = this.uuidClient.generate();

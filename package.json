@@ -18,6 +18,7 @@
     "@root": "./",
     "@configuration": "build/src/configuration",
     "@chargement": "build/src/chargement",
+    "@shared": "build/src/shared",
     "@transformation": "build/src/transformation"
   },
   "repository": {

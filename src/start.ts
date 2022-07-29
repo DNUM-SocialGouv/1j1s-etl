@@ -1,12 +1,29 @@
-import * as http from "http";
+import "module-alias/register";
 
-const port = Number(process.env.PORT);
-const hostname = "0.0.0.0";
+import { ConfigurationFactory } from "@configuration/configuration";
+import { LoggerFactory } from "@transformation/configuration/logger";
+import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
+import { MinioAdminStorageClient } from "@shared/gateway/minio-admin-storage.client";
 
-const server = http.createServer((req, res) => {
-	res.statusCode = 200;
-	res.setHeader("Content-Type", "text/plain");
-	res.end("Hello World");
-});
+const configuration = ConfigurationFactory.create();
+const applicationLogger = LoggerFactory.create(configuration);
+const gatewayContainer = GatewayContainerFactory.create(configuration);
+const adminStorageClient = new MinioAdminStorageClient(gatewayContainer.storages.minioClient);
 
-server.listen(port, hostname, () => console.info("Main app has started..."));
+adminStorageClient
+	.createBucket(configuration.MINIO_RAW_BUCKET_NAME)
+	.then(async () => {
+		try {
+			await adminStorageClient.createBucket(configuration.MINIO_JSON_BUCKET_NAME);
+			applicationLogger.info("Création des seaux effectuées");
+		} catch (e) {
+			applicationLogger.error({ reason: "Echec dans la création du seau JSON" });
+			throw e;
+		}
+	})
+	.catch((e) => {
+		applicationLogger.error({ reason: "Echec dans la création du seau" });
+		applicationLogger.trace(e as Error);
+		process.exit(1);
+	})
+	.finally(() => process.exit(0));
