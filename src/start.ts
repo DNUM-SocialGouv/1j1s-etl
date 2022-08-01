@@ -19,7 +19,7 @@ adminStorageClient
 	.then(async () => {
 		try {
 			await adminStorageClient.createBucket(configuration.MINIO_JSON_BUCKET_NAME);
-			applicationLogger.info("Création des seaux effectuées");
+			applicationLogger.info("Création des seaux effectuée");
 		} catch (e) {
 			applicationLogger.error({ reason: "Echec dans la création du seau JSON" });
 			throw e;

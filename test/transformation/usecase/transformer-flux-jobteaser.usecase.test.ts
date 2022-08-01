@@ -21,7 +21,6 @@ let configurationFlux: ConfigurationFlux;
 
 let dateService: StubbedClass<DateService>;
 let storageClient: StubbedType<StorageClient>;
-let correspondanceDomaines: Jobteaser.CorrespondanceDomaine;
 let convertirOffreDeStage: Jobteaser.Convertir;
 let transformFluxJobteaser: TransformerFluxJobteaser;
 
@@ -38,6 +37,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			})];
 			delete resultatTransformation[0].dureeEnJourMax;
 			delete resultatTransformation[0].remunerationBase;
+			delete resultatTransformation[0].teletravailPossible;
 
 			configurationFlux = {
 				dossierHistorisation: dossierDHistorisation,
@@ -48,8 +48,7 @@ describe("TransformerFluxJobteaserTest", () => {
 
 			dateService = stubClass(DateService);
 			storageClient = stubInterface<StorageClient>(sinon);
-			correspondanceDomaines = new Jobteaser.CorrespondanceDomaine();
-			convertirOffreDeStage = new Jobteaser.Convertir(dateService, correspondanceDomaines);
+			convertirOffreDeStage = new Jobteaser.Convertir(dateService);
 			transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
 
 			dateService.maintenant.returns(dateEcriture);
