@@ -15,6 +15,7 @@ export class TransformFluxJobteaserCron implements Cron {
 	}
 
 	init(): CronJob {
+		this.logger.info("Coucou");
 		return new CronJob({
 			cronTime: this.configuration.JOBTEASER.CRON_TIME,
 			runOnInit: this.configuration.JOBTEASER.CRON_RUN_ON_INIT,
@@ -34,7 +35,8 @@ export class TransformFluxJobteaserCron implements Cron {
 					.then(() => {
 						this.logger.info(`Flux [${configurationFlux.nom}] has been successfully transformed`);
 					})
-					.catch(e => this.logger.error(e));
+					.catch(e => this.logger.error(e))
+					.finally(() => this.logger.info("Aïe Aïe Aïe"));
 			},
 		});
 	}

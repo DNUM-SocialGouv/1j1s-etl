@@ -19,12 +19,16 @@ export class TransformerFluxJobteaser implements Usecase {
 	}
 
 	async executer<T>(configurationFlux: Readonly<ConfigurationFlux>): Promise<void | T> {
+		console.log("Coucou je suis dans le usecase avant récupération");
 		const contenuDuFlux = await this.recupererContenuDuFluxATransformer<Jobteaser.Contenu>(configurationFlux);
+		console.log("Coucou je suis dans le usecase après récupération");
 
 		const contenuTransforme: Array<UnJeune1Solution.OffreDeStage>
 			= contenuDuFlux.jobs.job.map((job: Jobteaser.OffreDeStage) => this.convertirOffreDeStage.depuisJobteaser(job));
 
+		console.log("Coucou je suis dans le usecase avant écriture");
 		await this.sauvegarderLesFluxTransformes(contenuTransforme, configurationFlux);
+		console.log("Coucou je suis dans le usecase après écriture");
 	}
 
 	private recupererContenuDuFluxATransformer<T>(configurationFlux: ConfigurationFlux): Promise<T> {
