@@ -1,6 +1,7 @@
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { DateService } from "@shared/date.service";
 import { Jobteaser } from "@transformation/domain/jobteaser";
+import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { StorageClient } from "@shared/gateway/storage.client";
 import { Usecase } from "@shared/usecase";
 
@@ -11,28 +12,26 @@ export class TransformerFluxJobteaser implements Usecase {
 	constructor(
 		private readonly dateService: DateService,
 		private readonly storageClient: StorageClient,
-		private readonly convertirOffreDeStage: Jobteaser.ConvertirOffreDeStage,
+		private readonly convertirOffreDeStage: Jobteaser.Convertir,
 	) {
 	}
 
 	async executer<T>(configurationFlux: ConfigurationFlux): Promise<void | T> {
-		const contenuDuFlux = await this.recupererContenuDuFluxATransformer(configurationFlux);
+		const contenuDuFlux = await this.recupererContenuDuFluxATransformer<Jobteaser.Contenu>(configurationFlux);
 
-		const contenuTransforme = !Array.isArray(contenuDuFlux.jobs.job)
-			? this.convertirOffreDeStage.depuisJobteaser(contenuDuFlux.jobs.job)
-			: contenuDuFlux.jobs.job.map((job) => this.convertirOffreDeStage.depuisJobteaser(job));
+		const contenuTransforme = contenuDuFlux.jobs.job.map((job) => this.convertirOffreDeStage.depuisJobteaser(job));
 
-		await this.creerFichierAHistoriser(JSON.stringify(contenuTransforme, null, 2), configurationFlux);
-		await this.creerCloneDuDernierFichier(JSON.stringify(contenuTransforme, null, 2), configurationFlux);
+		await this.creerFichierAHistoriser(this.versJSONLisible(contenuTransforme), configurationFlux);
+		await this.creerCloneDuDernierFichier(this.versJSONLisible(contenuTransforme), configurationFlux);
 	}
 
-	private async recupererContenuDuFluxATransformer(configurationFlux: ConfigurationFlux): Promise<Jobteaser.Contenu> {
+	private async recupererContenuDuFluxATransformer<T>(configurationFlux: ConfigurationFlux): Promise<T> {
 		const { SEPARATEUR_DE_CHEMIN, NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE } = TransformerFluxJobteaser;
 		const fichierARecuperer = configurationFlux.nom
 			.concat(SEPARATEUR_DE_CHEMIN)
 			.concat(NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE)
 			.concat(configurationFlux.extensionFichierBrut);
-		return await this.storageClient.recupererContenu<Jobteaser.Contenu>(fichierARecuperer);
+		return await this.storageClient.recupererContenu<T>(fichierARecuperer);
 	}
 
 	private async creerFichierAHistoriser(contenuDuFlux: string, configurationFlux: Readonly<ConfigurationFlux>): Promise<void> {
@@ -56,5 +55,9 @@ export class TransformerFluxJobteaser implements Usecase {
 			.concat(NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE)
 			.concat(configurationFlux.extensionFichierJson);
 		await this.storageClient.enregistrer(nomDuDernierFicher, contenuDuFlux, configurationFlux.nom);
+	}
+
+	private versJSONLisible(contenuTransforme: UnJeune1Solution.OffreDeStage[]): string {
+		return JSON.stringify(contenuTransforme, null, 2);
 	}
 }

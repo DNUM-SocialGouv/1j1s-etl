@@ -1,6 +1,6 @@
 export type Contenu = {
 	jobs: {
-		job: OffreDeStage | Array<OffreDeStage>
+		job: Array<OffreDeStage>
 	}
 }
 
@@ -16,7 +16,7 @@ export type OffreDeStage = {
 	},
 	title: string,
 	mission: string,
-	contract: Contrat,
+	contract?: Contrat,
 	domains: {
 		domain: string | Array<string>
 	},
@@ -40,10 +40,10 @@ type Localisation = {
 
 type Contrat = {
 	name: string,
-	duration: Duree
+	duration?: Duree
 }
 
 export type Duree = {
-	amount: string,
-	type: string
+	amount?: string,
+	type?: string
 }

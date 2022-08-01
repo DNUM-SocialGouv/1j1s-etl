@@ -14,7 +14,7 @@ import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-fl
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
-let resultatTransformation: UnJeune1Solution.OffreDeStage;
+let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;
 let nomDuFlux: string;
 let dossierDHistorisation: string;
 let configurationFlux: ConfigurationFlux;
@@ -22,22 +22,22 @@ let configurationFlux: ConfigurationFlux;
 let dateService: StubbedClass<DateService>;
 let storageClient: StubbedType<StorageClient>;
 let correspondanceDomaines: Jobteaser.CorrespondanceDomaine;
-let convertirOffreDeStage: Jobteaser.ConvertirOffreDeStage;
+let convertirOffreDeStage: Jobteaser.Convertir;
 let transformFluxJobteaser: TransformerFluxJobteaser;
 
-describe("TransformFluxJobteaserTest", () => {
+describe("TransformerFluxJobteaserTest", () => {
 	context("Lorsque je transforme le flux en provenance de jobteaser", () => {
 		beforeEach(() => {
 			dossierDHistorisation = "history";
 			nomDuFlux = "source";
-			resultatTransformation = OffreDeStageFixtureBuilder.build({
-				remunerationBase: -1,
+			resultatTransformation = [OffreDeStageFixtureBuilder.build({
 				domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE],
 				teletravailPossible: false,
 				duree: "180",
 				dureeEnJour: 180,
-			});
-			delete resultatTransformation.dureeEnJourMax;
+			})];
+			delete resultatTransformation[0].dureeEnJourMax;
+			delete resultatTransformation[0].remunerationBase;
 
 			configurationFlux = {
 				dossierHistorisation: dossierDHistorisation,
@@ -49,16 +49,25 @@ describe("TransformFluxJobteaserTest", () => {
 			dateService = stubClass(DateService);
 			storageClient = stubInterface<StorageClient>(sinon);
 			correspondanceDomaines = new Jobteaser.CorrespondanceDomaine();
-			convertirOffreDeStage = new Jobteaser.ConvertirOffreDeStage(dateService, correspondanceDomaines);
+			convertirOffreDeStage = new Jobteaser.Convertir(dateService, correspondanceDomaines);
 			transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
 
 			dateService.maintenant.returns(dateEcriture);
 			storageClient.recupererContenu.resolves({
-				jobs: OffreDeStageJobteaserFixtureBuilder.build({
-					domains: {
-						domain: Jobteaser.Domaine.AGRONOMIE_BIOLOGIE,
-					},
-				}),
+				jobs: {
+					job: [OffreDeStageJobteaserFixtureBuilder.build({
+						domains: {
+							domain: Jobteaser.Domaine.AGRONOMIE_BIOLOGIE,
+						},
+						contract: {
+							duration: {
+								amount: "180",
+								type: undefined,
+							},
+							name: "Internship",
+						},
+					})],
+				},
 			});
 		});
 
