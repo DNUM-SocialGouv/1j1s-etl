@@ -15,8 +15,11 @@ const { a: actionArg, f: flux } = YargsConfiguration.create();
 
 const action = crons[actionArg];
 
+console.log("Coucouuuuu");
+
 if (action) {
 	const cron = action[flux];
+	console.log(cron);
 	if (cron) {
 		cron.init();
 	}
