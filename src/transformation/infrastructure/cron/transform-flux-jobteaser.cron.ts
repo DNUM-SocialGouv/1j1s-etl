@@ -16,6 +16,7 @@ export class TransformFluxJobteaserCron implements Cron {
 
 	init(): CronJob {
 		return new CronJob({
+			cronTime: this.configuration.JOBTEASER.CRON_TIME,
 			runOnInit: this.configuration.JOBTEASER.CRON_RUN_ON_INIT,
 			start: this.configuration.JOBTEASER.CRON_ENABLED,
 			timeZone: this.configuration.CRON_TIMEZONE,
@@ -35,7 +36,6 @@ export class TransformFluxJobteaserCron implements Cron {
 					})
 					.catch(e => this.logger.error(e));
 			},
-			cronTime: this.configuration.JOBTEASER.CRON_TIME,
 		});
 	}
 }
