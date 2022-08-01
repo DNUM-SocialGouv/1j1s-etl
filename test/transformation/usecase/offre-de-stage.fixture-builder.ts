@@ -5,7 +5,6 @@ export class OffreDeStageFixtureBuilder {
 		const defaults: UnJeune1Solution.OffreDeStage = {
 			titre: "Titre de l'offre",
 			description: "Description de l'offre",
-			duree: "Durée",
 			dureeEnJour: 90,
 			dureeEnJourMax: 180,
 			domaines: [UnJeune1Solution.Domaine.NON_APPLICABLE],
