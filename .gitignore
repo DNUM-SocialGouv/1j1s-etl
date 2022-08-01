@@ -109,3 +109,6 @@ dist
 
 # Build
 build/
+
+# Temporary
+tmp/
