@@ -119,7 +119,6 @@ export namespace Jobteaser {
 				sourcePublishedAt: this.dateService.maintenant().toISOString(),
 				remunerationBase: undefined,
 				identifiantSource: offreDeStage.reference,
-				duree: offreDeStage.contract?.duration?.amount,
 				dureeEnJour: this.traduireLaDureeEnJours(offreDeStage.contract?.duration),
 				dureeEnJourMax: undefined,
 				domaines: this.traduireLesDomainesVers1Jeune1Solution(offreDeStage),

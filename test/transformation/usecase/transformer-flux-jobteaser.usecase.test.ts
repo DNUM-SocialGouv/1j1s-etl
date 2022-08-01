@@ -32,7 +32,6 @@ describe("TransformerFluxJobteaserTest", () => {
 			resultatTransformation = [OffreDeStageFixtureBuilder.build({
 				domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE],
 				teletravailPossible: false,
-				duree: "180",
 				dureeEnJour: 180,
 			})];
 			delete resultatTransformation[0].dureeEnJourMax;
