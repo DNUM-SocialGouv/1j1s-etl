@@ -24,7 +24,7 @@ export namespace UnJeune1Solution {
 
 	type Employeur = {
 		nom: string
-		description: string
+		description?: string
 		logoUrl: string
 		siteUrl: string
 	}

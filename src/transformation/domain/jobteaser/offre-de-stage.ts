@@ -7,13 +7,7 @@ export type Contenu = {
 export type OffreDeStage = {
 	reference: string,
 	date_created: string,
-	company: {
-		name: string,
-		website: string,
-		domain: string,
-		description: string,
-		logo: string
-	},
+	company: Employeur,
 	title: string,
 	mission: string,
 	contract?: Contrat,
@@ -28,6 +22,14 @@ export type OffreDeStage = {
 	start_date: string,
 	expiration_date: string,
 	external_url: string,
+}
+
+export type Employeur = {
+	name: string,
+	website: string,
+	domain: string,
+	description: string,
+	logo: string
 }
 
 type Localisation = {

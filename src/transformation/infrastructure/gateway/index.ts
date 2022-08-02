@@ -1,13 +1,17 @@
 import { Client } from "minio";
 
-import { StorageClient } from "@shared/gateway/storage.client";
+import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
 import {
 	ContentParserRepository,
 } from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
+import { ConvertisseurPays } from "@shared/convertisseur-pays";
+import { StorageClient } from "@shared/gateway/storage.client";
 
 export type GatewayContainer = {
 	repositories: {
-		contentParserRepository: ContentParserRepository
+		contentParserRepository: ContentParserRepository,
+		country: ConvertisseurPays
+		textSanitizer: AssainisseurDeTexte
 	};
 	storages: {
 		minioClient: Client

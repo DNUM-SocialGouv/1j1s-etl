@@ -11,7 +11,7 @@
     "cli:transformation": "node ./build/src/transformation/infrastructure/cron",
     "coverage": "nyc mocha",
     "lint": "eslint src test",
-    "start": "node -r dotenv/config build/src/start.js",
+    "start": "node --max-old-space-size=512 -r dotenv/config build/src/start.js",
     "test": "mocha"
   },
   "_moduleAliases": {
@@ -36,9 +36,11 @@
     "cron": "~2.0.0",
     "dotenv": "~16.0.1",
     "fast-xml-parser": "~4.0.8",
+    "i18n-iso-countries": "~7.5.0",
     "minio": "~7.0.28",
     "module-alias": "~2.2.2",
     "pino": "~8.3.0",
+    "turndown": "~7.1.1",
     "yargs": "~17.5.1"
   },
   "devDependencies": {
@@ -52,6 +54,7 @@
     "@types/node": "~18.0.0",
     "@types/sinon": "~10.0.12",
     "@types/sinon-chai": "~3.2.8",
+    "@types/turndown": "~5.0.1",
     "@types/yargs": "~17.0.10",
     "@typescript-eslint/eslint-plugin": "~5.30.5",
     "@typescript-eslint/parser": "~5.30.5",

@@ -1,6 +1,9 @@
+import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
+import { ConvertisseurPays } from "@shared/convertisseur-pays";
 import {
 	Contenu as _Contenu,
 	Duree,
+	Employeur as _Employeur,
 	OffreDeStage as _OffreDeStage,
 } from "@transformation/domain/jobteaser/offre-de-stage";
 import { DateService } from "@shared/date.service";
@@ -11,12 +14,17 @@ export namespace Jobteaser {
 	export type Contenu = _Contenu;
 	export import Domaine = _Domaine;
 	export type OffreDeStage = _OffreDeStage;
+	export type Employeur = _Employeur
 
 	export class Convertir {
 		private static NOMBRE_DE_JOURS_DANS_UN_MOIS = 30;
 		private readonly correspondanceDomaines: Map<Domaine, UnJeune1Solution.Domaine>;
 
-		constructor(private readonly dateService: DateService) {
+		constructor(
+			private readonly dateService: DateService,
+			private readonly assainisseurDeTexte: AssainisseurDeTexte,
+			private readonly convertisseur: ConvertisseurPays,
+		) {
 			this.correspondanceDomaines = new Map();
 			this.correspondanceDomaines.set(Domaine.ACHATS, UnJeune1Solution.Domaine.ACHATS);
 			this.correspondanceDomaines.set(Domaine.ACTUARIAT, UnJeune1Solution.Domaine.CONSEIL);
@@ -96,9 +104,9 @@ export namespace Jobteaser {
 		depuisJobteaser(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
 			return {
 				titre: offreDeStage.title,
-				description: offreDeStage.mission,
+				description: this.assainisseurDeTexte.nettoyer(offreDeStage.mission),
 				employeur: {
-					description: offreDeStage.company.description,
+					description: this.nettoyer(offreDeStage.company),
 					nom: offreDeStage.company.name,
 					logoUrl: offreDeStage.company.logo,
 					siteUrl: offreDeStage.company.website,
@@ -108,7 +116,7 @@ export namespace Jobteaser {
 					codePostal: offreDeStage.location.zipcode,
 					departement: offreDeStage.location.department,
 					region: offreDeStage.location.state,
-					pays: offreDeStage.location.country,
+					pays: this.convertisseur.versFormatISOAlpha2(offreDeStage.location.country),
 				},
 				source: UnJeune1Solution.Source.JOBTEASER,
 				urlDeCandidature: offreDeStage.external_url,
@@ -123,6 +131,13 @@ export namespace Jobteaser {
 				dureeEnJourMax: undefined,
 				domaines: this.traduireLesDomainesVers1Jeune1Solution(offreDeStage),
 			};
+		}
+
+		private nettoyer(employeur?: Jobteaser.Employeur): string | undefined {
+			if (employeur && employeur.description) {
+				return this.assainisseurDeTexte.nettoyer(employeur.description);
+			}
+			return undefined;
 		}
 
 		private traduireDomaine(domaine: Domaine): UnJeune1Solution.Domaine {
