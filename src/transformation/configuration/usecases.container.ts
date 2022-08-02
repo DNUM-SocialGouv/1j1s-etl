@@ -7,7 +7,11 @@ import { UsecaseContainer } from "@transformation/usecase";
 export class UsecaseContainerFactory {
 	static create(gateways: GatewayContainer): UsecaseContainer {
 		const dateService = new DateService();
-		const convertirOffreDeStageJobteaser = new Jobteaser.Convertir(dateService);
+		const convertirOffreDeStageJobteaser = new Jobteaser.Convertir(
+			dateService,
+			gateways.repositories.textSanitizer,
+			gateways.repositories.country
+		);
 
 		return {
 			transformerFluxJobteaser: new TransformerFluxJobteaser(dateService, gateways.storages.storageClient, convertirOffreDeStageJobteaser),
