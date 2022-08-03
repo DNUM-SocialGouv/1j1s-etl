@@ -1,16 +1,16 @@
 import { Client } from "minio";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { MinioAdminStorageClient } from "@shared/gateway/minio-admin-storage.client";
+import { MinioAdminStorageRepository } from "@shared/gateway/minio-admin-storage.repository";
 
 const bucketName = "bucket-name";
 let minioClient: StubbedClass<Client>;
-let minioAdminStorageClient: MinioAdminStorageClient;
+let minioAdminStorageClient: MinioAdminStorageRepository;
 
 describe("MinioAdminStorageClientTest", () => {
 	beforeEach(() => {
 		minioClient = stubClass<Client>(Client);
-		minioAdminStorageClient = new MinioAdminStorageClient(minioClient);
+		minioAdminStorageClient = new MinioAdminStorageRepository(minioClient);
 	});
 
 	context("Lorsque le bucket existe sur le dépôt Minio", () => {

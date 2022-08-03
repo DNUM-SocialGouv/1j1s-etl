@@ -7,6 +7,8 @@ export interface FileSystemClient {
 }
 
 export class NodeFileSystemClient implements FileSystemClient {
+	private readonly encoding = "utf-8";
+
 	constructor(private readonly temporaryDirPath: string) {
 	}
 
@@ -16,7 +18,7 @@ export class NodeFileSystemClient implements FileSystemClient {
 	}
 
 	read(filePathIncludingFileName: string): Promise<string> {
-		const fileContent = fs.readFileSync(filePathIncludingFileName, "utf-8");
+		const fileContent = fs.readFileSync(filePathIncludingFileName, this.encoding);
 		return Promise.resolve(fileContent);
 	}
 
@@ -25,7 +27,7 @@ export class NodeFileSystemClient implements FileSystemClient {
 			fs.mkdirSync(this.temporaryDirPath);
 		}
 
-		fs.appendFileSync(filePath, fileContent, { encoding: "utf-8" });
+		fs.appendFileSync(filePath, fileContent, { encoding: this.encoding });
 		return Promise.resolve();
 	}
 }

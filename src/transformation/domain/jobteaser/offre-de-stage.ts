@@ -28,7 +28,7 @@ export type Employeur = {
 	name: string,
 	website: string,
 	domain: string,
-	description: string,
+	description?: string,
 	logo: string
 }
 
