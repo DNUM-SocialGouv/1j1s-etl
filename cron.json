@@ -1,0 +1,8 @@
+{
+  "jobs": [
+    {
+      "command": "30 7 * * * npm run cli:transformation -- -a transform -f jobteaser",
+      "size": "L"
+    }
+  ]
+}
