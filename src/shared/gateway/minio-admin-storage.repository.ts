@@ -1,6 +1,6 @@
 import { Client } from "minio";
 
-export class MinioAdminStorageClient {
+export class MinioAdminStorageRepository {
 	static REGION = "none";
 
 	constructor(
@@ -10,7 +10,7 @@ export class MinioAdminStorageClient {
 
 	async createBucket(bucketName: string): Promise<void> {
 		if (!(await this.bucketExists(bucketName))) {
-			await this.minioClient.makeBucket(bucketName, MinioAdminStorageClient.REGION);
+			await this.minioClient.makeBucket(bucketName, MinioAdminStorageRepository.REGION);
 		}
 	}
 

@@ -4,12 +4,12 @@ import "module-alias/register";
 import { ConfigurationFactory } from "@configuration/configuration";
 import { LoggerFactory } from "@transformation/configuration/logger";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
-import { MinioAdminStorageClient } from "@shared/gateway/minio-admin-storage.client";
+import { MinioAdminStorageRepository } from "@shared/gateway/minio-admin-storage.repository";
 
 const configuration = ConfigurationFactory.create();
 const applicationLogger = LoggerFactory.create(configuration);
 const gatewayContainer = GatewayContainerFactory.create(configuration);
-const adminStorageClient = new MinioAdminStorageClient(gatewayContainer.storages.minioClient);
+const adminStorageClient = new MinioAdminStorageRepository(gatewayContainer.minioClient);
 
 const server = http.createServer();
 server.listen(process.env.PORT);

@@ -1,10 +1,10 @@
 import { XMLParser } from "fast-xml-parser";
 
-export interface ContentParserRepository {
+export interface ContentParser {
 	parse<T>(xmlContent: string | Buffer): Promise<T>;
 }
 
-export class XmlContentParserRepository implements ContentParserRepository {
+export class XmlContentParser implements ContentParser {
 	constructor(private readonly parser: XMLParser,) {
 	}
 

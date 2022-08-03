@@ -1,7 +1,7 @@
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { DateService } from "@shared/date.service";
 import { Jobteaser } from "@transformation/domain/jobteaser";
-import { StorageClient } from "@shared/gateway/storage.client";
+import { StorageRepository } from "@shared/gateway/storage.repository";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { Usecase } from "@shared/usecase";
 
@@ -13,7 +13,7 @@ export class TransformerFluxJobteaser implements Usecase {
 
 	constructor(
 		private readonly dateService: DateService,
-		private readonly storageClient: StorageClient,
+		private readonly storageClient: StorageRepository,
 		private readonly convertirOffreDeStage: Jobteaser.Convertir,
 	) {
 	}

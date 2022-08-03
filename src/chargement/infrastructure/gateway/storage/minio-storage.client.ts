@@ -1,18 +1,18 @@
 import { Client } from "minio";
 
 import { Configuration } from "@configuration/configuration";
-import { EcritureFluxErreur, StorageClient } from "@shared/gateway/storage.client";
-import { FileSystemClient } from "@transformation/infrastructure/gateway/storage/node-file-system.client";
-import { UuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
+import { EcritureFluxErreur, StorageRepository } from "@shared/gateway/storage.repository";
+import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 
-export class MinioStorageClient implements StorageClient {
+export class MinioStorageClient implements StorageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
 
 	constructor(
 		private readonly configuration: Configuration,
 		private readonly minioClient: Client,
 		private readonly fileSystemClient: FileSystemClient,
-		private readonly uuidClient: UuidClient
+		private readonly uuidClient: UuidGenerator
 	) {
 	}
 

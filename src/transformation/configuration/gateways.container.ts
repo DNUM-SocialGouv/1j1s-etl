@@ -3,15 +3,13 @@ import { XMLParser } from "fast-xml-parser";
 import TurndownService from "turndown";
 
 import { Configuration } from "@configuration/configuration";
+import { CountryToIso } from "@transformation/infrastructure/gateway/country-to-iso";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
-import { MinioStorageClient } from "@transformation/infrastructure/gateway/storage/minio-storage.client";
-import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/storage/node-file-system.client";
-import { NodeUuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
-import {
-	XmlContentParserRepository,
-} from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
-import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/repository/html-to-markdown.sanitizer";
-import { Country } from "@transformation/infrastructure/gateway/repository/country";
+import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/html-to-markdown.sanitizer";
+import { MinioStorageRepository } from "@transformation/infrastructure/gateway/repository/minio-storage.repository";
+import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { NodeUuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
+import { XmlContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
@@ -22,22 +20,18 @@ export class GatewayContainerFactory {
 			port: configuration.MINIO_PORT,
 			endPoint: configuration.MINIO_URL,
 		});
-		const uuidClient = new NodeUuidClient();
+		const uuidClient = new NodeUuidGenerator();
 		const xmlParser = new XMLParser({ trimValues: true });
-		const contentParserRepository = new XmlContentParserRepository(xmlParser);
+		const contentParserRepository = new XmlContentParser(xmlParser);
 		const htmlToMarkdown = new TurndownService();
 		const assainisseurDeTexte = new HtmlToMarkdownSanitizer(htmlToMarkdown);
 
 		return {
-			repositories: {
-				contentParserRepository,
-				textSanitizer: assainisseurDeTexte,
-				country: new Country(),
-			},
-			storages: {
-				minioClient,
-				storageClient: new MinioStorageClient(configuration, minioClient, fileSystemClient, uuidClient, contentParserRepository),
-			},
+			country: new CountryToIso(),
+			contentParser: contentParserRepository,
+			minioClient,
+			storageRepository: new MinioStorageRepository(configuration, minioClient, fileSystemClient, uuidClient, contentParserRepository),
+			textSanitizer: assainisseurDeTexte,
 		};
 	}
 }

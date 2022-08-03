@@ -5,12 +5,12 @@ import sinon from "sinon";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@configuration/configuration";
 import {
-	ContentParserRepository,
-} from "@transformation/infrastructure/gateway/repository/xml-content-parser.repository";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/storage.client";
-import { FileSystemClient } from "@transformation/infrastructure/gateway/storage/node-file-system.client";
-import { MinioStorageClient } from "@transformation/infrastructure/gateway/storage/minio-storage.client";
-import { UuidClient } from "@transformation/infrastructure/gateway/storage/uuid.client";
+	ContentParser,
+} from "@transformation/infrastructure/gateway/xml-content.parser";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/storage.repository";
+import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { MinioStorageRepository } from "@transformation/infrastructure/gateway/repository/minio-storage.repository";
+import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 
 const fluxName = "fluxName";
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
@@ -19,11 +19,11 @@ let fileNameIncludingPath: string;
 let latestStoredFileNameIncludingPath: string;
 
 let configuration: StubbedType<Configuration>;
-let contentParserRepository: StubbedType<ContentParserRepository>;
+let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
-let uuidClient: StubbedType<UuidClient>;
+let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
-let storageClient: MinioStorageClient;
+let storageClient: MinioStorageRepository;
 
 describe("MinioStorageClientTest", () => {
 	beforeEach(() => {
@@ -34,11 +34,11 @@ describe("MinioStorageClientTest", () => {
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO_RAW_BUCKET_NAME = "raw";
 		configuration.MINIO_JSON_BUCKET_NAME = "json";
-		contentParserRepository = stubInterface<ContentParserRepository>(sinon);
+		contentParserRepository = stubInterface<ContentParser>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
-		uuidClient = stubInterface<UuidClient>(sinon);
+		uuidClient = stubInterface<UuidGenerator>(sinon);
 		uuidClient.generate.returns("d184b5b1-75ad-44f0-8fe7-7c55208bf26c");
-		storageClient = new MinioStorageClient(
+		storageClient = new MinioStorageRepository(
 			configuration,
 			minioStub,
 			fileSystemClient,

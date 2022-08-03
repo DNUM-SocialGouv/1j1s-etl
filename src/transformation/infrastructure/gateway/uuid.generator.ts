@@ -1,10 +1,10 @@
 import crypto from "crypto";
 
-export interface UuidClient {
+export interface UuidGenerator {
 	generate(): string;
 }
 
-export class NodeUuidClient implements UuidClient {
+export class NodeUuidGenerator implements UuidGenerator {
 	generate(): string {
 		return crypto.randomUUID();
 	}

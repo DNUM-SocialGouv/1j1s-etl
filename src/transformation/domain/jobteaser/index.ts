@@ -1,5 +1,4 @@
 import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
-import { ConvertisseurPays } from "@shared/convertisseur-pays";
 import {
 	Contenu as _Contenu,
 	Duree,
@@ -8,6 +7,7 @@ import {
 } from "@transformation/domain/jobteaser/offre-de-stage";
 import { DateService } from "@shared/date.service";
 import { Domaine as _Domaine } from "@transformation/domain/jobteaser/domaine";
+import { Pays } from "@shared/pays";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
 export namespace Jobteaser {
@@ -23,7 +23,7 @@ export namespace Jobteaser {
 		constructor(
 			private readonly dateService: DateService,
 			private readonly assainisseurDeTexte: AssainisseurDeTexte,
-			private readonly convertisseur: ConvertisseurPays,
+			private readonly pays: Pays,
 		) {
 			this.correspondanceDomaines = new Map();
 			this.correspondanceDomaines.set(Domaine.ACHATS, UnJeune1Solution.Domaine.ACHATS);
@@ -116,7 +116,7 @@ export namespace Jobteaser {
 					codePostal: offreDeStage.location.zipcode,
 					departement: offreDeStage.location.department,
 					region: offreDeStage.location.state,
-					pays: this.convertisseur.versFormatISOAlpha2(offreDeStage.location.country),
+					pays: this.pays.versFormatISOAlpha2(offreDeStage.location.country),
 				},
 				source: UnJeune1Solution.Source.JOBTEASER,
 				urlDeCandidature: offreDeStage.external_url,

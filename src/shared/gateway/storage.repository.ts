@@ -1,4 +1,4 @@
-export interface StorageClient {
+export interface StorageRepository {
 	enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void>;
 	recupererContenu<T>(sourcefilePath: string): Promise<T>;
 }
