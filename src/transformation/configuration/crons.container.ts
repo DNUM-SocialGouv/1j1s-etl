@@ -1,20 +1,20 @@
 import { Configuration } from "@configuration/configuration";
-import { Cron } from "@transformation/infrastructure/cron/cron";
+import { Task } from "@transformation/infrastructure/tasks/task";
 import { LoggerFactory } from "@transformation/configuration/logger";
-import { TransformFluxJobteaserCron } from "@transformation/infrastructure/cron/transform-flux-jobteaser.cron";
+import { TransformFluxJobteaserTask } from "@transformation/infrastructure/tasks/transform-flux-jobteaser.task";
 import { UsecaseContainer } from "@transformation/usecase";
 
 export type CronContainer = {
-	[transform: string]: { [key: string]: Cron }
+	[transform: string]: { [key: string]: Task }
 }
 
-export class CronContainerFactory {
+export class TaskContainerFactory {
 	static create(configuration: Configuration, usecases: UsecaseContainer): CronContainer {
 		const jobteaserLogger = LoggerFactory.create(configuration.JOBTEASER);
 
 		return {
 			transform: {
-				jobteaser: new TransformFluxJobteaserCron(configuration, usecases.transformerFluxJobteaser, jobteaserLogger),
+				jobteaser: new TransformFluxJobteaserTask(configuration, usecases.transformerFluxJobteaser, jobteaserLogger),
 			},
 		};
 	}

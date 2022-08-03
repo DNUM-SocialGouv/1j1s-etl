@@ -2,22 +2,22 @@ import "dotenv/config";
 import "module-alias/register";
 
 import { ConfigurationFactory } from "@configuration/configuration";
-import { CronContainerFactory } from "@transformation/configuration/crons.container";
-import { YargsConfiguration } from "@transformation/configuration/yargs.configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
+import { TaskContainerFactory } from "@transformation/configuration/crons.container";
 import { UsecaseContainerFactory } from "@transformation/configuration/usecases.container";
+import { YargsConfiguration } from "@transformation/configuration/yargs.configuration";
 
 const configuration = ConfigurationFactory.create();
 const gateways = GatewayContainerFactory.create(configuration);
 const usecases = UsecaseContainerFactory.create(gateways);
-const crons = CronContainerFactory.create(configuration, usecases);
+const tasks = TaskContainerFactory.create(configuration, usecases);
 const { a: actionArg, f: flux } = YargsConfiguration.create(configuration);
 
-const action = crons[actionArg];
+const action = tasks[actionArg];
 
 if (action) {
-	const cron = action[flux];
-	if (cron) {
-		cron.init();
+	const task = action[flux];
+	if (task) {
+		task.run();
 	}
 }
