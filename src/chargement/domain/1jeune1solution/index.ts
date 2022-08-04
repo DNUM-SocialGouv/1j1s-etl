@@ -21,6 +21,7 @@ export namespace UnJeune1Solution {
 	export interface OffreDeStageRepository {
 		charger(offresDeStages: Array<OffreDeStage>): Promise<void>;
 		recuperer(nomDuFlux: string): Promise<Array<OffreDeStage>>;
+		enregistrer(cheminDuFichier: string, contenu: string, nomDuFlux: string): Promise<void>;
 	}
 
 	type Employeur = {

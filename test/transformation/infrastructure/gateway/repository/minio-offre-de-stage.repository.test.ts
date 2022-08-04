@@ -7,9 +7,9 @@ import { Configuration } from "@configuration/configuration";
 import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/storage.repository";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
-import { MinioStorageRepository } from "@transformation/infrastructure/gateway/repository/minio-storage.repository";
+import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 
 const fluxName = "fluxName";
@@ -23,7 +23,7 @@ let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
-let storageClient: MinioStorageRepository;
+let minioOffreDeStageRepository: MinioOffreDeStageRepository;
 
 describe("MinioStorageClientTest", () => {
 	beforeEach(() => {
@@ -38,7 +38,7 @@ describe("MinioStorageClientTest", () => {
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 		uuidClient = stubInterface<UuidGenerator>(sinon);
 		uuidClient.generate.returns("d184b5b1-75ad-44f0-8fe7-7c55208bf26c");
-		storageClient = new MinioStorageRepository(
+		minioOffreDeStageRepository = new MinioOffreDeStageRepository(
 			configuration,
 			minioStub,
 			fileSystemClient,
@@ -49,7 +49,7 @@ describe("MinioStorageClientTest", () => {
 
 	context("Lorsque j'écris le contenu d'un fichier qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
 		it("j'écris le contenu d'un fichier", async () => {
-			await storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName);
+			await minioOffreDeStageRepository.enregistrer(fileNameIncludingPath, fileContent, fluxName);
 
 			expect(uuidClient.generate).to.have.been.calledOnce;
 			expect(fileSystemClient.write).to.have.been.calledOnce;
@@ -71,7 +71,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
 				EcritureFluxErreur,
 				`Le flux ${fluxName} n'a pas été extrait car une erreur d'écriture est survenue`
 			);
@@ -85,7 +85,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
 				EcritureFluxErreur,
 				`Le flux ${fluxName} n'a pas été extrait car une erreur d'écriture est survenue`
 			);
@@ -115,7 +115,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je récupère le contenu du fichier", async () => {
-			const result = await storageClient.recupererContenu(fileNameIncludingPath);
+			const result = await minioOffreDeStageRepository.recuperer(fileNameIncludingPath);
 
 			expect(result).to.eql({
 				root: {
@@ -152,7 +152,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(storageClient.recupererContenu(fileNameIncludingPath)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer(fileNameIncludingPath)).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
@@ -173,7 +173,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(storageClient.recupererContenu(fileNameIncludingPath)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer(fileNameIncludingPath)).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);

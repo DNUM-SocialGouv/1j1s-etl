@@ -4,11 +4,12 @@ import { Configuration } from "@configuration/configuration";
 import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
-import { EcritureFluxErreur, RecupererContenuErreur, StorageRepository } from "@shared/gateway/storage.repository";
+import { EcritureFluxErreur, RecupererContenuErreur} from "@shared/gateway/offre-de-stage.repository";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 
-export class MinioStorageRepository implements StorageRepository {
+export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
 
 	constructor(
@@ -20,9 +21,9 @@ export class MinioStorageRepository implements StorageRepository {
 	) {
 	}
 
-	async recupererContenu<T>(sourcefilePath: string): Promise<T> {
+	async recuperer<T>(sourcefilePath: string): Promise<T> {
 		const temporaryFileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
+		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
 			await this.minioClient.fGetObject(
@@ -41,7 +42,7 @@ export class MinioStorageRepository implements StorageRepository {
 
 	async enregistrer(filePath: string, fileContent: string, sourceName: string): Promise<void> {
 		const temporaryFileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
+		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);

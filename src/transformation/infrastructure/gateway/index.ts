@@ -5,12 +5,12 @@ import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { Pays } from "@shared/pays";
-import { StorageRepository } from "@shared/gateway/storage.repository";
+import { OffreDeStageRepository } from "@transformation/domain/1jeune1solution/offre-de-stage.repository";
 
 export type GatewayContainer = {
 	country: Pays
 	contentParser: ContentParser
 	minioClient: Client
-	storageRepository: StorageRepository
+	offreDeStageRepository: OffreDeStageRepository
 	textSanitizer: AssainisseurDeTexte
 }

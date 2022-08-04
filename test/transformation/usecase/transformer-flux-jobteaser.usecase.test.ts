@@ -4,14 +4,14 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
-import { Pays } from "@shared/pays";
 import { DateService } from "@shared/date.service";
 import { Jobteaser } from "@transformation/domain/jobteaser";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import {
 	OffreDeStageJobteaserFixtureBuilder,
 } from "@test/transformation/fixture/offre-de-stage-jobteaser.fixture-builder";
-import { StorageRepository } from "@shared/gateway/storage.repository";
+import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
+import { Pays } from "@shared/pays";
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
@@ -22,7 +22,7 @@ let dossierDHistorisation: string;
 let configurationFlux: ConfigurationFlux;
 
 let dateService: StubbedClass<DateService>;
-let storageClient: StubbedType<StorageRepository>;
+let offreDeStageRepository: StubbedType<OffreDeStageRepository>;
 let convertisseurDePays: StubbedType<Pays>;
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
 let convertirOffreDeStage: Jobteaser.Convertir;
@@ -65,18 +65,18 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
 				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
-				storageClient.recupererContenu.resolves({
+				offreDeStageRepository.recuperer.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
 							mission: "<p>Contenu</p>",
@@ -105,16 +105,16 @@ describe("TransformerFluxJobteaserTest", () => {
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 
@@ -156,18 +156,18 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
 				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
-				storageClient.recupererContenu.resolves({
+				offreDeStageRepository.recuperer.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
 							mission: "<p>Contenu</p>",
@@ -196,16 +196,16 @@ describe("TransformerFluxJobteaserTest", () => {
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 
@@ -246,11 +246,11 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -283,22 +283,22 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 				delete fluxJobteaser.jobs.job[0].company.description;
 
-				storageClient.recupererContenu.resolves(fluxJobteaser);
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 
@@ -340,11 +340,11 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -377,22 +377,22 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 				delete fluxJobteaser.jobs.job[0].contract?.duration;
 
-				storageClient.recupererContenu.resolves(fluxJobteaser);
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 
@@ -435,11 +435,11 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -473,22 +473,22 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 				delete fluxJobteaser.jobs.job[0].contract?.duration;
 
-				storageClient.recupererContenu.resolves(fluxJobteaser);
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 
@@ -528,11 +528,11 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -566,22 +566,22 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 				delete fluxJobteaser.jobs.job[0].contract?.duration;
 
-				storageClient.recupererContenu.resolves(fluxJobteaser);
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 
@@ -621,11 +621,11 @@ describe("TransformerFluxJobteaserTest", () => {
 				};
 
 				dateService = stubClass(DateService);
-				storageClient = stubInterface<StorageRepository>(sinon);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, storageClient, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -658,22 +658,22 @@ describe("TransformerFluxJobteaserTest", () => {
 					},
 				};
 
-				storageClient.recupererContenu.resolves(fluxJobteaser);
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
 				await transformFluxJobteaser.executer(configurationFlux);
 
-				expect(storageClient.recupererContenu).to.have.been.called;
-				expect(storageClient.enregistrer).to.have.been.calledTwice;
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
 
-				expect(storageClient.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(`${nomDuFlux}/${dossierDHistorisation}/${dateEcriture.toISOString()}.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql(nomDuFlux);
 
-				expect(storageClient.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
-				expect(JSON.parse(storageClient.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
-				expect(storageClient.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(`${nomDuFlux}/latest.json`);
+				expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.eql(resultatTransformation);
+				expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql(nomDuFlux);
 			});
 		});
 	});

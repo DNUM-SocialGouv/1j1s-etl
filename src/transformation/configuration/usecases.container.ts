@@ -14,7 +14,7 @@ export class UsecaseContainerFactory {
 		);
 
 		return {
-			transformerFluxJobteaser: new TransformerFluxJobteaser(dateService, gateways.storageRepository, convertirOffreDeStageJobteaser),
+			transformerFluxJobteaser: new TransformerFluxJobteaser(dateService, gateways.offreDeStageRepository, convertirOffreDeStageJobteaser),
 		};
 	}
 }

@@ -6,7 +6,7 @@ import { Configuration } from "@configuration/configuration";
 import { CountryToIso } from "@transformation/infrastructure/gateway/country-to-iso";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/html-to-markdown.sanitizer";
-import { MinioStorageRepository } from "@transformation/infrastructure/gateway/repository/minio-storage.repository";
+import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { NodeUuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { XmlContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
@@ -30,7 +30,7 @@ export class GatewayContainerFactory {
 			country: new CountryToIso(),
 			contentParser: contentParserRepository,
 			minioClient,
-			storageRepository: new MinioStorageRepository(configuration, minioClient, fileSystemClient, uuidClient, contentParserRepository),
+			offreDeStageRepository: new MinioOffreDeStageRepository(configuration, minioClient, fileSystemClient, uuidClient, contentParserRepository),
 			textSanitizer: assainisseurDeTexte,
 		};
 	}
