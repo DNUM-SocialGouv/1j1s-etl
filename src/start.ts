@@ -3,7 +3,7 @@ import "module-alias/register";
 
 import { ConfigurationFactory } from "@configuration/configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
-import { LoggerFactory } from "@transformation/configuration/logger";
+import { LoggerFactory } from "@shared/logger";
 import { MinioAdminStorageRepository } from "@shared/gateway/minio-admin-storage.repository";
 import { Setup } from "./setup";
 

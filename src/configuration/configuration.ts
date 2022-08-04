@@ -17,6 +17,7 @@ export type Configuration = {
 	MINIO_HISTORY_DIRECTORY_NAME: string
 	MINIO_PORT: number
 	MINIO_RAW_BUCKET_NAME: string
+	MINIO_RESULT_BUCKET_NAME: string
 	MINIO_SECRET_KEY: string
 	MINIO_TRANSFORMED_BUCKET_NAME: string
 	MINIO_URL: string
@@ -28,6 +29,7 @@ export class ConfigurationFactory {
 		const { getOrError, getOrDefault } = ConfigurationFactory;
 		const DEFAULT_RAW_BUCKET_NAME = "raw";
 		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
+		const DEFAULT_RESULT_BUCKET_NAME = "result";
 		const DEFAULT_MINIO_PORT = "9000";
 
 		return {
@@ -45,6 +47,7 @@ export class ConfigurationFactory {
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
 			MINIO_RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
+			MINIO_RESULT_BUCKET_NAME: getOrDefault("MINIO_RESULT_BUCKET_NAME", DEFAULT_RESULT_BUCKET_NAME),
 			MINIO_SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 			MINIO_TRANSFORMED_BUCKET_NAME: getOrDefault("MINIO_TRANSFORMED_BUCKET_NAME", DEFAULT_TRANSFORMED_BUCKET_NAME),
 			MINIO_URL: getOrError("MINIO_URL"),
