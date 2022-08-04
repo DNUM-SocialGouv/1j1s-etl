@@ -1,7 +1,7 @@
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { DateService } from "@shared/date.service";
 import { Jobteaser } from "@transformation/domain/jobteaser";
-import { StorageRepository } from "@shared/gateway/storage.repository";
+import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { Usecase } from "@shared/usecase";
 
@@ -13,7 +13,7 @@ export class TransformerFluxJobteaser implements Usecase {
 
 	constructor(
 		private readonly dateService: DateService,
-		private readonly storageClient: StorageRepository,
+		private readonly offreDeStageRepository: OffreDeStageRepository,
 		private readonly convertirOffreDeStage: Jobteaser.Convertir,
 	) {
 	}
@@ -33,7 +33,7 @@ export class TransformerFluxJobteaser implements Usecase {
 			.concat(SEPARATEUR_DE_CHEMIN)
 			.concat(NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE)
 			.concat(configurationFlux.extensionFichierBrut);
-		return this.storageClient.recupererContenu<T>(fichierARecuperer);
+		return this.offreDeStageRepository.recuperer<T>(fichierARecuperer);
 	}
 
 	private async sauvegarderLesFluxTransformes(contenuTransforme: Array<UnJeune1Solution.OffreDeStage>, configurationFlux: ConfigurationFlux): Promise<void> {
@@ -50,12 +50,12 @@ export class TransformerFluxJobteaser implements Usecase {
 
 	private async sauvegarderFichierAHistoriser(contenuDuFlux: string, configurationFlux: Readonly<ConfigurationFlux>): Promise<void> {
 		const nomDuFichierHistorise = this.creerNomDuFichierAHistoriser(configurationFlux);
-		await this.storageClient.enregistrer(nomDuFichierHistorise, contenuDuFlux, configurationFlux.nom);
+		await this.offreDeStageRepository.enregistrer(nomDuFichierHistorise, contenuDuFlux, configurationFlux.nom);
 	}
 
 	private async sauvegarderCloneDuDernierFichier(contenuDuFlux: string, configurationFlux: Readonly<ConfigurationFlux>): Promise<void> {
 		const nomDuDernierFicher = this.creerNomDuCloneDuDernierFicher(configurationFlux);
-		await this.storageClient.enregistrer(nomDuDernierFicher, contenuDuFlux, configurationFlux.nom);
+		await this.offreDeStageRepository.enregistrer(nomDuDernierFicher, contenuDuFlux, configurationFlux.nom);
 	}
 
 	private creerNomDuCloneDuDernierFicher(configurationFlux: Readonly<ConfigurationFlux>): string {

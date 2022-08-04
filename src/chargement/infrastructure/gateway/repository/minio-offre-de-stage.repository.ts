@@ -1,11 +1,12 @@
 import { Client } from "minio";
 
 import { Configuration } from "@configuration/configuration";
-import { EcritureFluxErreur, StorageRepository } from "@shared/gateway/storage.repository";
+import { EcritureFluxErreur} from "@shared/gateway/offre-de-stage.repository";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 
-export class MinioStorageClient implements StorageRepository {
+export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
 
 	constructor(
@@ -16,13 +17,13 @@ export class MinioStorageClient implements StorageRepository {
 	) {
 	}
 
-	recupererContenu<T>(sourcefilePath: string): Promise<T> {
+	recuperer<T>(sourcefilePath: string): Promise<T> {
         throw new Error("Method not implemented.");
     }
 
 	async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
 		const temporaryFileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageClient.LOCAL_FILE_PATH.concat(temporaryFileName);
+		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);
