@@ -33,7 +33,7 @@ describe("MinioStorageClientTest", () => {
 		minioStub = stubClass(Client);
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO_RAW_BUCKET_NAME = "raw";
-		configuration.MINIO_JSON_BUCKET_NAME = "json";
+		configuration.MINIO_TRANSFORMED_BUCKET_NAME = "json";
 		contentParserRepository = stubInterface<ContentParser>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 		uuidClient = stubInterface<UuidGenerator>(sinon);
@@ -56,7 +56,7 @@ describe("MinioStorageClientTest", () => {
 			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, fileContent);
 			expect(minioStub.fPutObject).to.have.been.calledOnce;
 			expect(minioStub.fPutObject).to.have.been.calledWith(
-				configuration.MINIO_JSON_BUCKET_NAME,
+				configuration.MINIO_TRANSFORMED_BUCKET_NAME,
 				fileNameIncludingPath,
 				localFileNameIncludingPath
 			);
@@ -154,7 +154,7 @@ describe("MinioStorageClientTest", () => {
 		it("je lance une erreur de lecture", async () => {
 			await expect(storageClient.recupererContenu(fileNameIncludingPath)).to.be.rejectedWith(
 				RecupererContenuErreur,
-				"Une erreur de lecture est survenue lors de la récupération du contenu"
+				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
 		});
 	});
@@ -175,7 +175,7 @@ describe("MinioStorageClientTest", () => {
 		it("je lance une erreur de lecture", async () => {
 			await expect(storageClient.recupererContenu(fileNameIncludingPath)).to.be.rejectedWith(
 				RecupererContenuErreur,
-				"Une erreur de lecture est survenue lors de la récupération du contenu"
+				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
 		});
 	});

@@ -1,11 +1,12 @@
 import yargs from "yargs";
+import { Configuration } from "@configuration/configuration";
 
 type Commands = { [p: string]: unknown, a: string, f: string, _: (string | number)[], $0: string };
 
 export class YargsConfiguration {
-	static create(): Commands {
+	static create(configuration: Configuration): Commands {
 		const actionChoices = ["transform"];
-		const fluxChoices = ["jobteaser"];
+		const fluxChoices = [configuration.JOBTEASER.NAME];
 
 		const options = {
 			a: {

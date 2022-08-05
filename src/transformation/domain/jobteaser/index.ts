@@ -3,6 +3,7 @@ import {
 	Contenu as _Contenu,
 	Duree,
 	Employeur as _Employeur,
+	Localisation as _Localisation,
 	OffreDeStage as _OffreDeStage,
 } from "@transformation/domain/jobteaser/offre-de-stage";
 import { DateService } from "@shared/date.service";
@@ -13,11 +14,12 @@ import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 export namespace Jobteaser {
 	export type Contenu = _Contenu;
 	export import Domaine = _Domaine;
+	export type Employeur = _Employeur;
+	export type Localisation = _Localisation;
 	export type OffreDeStage = _OffreDeStage;
-	export type Employeur = _Employeur
 
 	export class Convertir {
-		private static NOMBRE_DE_JOURS_DANS_UN_MOIS = 30;
+		private static NOMBRE_DE_JOURS_DANS_UN_MOIS_POUR_CALCUL = 30;
 		private readonly correspondanceDomaines: Map<Domaine, UnJeune1Solution.Domaine>;
 
 		constructor(
@@ -102,15 +104,12 @@ export namespace Jobteaser {
 		}
 
 		depuisJobteaser(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
+			const maintenant = this.dateService.maintenant().toISOString();
+
 			return {
 				titre: offreDeStage.title,
 				description: this.assainisseurDeTexte.nettoyer(offreDeStage.mission),
-				employeur: {
-					description: this.nettoyer(offreDeStage.company),
-					nom: offreDeStage.company.name,
-					logoUrl: offreDeStage.company.logo,
-					siteUrl: offreDeStage.company.website,
-				},
+				employeur: this.extraireEmployeur(offreDeStage.company),
 				localisation: {
 					ville: offreDeStage.location.city,
 					codePostal: offreDeStage.location.zipcode,
@@ -121,10 +120,10 @@ export namespace Jobteaser {
 				source: UnJeune1Solution.Source.JOBTEASER,
 				urlDeCandidature: offreDeStage.external_url,
 				teletravailPossible: undefined,
-				dateDeDebut: offreDeStage.start_date || this.dateService.maintenant().toISOString(),
+				dateDeDebut: offreDeStage.start_date || maintenant,
 				sourceCreatedAt: offreDeStage.date_created,
 				sourceUpdatedAt: offreDeStage.date_created,
-				sourcePublishedAt: this.dateService.maintenant().toISOString(),
+				sourcePublishedAt: maintenant,
 				remunerationBase: undefined,
 				identifiantSource: offreDeStage.reference,
 				dureeEnJour: this.traduireLaDureeEnJours(offreDeStage.contract?.duration),
@@ -133,11 +132,13 @@ export namespace Jobteaser {
 			};
 		}
 
-		private nettoyer(employeur?: Jobteaser.Employeur): string | undefined {
-			if (employeur && employeur.description) {
-				return this.assainisseurDeTexte.nettoyer(employeur.description);
-			}
-			return undefined;
+		private extraireEmployeur(employeur: Jobteaser.Employeur): UnJeune1Solution.Employeur {
+			return {
+				description: employeur.description ? this.assainisseurDeTexte.nettoyer(employeur.description) : undefined,
+				nom: this.assainisseurDeTexte.nettoyer(employeur.name),
+				logoUrl: employeur.logo,
+				siteUrl: employeur.website,
+			};
 		}
 
 		private traduireDomaine(domaine: Domaine): UnJeune1Solution.Domaine {
@@ -157,9 +158,10 @@ export namespace Jobteaser {
 			if (!duree) {
 				return undefined;
 			}
-			return duree.type
-				? Number(duree.amount) * Convertir.NOMBRE_DE_JOURS_DANS_UN_MOIS
-				: Number(duree.amount);
+			if (duree.type) {
+				return Number(duree.amount) * Convertir.NOMBRE_DE_JOURS_DANS_UN_MOIS_POUR_CALCUL;
+			}
+			return Number(duree.amount);
 		}
 	}
 }

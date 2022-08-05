@@ -1,3 +1,3 @@
 export interface Pays {
-	versFormatISOAlpha2(nomDePays: string): string;
+	versFormatISOAlpha2(nomDePaysComplet: string): string;
 }

@@ -22,23 +22,21 @@ export namespace UnJeune1Solution {
 		teletravailPossible?: boolean
 	}
 
-	type Employeur = {
+	export type Employeur = {
 		nom: string
 		description?: string
 		logoUrl: string
 		siteUrl: string
 	}
 
-	type Localisation = {
+	export type Localisation = {
 		ville?: string
 		departement?: string
 		codePostal?: string
-		region?: string // enum de region ? (interessant pour savoir si pays en full + majuscule …)
-		pays: string // enum de pays ? (interessant pour savoir si pays en full + majuscule …) (https://www.npmjs.com/package/i18n-iso-countries ?)
-		_geo?: {
-			lat: number
-			lng: number
-		}
+		region?: string
+		pays: string
+		latitude?: number
+		longitude?: number
 	}
 
 	export enum Source {

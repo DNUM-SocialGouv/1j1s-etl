@@ -21,8 +21,8 @@ export class MinioStorageClient implements StorageRepository {
     }
 
 	async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
-		const fileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageClient.LOCAL_FILE_PATH.concat(fileName);
+		const temporaryFileName = this.uuidClient.generate();
+		const localFileNameIncludingPath = MinioStorageClient.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);

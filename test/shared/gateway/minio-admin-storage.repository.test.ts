@@ -32,7 +32,7 @@ describe("MinioAdminStorageClientTest", () => {
 			minioClient.bucketExists.resolves(false);
 		});
 
-		it("on crée le bucket", async () => {
+		it("on crée le bucket avec le nom demandé", async () => {
 			await minioAdminStorageClient.createBucket(bucketName);
 
 			expect(minioClient.bucketExists).to.have.been.calledOnce;

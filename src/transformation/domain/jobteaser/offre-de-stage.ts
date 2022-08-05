@@ -32,7 +32,7 @@ export type Employeur = {
 	logo: string
 }
 
-type Localisation = {
+export type Localisation = {
 	city: string,
 	zipcode: string,
 	department: string,
