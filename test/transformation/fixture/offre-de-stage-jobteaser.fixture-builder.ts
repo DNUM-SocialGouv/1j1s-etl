@@ -1,17 +1,29 @@
 import { Jobteaser } from "@transformation/domain/jobteaser";
 
 export class OffreDeStageJobteaserFixtureBuilder {
-	static build(offreDeStage?: Partial<Jobteaser.OffreDeStage>): Jobteaser.OffreDeStage {
+	static build(
+		offreDeStage?: Partial<Jobteaser.OffreDeStage>,
+		localisation?: Partial<Jobteaser.Localisation>,
+		employeur?: Partial<Jobteaser.Employeur>,
+	): Jobteaser.OffreDeStage {
+		const defaultEmployeur = {
+			name: "Nom de l'entreprise",
+			description: "Entreprise leader de son domaine",
+			logo: "http://url.du.logo",
+			domain: "Domaine d'activité de l'entreprise",
+			website: "http://site.de.l.entreprise",
+		};
+		const defaultLocalisation = {
+			city: "Montpellier",
+			zipcode: "34",
+			department: "Hérault",
+			state: "Occitanie",
+			country: "France",
+		};
 		const defaults: Jobteaser.OffreDeStage = {
 			title: "Titre de l'offre",
 			mission: "Description de l'offre",
-			company: {
-				name: "Nom de l'entreprise",
-				description: "Entreprise leader de son domaine",
-				logo: "http://url.du.logo",
-				domain: "Domaine d'activité de l'entreprise",
-				website: "http://site.de.l.entreprise",
-			},
+			company: { ...defaultEmployeur, ...employeur },
 			contract: {
 				name: "Stage",
 				duration: {
@@ -27,13 +39,7 @@ export class OffreDeStageJobteaserFixtureBuilder {
 			languages: {
 				language: [{ name: "fr" }, { name: "en" }],
 			},
-			location: {
-				city: "Montpellier",
-				zipcode: "34",
-				department: "Hérault",
-				state: "Occitanie",
-				country: "France",
-			},
+			location: { ...defaultLocalisation, ...localisation },
 			reference: "Identifiant source",
 			start_date: "2022-06-01T00:00:00.000Z",
 		};

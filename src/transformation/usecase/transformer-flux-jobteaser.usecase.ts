@@ -63,7 +63,7 @@ export class TransformerFluxJobteaser implements Usecase {
 		return configurationFlux.nom
 			.concat(SEPARATEUR_DE_CHEMIN)
 			.concat(NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE)
-			.concat(configurationFlux.extensionFichierJson);
+			.concat(configurationFlux.extensionFichierTransforme);
 	}
 
 	private creerNomDuFichierAHistoriser(configurationFlux: Readonly<ConfigurationFlux>): string {
@@ -73,6 +73,6 @@ export class TransformerFluxJobteaser implements Usecase {
 			.concat(configurationFlux.dossierHistorisation)
 			.concat(SEPARATEUR_DE_CHEMIN)
 			.concat(this.dateService.maintenant().toISOString())
-			.concat(configurationFlux.extensionFichierJson);
+			.concat(configurationFlux.extensionFichierTransforme);
 	}
 }

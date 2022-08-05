@@ -11,6 +11,6 @@ export class EcritureFluxErreur extends Error {
 
 export class RecupererContenuErreur extends Error {
 	constructor() {
-		super("Une erreur de lecture est survenue lors de la récupération du contenu");
+		super("Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu");
 	}
 }

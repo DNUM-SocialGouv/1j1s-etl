@@ -11,7 +11,7 @@ const configuration = ConfigurationFactory.create();
 const gateways = GatewayContainerFactory.create(configuration);
 const usecases = UsecaseContainerFactory.create(gateways);
 const crons = CronContainerFactory.create(configuration, usecases);
-const { a: actionArg, f: flux } = YargsConfiguration.create();
+const { a: actionArg, f: flux } = YargsConfiguration.create(configuration);
 
 const action = crons[actionArg];
 

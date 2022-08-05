@@ -21,8 +21,8 @@ export class MinioStorageRepository implements StorageRepository {
 	}
 
 	async recupererContenu<T>(sourcefilePath: string): Promise<T> {
-		const fileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageRepository.LOCAL_FILE_PATH.concat(fileName);
+		const temporaryFileName = this.uuidClient.generate();
+		const localFileNameIncludingPath = MinioStorageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
 			await this.minioClient.fGetObject(
@@ -39,19 +39,19 @@ export class MinioStorageRepository implements StorageRepository {
 		}
 	}
 
-	async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
-		const fileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageRepository.LOCAL_FILE_PATH.concat(fileName);
+	async enregistrer(filePath: string, fileContent: string, sourceName: string): Promise<void> {
+		const temporaryFileName = this.uuidClient.generate();
+		const localFileNameIncludingPath = MinioStorageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);
 			await this.minioClient.fPutObject(
-				this.configuration.MINIO_JSON_BUCKET_NAME,
+				this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
 				filePath,
 				localFileNameIncludingPath
 			);
 		} catch (e) {
-			throw new EcritureFluxErreur(fluxName);
+			throw new EcritureFluxErreur(sourceName);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
 		}

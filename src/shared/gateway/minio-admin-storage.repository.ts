@@ -10,7 +10,7 @@ export class MinioAdminStorageRepository {
 
 	async createBucket(bucketName: string): Promise<void> {
 		if (!(await this.bucketExists(bucketName))) {
-			await this.minioClient.makeBucket(bucketName, MinioAdminStorageRepository.REGION);
+			return this.minioClient.makeBucket(bucketName, MinioAdminStorageRepository.REGION);
 		}
 	}
 

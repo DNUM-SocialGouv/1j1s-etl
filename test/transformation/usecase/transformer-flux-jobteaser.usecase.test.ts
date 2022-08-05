@@ -61,7 +61,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -75,6 +75,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				storageClient.recupererContenu.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -148,7 +149,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -162,6 +163,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				storageClient.recupererContenu.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -234,7 +236,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -248,6 +250,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -324,7 +327,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -338,6 +341,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -415,7 +419,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -429,6 +433,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -507,7 +512,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -521,6 +526,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -599,7 +605,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
-					extensionFichierJson: ".json",
+					extensionFichierTransforme: ".json",
 				};
 
 				dateService = stubClass(DateService);
@@ -613,6 +619,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
+				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
