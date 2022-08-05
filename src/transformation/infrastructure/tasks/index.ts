@@ -17,7 +17,5 @@ const action = tasks[actionArg];
 
 if (action) {
 	const task = action[flux];
-	if (task) {
-		task.run();
-	}
+	task.run();
 }
