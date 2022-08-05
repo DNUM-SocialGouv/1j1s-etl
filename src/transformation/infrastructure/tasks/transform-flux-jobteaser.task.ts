@@ -15,7 +15,7 @@ export class TransformFluxJobteaserTask implements Task {
 	async run(): Promise<void> {
 		const configurationFlux: ConfigurationFlux = {
 			nom: this.configuration.JOBTEASER.NAME,
-			extensionFichierJson: this.configuration.JOBTEASER.JSON_FILE_EXTENSION,
+			extensionFichierTransforme: this.configuration.JOBTEASER.TRANSFORMED_FILE_EXTENSION,
 			extensionFichierBrut: this.configuration.JOBTEASER.RAW_FILE_EXTENSION,
 			dossierHistorisation: this.configuration.MINIO_HISTORY_DIRECTORY_NAME,
 		};
