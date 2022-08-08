@@ -3,7 +3,7 @@ import "module-alias/register";
 
 import { ConfigurationFactory } from "@configuration/configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
-import { TaskContainerFactory } from "@transformation/configuration/crons.container";
+import { TaskContainerFactory } from "@transformation/configuration/tasks.container";
 import { UsecaseContainerFactory } from "@transformation/configuration/usecases.container";
 import { YargsConfiguration } from "@transformation/configuration/yargs.configuration";
 

@@ -12,7 +12,7 @@ export namespace UnJeune1Solution {
 		sourceUpdatedAt: string
 		sourcePublishedAt: string
 		identifiantSource?: string
-		domaines?: Array<Domaine>
+		domaines?: Array<{ nom: Domaine }>
 		dureeEnJour?: number
 		dureeEnJourMax?: number
 		localisation?: Localisation

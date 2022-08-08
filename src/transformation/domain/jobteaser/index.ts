@@ -112,7 +112,7 @@ export namespace Jobteaser {
 				employeur: this.extraireEmployeur(offreDeStage.company),
 				localisation: {
 					ville: offreDeStage.location.city,
-					codePostal: offreDeStage.location.zipcode,
+					codePostal: String(offreDeStage.location.zipcode),
 					departement: offreDeStage.location.department,
 					region: offreDeStage.location.state,
 					pays: this.pays.versFormatISOAlpha2(offreDeStage.location.country),
@@ -146,12 +146,12 @@ export namespace Jobteaser {
 			return traductionDomaine || UnJeune1Solution.Domaine.NON_APPLICABLE;
 		}
 
-		private traduireLesDomainesVers1Jeune1Solution(offreDeStage: OffreDeStage): Array<UnJeune1Solution.Domaine> {
+		private traduireLesDomainesVers1Jeune1Solution(offreDeStage: OffreDeStage): Array<{ nom: UnJeune1Solution.Domaine }> {
 			return Array.isArray(offreDeStage.domains.domain)
 				? offreDeStage.domains.domain.map((domaine) => {
-					return this.traduireDomaine(domaine.trim() as Domaine);
+					return { nom: this.traduireDomaine(domaine.trim() as Domaine) };
 				})
-				: [this.traduireDomaine(offreDeStage.domains.domain.trim() as Domaine)];
+				: [{ nom: this.traduireDomaine(offreDeStage.domains.domain.trim() as Domaine) }];
 		}
 
 		private traduireLaDureeEnJours(duree?: Duree): number | undefined {

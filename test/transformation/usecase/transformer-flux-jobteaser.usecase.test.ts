@@ -42,7 +42,7 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE],
+					domaines: [{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE }],
 					teletravailPossible: false,
 					dureeEnJour: 180,
 					localisation: {
@@ -130,7 +130,10 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE, UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS],
+					domaines: [
+						{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE },
+						{ nom: UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS },
+					],
 					teletravailPossible: false,
 					dureeEnJour: 180,
 					localisation: {
@@ -217,7 +220,10 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE, UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS],
+					domaines: [
+						{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE },
+						{ nom: UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS },
+					],
 					teletravailPossible: false,
 					dureeEnJour: 180,
 					localisation: {
@@ -308,7 +314,10 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE, UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS],
+					domaines: [
+						{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE },
+						{ nom: UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS },
+					],
 					teletravailPossible: false,
 					localisation: {
 						ville: "Montpellier",
@@ -399,7 +408,10 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE, UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS],
+					domaines: [
+						{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE },
+						{ nom: UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS },
+					],
 					teletravailPossible: false,
 					localisation: {
 						ville: "Montpellier",
@@ -492,7 +504,7 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.NON_APPLICABLE],
+					domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
 					teletravailPossible: false,
 					localisation: {
 						ville: "Montpellier",
@@ -585,7 +597,7 @@ describe("TransformerFluxJobteaserTest", () => {
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
-					domaines: [UnJeune1Solution.Domaine.NON_APPLICABLE],
+					domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
 					teletravailPossible: false,
 					localisation: {
 						ville: "Montpellier",

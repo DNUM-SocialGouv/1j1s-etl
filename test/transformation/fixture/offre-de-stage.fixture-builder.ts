@@ -24,7 +24,7 @@ export class OffreDeStageFixtureBuilder {
 			description: "Description de l'offre",
 			dureeEnJour: 90,
 			dureeEnJourMax: 180,
-			domaines: [UnJeune1Solution.Domaine.NON_APPLICABLE],
+			domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
 			identifiantSource: "Identifiant source",
 			remunerationBase: 900,
 			sourceCreatedAt: "2022-01-01T00:00:00.000Z",

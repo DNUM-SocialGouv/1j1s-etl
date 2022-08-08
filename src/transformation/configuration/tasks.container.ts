@@ -1,15 +1,15 @@
 import { Configuration } from "@configuration/configuration";
-import { Task } from "@transformation/infrastructure/tasks/task";
 import { LoggerFactory } from "@transformation/configuration/logger";
+import { Task } from "@transformation/infrastructure/tasks/task";
 import { TransformFluxJobteaserTask } from "@transformation/infrastructure/tasks/transform-flux-jobteaser.task";
 import { UsecaseContainer } from "@transformation/usecase";
 
-export type CronContainer = {
+export type TaskContainer = {
 	[transform: string]: { [key: string]: Task }
 }
 
 export class TaskContainerFactory {
-	static create(configuration: Configuration, usecases: UsecaseContainer): CronContainer {
+	static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		const jobteaserLogger = LoggerFactory.create(configuration.JOBTEASER);
 
 		return {
