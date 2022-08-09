@@ -5,7 +5,7 @@ import { UsecaseContainer } from "@chargement/usecase";
 export class UsecaseContainerFactory {
 	static create(gateways: GatewayContainer): UsecaseContainer {
 		return {
-			chargerFluxJobteaser: new ChargerFluxJobteaser(),
+			chargerFluxJobteaser: new ChargerFluxJobteaser(gateways.offreDeStageRepository),
 		};
 	}
 }
