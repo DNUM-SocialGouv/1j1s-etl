@@ -1,6 +1,6 @@
 import { Configuration } from "@configuration/configuration";
-import { LoggerFactory } from "@shared/logger";
-import { Task } from "@transformation/infrastructure/tasks/task";
+import { LoggerFactory } from "@shared/logger.factory";
+import { Task } from "@shared/gateway/task";
 import { TransformFluxJobteaserTask } from "@transformation/infrastructure/tasks/transform-flux-jobteaser.task";
 import { UsecaseContainer } from "@transformation/usecase";
 

@@ -1,19 +1,21 @@
-import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
+import {
+	ChargerOffresDeStageDomainService,
+} from "@chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
 import { Usecase } from "@shared/usecase";
 
 export class ChargerFluxJobteaser implements Usecase {
-	constructor(private readonly offreDeStageRepository: UnJeune1Solution.OffreDeStageRepository) {
+	static NOM_DU_FLUX = "jobteaser";
+	static EXTENSION_DU_FICHIER_DE_RESULTAT = ".json";
+
+	constructor(
+		private readonly chargerOffresDeStages: ChargerOffresDeStageDomainService
+	) {
 	}
 
-	async executer(nomDuFlux: string): Promise<void> {
-		const offresDeStages = await this.offreDeStageRepository.recuperer(nomDuFlux);
-
-		const offresDeStagesAvecEmployeur = this.filtrerLesOffresDeStagesSansEmployeur(offresDeStages);
-
-		return this.offreDeStageRepository.charger(offresDeStagesAvecEmployeur);
-	}
-
-	private filtrerLesOffresDeStagesSansEmployeur(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Array<UnJeune1Solution.OffreDeStage> {
-		return offresDeStages.filter((offreDeStage) => offreDeStage.employeur);
+	async executer(): Promise<void> {
+		await this.chargerOffresDeStages.charger(
+			ChargerFluxJobteaser.NOM_DU_FLUX,
+			ChargerFluxJobteaser.EXTENSION_DU_FICHIER_DE_RESULTAT
+		);
 	}
 }

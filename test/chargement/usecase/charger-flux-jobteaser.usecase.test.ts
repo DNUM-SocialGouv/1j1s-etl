@@ -1,42 +1,30 @@
-import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
+import { expect, StubbedClass, stubClass } from "@test/configuration";
+import {
+	ChargerOffresDeStageDomainService,
+} from "@chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
 import { ChargerFluxJobteaser } from "@chargement/usecase/charger-flux-jobteaser.usecase";
-import { expect } from "@test/configuration";
-import { OffreDeStageFixtureBuilder } from "@test/chargement/fixture/offre-de-stage.fixture-builder";
-import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
+let extension: string;
 let nomDuFlux: string;
-let offresDeStages: Array<UnJeune1Solution.OffreDeStage>;
 
-let offreDeStageRepository: StubbedType<UnJeune1Solution.OffreDeStageRepository>;
+let domainService: StubbedClass<ChargerOffresDeStageDomainService>;
 let usecase: ChargerFluxJobteaser;
 
-describe("ChargerFluxJobteaserUsecaseTest", () => {
-	context("Lorsque je charge le flux issue de Jobteaser", () => {
+describe("ChargerFluxJobteaserTest", () => {
+	context("Lorsque je charge le flux Jobteaser", () => {
 		beforeEach(() => {
 			nomDuFlux = "jobteaser";
-			offresDeStages = [
-				OffreDeStageFixtureBuilder.build(),
-				OffreDeStageFixtureBuilder.build({
-					employeur: undefined,
-				}),
-			];
+			extension = ".json";
 
-			offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-			usecase = new ChargerFluxJobteaser(offreDeStageRepository);
-
-			offreDeStageRepository.recuperer.resolves(offresDeStages);
+			domainService = stubClass(ChargerOffresDeStageDomainService);
+			usecase = new ChargerFluxJobteaser(domainService);
 		});
 
-		it("Je charge les offres de stage dont on connaît l'employeur", async () => {
-			await usecase.executer(nomDuFlux);
+		it("Je charge ce dernier", async () => {
+			await usecase.executer();
 
-			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-			expect(offreDeStageRepository.recuperer).to.have.been.calledWith(nomDuFlux);
-
-			expect(offreDeStageRepository.charger).to.have.been.calledOnce;
-			expect(offreDeStageRepository.charger).to.have.been.calledWith([offresDeStages[0]]);
+			expect(domainService.charger).to.have.been.calledOnce;
+			expect(domainService.charger).to.have.been.calledWith(nomDuFlux, extension);
 		});
 	});
 });

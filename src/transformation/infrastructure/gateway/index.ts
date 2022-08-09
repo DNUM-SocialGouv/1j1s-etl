@@ -4,8 +4,8 @@ import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-text
 import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
+import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { Pays } from "@shared/pays";
-import { OffreDeStageRepository } from "@transformation/domain/1jeune1solution/offre-de-stage.repository";
 
 export type GatewayContainer = {
 	country: Pays
