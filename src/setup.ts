@@ -18,6 +18,7 @@ export class Setup {
 		try {
 			await this.adminStorageClient.createBucket(this.configuration.MINIO_RAW_BUCKET_NAME);
 			await this.adminStorageClient.createBucket(this.configuration.MINIO_TRANSFORMED_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO_RESULT_BUCKET_NAME);
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 		} catch (e) {
 			this.logger.error({ reason: Setup.BUCKET_CREATION_FAILURE_MESSAGE });

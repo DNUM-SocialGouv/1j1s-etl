@@ -31,7 +31,33 @@ export class OffreDeStageFixtureBuilder {
 		},
 	};
 
+	static DEFAULT_ID = "Identifiant technique";
+
 	static buildOffreDeStage(offreDeStage?: Partial<UnJeune1Solution.AttributsDOffreDeStage>): UnJeune1Solution.OffreDeStage {
 		return new UnJeune1Solution.OffreDeStage({ ...OffreDeStageFixtureBuilder.DEFAULTS_ATTRIBUTS, ...offreDeStage });
+	}
+
+	static buildOffreDeStageAPublier(offreDeStage?: Partial<UnJeune1Solution.AttributsDOffreDeStage>): UnJeune1Solution.OffreDeStageAPublier {
+		return new UnJeune1Solution.OffreDeStageAPublier({ ...OffreDeStageFixtureBuilder.DEFAULTS_ATTRIBUTS, ...offreDeStage });
+	}
+
+	static buildOffreDeStageAMettreAJour(
+		offreDeStage?: Partial<UnJeune1Solution.AttributsDOffreDeStage>,
+		idTechnique?: string
+	): UnJeune1Solution.OffreDeStageAMettreAJour {
+		return new UnJeune1Solution.OffreDeStageAMettreAJour(
+			{ ...OffreDeStageFixtureBuilder.DEFAULTS_ATTRIBUTS, ...offreDeStage },
+			idTechnique || this.DEFAULT_ID
+		);
+	}
+
+	static buildOffreDeStageASupprimer(
+		offreDeStage?: Partial<UnJeune1Solution.AttributsDOffreDeStage>,
+		idTechnique?: string
+	): UnJeune1Solution.OffreDeStageASupprimer {
+		return new UnJeune1Solution.OffreDeStageASupprimer(
+			{ ...OffreDeStageFixtureBuilder.DEFAULTS_ATTRIBUTS, ...offreDeStage },
+			idTechnique || this.DEFAULT_ID
+		);
 	}
 }

@@ -18,10 +18,16 @@ export namespace UnJeune1Solution {
 		teletravailPossible?: boolean
 	}
 
-	export type OffreDeStageExistante = {
-		identifiantSource: string,
-		sourceUpdatedAt: Date,
-		id: string
+	export class OffreDeStageExistante {
+		public readonly id: string;
+		public readonly identifiantSource: string;
+		public readonly sourceUpdatedAt: Date;
+
+		constructor(id: string, identifiantSource: string, sourceUpdatedAt: string) {
+			this.id = id;
+			this.identifiantSource = identifiantSource;
+			this.sourceUpdatedAt = sourceUpdatedAt ? new Date(sourceUpdatedAt) : new Date("1971-01-01T:00:00:00.000Z");
+		}
 	}
 
 	export class OffreDeStage {

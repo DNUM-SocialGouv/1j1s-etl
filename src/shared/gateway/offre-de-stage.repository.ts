@@ -9,3 +9,9 @@ export class RecupererContenuErreur extends Error {
 		super("Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu");
 	}
 }
+
+export class RecupererOffresExistantesErreur extends Error {
+	constructor() {
+		super("Une erreur est survenue lors de la récupération des offres existantes");
+	}
+}

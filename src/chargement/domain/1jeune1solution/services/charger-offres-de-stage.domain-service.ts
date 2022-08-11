@@ -156,6 +156,6 @@ export class ChargerOffresDeStageDomainService {
 		extensionDuFichier: string,
 		type: string
 	): string {
-		return `/${nomDuFlux}/${nomDuFichier.toISOString()}_${type}${extensionDuFichier}`;
+		return `${nomDuFlux}/${nomDuFichier.toISOString()}_${type}${extensionDuFichier}`;
 	}
 }
