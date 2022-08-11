@@ -8,12 +8,13 @@ import { DateService } from "@shared/date.service";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
+import OffreDeStageExistante = UnJeune1Solution.OffreDeStageExistante;
 
 const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;
 let extensionDuFichierDeResultat: string;
 let offresDeStagesMisesAJour: Array<UnJeune1Solution.OffreDeStage>;
-let offresDeStagesExistantes: Array<{ identifiantSource: string, sourceUpdatedAt: Date, id: string }>;
+let offresDeStagesExistantes: Array<UnJeune1Solution.OffreDeStageExistante>;
 let offreDeStageAPublier: UnJeune1Solution.OffreDeStageAPublier;
 let offreDeStageAMettreAJour: UnJeune1Solution.OffreDeStageAMettreAJour;
 let offreDeStageASupprimer: UnJeune1Solution.OffreDeStageASupprimer;
@@ -149,7 +150,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 				expect(offreDeStageRepository.enregistrer).to.have.been.calledThrice;
 				expect(offreDeStageRepository.enregistrer.getCall(0).args).to.have.deep.members([
-					`/${nomDuFlux}/${maintenant}_created.json`,
+					`${nomDuFlux}/${maintenant}_created.json`,
 					JSON.stringify([offreDeStageAPublier], null, 2),
 					nomDuFlux,
 				]);
@@ -162,11 +163,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					sourceUpdatedAt: "2022-01-10T00:00:00.000Z",
 				})];
 
-				offresDeStagesExistantes = [{
-					id: "Identifiant technique",
-					identifiantSource: "Identifiant source",
-					sourceUpdatedAt: new Date("2022-01-01T00:00:00.000Z"),
-				}];
+				offresDeStagesExistantes = [new UnJeune1Solution.OffreDeStageExistante("Identifiant technique", "Identifiant source", "2022-01-01T00:00:00.000Z",)];
 
 				offreDeStageAMettreAJour = new UnJeune1Solution.OffreDeStageAMettreAJour(
 					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id
@@ -186,7 +183,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageAMettreAJour]);
 
 				expect(offreDeStageRepository.enregistrer.getCall(1).args).to.have.deep.members([
-					`/${nomDuFlux}/${maintenant}_updated.json`,
+					`${nomDuFlux}/${maintenant}_updated.json`,
 					JSON.stringify([offreDeStageAMettreAJour], null, 2),
 					nomDuFlux,
 				]);
@@ -199,11 +196,11 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					sourceUpdatedAt: "2022-01-10T00:00:00.000Z",
 				})];
 
-				offresDeStagesExistantes = [{
-					id: "Identifiant technique",
-					identifiantSource: "Identifiant source",
-					sourceUpdatedAt: new Date("2022-01-16T00:00:00.000Z"),
-				}];
+				offresDeStagesExistantes = [new UnJeune1Solution.OffreDeStageExistante(
+					"Identifiant technique",
+					"Identifiant source",
+					"2022-01-16T00:00:00.000Z",
+				)];
 
 				offreDeStageAMettreAJour = new UnJeune1Solution.OffreDeStageAMettreAJour(
 					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id
@@ -224,7 +221,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				expect(offreDeStageRepository.charger).to.have.been.calledWith([]);
 
 				expect(offreDeStageRepository.enregistrer.getCall(1).args).to.have.deep.members([
-					`/${nomDuFlux}/${maintenant}_updated.json`,
+					`${nomDuFlux}/${maintenant}_updated.json`,
 					JSON.stringify([], null, 2),
 					nomDuFlux,
 				]);
@@ -235,11 +232,11 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			beforeEach(() => {
 				offresDeStagesMisesAJour = [];
 
-				offresDeStagesExistantes = [{
-					id: "Identifiant technique",
-					identifiantSource: "Identifiant source",
-					sourceUpdatedAt: new Date("2022-01-01T00:00:00.000Z"),
-				}];
+				offresDeStagesExistantes = [new OffreDeStageExistante(
+					"Identifiant technique",
+					"Identifiant source",
+					"2022-01-01T00:00:00.000Z",
+				)];
 
 				offreDeStageASupprimer = new UnJeune1Solution.OffreDeStageASupprimer({
 					identifiantSource: "Identifiant source",
@@ -260,7 +257,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageASupprimer]);
 
 				expect(offreDeStageRepository.enregistrer.getCall(2).args).to.have.deep.members([
-					`/${nomDuFlux}/${maintenant}_deleted.json`,
+					`${nomDuFlux}/${maintenant}_deleted.json`,
 					JSON.stringify([offreDeStageASupprimer], null, 2),
 					nomDuFlux,
 				]);
@@ -278,15 +275,15 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					}),
 				];
 
-				offresDeStagesExistantes = [{
-					id: "Identifiant technique 1",
-					identifiantSource: "Identifiant à mettre à jour",
-					sourceUpdatedAt: new Date("2022-01-01T00:00:00.000Z"),
-				}, {
-					id: "Identifiant technique 2",
-					identifiantSource: "Identifiant à supprimer",
-					sourceUpdatedAt: new Date("2022-01-01T00:00:00.000Z"),
-				}];
+				offresDeStagesExistantes = [new UnJeune1Solution.OffreDeStageExistante(
+					"Identifiant technique 1",
+					"Identifiant à mettre à jour",
+					"2022-01-01T00:00:00.000Z",
+				), new UnJeune1Solution.OffreDeStageExistante(
+					"Identifiant technique 2",
+					"Identifiant à supprimer",
+					"2022-01-01T00:00:00.000Z",
+				)];
 
 				offreDeStageAPublier = new UnJeune1Solution.OffreDeStageAPublier(
 					offresDeStagesMisesAJour[1].recupererAttributs()

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.prod.json",
+    "cli:load": "node --max-old-space-size=512 ./build/src/chargement/infrastructure/tasks",
     "cli:transformation": "node --max-old-space-size=512 ./build/src/transformation/infrastructure/tasks",
     "coverage": "nyc mocha",
     "lint": "eslint src test",
