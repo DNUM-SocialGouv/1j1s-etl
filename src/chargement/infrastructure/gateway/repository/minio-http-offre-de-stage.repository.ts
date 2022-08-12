@@ -26,8 +26,21 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 	) {
 	}
 
-	async charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<void> {
+	async charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
+		const offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur> = [];
+
 		for (const offreDeStage of offresDeStages) {
+			await this.chargerOffreDeStageSelonType(offreDeStage, offresDeStageEnErreur);
+		}
+
+		return offresDeStageEnErreur;
+	}
+
+	private async chargerOffreDeStageSelonType(
+		offreDeStage: UnJeune1Solution.OffreDeStage,
+		offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur>
+	): Promise<void> {
+		try {
 			if (offreDeStage instanceof UnJeune1Solution.OffreDeStageAPublier) {
 				await this.httpClient.post(offreDeStage);
 			} else if (offreDeStage instanceof UnJeune1Solution.OffreDeStageASupprimer) {
@@ -36,7 +49,17 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 				await this.httpClient.put(offreDeStage);
 			} else {
 				this.logger.error(`L'offre de stage avec l'identifiant ${offreDeStage.identifiantSource || "undefined"} n'a pas pu être catégorisée`);
+				offresDeStageEnErreur.push({
+					contenuDeLOffre: offreDeStage,
+					motif: `L'offre de stage avec l'identifiant ${offreDeStage.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
+				});
 			}
+		} catch (e) {
+			this.logger.error(e);
+			offresDeStageEnErreur.push({
+				contenuDeLOffre: offreDeStage,
+				motif: (<Error>e).stack,
+			});
 		}
 	}
 

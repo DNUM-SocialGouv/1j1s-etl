@@ -7,6 +7,7 @@ export class ChargerOffresDeStageDomainService {
 	static readonly CREATED = "created";
 	static readonly UPDATED = "updated";
 	static readonly DELETED = "deleted";
+	static readonly ERROR = "error";
 
 	constructor(
 		private readonly offreDeStageRepository: UnJeune1Solution.OffreDeStageRepository,
@@ -26,7 +27,7 @@ export class ChargerOffresDeStageDomainService {
 		const offresDeStageAPublier = this.extaireLesOffresAPublier(offresDeStageAvecEmployeur, identifiantsSourceDesOffresExistantes);
 		const offresDeStageASupprimer = this.extaireLesOffresASupprimer(offresDeStageExistantes, this.extaireLesIdentifiantsDeLaMiseAJourDesOffres(offresDeStageMisesAJour));
 
-		await this.offreDeStageRepository.charger([
+		const offresDeStageEnErreur = await this.offreDeStageRepository.charger([
 			...offresDeStageAMettreAJour,
 			...offresDeStageAPublier,
 			...offresDeStageASupprimer,
@@ -37,7 +38,8 @@ export class ChargerOffresDeStageDomainService {
 			extensionDuFichierDeResultat,
 			offresDeStageAPublier,
 			offresDeStageAMettreAJour,
-			offresDeStageASupprimer
+			offresDeStageASupprimer,
+			offresDeStageEnErreur
 		);
 	}
 
@@ -46,9 +48,10 @@ export class ChargerOffresDeStageDomainService {
 		extensionDuFichierDeResultat: string,
 		offresDeStageAPublier: Array<UnJeune1Solution.OffreDeStageAPublier>,
 		offresDeStageAMettreAJour: Array<UnJeune1Solution.OffreDeStageAMettreAJour>,
-		offresDeStageASupprimer: Array<UnJeune1Solution.OffreDeStageASupprimer>
+		offresDeStageASupprimer: Array<UnJeune1Solution.OffreDeStageASupprimer>,
+		offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur>
 	): Promise<void> {
-		const { CREATED, UPDATED, DELETED } = ChargerOffresDeStageDomainService;
+		const { CREATED, UPDATED, DELETED, ERROR } = ChargerOffresDeStageDomainService;
 		const parametresDesFichiersDeResultat = {
 			nomDuFlux,
 			nomDuFichier: this.dateService.maintenant(),
@@ -58,6 +61,7 @@ export class ChargerOffresDeStageDomainService {
 		await this.enregistrerLeResultat(CREATED, offresDeStageAPublier, parametresDesFichiersDeResultat);
 		await this.enregistrerLeResultat(UPDATED, offresDeStageAMettreAJour, parametresDesFichiersDeResultat);
 		await this.enregistrerLeResultat(DELETED, offresDeStageASupprimer, parametresDesFichiersDeResultat);
+		await this.enregistrerLeResultat(ERROR, offresDeStageEnErreur, parametresDesFichiersDeResultat);
 	}
 
 	private extaireLesOffresASupprimer(
@@ -132,7 +136,7 @@ export class ChargerOffresDeStageDomainService {
 
 	private async enregistrerLeResultat(
 		typeDeResultat: string,
-		offresDeStage: Array<UnJeune1Solution.OffreDeStageAPublier>,
+		offresDeStage: Array<UnJeune1Solution.OffreDeStage> | Array<UnJeune1Solution.OffreDeStageEnErreur>,
 		parametres: { nomDuFlux: string, nomDuFichier: Date, extensionDuFichier: string },
 	): Promise<void> {
 		const contenu = this.versJSONLisible(offresDeStage);
@@ -145,7 +149,7 @@ export class ChargerOffresDeStageDomainService {
 		await this.offreDeStageRepository.enregistrer(nomDuFichierDeResultat, contenu, parametres.nomDuFlux);
 	}
 
-	private versJSONLisible(offresDeStage: Array<UnJeune1Solution.OffreDeStage>): string {
+	private versJSONLisible(offresDeStage: Array<UnJeune1Solution.OffreDeStage> | Array<UnJeune1Solution.OffreDeStageEnErreur>): string {
 		const { INDENTATION_JSON, REMPLACANT_JSON } = ChargerOffresDeStageDomainService;
 		return JSON.stringify(offresDeStage, REMPLACANT_JSON, INDENTATION_JSON);
 	}
