@@ -1,6 +1,6 @@
 import { ChargerFluxJobteaser } from "@chargement/usecase/charger-flux-jobteaser.usecase";
 import {
-	ChargerOffresDeStageDomainService
+	ChargerOffresDeStageDomainService,
 } from "@chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@chargement/infrastructure/gateway";

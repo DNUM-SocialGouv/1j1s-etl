@@ -18,6 +18,10 @@ import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localfileNameIncludingPath = `./tmp/${uuid}`;
 
+const erreurDePublication = new Error("Oops something went wrong");
+const erreurDeMiseAJour = new Error("Oops something went wrong");
+const erreurDeSuppression = new Error("Oops something went wrong");
+
 let nomDuFlux: string;
 let offresMisesAJourAttendues: Array<UnJeune1Solution.OffreDeStage>;
 let offresExistantesAttendues: Array<UnJeune1Solution.OffreDeStageExistante>;
@@ -25,6 +29,7 @@ let offreDeStageAPublier: UnJeune1Solution.OffreDeStageAPublier;
 let offreDeStageASupprimer: UnJeune1Solution.OffreDeStageASupprimer;
 let offreDeStageAMettreAJour: UnJeune1Solution.OffreDeStageAMettreAJour;
 let offreDeStageNonCategorisable: UnJeune1Solution.OffreDeStage;
+let offresDeStagePourException: Array<UnJeune1Solution.OffreDeStage>;
 
 let configuration: StubbedType<Configuration>;
 let minioClient: StubbedClass<Client>;
@@ -181,6 +186,63 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			httpClient.post.withArgs(offreDeStageAPublier).resolves();
 		});
 
+		context("qui tombent en erreur", () => {
+			beforeEach(() => {
+				offresDeStagePourException = MinioHttpOffreDeStageRepositoryTest.initialiserOffresDeStagePourException();
+
+				MinioHttpOffreDeStageRepositoryTest.initialiserLeRejetSurLesAppelsHttp();
+			});
+
+			it("je retourne les offres que je n'ai pas pu charger", async () => {
+				const resultat = await minioHttpOffreDeStageRepository.charger([...offresDeStagePourException]);
+
+				expect(resultat).to.have.deep.members([
+					{
+						contenuDeLOffre: OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
+							identifiantSource: "Un premier identifiant source",
+						}),
+						motif: erreurDePublication.stack,
+					},
+					{
+						contenuDeLOffre: OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
+							identifiantSource: "Un troisième identifiant source",
+						}, "Un premier identifiant technique"),
+						motif: erreurDeMiseAJour.stack,
+					},
+					{
+						contenuDeLOffre: OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({
+							identifiantSource: "Un cinquième identifiant source",
+						}, "Un troisième identifiant technique"),
+						motif: erreurDeSuppression.stack,
+					},
+				]);
+
+				expect(httpClient.post).to.have.been.calledTwice;
+				expect(httpClient.post.getCall(0).args).to.have.deep.members([OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
+					identifiantSource: "Un premier identifiant source",
+				})]);
+				expect(httpClient.post.getCall(1).args).to.have.deep.members([OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
+					identifiantSource: "Un second identifiant source",
+				})]);
+
+				expect(httpClient.delete).to.have.been.calledTwice;
+				expect(httpClient.delete.getCall(0).args).to.have.deep.members([OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({
+					identifiantSource: "Un cinquième identifiant source",
+				}, "Un troisième identifiant technique")]);
+				expect(httpClient.delete.getCall(1).args).to.have.deep.members([OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({
+					identifiantSource: "Un sixième identifiant source",
+				}, "Un quatrième identifiant technique")]);
+
+				expect(httpClient.put).to.have.been.calledTwice;
+				expect(httpClient.put.getCall(0).args).to.have.deep.members([OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
+					identifiantSource: "Un troisième identifiant source",
+				}, "Un premier identifiant technique")]);
+				expect(httpClient.put.getCall(1).args).to.have.deep.members([OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
+					identifiantSource: "Un quatrième identifiant source",
+				}, "Un second identifiant technique")]);
+			});
+		});
+
 		context("qui sont de nouvelles offres de stage", () => {
 			beforeEach(() => {
 				offreDeStageAPublier = OffreDeStageFixtureBuilder.buildOffreDeStageAPublier();
@@ -257,3 +319,48 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		});
 	});
 });
+
+class MinioHttpOffreDeStageRepositoryTest {
+	static initialiserLeRejetSurLesAppelsHttp(): void {
+		httpClient.post.withArgs(
+			OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
+				identifiantSource: "Un premier identifiant source",
+			})
+		).rejects(erreurDePublication);
+
+		httpClient.put.withArgs(
+			OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
+				identifiantSource: "Un troisième identifiant source",
+			}, "Un premier identifiant technique")
+		).rejects(erreurDeMiseAJour);
+
+		httpClient.delete.withArgs(
+			OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({
+				identifiantSource: "Un cinquième identifiant source",
+			}, "Un troisième identifiant technique"),
+		).rejects(erreurDeSuppression);
+	}
+
+	static initialiserOffresDeStagePourException(): Array<UnJeune1Solution.OffreDeStage> {
+		return [
+			OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
+				identifiantSource: "Un premier identifiant source",
+			}),
+			OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
+				identifiantSource: "Un second identifiant source",
+			}),
+			OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
+				identifiantSource: "Un troisième identifiant source",
+			}, "Un premier identifiant technique"),
+			OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
+				identifiantSource: "Un quatrième identifiant source",
+			}, "Un second identifiant technique"),
+			OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({
+				identifiantSource: "Un cinquième identifiant source",
+			}, "Un troisième identifiant technique"),
+			OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({
+				identifiantSource: "Un sixième identifiant source",
+			}, "Un quatrième identifiant technique"),
+		];
+	}
+}

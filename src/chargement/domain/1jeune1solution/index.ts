@@ -18,6 +18,11 @@ export namespace UnJeune1Solution {
 		teletravailPossible?: boolean
 	}
 
+	export type OffreDeStageEnErreur = {
+		contenuDeLOffre: OffreDeStage,
+		motif?: string
+	}
+
 	export class OffreDeStageExistante {
 		public readonly id: string;
 		public readonly identifiantSource: string;
@@ -115,7 +120,7 @@ export namespace UnJeune1Solution {
 
 
 	export interface OffreDeStageRepository {
-		charger(offresDeStages: Array<OffreDeStage>): Promise<void>;
+		charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>>;
 		recupererMisesAJourDesOffres(nomDuFlux: string): Promise<Array<OffreDeStage>>;
 		recupererOffresExistantes(nomDuFlux: string): Promise<Array<{ identifiantSource: string, sourceUpdatedAt: Date, id: string }>>;
 		enregistrer(cheminDuFichier: string, contenu: string, nomDuFlux: string): Promise<void>;

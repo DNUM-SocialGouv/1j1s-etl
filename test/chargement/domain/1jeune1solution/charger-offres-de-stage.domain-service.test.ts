@@ -8,7 +8,6 @@ import { DateService } from "@shared/date.service";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import OffreDeStageExistante = UnJeune1Solution.OffreDeStageExistante;
 
 const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;
@@ -18,6 +17,7 @@ let offresDeStagesExistantes: Array<UnJeune1Solution.OffreDeStageExistante>;
 let offreDeStageAPublier: UnJeune1Solution.OffreDeStageAPublier;
 let offreDeStageAMettreAJour: UnJeune1Solution.OffreDeStageAMettreAJour;
 let offreDeStageASupprimer: UnJeune1Solution.OffreDeStageASupprimer;
+let offreDeStageEnErreur: UnJeune1Solution.OffreDeStageEnErreur;
 
 let dateService: StubbedClass<DateService>;
 let offreDeStageRepository: StubbedType<UnJeune1Solution.OffreDeStageRepository>;
@@ -30,6 +30,9 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 		dateService = stubClass(DateService);
 		dateService.maintenant.returns(new Date(maintenant));
+
+		offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
+		domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
 	});
 
 	context("Lorsque je charge le flux dont on me donne le nom", () => {
@@ -73,9 +76,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				});
 
 				offresDeStagesExistantes = [];
-
-				offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-				domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
 
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
@@ -131,9 +131,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 				offresDeStagesExistantes = [];
 
-				offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-				domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
-
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
@@ -148,7 +145,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			it("J'enregistre le résultat", async () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
-				expect(offreDeStageRepository.enregistrer).to.have.been.calledThrice;
 				expect(offreDeStageRepository.enregistrer.getCall(0).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_created.json`,
 					JSON.stringify([offreDeStageAPublier], null, 2),
@@ -169,9 +165,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id
 				);
 
-				offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-				domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
-
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
@@ -181,6 +174,10 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageAMettreAJour]);
+			});
+
+			it("J'enregistre le résultat", async () => {
+				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
 				expect(offreDeStageRepository.enregistrer.getCall(1).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_updated.json`,
@@ -206,9 +203,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id
 				);
 
-				offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-				domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
-
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
@@ -232,7 +226,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			beforeEach(() => {
 				offresDeStagesMisesAJour = [];
 
-				offresDeStagesExistantes = [new OffreDeStageExistante(
+				offresDeStagesExistantes = [new UnJeune1Solution.OffreDeStageExistante(
 					"Identifiant technique",
 					"Identifiant source",
 					"2022-01-01T00:00:00.000Z",
@@ -243,9 +237,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					sourceUpdatedAt: "2022-01-01T00:00:00.000Z",
 				}, "Identifiant technique");
 
-				offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-				domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
-
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
@@ -255,6 +246,10 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageASupprimer]);
+			});
+
+			it("J'enregistre le résultat", async () => {
+				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
 				expect(offreDeStageRepository.enregistrer.getCall(2).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_deleted.json`,
@@ -299,17 +294,43 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					"Identifiant technique 1"
 				);
 
-				offreDeStageRepository = stubInterface<UnJeune1Solution.OffreDeStageRepository>(sinon);
-				domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
-
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
 
-			it("Enregistre les résultats de création, mises à jour et suppression des offres", async () => {
+			it("Enregistre les résultats de création, mises à jour, suppression des offres et des offres en erreur", async () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
-				expect(offreDeStageRepository.enregistrer).to.have.been.calledThrice;
+				expect(offreDeStageRepository.enregistrer.callCount).to.eql(4);
+			});
+		});
+
+		context("Lorsqu'il y a des offres de stages qui n'ont pas réussi à être chargées", () => {
+			beforeEach(() => {
+				offresDeStagesMisesAJour = [OffreDeStageFixtureBuilder.buildOffreDeStage()];
+				offreDeStageAPublier = OffreDeStageFixtureBuilder.buildOffreDeStageAPublier();
+
+				offreDeStageEnErreur = {
+					contenuDeLOffre: offreDeStageAPublier,
+					motif: "C'est pô juste",
+				};
+
+				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
+				offreDeStageRepository.recupererOffresExistantes.resolves([]);
+
+				offreDeStageRepository.charger
+					.withArgs([offreDeStageAPublier])
+					.resolves([offreDeStageEnErreur]);
+			});
+
+			it("J'enregistre le résultat des offres en erreur", async () => {
+				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+
+				expect(offreDeStageRepository.enregistrer.getCall(3).args).to.have.deep.members([
+					`${nomDuFlux}/${maintenant}_error.json`,
+					JSON.stringify([offreDeStageEnErreur], null, 2),
+					nomDuFlux,
+				]);
 			});
 		});
 	});
