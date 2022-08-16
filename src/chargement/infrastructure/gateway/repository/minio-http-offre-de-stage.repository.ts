@@ -58,7 +58,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 			this.logger.error(e);
 			offresDeStageEnErreur.push({
 				contenuDeLOffre: offreDeStage,
-				motif: (<Error>e).stack,
+				motif: (<Error>e).stack || (<Error>e).message,
 			});
 		}
 	}
