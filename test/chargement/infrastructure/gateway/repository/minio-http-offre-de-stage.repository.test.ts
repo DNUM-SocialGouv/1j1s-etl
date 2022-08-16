@@ -4,6 +4,11 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Configuration } from "@configuration/configuration";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
+import {
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+	RecupererOffresExistantesErreur,
+} from "@shared/gateway/offre-de-stage.repository";
 import { FileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
 import { HttpClient, OffreDeStageHttp } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
@@ -11,18 +16,19 @@ import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/chargement/fixture/offre-de-stage.fixture-builder";
-import { RecupererContenuErreur, RecupererOffresExistantesErreur } from "@shared/gateway/offre-de-stage.repository";
-import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
+import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
-const localfileNameIncludingPath = `./tmp/${uuid}`;
+const localFileNameIncludingPath = `./tmp/${uuid}`;
+const filePathForMinio = "source/nom-du-fichier";
 
 const erreurDePublication = new Error("Oops something went wrong");
 const erreurDeMiseAJour = new Error("Oops something went wrong");
 const erreurDeSuppression = new Error("Oops something went wrong");
 
 let nomDuFlux: string;
+let contenu: string;
 let offresMisesAJourAttendues: Array<UnJeune1Solution.OffreDeStage>;
 let offresExistantesAttendues: Array<UnJeune1Solution.OffreDeStageExistante>;
 let offreDeStageAPublier: UnJeune1Solution.OffreDeStageAPublier;
@@ -46,6 +52,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO_TRANSFORMED_BUCKET_NAME = "json";
 		configuration.MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
+		configuration.MINIO_RESULT_BUCKET_NAME = "result";
 
 		minioClient = stubClass(Client);
 
@@ -93,14 +100,14 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			expect(minioClient.fGetObject).to.have.been.calledWith(
 				"json",
 				`${nomDuFlux}/latest.json`,
-				localfileNameIncludingPath
+				localFileNameIncludingPath
 			);
 
 			expect(fileSystemClient.read).to.have.been.calledOnce;
-			expect(fileSystemClient.read).to.have.been.calledWith(localfileNameIncludingPath);
+			expect(fileSystemClient.read).to.have.been.calledWith(localFileNameIncludingPath);
 
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
-			expect(fileSystemClient.delete).to.have.been.calledWith(localfileNameIncludingPath);
+			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
 		});
 	});
 
@@ -310,12 +317,86 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 				offreDeStageNonCategorisable = OffreDeStageFixtureBuilder.buildOffreDeStage();
 			});
 
-			it("je log une erreur", async () => {
-				await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
+			it("j'ajoute l'offre de stage dans les offres en erreur", async () => {
+				const resultat = await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
 
 				expect(logger.error).to.have.been.calledOnce;
-				expect(logger.error).to.have.been.calledWith(`L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`);
+				expect(logger.error).to.have.been.calledWith(
+					`L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`
+				);
+
+				expect(resultat).to.have.deep.members([{
+					contenuDeLOffre: OffreDeStageFixtureBuilder.buildOffreDeStage(),
+					motif: `L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
+				}]);
 			});
+
+			context("et qui n'a pas d'identifiant source", () => {
+				beforeEach(() => {
+					offreDeStageNonCategorisable = OffreDeStageFixtureBuilder.buildOffreDeStage({ identifiantSource: undefined });
+				});
+
+				it("j'ajoute l'offre de stage dans les offres en erreur", async () => {
+					const resultat = await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
+
+					expect(logger.error).to.have.been.calledOnce;
+					expect(logger.error).to.have.been.calledWith(
+						"L'offre de stage avec l'identifiant undefined n'a pas pu être catégorisée"
+					);
+
+					expect(resultat).to.have.deep.members([{
+						contenuDeLOffre: OffreDeStageFixtureBuilder.buildOffreDeStage({ identifiantSource: undefined }),
+						motif: "L'offre de stage avec l'identifiant undefined n'a pas pu être catégorisée",
+					}]);
+				});
+			});
+		});
+	});
+
+	context("Lorsque j'écris le contenu d'un fichier qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
+		it("j'écris le contenu d'un fichier", async () => {
+			await minioHttpOffreDeStageRepository.enregistrer(filePathForMinio, contenu, nomDuFlux);
+
+			expect(uuidGenerator.generate).to.have.been.calledOnce;
+			expect(fileSystemClient.write).to.have.been.calledOnce;
+			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, contenu);
+			expect(minioClient.fPutObject).to.have.been.calledOnce;
+			expect(minioClient.fPutObject).to.have.been.calledWith(
+				configuration.MINIO_RESULT_BUCKET_NAME,
+				filePathForMinio,
+				localFileNameIncludingPath
+			);
+			expect(fileSystemClient.delete).to.have.been.calledOnce;
+			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
+		});
+	});
+
+	context("Lorsque je n'arrive pas à écrire le fichier chez moi", () => {
+		beforeEach(() => {
+			fileSystemClient.write.rejects();
+		});
+
+		it("je lance une erreur", async () => {
+			await expect(minioHttpOffreDeStageRepository.enregistrer(filePathForMinio, contenu, nomDuFlux)).to.be.rejectedWith(
+				EcritureFluxErreur,
+				`Le flux ${nomDuFlux} n'a pas été extrait car une erreur d'écriture est survenue`
+			);
+		});
+	});
+
+	context("Lorsque j'écris le contenu d'un fichier dont je ne trouve pas le dossier racine ou que le nouveau nom du" +
+		" fichier est invalide", () => {
+		beforeEach(() => {
+			minioClient.fPutObject.rejects();
+		});
+
+		it("je lance une erreur", async () => {
+			await expect(minioHttpOffreDeStageRepository.enregistrer(filePathForMinio, contenu, nomDuFlux)).to.be.rejectedWith(
+				EcritureFluxErreur,
+				`Le flux ${nomDuFlux} n'a pas été extrait car une erreur d'écriture est survenue`
+			);
+			expect(fileSystemClient.delete).to.have.been.calledOnce;
+			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
 		});
 	});
 });
