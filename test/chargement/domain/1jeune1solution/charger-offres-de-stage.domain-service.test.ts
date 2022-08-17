@@ -1,6 +1,6 @@
 import sinon from "sinon";
-
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+
 import {
 	ChargerOffresDeStageDomainService,
 } from "@chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";

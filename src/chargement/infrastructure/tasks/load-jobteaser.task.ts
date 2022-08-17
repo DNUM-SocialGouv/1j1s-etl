@@ -1,6 +1,6 @@
-import { Task } from "@shared/gateway/task";
 import { ChargerFluxJobteaser } from "@chargement/usecase/charger-flux-jobteaser.usecase";
 import { Logger } from "@shared/configuration/logger";
+import { Task } from "@shared/gateway/task";
 
 export class LoadJobteaserTask implements Task {
 	constructor(

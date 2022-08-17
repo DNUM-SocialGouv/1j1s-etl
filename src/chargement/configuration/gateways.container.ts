@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Client } from "minio";
 
+import { AuthenticationClient } from "@chargement/infrastructure/gateway/authentication.client";
 import { Configuration } from "@configuration/configuration";
 import { GatewayContainer } from "@chargement/infrastructure/gateway";
 import { LoggerFactory } from "@shared/logger.factory";
@@ -22,11 +23,19 @@ export class GatewayContainerFactory {
 		});
 		const uuidClient = new NodeUuidGenerator();
 		const axiosInstance = axios.create({
-			baseURL: configuration.STRAPI_OFFRE_DE_STAGE_URL,
+			baseURL: configuration.STRAPI.BASE_URL,
 			maxBodyLength: Infinity,
 			maxContentLength: Infinity,
 		});
-		const strapiOffreDeStageHttpClient = new StrapiOffreDeStageHttpClient(axiosInstance);
+		const authenticationClient = new AuthenticationClient(
+			configuration.STRAPI.AUTHENTICATION_URL,
+			{ username: configuration.STRAPI.USERNAME, password: configuration.STRAPI.PASSWORD },
+		);
+		const strapiOffreDeStageHttpClient = new StrapiOffreDeStageHttpClient(
+			axiosInstance,
+			authenticationClient,
+			configuration.STRAPI.OFFRE_DE_STAGE_URL
+		);
 		const httpClientLogger = LoggerFactory.create(configuration);
 
 		return {
