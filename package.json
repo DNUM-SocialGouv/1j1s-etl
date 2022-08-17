@@ -81,11 +81,13 @@
       "**/test/**/*.ts",
       "**/configuration/**/*.ts",
       "**/start.ts",
+      "**/setup.ts",
       "**/infrastructure/cron/**/*.ts",
       "**/infrastructure/**/node-file-system.client.ts",
       "**/infrastructure/**/country-to-iso.ts",
       "**/infrastructure/**/html-to-markdown.sanitizer.ts",
-      "**/infrastructure/**/uuid.generator.ts"
+      "**/infrastructure/**/uuid.generator.ts",
+      "**/src/**/tasks/*"
     ],
     "reporter": [
       "text"
