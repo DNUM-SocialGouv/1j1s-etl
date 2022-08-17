@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 
+import { AuthenticationClient } from "@chargement/infrastructure/gateway/authentication.client";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
 export interface HttpClient {
@@ -30,20 +31,24 @@ export type OffreDeStageHttp = {
 }
 
 export class StrapiOffreDeStageHttpClient implements HttpClient {
-	static URL_VIDE = "";
 	static FIELDS_TO_RETRIEVE = "identifiantSource,id,sourceUpdatedAt";
 	static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
-	constructor(private readonly axios: AxiosInstance) {
+	constructor(
+		private readonly axios: AxiosInstance,
+		private readonly authClient: AuthenticationClient,
+		private readonly offreDeStageUrl: string,
+	) {
 	}
 
-	delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void> {
-		return this.axios.delete("/" + offreDeStage.id);
+	async delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void> {
+		await this.authClient.handleAuthentication(this.axios);
+		return this.axios.delete(`${this.offreDeStageUrl}/${offreDeStage.id}`);
 	}
 
 	async getAll(source: string): Promise<Array<OffreDeStageHttp>> {
 		const result = await this.axios.get<StrapiResponse>(
-			StrapiOffreDeStageHttpClient.URL_VIDE,
+			this.offreDeStageUrl,
 			{
 				params: {
 					"filters[source][$eq]": encodeURI(source),
@@ -58,7 +63,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {
 			intershipOffers.push(...
 				(await this.axios.get<StrapiResponse>(
-					StrapiOffreDeStageHttpClient.URL_VIDE,
+					this.offreDeStageUrl,
 					{
 						params: {
 							"filters[source][$eq]": encodeURI(source),
@@ -74,12 +79,14 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 		return intershipOffers;
 	}
 
-	post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void> {
+	async post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void> {
+		await this.authClient.handleAuthentication(this.axios);
 		const body = { data: offreDeStage.recupererAttributs() };
-		return this.axios.post(StrapiOffreDeStageHttpClient.URL_VIDE, body);
+		return this.axios.post(this.offreDeStageUrl, body);
 	}
 
-	put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void> {
-		return this.axios.put("/" + offreDeStage.id, { data: offreDeStage.recupererAttributs() });
+	async put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void> {
+		await this.authClient.handleAuthentication(this.axios);
+		return this.axios.put(`${this.offreDeStageUrl}/${offreDeStage.id}`, { data: offreDeStage.recupererAttributs() });
 	}
 }
