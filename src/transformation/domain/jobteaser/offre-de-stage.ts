@@ -34,8 +34,8 @@ export type Employeur = {
 
 export type Localisation = {
 	city: string,
-	zipcode: string,
-	department: string,
+	zipcode?: string,
+	department?: string,
 	state: string,
 	country: string
 }

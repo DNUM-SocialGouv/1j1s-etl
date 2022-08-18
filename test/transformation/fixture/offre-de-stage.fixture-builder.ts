@@ -8,10 +8,10 @@ export class OffreDeStageFixtureBuilder {
 	): UnJeune1Solution.OffreDeStage {
 		const defaultLocalisation: UnJeune1Solution.Localisation = {
 			ville: "Montpellier",
-				codePostal: "34",
-				departement: "Hérault",
-				region: "Occitanie",
-				pays: "France",
+			codePostal: "34",
+			departement: "Hérault",
+			region: "Occitanie",
+			pays: "FR",
 		};
 		const defaultEmployeur = {
 			description: "Entreprise leader de son domaine",

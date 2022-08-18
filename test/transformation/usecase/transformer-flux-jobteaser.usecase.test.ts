@@ -45,13 +45,6 @@ describe("TransformerFluxJobteaserTest", () => {
 					domaines: [{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE }],
 					teletravailPossible: false,
 					dureeEnJour: 180,
-					localisation: {
-						ville: "Montpellier",
-						codePostal: "34",
-						departement: "Hérault",
-						region: "Occitanie",
-						pays: "FR",
-					},
 				})];
 				delete resultatTransformation[0].dureeEnJourMax;
 				delete resultatTransformation[0].remunerationBase;
@@ -155,18 +148,20 @@ describe("TransformerFluxJobteaserTest", () => {
 					extensionFichierTransforme: ".json",
 				};
 
-				dateService = stubClass(DateService);
-				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
-				convertisseurDePays = stubInterface<Pays>(sinon);
-				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 
+				dateService = stubClass(DateService);
 				dateService.maintenant.returns(dateEcriture);
+
+				convertisseurDePays = stubInterface<Pays>(sinon);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
+
+				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
 				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
 				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 				offreDeStageRepository.recuperer.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -191,6 +186,8 @@ describe("TransformerFluxJobteaserTest", () => {
 						})],
 					},
 				});
+
+				transformFluxJobteaser = new TransformerFluxJobteaser(dateService, offreDeStageRepository, convertirOffreDeStage);
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
@@ -413,13 +410,6 @@ describe("TransformerFluxJobteaserTest", () => {
 						{ nom: UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS },
 					],
 					teletravailPossible: false,
-					localisation: {
-						ville: "Montpellier",
-						codePostal: "34",
-						departement: "Hérault",
-						region: "Occitanie",
-						pays: "FR",
-					},
 					dateDeDebut: dateEcriture.toISOString(),
 				})];
 				delete resultatTransformation[0].dureeEnJour;

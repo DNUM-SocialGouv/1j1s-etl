@@ -26,7 +26,7 @@ export namespace UnJeune1Solution {
 		nom: string
 		description?: string
 		logoUrl: string
-		siteUrl: string
+		siteUrl?: string
 	}
 
 	export type Localisation = {
@@ -41,9 +41,10 @@ export namespace UnJeune1Solution {
 
 	export enum Source {
 		INTERNE = "interne",
-		WELCOME_TO_THE_JUNGLE = "welcome to the jungle",
 		JOBIJOBA = "jobijoba",
+		JOBTEASER = "jobteaser",
 		HELLOWORK = "hellowork",
-		JOBTEASER = "jobteaser"
+		STAGEFR_DECOMPRESSE = "stagefr-decompresse",
+		WELCOME_TO_THE_JUNGLE = "welcome to the jungle",
 	}
 }
