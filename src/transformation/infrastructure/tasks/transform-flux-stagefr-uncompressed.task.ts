@@ -1,10 +1,10 @@
 import { Configuration } from "@configuration/configuration";
+import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/gateway/task";
 import {
-	TransformerFluxStagefrDecompresse
+	TransformerFluxStagefrDecompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 
 export class TransformFluxStagefrUncompressedTask implements Task {
 	constructor(

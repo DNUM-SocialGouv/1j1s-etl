@@ -3,7 +3,7 @@ import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { Jobteaser } from "@transformation/domain/jobteaser";
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
 import {
-	TransformerFluxStagefrDecompresse
+	TransformerFluxStagefrDecompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
 import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { UsecaseContainer } from "@transformation/usecase";

@@ -4,7 +4,7 @@ import { Task } from "@shared/gateway/task";
 import { TransformFluxJobteaserTask } from "@transformation/infrastructure/tasks/transform-flux-jobteaser.task";
 import { UsecaseContainer } from "@transformation/usecase";
 import {
-	TransformFluxStagefrUncompressedTask
+	TransformFluxStagefrUncompressedTask,
 } from "@transformation/infrastructure/tasks/transform-flux-stagefr-uncompressed.task";
 
 export type TaskContainer = {
