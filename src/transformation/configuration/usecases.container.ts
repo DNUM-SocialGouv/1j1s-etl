@@ -2,6 +2,10 @@ import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { Jobteaser } from "@transformation/domain/jobteaser";
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
+import {
+	TransformerFluxStagefrDecompresse
+} from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
+import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { UsecaseContainer } from "@transformation/usecase";
 
 export class UsecaseContainerFactory {
@@ -12,9 +16,22 @@ export class UsecaseContainerFactory {
 			gateways.textSanitizer,
 			gateways.country
 		);
+		const convertirOffreDeStageStagefrDecompresse = new StagefrDecompresse.Convertir(
+			dateService,
+			gateways.textSanitizer
+		);
 
 		return {
-			transformerFluxJobteaser: new TransformerFluxJobteaser(dateService, gateways.offreDeStageRepository, convertirOffreDeStageJobteaser),
+			transformerFluxJobteaser: new TransformerFluxJobteaser(
+				dateService,
+				gateways.offreDeStageRepository,
+				convertirOffreDeStageJobteaser
+			),
+			transformerFluxStagerfrDecompresse: new TransformerFluxStagefrDecompresse(
+				dateService,
+				gateways.offreDeStageRepository,
+				convertirOffreDeStageStagefrDecompresse,
+			),
 		};
 	}
 }

@@ -1,10 +1,10 @@
 import pino from "pino";
 
-import { Configuration, CronConfiguration } from "@configuration/configuration";
+import { Configuration, TaskConfiguration } from "@configuration/configuration";
 import { Logger } from "@shared/configuration/logger";
 
 export class LoggerFactory {
-	static create(configuration: Configuration | CronConfiguration): Logger {
+	static create(configuration: Configuration | TaskConfiguration): Logger {
 		if (LoggerFactory.isConfiguration(configuration)) {
 			return pino({
 				level: configuration.APPLICATION_LOGGER_LOG_LEVEL,

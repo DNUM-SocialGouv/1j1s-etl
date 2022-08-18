@@ -1,8 +1,7 @@
 export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
-export type CronConfiguration = {
+export type TaskConfiguration = {
 	DIRECTORY_NAME: string
-	FLUX_URL: string
 	LOGGER_LOG_LEVEL: LogLevel
 	NAME: string
 	RAW_FILE_EXTENSION: string
@@ -12,7 +11,7 @@ export type CronConfiguration = {
 export type Configuration = {
 	APPLICATION_LOGGER_NAME: string
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
-	JOBTEASER: CronConfiguration
+	JOBTEASER: TaskConfiguration
 	MINIO_ACCESS_KEY: string
 	MINIO_HISTORY_DIRECTORY_NAME: string
 	MINIO_PORT: number
@@ -22,6 +21,7 @@ export type Configuration = {
 	MINIO_TRANSFORMED_BUCKET_NAME: string
 	MINIO_TRANSFORMED_FILE_EXTENSION: string
 	MINIO_URL: string
+	STAGEFR_UNCOMPRESSED: TaskConfiguration
 	STRAPI: {
 		AUTHENTICATION_URL: string
 		BASE_URL: string
@@ -46,7 +46,6 @@ export class ConfigurationFactory {
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
-				FLUX_URL: getOrError("JOBTEASER_FLUX_URL"),
 				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
 				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
@@ -61,6 +60,13 @@ export class ConfigurationFactory {
 			MINIO_TRANSFORMED_BUCKET_NAME: getOrDefault("MINIO_TRANSFORMED_BUCKET_NAME", DEFAULT_TRANSFORMED_BUCKET_NAME),
 			MINIO_TRANSFORMED_FILE_EXTENSION: getOrDefault("MINIO_TRANSFORMED_FILE_EXTENSION", DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION),
 			MINIO_URL: getOrError("MINIO_URL"),
+			STAGEFR_UNCOMPRESSED: {
+				DIRECTORY_NAME: getOrDefault("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME", "stagefr_uncompressed"),
+				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_UNCOMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
+				NAME: getOrDefault("STAGEFR_UNCOMPRESSED_NAME", "stagefr_uncompressed"),
+				RAW_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_RAW_FILE_EXTENSION"),
+				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_TRANSFORMED_FILE_EXTENSION"),
+			},
 			STRAPI: {
 				AUTHENTICATION_URL: getOrError("STRAPI_AUTHENTICATION_URL"),
 				BASE_URL: getOrError("STRAPI_BASE_URL"),

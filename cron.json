@@ -7,6 +7,10 @@
     {
       "command": "45 7 * * * npm run cli:load -- -a load -f jobteaser",
       "size": "L"
+    },
+    {
+      "command": "30 6 * * * npm run cli:transformation -- -a transform -f stagefr-uncompressed",
+      "size": "L"
     }
   ]
 }
