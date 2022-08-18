@@ -1,4 +1,5 @@
 import { ChargerFluxJobteaser } from "@chargement/usecase/charger-flux-jobteaser.usecase";
+import { ChargerFluxStagefrDecompresse } from "@chargement/usecase/charger-flux-stagefr-decompresse.usecase";
 import {
 	ChargerOffresDeStageDomainService,
 } from "@chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
@@ -16,6 +17,7 @@ export class UsecaseContainerFactory {
 
 		return {
 			chargerFluxJobteaser: new ChargerFluxJobteaser(chargerOffresDeStageDomainService),
+			chargerFluxStagefrDecompresse: new ChargerFluxStagefrDecompresse(chargerOffresDeStageDomainService),
 		};
 	}
 }
