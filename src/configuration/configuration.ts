@@ -11,6 +11,7 @@ export type TaskConfiguration = {
 export type Configuration = {
 	APPLICATION_LOGGER_NAME: string
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
+	FEATURE_FLIPPING_CHARGEMENT: boolean
 	JOBTEASER: TaskConfiguration
 	MINIO_ACCESS_KEY: string
 	MINIO_HISTORY_DIRECTORY_NAME: string
@@ -34,7 +35,7 @@ export type Configuration = {
 
 export class ConfigurationFactory {
 	static create(): Configuration {
-		const { getOrError, getOrDefault } = ConfigurationFactory;
+		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
 		const DEFAULT_RAW_BUCKET_NAME = "raw";
 		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
 		const DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
@@ -44,6 +45,7 @@ export class ConfigurationFactory {
 		return {
 			APPLICATION_LOGGER_NAME: getOrDefault("APPLICATION_LOGGER_NAME", "application"),
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
+			FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("FEATURE_FLIPPING_CHARGEMENT", "false")),
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
 				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
