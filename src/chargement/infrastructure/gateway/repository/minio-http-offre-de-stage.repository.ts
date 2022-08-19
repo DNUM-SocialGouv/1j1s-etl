@@ -17,12 +17,12 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 	static NOM_DU_FICHIER_A_RECUPERER = "latest";
 
 	constructor(
-		private readonly configuration: Configuration,
-		private readonly minioClient: Client,
-		private readonly fileSystemClient: FileSystemClient,
-		private readonly uuidGenerator: UuidGenerator,
-		private readonly httpClient: HttpClient,
-		private readonly logger: Logger,
+		protected readonly configuration: Configuration,
+		protected readonly minioClient: Client,
+		protected readonly fileSystemClient: FileSystemClient,
+		protected readonly uuidGenerator: UuidGenerator,
+		protected readonly httpClient: HttpClient,
+		protected readonly logger: Logger,
 	) {
 	}
 

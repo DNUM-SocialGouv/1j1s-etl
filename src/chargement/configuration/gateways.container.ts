@@ -8,9 +8,14 @@ import { LoggerFactory } from "@shared/logger.factory";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import { NodeFileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
-import { NodeUuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { FileSystemClient, NodeFileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
+import { NodeUuidGenerator, UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway/http.client";
+import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
+import { Logger } from "@shared/configuration/logger";
+import {
+	FeatureFlippingOffreDeStageRepository
+} from "@chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
@@ -21,7 +26,7 @@ export class GatewayContainerFactory {
 			port: configuration.MINIO_PORT,
 			endPoint: configuration.MINIO_URL,
 		});
-		const uuidClient = new NodeUuidGenerator();
+		const uuidGenerator = new NodeUuidGenerator();
 		const axiosInstance = axios.create({
 			baseURL: configuration.STRAPI.BASE_URL,
 			maxBodyLength: Infinity,
@@ -39,14 +44,43 @@ export class GatewayContainerFactory {
 		const httpClientLogger = LoggerFactory.create(configuration);
 
 		return {
-			offreDeStageRepository: new MinioHttpOffreDeStageRepository(
+			offreDeStageRepository: this.buildOffreDeStageRepository(
 				configuration,
 				minioClient,
 				fileSystemClient,
-				uuidClient,
+				uuidGenerator,
 				strapiOffreDeStageHttpClient,
-				httpClientLogger,
+				httpClientLogger
 			),
 		};
+	}
+
+	static buildOffreDeStageRepository(
+		configuration: Configuration,
+		minioClient: Client,
+		fileSystemClient: FileSystemClient,
+		uuidGenerator: UuidGenerator,
+		offreDeStageHttpClient: StrapiOffreDeStageHttpClient,
+		logger: Logger,
+	): UnJeune1Solution.OffreDeStageRepository {
+		if (configuration.FEATURE_FLIPPING_CHARGEMENT) {
+			return new FeatureFlippingOffreDeStageRepository(
+				configuration,
+				minioClient,
+				fileSystemClient,
+				uuidGenerator,
+				offreDeStageHttpClient,
+				logger
+			);
+		} else {
+			return new MinioHttpOffreDeStageRepository(
+				configuration,
+				minioClient,
+				fileSystemClient,
+				uuidGenerator,
+				offreDeStageHttpClient,
+				logger,
+			);
+		}
 	}
 }
