@@ -2,11 +2,16 @@ import { AxiosInstance } from "axios";
 
 import { AuthenticationClient } from "@chargement/infrastructure/gateway/authentication.client";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
+import { LoggerFactory } from "@shared/logger.factory";
+import { TaskConfiguration } from "@configuration/configuration";
 
 export interface HttpClient {
 	delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void>;
+
 	getAll(source: string): Promise<Array<OffreDeStageHttp>>;
+
 	post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void>;
+
 	put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void>;
 }
 

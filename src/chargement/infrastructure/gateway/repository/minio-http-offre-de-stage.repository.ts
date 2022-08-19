@@ -1,6 +1,6 @@
 import { Client } from "minio";
 
-import { Configuration } from "@configuration/configuration";
+import { Configuration, TaskConfiguration } from "@configuration/configuration";
 import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,
@@ -11,6 +11,7 @@ import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { LoggerFactory } from "@shared/logger.factory";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
@@ -64,9 +65,15 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 	}
 
 	async recupererMisesAJourDesOffres(nomDuFlux: string): Promise<UnJeune1Solution.OffreDeStage[]> {
+		const logger = LoggerFactory.create({
+			NAME: "stagefr-decompressse",
+			LOGGER_LOG_LEVEL: "debug"
+		} as TaskConfiguration);
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = MinioHttpOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO_TRANSFORMED_FILE_EXTENSION}`;
+
+		logger.debug({ sourceFilePath });
 
 		try {
 			await this.minioClient.fGetObject(
