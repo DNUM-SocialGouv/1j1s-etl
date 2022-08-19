@@ -26,9 +26,13 @@ export namespace StagefrDecompresse {
         constructor(private readonly dateService: DateService, private readonly assainisseurDeTexte: AssainisseurDeTexte) {
         }
 
+        depuisChaineHexadecimal(chaineHexadecimal: string): number {
+            return parseInt(chaineHexadecimal, 16);
+        }
+
         depuisStagefrDecompresse(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
             return {
-                identifiantSource: offreDeStage.jobid,
+                identifiantSource: this.depuisChaineHexadecimal(offreDeStage.jobid).toString(),
                 titre: this.assainisseurDeTexte.nettoyer(offreDeStage.title),
                 description: this.assainisseurDeTexte.nettoyer(offreDeStage.description),
                 dateDeDebut: this.dateService.maintenant().toISOString(),
