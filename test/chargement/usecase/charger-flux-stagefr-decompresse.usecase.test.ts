@@ -13,7 +13,7 @@ let usecase: ChargerFluxStagefrDecompresse;
 describe("ChargerFluxStagefrDecompresseTest", () => {
 	context("Lorsque je charge le flux Stagefr décompressé", () => {
 		beforeEach(() => {
-			nomDuFlux = "jobteaser";
+			nomDuFlux = "stagefr-decompresse";
 			extension = ".json";
 
 			domainService = stubClass(ChargerOffresDeStageDomainService);

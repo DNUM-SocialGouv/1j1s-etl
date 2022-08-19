@@ -4,7 +4,7 @@ import {
 import { Usecase } from "@shared/usecase";
 
 export class ChargerFluxStagefrDecompresse implements Usecase {
-	static NOM_DU_FLUX = "stagefr-uncompressed";
+	static NOM_DU_FLUX = "stagefr-decompresse";
 	static EXTENSION_DU_FICHIER_DE_RESULTAT = ".json";
 
 	constructor(private readonly chargerOffresDeStages: ChargerOffresDeStageDomainService) {

@@ -19,7 +19,7 @@ export class TaskContainerFactory {
 		return {
 			transform: {
 				jobteaser: new TransformFluxJobteaserTask(configuration, usecases.transformerFluxJobteaser, jobteaserLogger),
-				"stagefr-uncompressed": new TransformFluxStagefrUncompressedTask(
+				"stagefr-decompresse": new TransformFluxStagefrUncompressedTask(
 					configuration,
 					usecases.transformerFluxStagerfrDecompresse,
 					stagefrDecompresseLogger
