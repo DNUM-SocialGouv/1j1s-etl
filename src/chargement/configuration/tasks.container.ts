@@ -17,7 +17,7 @@ export class TaskContainerFactory {
 		return {
 			load: {
 				jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, loadJobteaserLogger),
-				"stagefr-uncompressed": new LoadStagefrUncompressedTask(
+				"stagefr-decompresse": new LoadStagefrUncompressedTask(
 					usecases.chargerFluxStagefrDecompresse,
 					loadStagefrUncompressedLogger
 				),

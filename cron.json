@@ -9,11 +9,11 @@
       "size": "L"
     },
     {
-      "command": "30 6 * * * npm run cli:transformation -- -a transform -f stagefr-uncompressed",
+      "command": "30 6 * * * npm run cli:transformation -- -a transform -f stagefr-decompresse",
       "size": "L"
     },
     {
-      "command": "45 6 * * * npm run cli:load -- -a load -f stagefr-uncompressed",
+      "command": "45 6 * * * npm run cli:load -- -a load -f stagefr-decompresse",
       "size": "L"
     }
   ]
