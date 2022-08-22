@@ -54,6 +54,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 					"filters[source][$eq]": encodeURI(source),
 					"fields": StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE,
 					"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
+					"sort": "identifiantSource"
 				},
 			},
 		);
@@ -70,6 +71,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 							"fields": StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE,
 							"pagination[page]": pageNumber,
 							"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
+							"sort": "identifiantSource"
 						},
 					},
 				)).data.data
