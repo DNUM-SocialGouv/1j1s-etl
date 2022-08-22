@@ -11,11 +11,11 @@ import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.gener
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
 export class MinioOffreDeStageRepository implements OffreDeStageRepository {
-	static LOCAL_FILE_PATH = "./tmp/";
-	static readonly JSON_INDENTATION = 2;
-	static readonly LATEST_FILE_NAME = "latest";
-	static readonly JSON_REPLACER = null;
-	static readonly PATH_SEPARATOR = "/";
+	private static LOCAL_FILE_PATH = "./tmp/";
+	private static readonly JSON_INDENTATION = 2;
+	private static readonly LATEST_FILE_NAME = "latest";
+	private static readonly JSON_REPLACER = null;
+	private static readonly PATH_SEPARATOR = "/";
 
 	constructor(
 		private readonly configuration: Configuration,
@@ -28,13 +28,13 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	}
 
 	async recuperer<T>(configurationFlux: ConfigurationFlux): Promise<T> {
-		const fichierARecuperer = this.getFileNameToFetch(configurationFlux);
+		const fileNameToPull = this.getFileNameToFetch(configurationFlux);
 		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(this.generateFileName());
 
 		try {
 			await this.minioClient.fGetObject(
 				this.configuration.MINIO_RAW_BUCKET_NAME,
-				fichierARecuperer,
+				fileNameToPull,
 				localFileNameIncludingPath
 			);
 			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
@@ -46,8 +46,8 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	async sauvegarder(offresDeStage: UnJeune1Solution.OffreDeStage[], flowConfiguration: ConfigurationFlux): Promise<void> {
-		const contentToSave = this.toReadableJson(offresDeStage);
+	async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flowConfiguration: ConfigurationFlux): Promise<void> {
+		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
 		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
@@ -63,26 +63,26 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	private getFileNameToFetch(configurationFlux: ConfigurationFlux): string {
+	private getFileNameToFetch(flowConfiguration: ConfigurationFlux): string {
 		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
-		return configurationFlux.nom
+		return flowConfiguration.nom
 			.concat(PATH_SEPARATOR)
 			.concat(LATEST_FILE_NAME)
-			.concat(configurationFlux.extensionFichierBrut);
+			.concat(flowConfiguration.extensionFichierBrut);
 	}
 
-	private toReadableJson(contenuTransforme: Array<UnJeune1Solution.OffreDeStage>): string {
+	private toReadableJson(internshipOffers: Array<UnJeune1Solution.OffreDeStage>): string {
 		const { JSON_INDENTATION, JSON_REPLACER } = MinioOffreDeStageRepository;
-		return JSON.stringify(contenuTransforme, JSON_REPLACER, JSON_INDENTATION);
+		return JSON.stringify(internshipOffers, JSON_REPLACER, JSON_INDENTATION);
 	}
 
-	private async saveHistoryFile(configurationFlux: Readonly<ConfigurationFlux>, temporaryFileName: string): Promise<void> {
-		const historyFileName = this.createHistoryFileName(configurationFlux);
+	private async saveHistoryFile(flowConfiguration: Readonly<ConfigurationFlux>, temporaryFileName: string): Promise<void> {
+		const historyFileName = this.createHistoryFileName(flowConfiguration);
 		await this.saveOnMinio(historyFileName, temporaryFileName);
 	}
 
-	private async saveLatestFile(configurationFlux: Readonly<ConfigurationFlux>, temporaryFileName: string): Promise<void> {
-		const latestFileName = this.createCloneFileName(configurationFlux);
+	private async saveLatestFile(flowConfiguration: Readonly<ConfigurationFlux>, temporaryFileName: string): Promise<void> {
+		const latestFileName = this.createCloneFileName(flowConfiguration);
 		await this.saveOnMinio(latestFileName, temporaryFileName);
 	}
 
