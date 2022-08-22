@@ -4,31 +4,47 @@ import sinon from "sinon";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@configuration/configuration";
+import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
+import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
+import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
+import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 
-const fluxName = "fluxName";
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
+let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;
 let fileContent: string;
-let fileNameIncludingPath: string;
-let latestStoredFileNameIncludingPath: string;
+let latestFileNameIncludingPath: string;
+let historyFileNameIncludingPath: string;
+let latestStoredFileNameIncludingPathForReading: string;
 
 let configuration: StubbedType<Configuration>;
+let configurationFlux: ConfigurationFlux;
 let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
+let dateService: StubbedClass<DateService>;
 let minioOffreDeStageRepository: MinioOffreDeStageRepository;
 
-describe("MinioStorageClientTest", () => {
+describe("MinioOffreDeStageRepositoryTest", () => {
 	beforeEach(() => {
-		fileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+		latestFileNameIncludingPath = "source/latest.json";
+		historyFileNameIncludingPath = "source/history/2022-01-01T00:00:00.000Z.json";
 		fileContent = "<toto>contenu du fichier</toto>";
+		configurationFlux = {
+			nom: "source",
+			extensionFichierBrut: ".xml",
+			extensionFichierTransforme: ".json",
+			dossierHistorisation: "history",
+		};
+
+		offresDeStage = [OffreDeStageFixtureBuilder.build()];
 
 		minioStub = stubClass(Client);
 		configuration = stubInterface<Configuration>(sinon);
@@ -37,6 +53,9 @@ describe("MinioStorageClientTest", () => {
 		contentParserRepository = stubInterface<ContentParser>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 		uuidClient = stubInterface<UuidGenerator>(sinon);
+		dateService = stubClass(DateService);
+		dateService.maintenant.returns(new Date("2022-01-01T00:00:00.000Z"));
+
 		uuidClient.generate.returns("d184b5b1-75ad-44f0-8fe7-7c55208bf26c");
 		minioOffreDeStageRepository = new MinioOffreDeStageRepository(
 			configuration,
@@ -44,22 +63,32 @@ describe("MinioStorageClientTest", () => {
 			fileSystemClient,
 			uuidClient,
 			contentParserRepository,
+			dateService
 		);
 	});
 
 	context("Lorsque j'écris le contenu d'un fichier qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
 		it("j'écris le contenu d'un fichier", async () => {
-			await minioOffreDeStageRepository.enregistrer(fileNameIncludingPath, fileContent, fluxName);
+			await minioOffreDeStageRepository.sauvegarder(offresDeStage, configurationFlux);
 
 			expect(uuidClient.generate).to.have.been.calledOnce;
+
 			expect(fileSystemClient.write).to.have.been.calledOnce;
-			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, fileContent);
-			expect(minioStub.fPutObject).to.have.been.calledOnce;
-			expect(minioStub.fPutObject).to.have.been.calledWith(
+			expect(fileSystemClient.write.getCall(0).args[0]).to.eql(localFileNameIncludingPath);
+			expect(JSON.parse(fileSystemClient.write.getCall(0).args[1] as string)).to.have.deep.members(offresDeStage);
+
+			expect(minioStub.fPutObject).to.have.been.calledTwice;
+			expect(minioStub.fPutObject.firstCall.args).to.have.deep.members([
 				configuration.MINIO_TRANSFORMED_BUCKET_NAME,
-				fileNameIncludingPath,
-				localFileNameIncludingPath
-			);
+				historyFileNameIncludingPath,
+				localFileNameIncludingPath,
+			]);
+			expect(minioStub.fPutObject.secondCall.args).to.have.deep.members([
+				configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+				latestFileNameIncludingPath,
+				localFileNameIncludingPath,
+			]);
+
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
 		});
@@ -71,9 +100,9 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(minioOffreDeStageRepository.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, configurationFlux)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${fluxName} n'a pas été extrait car une erreur d'écriture est survenue`
+				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue"
 			);
 		});
 	});
@@ -85,9 +114,9 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(minioOffreDeStageRepository.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, configurationFlux)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${fluxName} n'a pas été extrait car une erreur d'écriture est survenue`
+				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue"
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -96,7 +125,7 @@ describe("MinioStorageClientTest", () => {
 
 	context("Lorsque je récupère le contenu d'un fichier", () => {
 		beforeEach(() => {
-			latestStoredFileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+			latestStoredFileNameIncludingPathForReading = "source/latest.xml";
 			configuration = stubInterface<Configuration>(sinon);
 			configuration.MINIO_RAW_BUCKET_NAME = "raw";
 
@@ -115,7 +144,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je récupère le contenu du fichier", async () => {
-			const result = await minioOffreDeStageRepository.recuperer(fileNameIncludingPath);
+			const result = await minioOffreDeStageRepository.recuperer(latestStoredFileNameIncludingPathForReading);
 
 			expect(result).to.eql({
 				root: {
@@ -127,7 +156,7 @@ describe("MinioStorageClientTest", () => {
 			expect(minioStub.fGetObject).to.have.been.calledOnce;
 			expect(minioStub.fGetObject).to.have.been.calledWith(
 				configuration.MINIO_RAW_BUCKET_NAME,
-				latestStoredFileNameIncludingPath,
+				"source/latest.xml",
 				localFileNameIncludingPath
 			);
 			expect(fileSystemClient.read).to.have.been.calledOnce;
@@ -141,7 +170,7 @@ describe("MinioStorageClientTest", () => {
 
 	context("Lorsque je récupère le contenu d'un fichier qui n'existe pas", () => {
 		beforeEach(() => {
-			latestStoredFileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+			latestStoredFileNameIncludingPathForReading = "./history/source/2022-01-01T00:00:00Z_source.xml";
 			configuration = stubInterface<Configuration>(sinon);
 			configuration.MINIO_RAW_BUCKET_NAME = "raw";
 
@@ -152,7 +181,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(minioOffreDeStageRepository.recuperer(fileNameIncludingPath)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer(latestFileNameIncludingPath)).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
@@ -161,7 +190,7 @@ describe("MinioStorageClientTest", () => {
 
 	context("Lorsque je ne réussis pas à lire le contenu d'un fichier", () => {
 		beforeEach(() => {
-			latestStoredFileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
+			latestStoredFileNameIncludingPathForReading = "source/latest.xml";
 			configuration = stubInterface<Configuration>(sinon);
 			configuration.MINIO_RAW_BUCKET_NAME = "raw";
 
@@ -173,7 +202,7 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(minioOffreDeStageRepository.recuperer(fileNameIncludingPath)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer(latestFileNameIncludingPath)).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);

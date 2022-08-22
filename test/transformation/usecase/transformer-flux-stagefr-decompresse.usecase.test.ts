@@ -16,14 +16,11 @@ import {
 } from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
-
 const now = new Date("2022-06-01T00:00:00.000Z");
 
 let config: ConfigurationFlux;
 let offresDeStage1Jeune1Solution: Array<UnJeune1Solution.OffreDeStage>;
 let offresDeStageStagefrDecompresse: Array<StagefrDecompresse.OffreDeStage>;
-let cheminDuFichierAHistoriser: string;
-let cheminDeLaDerniereVersion: string;
 
 let dateService: StubbedType<DateService>;
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
@@ -53,9 +50,6 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 			delete offreDeStage1Jeune1Solution.localisation?.departement;
 			delete offreDeStage1Jeune1Solution.teletravailPossible;
 
-			cheminDuFichierAHistoriser = "stagefr-decompresse/test/".concat(now.toISOString()).concat(".json");
-			cheminDeLaDerniereVersion = "stagefr-decompresse/latest.json";
-
 			offresDeStageStagefrDecompresse = [OffreDeStageStagefrDecompresseFixtureBuilder.build()];
 
 			offresDeStage1Jeune1Solution = [offreDeStage1Jeune1Solution];
@@ -76,11 +70,7 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 
 			convertir = new StagefrDecompresse.Convertir(dateService, assainisseurDeTexte);
 
-			usecase = new TransformerFluxStagefrDecompresse(
-				dateService,
-				offreDeStageRepository,
-				convertir
-			);
+			usecase = new TransformerFluxStagefrDecompresse(offreDeStageRepository, convertir);
 		});
 
 		it("je le sauvegarde au format 1Jeune1Solution", async () => {
@@ -89,15 +79,8 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
 			expect(offreDeStageRepository.recuperer).to.have.been.calledWith("stagefr-decompresse/latest.xml");
 
-			expect(offreDeStageRepository.enregistrer).to.have.been.calledTwice;
-
-			expect(offreDeStageRepository.enregistrer.getCall(0).args[0]).to.eql(cheminDuFichierAHistoriser);
-			expect(offreDeStageRepository.enregistrer.getCall(0).args[2]).to.eql("stagefr-decompresse");
-			expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(0).args[1] as string)).to.have.deep.members(offresDeStage1Jeune1Solution);
-
-			expect(offreDeStageRepository.enregistrer.getCall(1).args[0]).to.eql(cheminDeLaDerniereVersion);
-			expect(offreDeStageRepository.enregistrer.getCall(1).args[2]).to.eql("stagefr-decompresse");
-			expect(JSON.parse(offreDeStageRepository.enregistrer.getCall(1).args[1] as string)).to.have.deep.members(offresDeStage1Jeune1Solution);
+			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
+			expect(offreDeStageRepository.sauvegarder).to.have.been.calledWith(offresDeStage1Jeune1Solution);
 		});
 	});
 });

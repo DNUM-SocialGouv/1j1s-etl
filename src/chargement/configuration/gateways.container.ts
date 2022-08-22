@@ -14,7 +14,7 @@ import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { Logger } from "@shared/configuration/logger";
 import {
-	FeatureFlippingOffreDeStageRepository
+	FeatureFlippingOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
 
 export class GatewayContainerFactory {

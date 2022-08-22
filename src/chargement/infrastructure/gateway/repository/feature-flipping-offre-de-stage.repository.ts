@@ -6,7 +6,7 @@ import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
 import {
-	MinioHttpOffreDeStageRepository
+	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import OffreDeStageAPublier = UnJeune1Solution.OffreDeStageAPublier;
 import OffreDeStageASupprimer = UnJeune1Solution.OffreDeStageASupprimer;
@@ -50,7 +50,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		return Promise.resolve([]);
 	}
 
-	enregistrer(cheminDuFichier: string, contenu: string, nomDuFlux: string): Promise<void> {
+	enregistrer(): Promise<void> {
 		return Promise.resolve();
 	}
 }
