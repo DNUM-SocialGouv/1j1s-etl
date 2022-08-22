@@ -61,7 +61,7 @@ export namespace UnJeune1Solution {
 			this.sourceCreatedAt = attributs.sourceCreatedAt ? new Date(attributs.sourceCreatedAt) : undefined;
 			this.sourceUpdatedAt = new Date(attributs.sourceUpdatedAt);
 			this.sourcePublishedAt = attributs.sourcePublishedAt ? new Date(attributs.sourcePublishedAt) : undefined;
-			this.identifiantSource = new String(attributs.identifiantSource).toString();
+			this.identifiantSource = attributs.identifiantSource;
 			this.domaines = attributs.domaines;
 			this.dureeEnJour = attributs.dureeEnJour;
 			this.dureeEnJourMax = attributs.dureeEnJourMax;
