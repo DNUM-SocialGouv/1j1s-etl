@@ -27,14 +27,14 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	) {
 	}
 
-	async recuperer<T>(sourcefilePath: string): Promise<T> {
-		const temporaryFileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
+	async recuperer<T>(configurationFlux: ConfigurationFlux): Promise<T> {
+		const fichierARecuperer = this.getFileNameToFetch(configurationFlux);
+		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(this.generateFileName());
 
 		try {
 			await this.minioClient.fGetObject(
 				this.configuration.MINIO_RAW_BUCKET_NAME,
-				sourcefilePath,
+				fichierARecuperer,
 				localFileNameIncludingPath
 			);
 			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
@@ -48,7 +48,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 
 	async sauvegarder(offresDeStage: UnJeune1Solution.OffreDeStage[], flowConfiguration: ConfigurationFlux): Promise<void> {
 		const contentToSave = this.toReadableJson(offresDeStage);
-		const temporaryFileName = this.uuidClient.generate();
+		const temporaryFileName = this.generateFileName();
 		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
 
 		try {
@@ -61,6 +61,14 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
 		}
+	}
+
+	private getFileNameToFetch(configurationFlux: ConfigurationFlux): string {
+		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
+		return configurationFlux.nom
+			.concat(PATH_SEPARATOR)
+			.concat(LATEST_FILE_NAME)
+			.concat(configurationFlux.extensionFichierBrut);
 	}
 
 	private toReadableJson(contenuTransforme: Array<UnJeune1Solution.OffreDeStage>): string {
@@ -102,5 +110,9 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 			filePath,
 			localFileNameIncludingPath
 		);
+	}
+
+	private generateFileName(): string {
+		return this.uuidClient.generate();
 	}
 }

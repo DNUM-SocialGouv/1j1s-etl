@@ -57,7 +57,7 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 			offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 			offreDeStageRepository
 				.recuperer
-				.withArgs("stagefr-decompresse/latest.xml")
+				.withArgs(config)
 				.resolves({ jobs: { job: offresDeStageStagefrDecompresse } });
 
 			dateService = stubInterface<DateService>(sinon);
@@ -77,7 +77,7 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 			await usecase.executer(config);
 
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-			expect(offreDeStageRepository.recuperer).to.have.been.calledWith("stagefr-decompresse/latest.xml");
+			expect(offreDeStageRepository.recuperer).to.have.been.calledWith({ ...config });
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledWith(offresDeStage1Jeune1Solution);

@@ -10,6 +10,7 @@ import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gate
 import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { NodeUuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { XmlContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
+import { DateService } from "@shared/date.service";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
@@ -25,12 +26,20 @@ export class GatewayContainerFactory {
 		const contentParserRepository = new XmlContentParser(xmlParser);
 		const htmlToMarkdown = new TurndownService();
 		const assainisseurDeTexte = new HtmlToMarkdownSanitizer(htmlToMarkdown);
+		const dateService = new DateService();
 
 		return {
 			country: new CountryToIso(),
 			contentParser: contentParserRepository,
 			minioClient,
-			offreDeStageRepository: new MinioOffreDeStageRepository(configuration, minioClient, fileSystemClient, uuidClient, contentParserRepository),
+			offreDeStageRepository: new MinioOffreDeStageRepository(
+				configuration,
+				minioClient,
+				fileSystemClient,
+				uuidClient,
+				contentParserRepository,
+				dateService
+			),
 			textSanitizer: assainisseurDeTexte,
 		};
 	}
