@@ -23,12 +23,10 @@ export class UsecaseContainerFactory {
 
 		return {
 			transformerFluxJobteaser: new TransformerFluxJobteaser(
-				dateService,
 				gateways.offreDeStageRepository,
 				convertirOffreDeStageJobteaser
 			),
 			transformerFluxStagerfrDecompresse: new TransformerFluxStagefrDecompresse(
-				dateService,
 				gateways.offreDeStageRepository,
 				convertirOffreDeStageStagefrDecompresse,
 			),

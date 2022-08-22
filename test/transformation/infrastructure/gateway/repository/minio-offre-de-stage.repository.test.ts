@@ -2,7 +2,6 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Client } from "minio";
 import sinon from "sinon";
 
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@configuration/configuration";
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import {
@@ -10,18 +9,18 @@ import {
 } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
+import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
-import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;
 let fileContent: string;
 let latestFileNameIncludingPath: string;
 let historyFileNameIncludingPath: string;
-let latestStoredFileNameIncludingPathForReading: string;
 
 let configuration: StubbedType<Configuration>;
 let configurationFlux: ConfigurationFlux;
@@ -125,7 +124,6 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 	context("Lorsque je récupère le contenu d'un fichier", () => {
 		beforeEach(() => {
-			latestStoredFileNameIncludingPathForReading = "source/latest.xml";
 			configuration = stubInterface<Configuration>(sinon);
 			configuration.MINIO_RAW_BUCKET_NAME = "raw";
 
@@ -144,7 +142,12 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je récupère le contenu du fichier", async () => {
-			const result = await minioOffreDeStageRepository.recuperer(latestStoredFileNameIncludingPathForReading);
+			const result = await minioOffreDeStageRepository.recuperer({
+				nom: "source",
+				extensionFichierBrut: ".xml",
+				dossierHistorisation: "history",
+				extensionFichierTransforme: ".json",
+			});
 
 			expect(result).to.eql({
 				root: {
@@ -170,7 +173,6 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 	context("Lorsque je récupère le contenu d'un fichier qui n'existe pas", () => {
 		beforeEach(() => {
-			latestStoredFileNameIncludingPathForReading = "./history/source/2022-01-01T00:00:00Z_source.xml";
 			configuration = stubInterface<Configuration>(sinon);
 			configuration.MINIO_RAW_BUCKET_NAME = "raw";
 
@@ -181,7 +183,12 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(minioOffreDeStageRepository.recuperer(latestFileNameIncludingPath)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer({
+				nom: "source",
+				extensionFichierBrut: ".xml",
+				dossierHistorisation: "history",
+				extensionFichierTransforme: ".json",
+			})).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
@@ -190,7 +197,6 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 	context("Lorsque je ne réussis pas à lire le contenu d'un fichier", () => {
 		beforeEach(() => {
-			latestStoredFileNameIncludingPathForReading = "source/latest.xml";
 			configuration = stubInterface<Configuration>(sinon);
 			configuration.MINIO_RAW_BUCKET_NAME = "raw";
 
@@ -202,7 +208,12 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(minioOffreDeStageRepository.recuperer(latestFileNameIncludingPath)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer({
+				nom: "source",
+				extensionFichierBrut: ".xml",
+				dossierHistorisation: "history",
+				extensionFichierTransforme: ".json",
+			})).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
