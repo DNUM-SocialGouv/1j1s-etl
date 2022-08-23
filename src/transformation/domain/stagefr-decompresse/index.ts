@@ -26,13 +26,9 @@ export namespace StagefrDecompresse {
         constructor(private readonly dateService: DateService, private readonly assainisseurDeTexte: AssainisseurDeTexte) {
         }
 
-        depuisChaineHexadecimal(chaineHexadecimal: string): number {
-            return parseInt(chaineHexadecimal, 16);
-        }
-
         depuisStagefrDecompresse(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
             return {
-                identifiantSource: this.depuisChaineHexadecimal(offreDeStage.jobid).toString(),
+                identifiantSource: offreDeStage.jobid,
                 titre: this.assainisseurDeTexte.nettoyer(offreDeStage.title),
                 description: this.assainisseurDeTexte.nettoyer(offreDeStage.description),
                 dateDeDebut: this.dateService.maintenant().toISOString(),
@@ -43,7 +39,7 @@ export namespace StagefrDecompresse {
                 localisation: {
                     ville: offreDeStage.city,
                     region: offreDeStage.state,
-                    pays: offreDeStage.country.toUpperCase(),
+                    pays: offreDeStage.country?.toUpperCase(),
                 },
                 domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
                 urlDeCandidature: offreDeStage.url,

@@ -7,6 +7,7 @@ import { LoadStagefrUncompressedTask } from "@chargement/infrastructure/tasks/lo
 
 export type TaskContainer = {
 	jobteaser: LoadJobteaserTask,
+	"stagefr-compresse": LoadStagefrCompressedTask,
 	"stagefr-decompresse": LoadStagefrUncompressedTask
 }
 
@@ -18,6 +19,10 @@ export class TaskContainerFactory {
 
 		return {
 			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, loadJobteaserLogger),
+			"stagefr-compresse" : new LoadStagefrCompressedTask(
+				usecases.chargerFluxStagefrCompresse,
+				loadStagefrCompressedLogger,
+			),
 			"stagefr-decompresse": new LoadStagefrUncompressedTask(
 				usecases.chargerFluxStagefrDecompresse,
 				loadStagefrUncompressedLogger

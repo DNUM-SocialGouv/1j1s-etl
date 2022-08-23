@@ -40,10 +40,11 @@ export namespace UnJeune1Solution {
 	}
 
 	export enum Source {
+		HELLOWORK = "hellowork",
 		INTERNE = "interne",
 		JOBIJOBA = "jobijoba",
 		JOBTEASER = "jobteaser",
-		HELLOWORK = "hellowork",
+		STAGEFR_COMPRESSE = "stagefr-compresse",
 		STAGEFR_DECOMPRESSE = "stagefr-decompresse",
 		WELCOME_TO_THE_JUNGLE = "welcome to the jungle",
 	}

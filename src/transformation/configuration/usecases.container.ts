@@ -7,6 +7,8 @@ import {
 } from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
 import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { UsecaseContainer } from "@transformation/usecase";
+import { TransformerFluxStagefrCompresse } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
+import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 
 export class UsecaseContainerFactory {
 	static create(gateways: GatewayContainer): UsecaseContainer {
@@ -20,13 +22,21 @@ export class UsecaseContainerFactory {
 			dateService,
 			gateways.textSanitizer
 		);
+		const convertirOffreDeStageStagefrCompresse = new StagefrCompresse.Convertir(
+			dateService,
+			gateways.textSanitizer
+		);
 
 		return {
 			transformerFluxJobteaser: new TransformerFluxJobteaser(
 				gateways.offreDeStageRepository,
 				convertirOffreDeStageJobteaser
 			),
-			transformerFluxStagerfrDecompresse: new TransformerFluxStagefrDecompresse(
+			transformerFluxStagefrCompresse: new TransformerFluxStagefrCompresse(
+				gateways.offreDeStageRepository,
+				convertirOffreDeStageStagefrCompresse
+			),
+			transformerFluxStagefrDecompresse: new TransformerFluxStagefrDecompresse(
 				gateways.offreDeStageRepository,
 				convertirOffreDeStageStagefrDecompresse,
 			),
