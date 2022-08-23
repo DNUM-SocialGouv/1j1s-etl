@@ -38,6 +38,7 @@
     "paths": {
        "@chargement/*": ["src/chargement/*"],
        "@configuration/*": ["src/configuration/*"],
+       "@extraction/*": ["src/extraction/*"],
        "@shared/*": ["src/shared/*"],
        "@transformation/*": ["src/transformation/*"],
        "@test/*": ["test/*"]

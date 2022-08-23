@@ -6,11 +6,11 @@ type Commands = { [p: string]: unknown, a: string, f: string, _: (string | numbe
 
 export class CliConfiguration {
 	static create(configuration: Configuration): Commands {
-		const actionChoices = ["transform", "load"];
+		const actionChoices = ["extract", "transform", "load"];
 		const fluxChoices = [
-			configuration.JOBTEASER.NAME, 
+			configuration.JOBTEASER.NAME,
 			configuration.STAGEFR_COMPRESSED.NAME,
-			configuration.STAGEFR_UNCOMPRESSED.NAME, 
+			configuration.STAGEFR_UNCOMPRESSED.NAME,
 		];
 
 		const options = {

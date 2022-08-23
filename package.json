@@ -18,6 +18,7 @@
     "@root": "./",
     "@configuration": "build/src/configuration",
     "@chargement": "build/src/chargement",
+    "@extraction": "build/src/extraction",
     "@shared": "build/src/shared",
     "@transformation": "build/src/transformation"
   },
@@ -81,12 +82,13 @@
       "**/configuration/**/*.ts",
       "**/start.ts",
       "**/setup.ts",
-      "**/infrastructure/cron/**/*.ts",
+      "**/src/**/tasks/*",
       "**/infrastructure/**/node-file-system.client.ts",
       "**/infrastructure/**/country-to-iso.ts",
       "**/infrastructure/**/html-to-markdown.sanitizer.ts",
       "**/infrastructure/**/uuid.generator.ts",
-      "**/src/**/tasks/*"
+      "**/infrastructure/**/unzip.client.ts",
+      "**/src/cli/**/*.ts"
     ],
     "reporter": [
       "text"
