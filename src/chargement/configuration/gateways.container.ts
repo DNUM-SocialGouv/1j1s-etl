@@ -8,14 +8,14 @@ import { LoggerFactory } from "@shared/logger.factory";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import { FileSystemClient, NodeFileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
-import { NodeUuidGenerator, UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
-import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway/http.client";
-import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import { Logger } from "@shared/configuration/logger";
 import {
 	FeatureFlippingOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
+import { FileSystemClient, NodeFileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
+import { Logger } from "@shared/configuration/logger";
+import { NodeUuidGenerator, UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway/http.client";
+import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
