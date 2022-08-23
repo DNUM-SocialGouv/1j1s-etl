@@ -37,5 +37,5 @@ export enum Domaine {
 	SUPPORT = "relation client / support",
 	TRAVAUX = "travaux / chantiers",
 	VENTES = "ventes",
-	NON_APPLICABLE = "non renseigné"
+	NON_APPLICABLE = "non renseigné",
 }

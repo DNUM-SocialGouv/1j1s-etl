@@ -12,10 +12,12 @@ export class TaskContainerFactory {
 		return {
 			load: {
 				jobteaser: tasks.load.jobteaser,
+				"stagefr-compresse": tasks.load["stagefr-compresse"],
 				"stagefr-decompresse": tasks.load["stagefr-decompresse"]
 			},
 			transform: {
 				jobteaser: tasks.transform.jobteaser,
+				"stagefr-compresse": tasks.transform["stagefr-compresse"],
 				"stagefr-decompresse": tasks.transform["stagefr-decompresse"]
 			},
 		};
