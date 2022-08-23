@@ -1,5 +1,7 @@
-import * as http from "http";
+import "dotenv/config";
 import "module-alias/register";
+
+import * as http from "http";
 
 import { ConfigurationFactory } from "@configuration/configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
