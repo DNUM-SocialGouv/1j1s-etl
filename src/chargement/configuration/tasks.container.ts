@@ -1,9 +1,9 @@
 import { Configuration } from "@configuration/configuration";
 import { LoadJobteaserTask } from "@chargement/infrastructure/tasks/load-jobteaser.task";
-import { LoggerFactory } from "@shared/logger.factory";
-import { UsecaseContainer } from "@chargement/usecase";
 import { LoadStagefrCompressedTask } from "@chargement/infrastructure/tasks/load-stagefr-compressed.task";
 import { LoadStagefrUncompressedTask } from "@chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
+import { LoggerFactory } from "@shared/logger.factory";
+import { UsecaseContainer } from "@chargement/usecase";
 
 export type TaskContainer = {
 	jobteaser: LoadJobteaserTask,
