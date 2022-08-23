@@ -14,7 +14,9 @@ export type Configuration = {
 	FEATURE_FLIPPING_CHARGEMENT: boolean
 	JOBTEASER: TaskConfiguration
 	MINIO_ACCESS_KEY: string
+	MINIO_DAYS_AFTER_EXPIRATION: number
 	MINIO_HISTORY_DIRECTORY_NAME: string
+	MINIO_LIFECYCLE_RULES_STATUS: "Enabled" | "Disabled"
 	MINIO_PORT: number
 	MINIO_RAW_BUCKET_NAME: string
 	MINIO_RESULT_BUCKET_NAME: string
@@ -36,7 +38,7 @@ export type Configuration = {
 
 export class ConfigurationFactory {
 	static create(): Configuration {
-		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
+		const { getOrError, getOrDefault, toBoolean, toValidEnableStatus } = ConfigurationFactory;
 		const DEFAULT_RAW_BUCKET_NAME = "raw";
 		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
 		const DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
@@ -55,7 +57,9 @@ export class ConfigurationFactory {
 				TRANSFORMED_FILE_EXTENSION: getOrError("JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
+			MINIO_DAYS_AFTER_EXPIRATION: Number(getOrError("MINIO_DAYS_AFTER_EXPIRATION")),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
+			MINIO_LIFECYCLE_RULES_STATUS: toValidEnableStatus(getOrError("MINIO_LIFECYCLE_RULES_STATUS")),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
 			MINIO_RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
 			MINIO_RESULT_BUCKET_NAME: getOrDefault("MINIO_RESULT_BUCKET_NAME", DEFAULT_RESULT_BUCKET_NAME),
@@ -106,5 +110,9 @@ export class ConfigurationFactory {
 
 	static toBoolean(value: string): boolean {
 		return value.trim().toLowerCase() === "true";
+	}
+
+	static toValidEnableStatus(value: string): "Enabled" | "Disabled" {
+		return (value === "Enabled" || value === "Disabled") ? value : "Disabled";
 	}
 }
