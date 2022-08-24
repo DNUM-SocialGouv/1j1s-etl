@@ -50,8 +50,8 @@ export namespace StagefrCompresse {
                     ville: offreDeStage.location.location,
                     codePostal: offreDeStage.location.location_raw,
                     pays: offreDeStage.location.country?.toUpperCase(),
-                    longitude: offreDeStage.location.geo_lng,
-                    latitude: offreDeStage.location.geo_lat
+                    longitude: offreDeStage.location.geo_lng ? offreDeStage.location.geo_lng : 0,
+                    latitude: offreDeStage.location.geo_lat ? offreDeStage.location.geo_lat : 0
                 },
                 domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
                 remunerationBase: Number(offreDeStage.salary) || undefined,
