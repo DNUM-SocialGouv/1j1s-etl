@@ -3,7 +3,7 @@ import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/gateway/task";
 import { 
-	TransformerFluxStagefrCompresse 
+	TransformerFluxStagefrCompresse, 
 } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 
 export class TransformFluxStagefrCompressedTask implements Task {

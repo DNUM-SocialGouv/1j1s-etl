@@ -1,7 +1,5 @@
 import { DateService } from "@shared/date.service";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import { LoggerFactory } from "@shared/logger.factory";
-import { TaskConfiguration } from "@configuration/configuration";
 
 export class ChargerOffresDeStageDomainService {
 	static readonly INDENTATION_JSON = 2;

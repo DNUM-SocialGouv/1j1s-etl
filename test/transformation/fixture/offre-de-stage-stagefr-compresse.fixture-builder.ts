@@ -22,7 +22,7 @@ export class OffreDeStageStagefrCompresseFixtureBuilder {
 				geo_lat: 10,
 			},
 			category: "cuisine",
-			contract_type: "stage"
+			contract_type: "stage",
 		};
 
 		return { ...defaults, ...offreDeStage };
