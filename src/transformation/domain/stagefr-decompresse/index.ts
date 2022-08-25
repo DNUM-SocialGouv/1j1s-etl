@@ -1,25 +1,15 @@
 import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
+import { OffreDeStage as _OffreDeStage } from "@transformation/domain/stagefr-decompresse/offre-de-stage";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
 export namespace StagefrDecompresse {
+    export type OffreDeStage = _OffreDeStage;
+
     export type Contenu = {
         jobs: {
             job: Array<OffreDeStage>
         }
-    }
-
-    export type OffreDeStage = {
-        jobid: string
-        title: string
-        company: string
-        city: string
-        state: string
-        country: string
-        description: string
-        date: string
-        url: string
-        logo: string
     }
 
     export class Convertir {

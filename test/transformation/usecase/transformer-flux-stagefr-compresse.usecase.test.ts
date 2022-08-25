@@ -2,21 +2,21 @@ import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { DateService } from "@shared/date.service";
 import { expect } from "@test/configuration";
+import { Flux } from "@transformation/domain/flux";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
+import { OffreDeStageStagefrCompresseFixtureBuilder } from "../fixture/offre-de-stage-stagefr-compresse.fixture-builder";
 import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 import {
 	TransformerFluxStagefrCompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
-import { OffreDeStageStagefrCompresseFixtureBuilder } from "../fixture/offre-de-stage-stagefr-compresse.fixture-builder";
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 
-let config: ConfigurationFlux;
+let config: Flux;
 let offresDeStage1Jeune1Solution: Array<UnJeune1Solution.OffreDeStage>;
 let offresDeStageStagefrCompresse: Array<StagefrCompresse.OffreDeStage>;
 
@@ -39,7 +39,7 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 	context("Lorsque je souhaite transformer le flux stagefr compressé et que tout va bien", () => {
 		beforeEach(() => {
 			const offreDeStage1Jeune1Solution = OffreDeStageFixtureBuilder.build(
-				{ 
+				{
 					identifiantSource : "100",
 					source: UnJeune1Solution.Source.STAGEFR_COMPRESSE,
 				},

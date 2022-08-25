@@ -14,7 +14,7 @@ export class TaskContainerFactory {
 			extract: {
 				jobteaser: tasks.extract.jobteaser,
 				"stagefr-compresse": tasks.extract["stagefr-compresse"],
-				"stagefr-decompresse": tasks.extract["stagefr-decompresse"]
+				"stagefr-decompresse": tasks.extract["stagefr-decompresse"],
 			},
 			load: {
 				jobteaser: tasks.load.jobteaser,

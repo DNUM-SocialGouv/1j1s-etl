@@ -1,10 +1,10 @@
 import { Client } from "minio";
 
 import { Configuration } from "@configuration/configuration";
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { ContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
+import { Flux } from "@transformation/domain/flux";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
@@ -27,8 +27,8 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	) {
 	}
 
-	async recuperer<T>(configurationFlux: ConfigurationFlux): Promise<T> {
-		const fileNameToPull = this.getFileNameToFetch(configurationFlux);
+	async recuperer<T>(flow: Flux): Promise<T> {
+		const fileNameToPull = this.getFileNameToFetch(flow);
 		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(this.generateFileName());
 
 		try {
@@ -46,7 +46,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flowConfiguration: ConfigurationFlux): Promise<void> {
+	async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: Flux): Promise<void> {
 		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
 		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
@@ -54,21 +54,21 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, contentToSave);
 
-			await this.saveHistoryFile(flowConfiguration, localFileNameIncludingPath);
-			await this.saveLatestFile(flowConfiguration, localFileNameIncludingPath);
+			await this.saveHistoryFile(flow, localFileNameIncludingPath);
+			await this.saveLatestFile(flow, localFileNameIncludingPath);
 		} catch (e) {
-			throw new EcritureFluxErreur(flowConfiguration.nom);
+			throw new EcritureFluxErreur(flow.nom);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
 		}
 	}
 
-	private getFileNameToFetch(flowConfiguration: ConfigurationFlux): string {
+	private getFileNameToFetch(flow: Flux): string {
 		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
-		return flowConfiguration.nom
+		return flow.nom
 			.concat(PATH_SEPARATOR)
 			.concat(LATEST_FILE_NAME)
-			.concat(flowConfiguration.extensionFichierBrut);
+			.concat(flow.extensionFichierBrut);
 	}
 
 	private toReadableJson(internshipOffers: Array<UnJeune1Solution.OffreDeStage>): string {
@@ -76,32 +76,32 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		return JSON.stringify(internshipOffers, JSON_REPLACER, JSON_INDENTATION);
 	}
 
-	private async saveHistoryFile(flowConfiguration: Readonly<ConfigurationFlux>, temporaryFileName: string): Promise<void> {
-		const historyFileName = this.createHistoryFileName(flowConfiguration);
+	private async saveHistoryFile(flow: Readonly<Flux>, temporaryFileName: string): Promise<void> {
+		const historyFileName = this.createHistoryFileName(flow);
 		await this.saveOnMinio(historyFileName, temporaryFileName);
 	}
 
-	private async saveLatestFile(flowConfiguration: Readonly<ConfigurationFlux>, temporaryFileName: string): Promise<void> {
-		const latestFileName = this.createCloneFileName(flowConfiguration);
+	private async saveLatestFile(flow: Readonly<Flux>, temporaryFileName: string): Promise<void> {
+		const latestFileName = this.createCloneFileName(flow);
 		await this.saveOnMinio(latestFileName, temporaryFileName);
 	}
 
-	private createCloneFileName(flowConfiguration: Readonly<ConfigurationFlux>): string {
+	private createCloneFileName(flow: Readonly<Flux>): string {
 		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
-		return flowConfiguration.nom
+		return flow.nom
 			.concat(PATH_SEPARATOR)
 			.concat(LATEST_FILE_NAME)
-			.concat(flowConfiguration.extensionFichierTransforme);
+			.concat(flow.extensionFichierTransforme);
 	}
 
-	private createHistoryFileName(flowConfiguration: Readonly<ConfigurationFlux>): string {
+	private createHistoryFileName(flow: Readonly<Flux>): string {
 		const { PATH_SEPARATOR } = MinioOffreDeStageRepository;
-		return flowConfiguration.nom
+		return flow.nom
 			.concat(PATH_SEPARATOR)
-			.concat(flowConfiguration.dossierHistorisation)
+			.concat(flow.dossierHistorisation)
 			.concat(PATH_SEPARATOR)
 			.concat(this.dateService.maintenant().toISOString())
-			.concat(flowConfiguration.extensionFichierTransforme);
+			.concat(flow.extensionFichierTransforme);
 	}
 
 	private async saveOnMinio(filePath: string, localFileNameIncludingPath: string): Promise<void> {

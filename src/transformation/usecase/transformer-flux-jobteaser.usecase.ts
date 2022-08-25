@@ -1,4 +1,4 @@
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
+import { Flux } from "@transformation/domain/flux";
 import { Jobteaser } from "@transformation/domain/jobteaser";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
@@ -11,12 +11,12 @@ export class TransformerFluxJobteaser implements Usecase {
 	) {
 	}
 
-	async executer<T>(configurationFlux: Readonly<ConfigurationFlux>): Promise<void | T> {
-		const contenuDuFlux = await this.offreDeStageRepository.recuperer<Jobteaser.Contenu>(configurationFlux);
+	async executer<T>(flux: Readonly<Flux>): Promise<void | T> {
+		const contenuDuFlux = await this.offreDeStageRepository.recuperer<Jobteaser.Contenu>(flux);
 
 		const contenuTransforme: Array<UnJeune1Solution.OffreDeStage>
 			= contenuDuFlux.jobs.job.map((job: Jobteaser.OffreDeStage) => this.convertirOffreDeStage.depuisJobteaser(job));
 
-		await this.offreDeStageRepository.sauvegarder(contenuTransforme, configurationFlux);
+		await this.offreDeStageRepository.sauvegarder(contenuTransforme, flux);
 	}
 }

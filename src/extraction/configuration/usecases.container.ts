@@ -1,4 +1,4 @@
-import { DateService } from "@extraction/domain/services/date.service";
+import { DateService } from "@shared/date.service";
 import { ExtraireFluxDomainService } from "@extraction/domain/services/extraire-flux.domain-service";
 import { ExtraireJobteaser } from "@extraction/usecase/extraire-jobteaser.usecase";
 import { ExtraireStagefrCompresse } from "@extraction/usecase/extraire-stagefr-compresse.usecase";

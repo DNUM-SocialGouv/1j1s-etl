@@ -2,7 +2,7 @@ import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
+import { Flux } from "@transformation/domain/flux";
 import { DateService } from "@shared/date.service";
 import { expect } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
@@ -18,7 +18,7 @@ import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 
-let config: ConfigurationFlux;
+let flux: Flux;
 let offresDeStage1Jeune1Solution: Array<UnJeune1Solution.OffreDeStage>;
 let offresDeStageStagefrDecompresse: Array<StagefrDecompresse.OffreDeStage>;
 
@@ -30,7 +30,7 @@ let usecase: TransformerFluxStagefrDecompresse;
 
 describe("TransformerFluxStagefrDecompresseTest", () => {
 	before(() => {
-		config = {
+		flux = {
 			nom: "stagefr-decompresse",
 			dossierHistorisation: "test",
 			extensionFichierBrut: ".xml",
@@ -57,7 +57,7 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 			offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 			offreDeStageRepository
 				.recuperer
-				.withArgs(config)
+				.withArgs(flux)
 				.resolves({ jobs: { job: offresDeStageStagefrDecompresse } });
 
 			dateService = stubInterface<DateService>(sinon);
@@ -74,10 +74,10 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 		});
 
 		it("je le sauvegarde au format 1Jeune1Solution", async () => {
-			await usecase.executer(config);
+			await usecase.executer(flux);
 
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-			expect(offreDeStageRepository.recuperer).to.have.been.calledWith({ ...config });
+			expect(offreDeStageRepository.recuperer).to.have.been.calledWith({ ...flux });
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledWith(offresDeStage1Jeune1Solution);
