@@ -7,12 +7,12 @@ import { DateService } from "@shared/date.service";
 import { expect } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
+import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 import {
 	TransformerFluxStagefrCompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { OffreDeStageStagefrCompresseFixtureBuilder } from "../fixture/offre-de-stage-stagefr-compresse.fixture-builder";
-import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 

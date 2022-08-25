@@ -11,9 +11,9 @@ export class LoadJobteaserTask implements Task {
 
 	async run(): Promise<void> {
 		try {
-			this.logger.info("Starting load of Jobteaser flow");
+			this.logger.info("Starting load of [jobteaser] flow");
 			await this.chargerJobteaser.executer();
-			this.logger.info("Ending load of Jobteaser flow");
+			this.logger.info("Ending load of [jobteaser] flow");
 		} catch (e) {
 			this.logger.error(e);
 		}

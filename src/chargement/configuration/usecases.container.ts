@@ -1,4 +1,5 @@
 import { ChargerFluxJobteaser } from "@chargement/usecase/charger-flux-jobteaser.usecase";
+import { ChargerFluxStagefrCompresse } from "@chargement/usecase/charger-flux-stagefr-compresse.usecase";
 import { ChargerFluxStagefrDecompresse } from "@chargement/usecase/charger-flux-stagefr-decompresse.usecase";
 import {
 	ChargerOffresDeStageDomainService,
@@ -6,7 +7,6 @@ import {
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@chargement/infrastructure/gateway";
 import { UsecaseContainer } from "@chargement/usecase";
-import { ChargerFluxStagefrCompresse } from "@chargement/usecase/charger-flux-stagefr-compresse.usecase";
 
 export class UsecaseContainerFactory {
 	static create(gateways: GatewayContainer): UsecaseContainer {
@@ -18,8 +18,8 @@ export class UsecaseContainerFactory {
 
 		return {
 			chargerFluxJobteaser: new ChargerFluxJobteaser(chargerOffresDeStageDomainService),
-			chargerFluxStagefrDecompresse: new ChargerFluxStagefrDecompresse(chargerOffresDeStageDomainService),
 			chargerFluxStagefrCompresse: new ChargerFluxStagefrCompresse(chargerOffresDeStageDomainService),
+			chargerFluxStagefrDecompresse: new ChargerFluxStagefrDecompresse(chargerOffresDeStageDomainService),
 		};
 	}
 }
