@@ -1,8 +1,7 @@
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
-import { DateService } from "@shared/date.service";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
-import { Usecase } from "@shared/usecase";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
+import { Usecase } from "@shared/usecase";
 import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 
 
