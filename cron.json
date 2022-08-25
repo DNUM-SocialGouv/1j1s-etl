@@ -15,6 +15,14 @@
     {
       "command": "45 6 * * * npm run cli -- -a load -f stagefr-decompresse",
       "size": "L"
+    },
+    {
+      "command": "30 6 * * * npm run cli -- -a transform -f stagefr-compresse",
+      "size": "L"
+    },
+    {
+      "command": "45 6 * * * npm run cli -- -a load -f stagefr-compresse",
+      "size": "L"
     }
   ]
 }
