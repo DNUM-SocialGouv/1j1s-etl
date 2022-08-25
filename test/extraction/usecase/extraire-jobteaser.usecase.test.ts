@@ -1,9 +1,9 @@
-import { ConfigurationFlux } from "@extraction/domain/configuration-flux";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { ExtraireFluxDomainService } from "@extraction/domain/services/extraire-flux.domain-service";
 import { ExtraireJobteaser } from "@extraction/usecase/extraire-jobteaser.usecase";
+import { Flux } from "@extraction/domain/flux";
 
-const configurationFlux: Readonly<ConfigurationFlux> = {
+const flux: Readonly<Flux> = {
 	dossierHistorisation: "history",
 	extension: ".xml",
 	nom: "jobteaser",
@@ -20,10 +20,10 @@ describe("ExtraireJobteaserTest", () => {
 
 	context("Lorsque j'extrais le flux en provenant de Jobteaser", () => {
 		it("j'extrais le flux", async () => {
-			await extraireJobteaser.executer({ ...configurationFlux });
+			await extraireJobteaser.executer({ ...flux });
 
 			expect(extraireFluxDomainService.extraire).to.have.been.calledOnce;
-			expect(extraireFluxDomainService.extraire).to.have.been.calledWith(configurationFlux);
+			expect(extraireFluxDomainService.extraire).to.have.been.calledWith(flux);
 		});
 	});
 });

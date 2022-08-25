@@ -2,15 +2,15 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import sinon from "sinon";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { ConfigurationFlux } from "@extraction/domain/configuration-flux";
-import { DateService } from "@extraction/domain/services/date.service";
+import { DateService } from "@shared/date.service";
 import { ExtraireFluxDomainService } from "@extraction/domain/services/extraire-flux.domain-service";
+import { Flux } from "@extraction/domain/flux";
 import { FluxClient } from "@extraction/domain/flux.client";
 import { StorageClient } from "@extraction/domain/storage.client";
 
 const date = new Date("2022-01-01T00:00:00Z");
 const fluxContent = "<toto>Le Contenu</toto>";
-let configurationFlux: ConfigurationFlux;
+let flux: Flux;
 let fluxClient: StubbedType<FluxClient>;
 let storageClient: StubbedType<StorageClient>;
 let dateService: StubbedClass<DateService>;
@@ -29,7 +29,7 @@ describe("ExtraireFluxTest", () => {
 			dateService
 		);
 
-		configurationFlux = {
+		flux = {
 			dossierHistorisation: "history",
 			extension: ".xml",
 			nom: "jobteaser",
@@ -39,9 +39,9 @@ describe("ExtraireFluxTest", () => {
 
 	context("Lorsque j'extrais un flux avec la bonne configuration", () => {
 		it("je stocke le flux extrait", async () => {
-			const { nom, dossierHistorisation, extension, url } = configurationFlux;
+			const { nom, dossierHistorisation, extension, url } = flux;
 
-			await usecase.extraire(configurationFlux);
+			await usecase.extraire(flux);
 
 			expect(fluxClient.recuperer).to.have.been.calledOnce;
 			expect(fluxClient.recuperer).to.have.been.calledWith(url);
@@ -62,7 +62,7 @@ describe("ExtraireFluxTest", () => {
 		});
 
 		it("je laisse passer les erreurs", async () => {
-			await expect(usecase.extraire(configurationFlux)).to.be.rejectedWith(
+			await expect(usecase.extraire(flux)).to.be.rejectedWith(
 				Error,
 				"Oops! Something went wrong :-("
 			);

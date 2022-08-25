@@ -1,9 +1,8 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Client } from "minio";
 import sinon from "sinon";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Configuration } from "@configuration/configuration";
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
@@ -11,10 +10,11 @@ import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { Flux } from "@transformation/domain/flux";
 import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
-import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
+import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;
@@ -23,9 +23,9 @@ let latestFileNameIncludingPath: string;
 let historyFileNameIncludingPath: string;
 
 let configuration: StubbedType<Configuration>;
-let configurationFlux: ConfigurationFlux;
 let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
+let flux: Flux;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
 let dateService: StubbedClass<DateService>;
@@ -36,7 +36,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		latestFileNameIncludingPath = "source/latest.json";
 		historyFileNameIncludingPath = "source/history/2022-01-01T00:00:00.000Z.json";
 		fileContent = "<toto>contenu du fichier</toto>";
-		configurationFlux = {
+		flux = {
 			nom: "source",
 			extensionFichierBrut: ".xml",
 			extensionFichierTransforme: ".json",
@@ -71,7 +71,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 	context("Lorsque j'écris le contenu d'un fichier qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
 		it("j'écris le contenu d'un fichier", async () => {
-			await minioOffreDeStageRepository.sauvegarder(offresDeStage, configurationFlux);
+			await minioOffreDeStageRepository.sauvegarder(offresDeStage, flux);
 
 			expect(uuidClient.generate).to.have.been.calledOnce;
 
@@ -102,7 +102,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, configurationFlux)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, flux)).to.be.rejectedWith(
 				EcritureFluxErreur,
 				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue"
 			);
@@ -116,7 +116,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, configurationFlux)).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, flux)).to.be.rejectedWith(
 				EcritureFluxErreur,
 				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue"
 			);

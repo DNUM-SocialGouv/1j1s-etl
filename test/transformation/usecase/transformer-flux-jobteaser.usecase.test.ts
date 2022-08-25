@@ -3,8 +3,8 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { AssainisseurDeTexte } from "@transformation/domain/assainisseur-de-texte";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { DateService } from "@shared/date.service";
+import { Flux } from "@transformation/domain/flux";
 import { Jobteaser } from "@transformation/domain/jobteaser";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import {
@@ -19,7 +19,7 @@ const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;
 let nomDuFlux: string;
 let dossierDHistorisation: string;
-let configurationFlux: ConfigurationFlux;
+let flux: Flux;
 
 let dateService: StubbedClass<DateService>;
 let offreDeStageRepository: StubbedType<OffreDeStageRepository>;
@@ -50,7 +50,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -96,7 +96,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
 				expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
@@ -133,7 +133,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -183,7 +183,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.called;
 			});
@@ -218,7 +218,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -267,7 +267,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.called;
 				expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
@@ -304,7 +304,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -353,7 +353,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.called;
 				expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
@@ -384,7 +384,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -434,7 +434,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.called;
 				expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
@@ -469,7 +469,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -519,7 +519,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.called;
 				expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
@@ -554,7 +554,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				configurationFlux = {
+				flux = {
 					dossierHistorisation: dossierDHistorisation,
 					nom: nomDuFlux,
 					extensionFichierBrut: ".xml",
@@ -603,7 +603,7 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 
 			it("je le sauvegarde dans le format attendu", async () => {
-				await transformFluxJobteaser.executer(configurationFlux);
+				await transformFluxJobteaser.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.called;
 				expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
