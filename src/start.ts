@@ -7,7 +7,7 @@ import { ConfigurationFactory } from "@configuration/configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
 import { LoggerFactory } from "@shared/logger.factory";
 import { MinioAdminStorageRepository } from "@shared/gateway/minio-admin-storage.repository";
-import { Setup } from "./setup";
+import { Setup } from "@configuration/setup";
 
 const configuration = ConfigurationFactory.create();
 const applicationLogger = LoggerFactory.create(configuration);

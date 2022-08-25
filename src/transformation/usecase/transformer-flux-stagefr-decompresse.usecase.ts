@@ -1,4 +1,4 @@
-import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
+import { Flux } from "@transformation/domain/flux";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { Usecase } from "@shared/usecase";
@@ -12,12 +12,12 @@ export class TransformerFluxStagefrDecompresse implements Usecase {
 	) {
 	}
 
-	async executer(configurationFlux: Readonly<ConfigurationFlux>): Promise<void> {
-		const contenu = await this.offreDeStageRepository.recuperer<StagefrDecompresse.Contenu>(configurationFlux);
+	async executer(flux: Readonly<Flux>): Promise<void> {
+		const contenu = await this.offreDeStageRepository.recuperer<StagefrDecompresse.Contenu>(flux);
 
 		const contenuTransforme = this.transformerVers1Jeune1Solution(contenu);
 
-		await this.offreDeStageRepository.sauvegarder(contenuTransforme, configurationFlux);
+		await this.offreDeStageRepository.sauvegarder(contenuTransforme, flux);
 	}
 
 	private transformerVers1Jeune1Solution(contenu: StagefrDecompresse.Contenu): Array<UnJeune1Solution.OffreDeStage> {

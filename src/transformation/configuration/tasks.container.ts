@@ -1,18 +1,18 @@
 import { Configuration } from "@configuration/configuration";
 import { LoggerFactory } from "@shared/logger.factory";
-import { TransformFluxJobteaserTask } from "@transformation/infrastructure/tasks/transform-flux-jobteaser.task";
-import { 
-	TransformFluxStagefrCompressedTask, 
+import { TransformFlowJobteaserTask } from "@transformation/infrastructure/tasks/transform-flow-jobteaser.task";
+import {
+	TransformFluxStagefrCompressedTask,
 } from "@transformation/infrastructure/tasks/transform-flux-stagefr-compressed.task";
 import {
-	TransformFluxStagefrUncompressedTask,
-} from "@transformation/infrastructure/tasks/transform-flux-stagefr-uncompressed.task";
+	TransformFlowStagefrUncompressedTask,
+} from "@transformation/infrastructure/tasks/transform-flow-stagefr-uncompressed.task";
 import { UsecaseContainer } from "@transformation/usecase";
 
 export type TaskContainer = {
-	jobteaser: TransformFluxJobteaserTask
-	"stagefr-decompresse": TransformFluxStagefrUncompressedTask
+	jobteaser: TransformFlowJobteaserTask
 	"stagefr-compresse": TransformFluxStagefrCompressedTask
+	"stagefr-decompresse": TransformFlowStagefrUncompressedTask
 }
 
 export class TaskContainerFactory {
@@ -22,13 +22,13 @@ export class TaskContainerFactory {
 		const stagefrDecompresseLogger = LoggerFactory.create(configuration.STAGEFR_UNCOMPRESSED);
 
 		return {
-			jobteaser: new TransformFluxJobteaserTask(configuration, usecases.transformerFluxJobteaser, jobteaserLogger),
+			jobteaser: new TransformFlowJobteaserTask(configuration, usecases.transformerFluxJobteaser, jobteaserLogger),
 			"stagefr-compresse": new TransformFluxStagefrCompressedTask(
 				configuration,
 				usecases.transformerFluxStagefrCompresse,
 				stagefrCompresseLogger
 			),
-			"stagefr-decompresse": new TransformFluxStagefrUncompressedTask(
+			"stagefr-decompresse": new TransformFlowStagefrUncompressedTask(
 				configuration,
 				usecases.transformerFluxStagefrDecompresse,
 				stagefrDecompresseLogger
