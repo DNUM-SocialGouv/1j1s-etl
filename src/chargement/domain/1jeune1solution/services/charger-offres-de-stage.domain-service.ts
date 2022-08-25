@@ -162,16 +162,4 @@ export class ChargerOffresDeStageDomainService {
 	): string {
 		return `${nomDuFlux}/${nomDuFichier.toISOString()}_${type}${extensionDuFichier}`;
 	}
-
-	// private includes(identifiantSource: string, identifiantsOffresExistantes: Array<string>): boolean {
-	// 	const logger = LoggerFactory.create({ NAME: "stagefr-decompresse", LOGGER_LOG_LEVEL: "debug" } as TaskConfiguration);
-	// 	for (let idExistant of identifiantsOffresExistantes) {
-	// 		logger.debug({ currentIdTested: identifiantSource, currentIteration: idExistant });
-	// 		if (idExistant === identifiantSource) {
-	// 			return true;
-	// 		}
-	// 	}
-	//
-	// 	return false;
-	// }
 }

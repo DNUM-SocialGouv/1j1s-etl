@@ -1,13 +1,13 @@
 import { Configuration } from "@configuration/configuration";
 import { LoggerFactory } from "@shared/logger.factory";
 import { TransformFluxJobteaserTask } from "@transformation/infrastructure/tasks/transform-flux-jobteaser.task";
-import { UsecaseContainer } from "@transformation/usecase";
 import { 
 	TransformFluxStagefrCompressedTask, 
 } from "@transformation/infrastructure/tasks/transform-flux-stagefr-compressed.task";
 import {
 	TransformFluxStagefrUncompressedTask,
 } from "@transformation/infrastructure/tasks/transform-flux-stagefr-uncompressed.task";
+import { UsecaseContainer } from "@transformation/usecase";
 
 export type TaskContainer = {
 	jobteaser: TransformFluxJobteaserTask

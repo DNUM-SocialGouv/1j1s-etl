@@ -11,9 +11,9 @@ export class LoadStagefrUncompressedTask implements Task {
 
 	async run(): Promise<void> {
 		try {
-			this.logger.info("Starting load of Stagefr Uncompressed flow");
+			this.logger.info("Starting load of [stagefr-decompresse] flow");
 			await this.chargerStagefrDecompresse.executer();
-			this.logger.info("Ending load of Stagefr Uncompressed flow");
+			this.logger.info("Ending load of [stagefr-decompresse] flow");
 		} catch (e) {
 			this.logger.error(e);
 		}

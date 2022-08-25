@@ -12,7 +12,6 @@ import { Logger } from "@shared/configuration/logger";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 
-
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
 	static NOM_DU_FICHIER_A_RECUPERER = "latest";

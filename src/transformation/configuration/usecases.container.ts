@@ -1,14 +1,16 @@
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { Jobteaser } from "@transformation/domain/jobteaser";
+import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
+import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
+import { 
+	TransformerFluxStagefrCompresse,
+} from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
-import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { UsecaseContainer } from "@transformation/usecase";
-import { TransformerFluxStagefrCompresse } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
-import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 
 export class UsecaseContainerFactory {
 	static create(gateways: GatewayContainer): UsecaseContainer {

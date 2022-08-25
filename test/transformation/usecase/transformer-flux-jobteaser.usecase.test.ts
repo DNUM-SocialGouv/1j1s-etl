@@ -611,4 +611,3 @@ describe("TransformerFluxJobteaserTest", () => {
 		});
 	});
 });
-

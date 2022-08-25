@@ -1,8 +1,8 @@
 import { ConfigurationFlux } from "@transformation/domain/configuration-flux";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
+import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { Usecase } from "@shared/usecase";
-import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 
 
 export class TransformerFluxStagefrCompresse implements Usecase {

@@ -5,11 +5,8 @@ import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
 export interface HttpClient {
 	delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void>;
-
 	getAll(source: string): Promise<Array<OffreDeStageHttp>>;
-
 	post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void>;
-
 	put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void>;
 }
 
