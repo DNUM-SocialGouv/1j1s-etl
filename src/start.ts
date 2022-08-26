@@ -10,7 +10,10 @@ import { MinioAdminStorageRepository } from "@shared/gateway/minio-admin-storage
 import { Setup } from "@configuration/setup";
 
 const configuration = ConfigurationFactory.create();
-const applicationLogger = LoggerFactory.create(configuration);
+const applicationLogger = LoggerFactory.create({
+	name: configuration.APPLICATION_LOGGER_NAME,
+	logLevel: configuration.APPLICATION_LOGGER_LOG_LEVEL,
+});
 const gatewayContainer = GatewayContainerFactory.create(configuration);
 const adminStorageClient = new MinioAdminStorageRepository(gatewayContainer.minioClient);
 const setup = new Setup(configuration, applicationLogger, adminStorageClient);

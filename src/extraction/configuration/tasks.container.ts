@@ -1,4 +1,4 @@
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@extraction/configuration/configuration";
 import { ExtractFluxJobteaserTask } from "@extraction/infrastructure/tasks/extract-flux-jobteaser.task";
 import { ExtractFluxStagefrCompressedTask } from "@extraction/infrastructure/tasks/extract-flux-stagefr-compressed.task";
 import {
@@ -15,12 +15,21 @@ export type TaskContainer = {
 
 export class TaskContainerFactory {
 	static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
-		const jobteaserLogger = LoggerFactory.create(configuration.JOBTEASER);
-		const stagefrCompressedLogger = LoggerFactory.create(configuration.STAGEFR_COMPRESSED);
-		const stagefrUncompressedLogger = LoggerFactory.create(configuration.STAGEFR_UNCOMPRESSED);
+		const jobteaserLogger = LoggerFactory.create({
+			logLevel: configuration.JOBTEASER.LOGGER_LOG_LEVEL,
+			name: configuration.JOBTEASER.NAME
+		});
+		const stagefrCompressedLogger = LoggerFactory.create({
+			logLevel: configuration.STAGEFR_COMPRESSED.LOGGER_LOG_LEVEL,
+			name: configuration.STAGEFR_COMPRESSED.NAME
+		});
+		const stagefrUncompressedLogger = LoggerFactory.create({
+			logLevel: configuration.STAGEFR_UNCOMPRESSED.LOGGER_LOG_LEVEL,
+			name: configuration.STAGEFR_UNCOMPRESSED.NAME
+		});
 
 		return {
-			jobteaser: new ExtractFluxJobteaserTask(configuration, usecases.extraireJobteaser, jobteaserLogger),
+			jobteaser: new ExtractFluxJobteaserTask(usecases.extraireJobteaser, configuration, jobteaserLogger),
 			"stagefr-compresse": new ExtractFluxStagefrCompressedTask(usecases.extraireStagefrCompresse, configuration, stagefrCompressedLogger),
 			"stagefr-decompresse": new ExtractFluxStagefrUncompressedTask(usecases.extraireStagefrDecompresse, configuration, stagefrUncompressedLogger),
 		};

@@ -1,4 +1,4 @@
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@transformation/configuration/configuration";
 import { Flux } from "@transformation/domain/flux";
 import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/gateway/task";
@@ -8,8 +8,8 @@ import {
 
 export class TransformFlowStagefrUncompressedTask implements Task {
 	constructor(
-		private readonly configuration: Configuration,
 		private readonly usecase: TransformerFluxStagefrDecompresse,
+		private readonly configuration: Configuration,
 		private readonly logger: Logger
 	) {
 	}

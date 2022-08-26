@@ -2,7 +2,7 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { AuthenticationClient } from "@chargement/infrastructure/gateway/authentication.client";
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@chargement/configuration/configuration";
 import { GatewayContainer } from "@chargement/infrastructure/gateway";
 import { LoggerFactory } from "@shared/logger.factory";
 import {
@@ -41,7 +41,10 @@ export class GatewayContainerFactory {
 			authenticationClient,
 			configuration.STRAPI.OFFRE_DE_STAGE_URL
 		);
-		const httpClientLogger = LoggerFactory.create(configuration);
+		const httpClientLogger = LoggerFactory.create({
+			name: "http-client",
+			logLevel: "debug"
+		});
 
 		return {
 			offreDeStageRepository: this.buildOffreDeStageRepository(

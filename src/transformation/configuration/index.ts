@@ -1,7 +1,7 @@
 import "dotenv/config";
 import "module-alias/register";
 
-import { ConfigurationFactory } from "@configuration/configuration";
+import { ConfigurationFactory } from "@transformation/configuration/configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
 import { TaskContainer, TaskContainerFactory } from "@transformation/configuration/tasks.container";
 import { UsecaseContainerFactory } from "@transformation/configuration/usecases.container";
