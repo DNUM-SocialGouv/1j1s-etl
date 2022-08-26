@@ -1,6 +1,6 @@
 import { Client } from "minio";
 
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@transformation/configuration/configuration";
 import { ContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";

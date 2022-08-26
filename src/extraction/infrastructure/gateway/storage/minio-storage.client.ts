@@ -1,6 +1,6 @@
 import { Client } from "minio";
 
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@extraction/configuration/configuration";
 import { EcritureFluxErreur, StorageClient } from "@extraction/domain/storage.client";
 import { FileSystemClient } from "@extraction/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@extraction/infrastructure/gateway/common/uuid.generator";

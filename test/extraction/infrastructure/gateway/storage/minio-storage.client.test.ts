@@ -3,7 +3,7 @@ import { Client } from "minio";
 import sinon from "sinon";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@extraction/configuration/configuration";
 import { EcritureFluxErreur } from "@extraction/domain/storage.client";
 import { FileSystemClient } from "@extraction/infrastructure/gateway/common/node-file-system.client";
 import { MinioStorageClient } from "@extraction/infrastructure/gateway/storage/minio-storage.client";

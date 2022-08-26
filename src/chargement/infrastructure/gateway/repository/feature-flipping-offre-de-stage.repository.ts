@@ -1,16 +1,14 @@
-import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import { Configuration } from "@configuration/configuration";
 import { Client } from "minio";
+
+import { Configuration } from "@chargement/configuration/configuration";
 import { FileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
-import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import OffreDeStageAPublier = UnJeune1Solution.OffreDeStageAPublier;
-import OffreDeStageASupprimer = UnJeune1Solution.OffreDeStageASupprimer;
-import OffreDeStageAMettreAJour = UnJeune1Solution.OffreDeStageAMettreAJour;
+import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
+import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 
 export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
@@ -34,11 +32,11 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		let offresDeStageASupprimerCount = 0;
 
 		for (const offreDeStage of offresDeStages) {
-			if (offreDeStage instanceof OffreDeStageAPublier) {
+			if (offreDeStage instanceof UnJeune1Solution.OffreDeStageAPublier) {
 				offresDeStageAPublierCount++;
-			} else if (offreDeStage instanceof OffreDeStageAMettreAJour) {
+			} else if (offreDeStage instanceof UnJeune1Solution.OffreDeStageAMettreAJour) {
 				offresDeStageAMettreAJourCount++;
-			} else if (offreDeStage instanceof OffreDeStageASupprimer) {
+			} else if (offreDeStage instanceof UnJeune1Solution.OffreDeStageASupprimer) {
 				offresDeStageASupprimerCount++;
 			}
 		}

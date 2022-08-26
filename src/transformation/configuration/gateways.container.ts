@@ -2,7 +2,7 @@ import { Client } from "minio";
 import { XMLParser } from "fast-xml-parser";
 import TurndownService from "turndown";
 
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@transformation/configuration/configuration";
 import { CountryToIso } from "@transformation/infrastructure/gateway/country-to-iso";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/html-to-markdown.sanitizer";

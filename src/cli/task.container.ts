@@ -1,4 +1,3 @@
-import { Configuration } from "@configuration/configuration";
 import { Task } from "@shared/gateway/task";
 import { TaskContainer as ExtractTasks } from "@extraction/configuration/tasks.container";
 import { TaskContainer as LoadTasks } from "@chargement/configuration/tasks.container";
@@ -9,7 +8,7 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	static create(configuration: Configuration, tasks: { extract: ExtractTasks, transform: TransformTasks, load: LoadTasks }): TaskContainer {
+	static create(tasks: { extract: ExtractTasks; transform: TransformTasks; load: LoadTasks }): TaskContainer {
 		return {
 			extract: {
 				jobteaser: tasks.extract.jobteaser,

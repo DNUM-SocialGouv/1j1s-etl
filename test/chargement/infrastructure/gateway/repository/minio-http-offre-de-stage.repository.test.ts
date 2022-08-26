@@ -2,7 +2,7 @@ import { Client } from "minio";
 import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@chargement/configuration/configuration";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import {
 	EcritureFluxErreur,

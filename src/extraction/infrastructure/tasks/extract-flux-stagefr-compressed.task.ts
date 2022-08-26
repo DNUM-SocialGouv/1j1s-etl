@@ -1,4 +1,4 @@
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@extraction/configuration/configuration";
 import { ExtraireStagefrCompresse } from "@extraction/usecase/extraire-stagefr-compresse.usecase";
 import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/gateway/task";

@@ -1,6 +1,6 @@
 import { Client } from "minio";
 
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@chargement/configuration/configuration";
 import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,
