@@ -14,7 +14,7 @@ const extractTasks = ExtractionModule.export();
 const transformTasks = TransformationModule.export();
 const loadTasks = ChargementModule.export();
 
-const tasks = TaskContainerFactory.create(configuration, { extract: extractTasks, transform: transformTasks, load: loadTasks });
+const tasks = TaskContainerFactory.create({ extract: extractTasks, transform: transformTasks, load: loadTasks });
 const { a: actionArg, f: flux } = CliConfiguration.create(configuration);
 
 const action = tasks[actionArg];

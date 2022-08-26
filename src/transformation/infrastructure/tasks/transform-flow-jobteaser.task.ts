@@ -1,4 +1,4 @@
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@transformation/configuration/configuration";
 import { Flux } from "@transformation/domain/flux";
 import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/gateway/task";
@@ -6,8 +6,8 @@ import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-fl
 
 export class TransformFlowJobteaserTask implements Task {
 	constructor(
-		private readonly configuration: Configuration,
 		private readonly usecase: TransformerFluxJobteaser,
+		private readonly configuration: Configuration,
 		private readonly logger: Logger
 	) {
 	}
