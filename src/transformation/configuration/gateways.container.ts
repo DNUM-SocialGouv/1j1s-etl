@@ -4,13 +4,13 @@ import TurndownService from "turndown";
 
 import { Configuration } from "@transformation/configuration/configuration";
 import { CountryToIso } from "@transformation/infrastructure/gateway/country-to-iso";
+import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/html-to-markdown.sanitizer";
 import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { NodeUuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { XmlContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
-import { DateService } from "@shared/date.service";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {

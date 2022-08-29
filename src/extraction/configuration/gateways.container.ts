@@ -4,7 +4,7 @@ import { Client } from "minio";
 import { BasicFlowHttpClient } from "@extraction/infrastructure/gateway/client/basic-flow-http.client";
 import { CompressedFlowHttpClient } from "@extraction/infrastructure/gateway/client/compressed-flow-http.client";
 import { GatewayContainer } from "@extraction/infrastructure/gateway";
-import { MinioHttpFluxRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flux.repository";
+import { MinioHttpFlowRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { OctetStreamFlowHttpClient } from "@extraction/infrastructure/gateway/client/octet-stream-flow-http.client";
@@ -44,7 +44,7 @@ export class GatewayContainerFactory {
 
 		return {
 			repositories: {
-				flowRepository: new MinioHttpFluxRepository(
+				flowRepository: new MinioHttpFlowRepository(
 					configuration,
 					minioClient,
 					fileSystemClient,

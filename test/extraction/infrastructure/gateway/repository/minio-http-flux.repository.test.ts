@@ -8,7 +8,7 @@ import { EcritureFluxErreur } from "@extraction/domain/flux.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FlowStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
 import { Flux } from "@extraction/domain/flux";
-import { MinioHttpFluxRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flux.repository";
+import { MinioHttpFlowRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 const localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
@@ -21,7 +21,7 @@ let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
 let flowStrategy: StubbedType<FlowStrategy>;
-let flowRepository: MinioHttpFluxRepository;
+let flowRepository: MinioHttpFlowRepository;
 
 describe("MinioHttpFluxRepositoryTest", () => {
 	beforeEach(() => {
@@ -48,7 +48,7 @@ describe("MinioHttpFluxRepositoryTest", () => {
 		flowStrategy = stubInterface<FlowStrategy>(sinon);
 		flowStrategy.get.withArgs(flow).resolves("<some>contenu</some>");
 
-		flowRepository = new MinioHttpFluxRepository(
+		flowRepository = new MinioHttpFlowRepository(
 			configuration,
 			minioStub,
 			fileSystemClient,

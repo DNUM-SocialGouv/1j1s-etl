@@ -4,7 +4,7 @@ import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/infrastructure/task/task";
 import { TransformerFluxStagefrCompresse } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 
-export class TransformFluxStagefrCompressedTask implements Task {
+export class TransformFlowStagefrCompressedTask implements Task {
 	constructor(
 		private readonly usecase: TransformerFluxStagefrCompresse,
 		private readonly configuration: Configuration,
