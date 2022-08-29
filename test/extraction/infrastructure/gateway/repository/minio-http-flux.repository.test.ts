@@ -4,25 +4,36 @@ import sinon from "sinon";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@extraction/configuration/configuration";
-import { EcritureFluxErreur } from "@extraction/domain/storage.client";
-import { FileSystemClient } from "@extraction/infrastructure/gateway/common/node-file-system.client";
-import { MinioStorageClient } from "@extraction/infrastructure/gateway/storage/minio-storage.client";
-import { UuidGenerator } from "@extraction/infrastructure/gateway/common/uuid.generator";
+import { EcritureFluxErreur } from "@extraction/domain/flux.repository";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { FlowStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
+import { Flux } from "@extraction/domain/flux";
+import { MinioHttpFluxRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flux.repository";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 const localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
-const fluxName = "fluxName";
+let flow: Flux;
+
 let fileContent: string;
 let fileNameIncludingPath: string;
 let configuration: StubbedType<Configuration>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
-let storageClient: MinioStorageClient;
+let flowStrategy: StubbedType<FlowStrategy>;
+let flowRepository: MinioHttpFluxRepository;
 
-describe("MinioStorageClientTest", () => {
+describe("MinioHttpFluxRepositoryTest", () => {
 	beforeEach(() => {
 		fileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
 		fileContent = "<toto>contenu du fichier</toto>\n";
+
+		flow = {
+			nom: "flowName",
+			url: "http://some.url",
+			dossierHistorisation: "history",
+			extension: ".xml",
+		};
 
 		minioStub = stubClass(Client);
 
@@ -34,17 +45,21 @@ describe("MinioStorageClientTest", () => {
 		uuidClient = stubInterface<UuidGenerator>(sinon);
 		uuidClient.generate.returns("d184b5b1-75ad-44f0-8fe7-7c55208bf26c");
 
-		storageClient = new MinioStorageClient(
+		flowStrategy = stubInterface<FlowStrategy>(sinon);
+		flowStrategy.get.withArgs(flow).resolves("<some>contenu</some>");
+
+		flowRepository = new MinioHttpFluxRepository(
 			configuration,
 			minioStub,
 			fileSystemClient,
-			uuidClient
+			uuidClient,
+			flowStrategy
 		);
 	});
 
 	context("Lorsque j'écris le contenu d'un fichier qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
 		it("j'écris le contenu d'un fichier", async () => {
-			await storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName);
+			await flowRepository.enregistrer(fileNameIncludingPath, fileContent, flow);
 
 			expect(uuidClient.generate).to.have.been.calledOnce;
 			expect(fileSystemClient.write).to.have.been.calledOnce;
@@ -62,11 +77,12 @@ describe("MinioStorageClientTest", () => {
 
 	context("Lorsque j'écris le contenu d'un fichier compressé qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
 		beforeEach(() => {
+			flow.extension = ".xml.gz";
 			fileNameIncludingPath = fileNameIncludingPath.concat(".gz");
 		});
 
 		it("j'écris le contenu d'un fichier", async () => {
-			await storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName);
+			await flowRepository.enregistrer(fileNameIncludingPath, fileContent, flow, true);
 
 			expect(uuidClient.generate).to.have.been.calledOnce;
 			expect(fileSystemClient.write).to.have.been.calledOnce;
@@ -88,9 +104,9 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
+			await expect(flowRepository.enregistrer(fileNameIncludingPath, fileContent, flow)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${fluxName} n'a pas été extrait car une erreur d'écriture est survenue`
+				`Le flux ${flow.nom} n'a pas été extrait car une erreur d'écriture est survenue`
 			);
 		});
 	});
@@ -102,12 +118,23 @@ describe("MinioStorageClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(storageClient.enregistrer(fileNameIncludingPath, fileContent, fluxName)).to.be.rejectedWith(
+			await expect(flowRepository.enregistrer(fileNameIncludingPath, fileContent, flow)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${fluxName} n'a pas été extrait car une erreur d'écriture est survenue`
+				`Le flux ${flow.nom} n'a pas été extrait car une erreur d'écriture est survenue`
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
+		});
+	});
+
+	context("Lorsque je récupère le contenu d'un flux", () => {
+		it("je retourne son contenu", async () => {
+			const result = await flowRepository.recuperer(flow);
+
+			expect(result).to.eql("<some>contenu</some>");
+
+			expect(flowStrategy.get).to.have.been.calledOnce;
+			expect(flowStrategy.get).to.have.been.calledWith({ ...flow });
 		});
 	});
 });

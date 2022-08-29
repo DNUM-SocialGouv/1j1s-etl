@@ -1,6 +1,6 @@
 import { ExtraireFluxDomainService } from "@extraction/domain/services/extraire-flux.domain-service";
 import { Flux } from "@extraction/domain/flux";
-import { Usecase } from "@extraction/usecase/usecase";
+import { Usecase } from "@shared/usecase";
 
 export class ExtraireJobteaser implements Usecase {
 	constructor(private readonly extraireFluxDomainService: ExtraireFluxDomainService) {

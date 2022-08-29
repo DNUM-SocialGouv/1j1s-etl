@@ -5,12 +5,12 @@ import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,
 	RecupererOffresExistantesErreur,
-} from "@shared/gateway/offre-de-stage.repository";
-import { FileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
+} from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	static LOCAL_FILE_PATH = "./tmp/";
@@ -75,7 +75,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 				localFileNameIncludingPath
 			);
 			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-			return (<Array<UnJeune1Solution.AttributsDOffreDeStage>>JSON.parse(fileContent))
+			return (<Array<UnJeune1Solution.AttributsDOffreDeStage>>JSON.parse(fileContent.toString()))
 				.map((offreDeStage) => new UnJeune1Solution.OffreDeStage(offreDeStage));
 		} catch (e) {
 			throw new RecupererContenuErreur();

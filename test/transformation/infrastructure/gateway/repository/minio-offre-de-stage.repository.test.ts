@@ -7,7 +7,7 @@ import {
 	ContentParser,
 } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { Flux } from "@transformation/domain/flux";

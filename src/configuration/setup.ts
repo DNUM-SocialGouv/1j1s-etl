@@ -3,7 +3,7 @@ import {
 	LifecycleRule,
 	LifecycleRules,
 	MinioAdminStorageRepository,
-} from "@shared/gateway/minio-admin-storage.repository";
+} from "@shared/infrastructure/gateway/repository/minio-admin-storage.repository";
 import { Logger } from "@shared/configuration/logger";
 
 export class Setup {

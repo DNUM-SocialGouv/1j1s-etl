@@ -31,7 +31,7 @@ export type Configuration = {
 
 export class ConfigurationFactory {
 	static create(): Configuration {
-		const { getOrError, getOrDefault, toBoolean, toValidEnableStatus } = ConfigurationFactory;
+		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
 		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
 		const DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
 		const DEFAULT_RESULT_BUCKET_NAME = "result";
@@ -93,9 +93,5 @@ export class ConfigurationFactory {
 
 	static toBoolean(value: string): boolean {
 		return value.trim().toLowerCase() === "true";
-	}
-
-	static toValidEnableStatus(value: string): "Enabled" | "Disabled" {
-		return (value === "Enabled" || value === "Disabled") ? value : "Disabled";
 	}
 }

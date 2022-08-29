@@ -3,7 +3,7 @@ import { Client } from "minio";
 import { Configuration } from "@transformation/configuration/configuration";
 import { ContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/gateway/offre-de-stage.repository";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { Flux } from "@transformation/domain/flux";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
@@ -21,7 +21,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		private readonly configuration: Configuration,
 		private readonly minioClient: Client,
 		private readonly fileSystemClient: FileSystemClient,
-		private readonly uuidClient: UuidGenerator,
+		private readonly uuidGenerator: UuidGenerator,
 		private readonly contentParserRepository: ContentParser,
 		private readonly dateService: DateService
 	) {
@@ -113,6 +113,6 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	}
 
 	private generateFileName(): string {
-		return this.uuidClient.generate();
+		return this.uuidGenerator.generate();
 	}
 }

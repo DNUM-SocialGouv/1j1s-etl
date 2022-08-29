@@ -1,11 +1,11 @@
-import { FluxClient } from "@extraction/domain/flux.client";
 import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
+import { FlowClient } from "@extraction/infrastructure/gateway/client/flow.strategy";
 
-export class OctetStreamFlowHttpClient implements FluxClient {
+export class OctetStreamFlowHttpClient implements FlowClient {
     constructor(private readonly octetStreamHttpClient: OctetStreamHttpClient) {
     }
 
-    async recuperer(url: string): Promise<string> {
+    async fetch(url: string): Promise<string> {
         return (await this.octetStreamHttpClient.readStream(url)).toString();
     }
 }
