@@ -2,7 +2,7 @@ import { Configuration } from "@configuration/configuration";
 import {
 	LifecycleRule,
 	LifecycleRules,
-	MinioAdminStorageRepository
+	MinioAdminStorageRepository,
 } from "@shared/gateway/minio-admin-storage.repository";
 import { Logger } from "@shared/configuration/logger";
 
@@ -58,8 +58,8 @@ export class Setup {
 			this.logger.info({
 				summary: {
 					rulesToCreate: [rulesToCreateOnTransformationBucket, rulesToCreateOnLoadingBucket],
-					existingRules: [existingRulesOnTransformationBucket, existingRulesOnLoadingBucket]
-				}
+					existingRules: [existingRulesOnTransformationBucket, existingRulesOnLoadingBucket],
+				},
 			});
 		} catch (e) {
 			this.logger.error({ reason: Setup.BUCKET_CREATION_FAILURE_MESSAGE });
@@ -69,7 +69,7 @@ export class Setup {
 		}
 	}
 
-	private createRules(flows: Array<string>, isInsideDirectory: boolean = false): LifecycleRules {
+	private createRules(flows: Array<string>, isInsideDirectory = false): LifecycleRules {
 		const rules: Array<LifecycleRule> = [];
 
 		for (const flow of flows) {
