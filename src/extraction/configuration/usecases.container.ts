@@ -11,20 +11,17 @@ export class UsecaseContainerFactory {
 		const dateService = new DateService();
 
 		const extraireFluxDomainService = new ExtraireFluxDomainService(
-			gateways.repositories.fluxClient,
-			gateways.storages.storageClient,
+			gateways.repositories.flowRepository,
 			dateService
 		);
 
 		const extraireFluxCompresseDomainService = new ExtraireFluxDomainService(
-			gateways.repositories.compressedFluxClient,
-			gateways.storages.storageClient,
+			gateways.repositories.flowRepository,
 			dateService,
 		);
 
 		const extraireFluxDeDonneesContinuDomainService = new ExtraireFluxDomainService(
-			gateways.repositories.octetStreamFlowHttpClient,
-			gateways.storages.storageClient,
+			gateways.repositories.flowRepository,
 			dateService,
 		);
 

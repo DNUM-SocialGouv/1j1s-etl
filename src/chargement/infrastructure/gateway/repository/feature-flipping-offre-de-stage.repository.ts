@@ -1,14 +1,14 @@
 import { Client } from "minio";
 
 import { Configuration } from "@chargement/configuration/configuration";
-import { FileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStageRepository {
 	static NOM_DU_FICHIER_A_RECUPERER = "latest";

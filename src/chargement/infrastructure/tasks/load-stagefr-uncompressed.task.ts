@@ -1,6 +1,6 @@
 import { ChargerFluxStagefrDecompresse } from "@chargement/usecase/charger-flux-stagefr-decompresse.usecase";
 import { Logger } from "@shared/configuration/logger";
-import { Task } from "@shared/gateway/task";
+import { Task } from "@shared/infrastructure/task/task";
 
 export class LoadStagefrUncompressedTask implements Task {
 	constructor(

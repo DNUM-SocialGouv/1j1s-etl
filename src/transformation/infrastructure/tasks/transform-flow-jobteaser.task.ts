@@ -1,7 +1,7 @@
 import { Configuration } from "@transformation/configuration/configuration";
 import { Flux } from "@transformation/domain/flux";
 import { Logger } from "@shared/configuration/logger";
-import { Task } from "@shared/gateway/task";
+import { Task } from "@shared/infrastructure/task/task";
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
 
 export class TransformFlowJobteaserTask implements Task {

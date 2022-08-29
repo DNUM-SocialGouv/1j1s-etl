@@ -1,11 +1,11 @@
 import sinon from "sinon";
 
-import { CompressedFlowHttpClient } from "@extraction/infrastructure/gateway/repository/compressed-flow-http.client";
+import { CompressedFlowHttpClient } from "@extraction/infrastructure/gateway/client/compressed-flow-http.client";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { LectureFluxErreur } from "@extraction/domain/flux.client";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { UnzipClient } from "@extraction/infrastructure/gateway/common/unzip.client";
 import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
+import { LectureFluxErreur } from "@extraction/domain/flux.repository";
 
 const contenuDecompresse = "<toto>Contenu du fichier</toto>";
 const urlDuFlux = "https://some.url.xml.gz";
@@ -32,7 +32,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je retourne son contenu décompressé", async () => {
-			const result = await compressedFluxHttpClient.recuperer(urlDuFlux);
+			const result = await compressedFluxHttpClient.fetch(urlDuFlux);
 
 			expect(result).to.eql(contenuDecompresse);
 
@@ -50,7 +50,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je laisse passe une erreur", async () => {
-			await expect(compressedFluxHttpClient.recuperer(urlDuFlux)).to.be.rejectedWith(
+			await expect(compressedFluxHttpClient.fetch(urlDuFlux)).to.be.rejectedWith(
 				Error,
 				"Oops something went wrong !"
 			);
@@ -63,7 +63,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je lance une erreur", async () => {
-			await expect(compressedFluxHttpClient.recuperer(urlDuFlux)).to.be.rejectedWith(
+			await expect(compressedFluxHttpClient.fetch(urlDuFlux)).to.be.rejectedWith(
 				LectureFluxErreur,
 				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`
 			);

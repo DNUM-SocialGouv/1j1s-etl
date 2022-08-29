@@ -15,15 +15,15 @@ export class TaskContainerFactory {
 	static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		const loadJobteaserLogger = LoggerFactory.create({
 			name: configuration.JOBTEASER.NAME,
-			logLevel: configuration.JOBTEASER.LOGGER_LOG_LEVEL
+			logLevel: configuration.JOBTEASER.LOGGER_LOG_LEVEL,
 		});
 		const loadStagefrCompressedLogger = LoggerFactory.create({
 			name: configuration.STAGEFR_COMPRESSED.NAME,
-			logLevel: configuration.STAGEFR_COMPRESSED.LOGGER_LOG_LEVEL
+			logLevel: configuration.STAGEFR_COMPRESSED.LOGGER_LOG_LEVEL,
 		});
 		const loadStagefrUncompressedLogger = LoggerFactory.create({
 			name: configuration.STAGEFR_UNCOMPRESSED.NAME,
-			logLevel: configuration.STAGEFR_UNCOMPRESSED.LOGGER_LOG_LEVEL
+			logLevel: configuration.STAGEFR_UNCOMPRESSED.LOGGER_LOG_LEVEL,
 		});
 
 		return {
