@@ -1,0 +1,30 @@
+name: Test & Lint
+on: [push]
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.15.1]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+
+  Lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.15.1 ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
