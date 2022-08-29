@@ -4,15 +4,14 @@ import { Client } from "minio";
 import { AuthenticationClient } from "@chargement/infrastructure/gateway/authentication.client";
 import { Configuration } from "@chargement/configuration/configuration";
 import { GatewayContainer } from "@chargement/infrastructure/gateway";
-import { LoggerFactory } from "@shared/logger.factory";
+import { FileSystemClient, NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { Logger, LoggerFactory } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import {
 	FeatureFlippingOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
-import { FileSystemClient, NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { Logger } from "@shared/configuration/logger";
 import { NodeUuidGenerator, UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";

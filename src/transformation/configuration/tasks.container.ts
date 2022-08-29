@@ -1,5 +1,5 @@
 import { Configuration } from "@transformation/configuration/configuration";
-import { LoggerFactory } from "@shared/logger.factory";
+import { LoggerFactory } from "@shared/configuration/logger";
 import { TransformFlowJobteaserTask } from "@transformation/infrastructure/tasks/transform-flow-jobteaser.task";
 import {
 	TransformFluxStagefrCompressedTask,
