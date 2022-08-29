@@ -2,8 +2,8 @@ import { AxiosInstance } from "axios";
 import { Stream } from "stream";
 
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { LectureFluxErreur } from "@extraction/domain/flux.repository";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class OctetStreamHttpClient {
     static TEMPORARY_DIR = "/tmp/";
