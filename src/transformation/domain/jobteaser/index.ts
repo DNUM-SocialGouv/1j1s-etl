@@ -70,37 +70,6 @@ export namespace Jobteaser {
 			this.correspondanceDomaines.set(Domaine.STATISTIQUES_DATA_MATH_APP, UnJeune1Solution.Domaine.DATA);
 			this.correspondanceDomaines.set(Domaine.TRAVAUX_CHANTIER, UnJeune1Solution.Domaine.TRAVAUX);
 			this.correspondanceDomaines.set(Domaine.WEBDESIGN_ERGONOMIE, UnJeune1Solution.Domaine.DESIGN);
-
-			// this.correspondanceDomaines.set(Domaine.AGRICULTURE_SECTEUR_FORESTIER, UnJeune1Solution.Domaine.AGRICULTURE);
-			// this.correspondanceDomaines.set(Domaine.AGROALIMENTAIRE_BOISSONS, UnJeune1Solution.Domaine.AGRICULTURE);
-			// this.correspondanceDomaines.set(Domaine.ARCHITECTURE_DESIGN, UnJeune1Solution.Domaine.ARCHITECTURE_URBANISME_IMMOBILIER);
-			// this.correspondanceDomaines.set(Domaine.ASSURANCE, UnJeune1Solution.Domaine.FISCALITE_FINANCE_ASSURANCE);
-			// this.correspondanceDomaines.set(Domaine.AUTOMOBILE, UnJeune1Solution.Domaine.NON_APPLICABLE);
-			// this.correspondanceDomaines.set(Domaine.AUTRE, UnJeune1Solution.Domaine.NON_APPLICABLE);
-			// this.correspondanceDomaines.set(Domaine.AUTRES_INDUSTRIES, UnJeune1Solution.Domaine.NON_APPLICABLE);
-			// this.correspondanceDomaines.set(Domaine.AUTRES_SERVICES_ENTREPRISES_PARTICULIERS, UnJeune1Solution.Domaine.NON_APPLICABLE);
-			// this.correspondanceDomaines.set(Domaine.BANQUE_FINANCE, UnJeune1Solution.Domaine.FISCALITE_FINANCE_ASSURANCE);
-			// this.correspondanceDomaines.set(Domaine.BTP_URBANISME, UnJeune1Solution.Domaine.ARCHITECTURE_URBANISME_IMMOBILIER);
-			// this.correspondanceDomaines.set(Domaine.CHIMIE, UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE);
-			// this.correspondanceDomaines.set(Domaine.CONSEIL, UnJeune1Solution.Domaine.CONSEIL);
-			// this.correspondanceDomaines.set(Domaine.CONSEIL_STRATEGIE, UnJeune1Solution.Domaine.CONSEIL);
-			// this.correspondanceDomaines.set(Domaine.DISTRIBUTION, UnJeune1Solution.Domaine.VENTES);
-			// this.correspondanceDomaines.set(Domaine.ELECTRONIQUE, UnJeune1Solution.Domaine.ENERGIE_MATERIAUX_MECANIQUE_ELECTRONIQUE);
-			// this.correspondanceDomaines.set(Domaine.ENERGIE_UTILITIES, UnJeune1Solution.Domaine.ENERGIE_MATERIAUX_MECANIQUE_ELECTRONIQUE);
-			// this.correspondanceDomaines.set(Domaine.ESN, UnJeune1Solution.Domaine.INFORMATIQUE);
-			// this.correspondanceDomaines.set(Domaine.GRANDE_CONSO, UnJeune1Solution.Domaine.VENTES);
-			// this.correspondanceDomaines.set(Domaine.IMMOBILIER, UnJeune1Solution.Domaine.ARCHITECTURE_URBANISME_IMMOBILIER);
-			// this.correspondanceDomaines.set(Domaine.JURIDIQUE, UnJeune1Solution.Domaine.JURIDIQUE);
-			// this.correspondanceDomaines.set(Domaine.LOISIRS_CULTURE_SPORTS, UnJeune1Solution.Domaine.ACTIVITES_SOCIALES_CULTURELLES);
-			// this.correspondanceDomaines.set(Domaine.LUXE_MODE, UnJeune1Solution.Domaine.LUXE_MODE_TEXTILE);
-			// this.correspondanceDomaines.set(Domaine.MEDIA_EDITION, UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS);
-			// this.correspondanceDomaines.set(Domaine.PUBLIC_EDUCATION, UnJeune1Solution.Domaine.ENSEIGNEMENT);
-			// this.correspondanceDomaines.set(Domaine.RECRUTEMENT_FORMATION, UnJeune1Solution.Domaine.RH);
-			// this.correspondanceDomaines.set(Domaine.SERVICES_COMPTABLES, UnJeune1Solution.Domaine.COMPTABILITE_CONTROLE_GESTION);
-			// this.correspondanceDomaines.set(Domaine.SOCIAL_ONG, UnJeune1Solution.Domaine.ACTIVITES_SOCIALES_CULTURELLES);
-			// this.correspondanceDomaines.set(Domaine.SOCIAL_SERVICE_PERSONNE, UnJeune1Solution.Domaine.SANTE);
-			// this.correspondanceDomaines.set(Domaine.TOURISME_HOTELLERIE, UnJeune1Solution.Domaine.HOTELLERIE);
-			// this.correspondanceDomaines.set(Domaine.TRANSPORT_LOGISTIQUE, UnJeune1Solution.Domaine.LOGISTIQUE);
 		}
 
 		depuisJobteaser(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {

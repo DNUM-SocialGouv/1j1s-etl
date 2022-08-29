@@ -4,10 +4,10 @@ import { Configuration } from "@extraction/configuration/configuration";
 import { EcritureFluxErreur, FluxRepository } from "@extraction/domain/flux.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FlowStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { Flux } from "@extraction/domain/flux";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
-export class MinioHttpFluxRepository implements FluxRepository {
+export class MinioHttpFlowRepository implements FluxRepository {
 	static COMPRESSED_FILE_EXTENSION = ".gz";
 	static LOCAL_FILE_PATH = "./tmp/";
 
@@ -32,7 +32,7 @@ export class MinioHttpFluxRepository implements FluxRepository {
 	): Promise<void> {
 		const cleanedFilePath = omettreExtension ? this.removeCompressedFileExtension(cheminFichierIncluantNom) : cheminFichierIncluantNom;
 		const fileName = this.uuidGenerator.generate();
-		const localFileNameIncludingPath = MinioHttpFluxRepository.LOCAL_FILE_PATH.concat(fileName);
+		const localFileNameIncludingPath = MinioHttpFlowRepository.LOCAL_FILE_PATH.concat(fileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, contenuFlux);
@@ -49,7 +49,7 @@ export class MinioHttpFluxRepository implements FluxRepository {
 	}
 
 	private removeCompressedFileExtension(filePath: string): string {
-		const { COMPRESSED_FILE_EXTENSION } = MinioHttpFluxRepository;
+		const { COMPRESSED_FILE_EXTENSION } = MinioHttpFlowRepository;
 		return filePath.replace(COMPRESSED_FILE_EXTENSION, "");
 	}
 }
