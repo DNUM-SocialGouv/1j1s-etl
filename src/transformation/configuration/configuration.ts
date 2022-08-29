@@ -1,4 +1,4 @@
-import { LogLevel } from "@shared/configuration/log-level";
+import { LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string

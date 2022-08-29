@@ -1,10 +1,12 @@
 import { Configuration } from "@extraction/configuration/configuration";
 import { ExtractFluxJobteaserTask } from "@extraction/infrastructure/tasks/extract-flux-jobteaser.task";
-import { ExtractFluxStagefrCompressedTask } from "@extraction/infrastructure/tasks/extract-flux-stagefr-compressed.task";
+import {
+	ExtractFluxStagefrCompressedTask,
+} from "@extraction/infrastructure/tasks/extract-flux-stagefr-compressed.task";
 import {
 	ExtractFluxStagefrUncompressedTask,
 } from "@extraction/infrastructure/tasks/extract-flux-stagefr-uncompressed.task";
-import { LoggerFactory } from "@shared/logger.factory";
+import { LoggerFactory } from "@shared/configuration/logger";
 import { UsecaseContainer } from "@extraction/usecase";
 
 export type TaskContainer = {

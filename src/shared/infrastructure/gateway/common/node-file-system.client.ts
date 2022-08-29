@@ -2,9 +2,6 @@ import * as fs from "fs";
 import { finished, Stream } from "stream";
 import { createWriteStream } from "fs";
 import { promisify } from "util";
-import ReadWriteStream = NodeJS.ReadWriteStream;
-import ReadableStream = NodeJS.ReadableStream;
-import WritableStream = NodeJS.WritableStream;
 
 export interface FileSystemClient {
 	delete(filePathIncludingFileName: string): Promise<void>;
@@ -14,7 +11,7 @@ export interface FileSystemClient {
 }
 
 export class NodeFileSystemClient implements FileSystemClient {
-	private readonly finished: (arg1: (ReadableStream | WritableStream | ReadWriteStream)) => Promise<void>;
+	private readonly finished: (arg1: (NodeJS.ReadableStream | NodeJS.WritableStream | NodeJS.ReadWriteStream)) => Promise<void>;
 
 	constructor(private readonly temporaryDirPath: string) {
 		this.finished = promisify(finished);
