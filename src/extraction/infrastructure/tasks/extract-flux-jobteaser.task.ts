@@ -1,7 +1,7 @@
 import { Configuration } from "@extraction/configuration/configuration";
 import { ExtraireJobteaser } from "@extraction/usecase/extraire-jobteaser.usecase";
 import { Logger } from "@shared/configuration/logger";
-import { Task } from "@shared/gateway/task";
+import { Task } from "@shared/infrastructure/task/task";
 
 export class ExtractFluxJobteaserTask implements Task {
 	constructor(

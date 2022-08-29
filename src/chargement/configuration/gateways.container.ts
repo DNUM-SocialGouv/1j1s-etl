@@ -11,9 +11,9 @@ import {
 import {
 	FeatureFlippingOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
-import { FileSystemClient, NodeFileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient, NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { Logger } from "@shared/configuration/logger";
-import { NodeUuidGenerator, UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { NodeUuidGenerator, UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway/http.client";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
@@ -43,7 +43,7 @@ export class GatewayContainerFactory {
 		);
 		const httpClientLogger = LoggerFactory.create({
 			name: "http-client",
-			logLevel: "debug"
+			logLevel: "debug",
 		});
 
 		return {

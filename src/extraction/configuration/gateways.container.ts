@@ -1,16 +1,17 @@
 import axios from "axios";
 import { Client } from "minio";
 
-import { BasicFlowHttpClient } from "@extraction/infrastructure/gateway/repository/basic-flow-http.client";
-import { CompressedFlowHttpClient } from "@extraction/infrastructure/gateway/repository/compressed-flow-http.client";
+import { BasicFlowHttpClient } from "@extraction/infrastructure/gateway/client/basic-flow-http.client";
+import { CompressedFlowHttpClient } from "@extraction/infrastructure/gateway/client/compressed-flow-http.client";
 import { GatewayContainer } from "@extraction/infrastructure/gateway";
-import { MinioStorageClient } from "@extraction/infrastructure/gateway/storage/minio-storage.client";
-import { NodeFileSystemClient } from "@extraction/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@extraction/infrastructure/gateway/common/uuid.generator";
-import { OctetStreamFlowHttpClient } from "@extraction/infrastructure/gateway/repository/octet-stream-flow-http.client";
+import { MinioHttpFluxRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flux.repository";
+import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { OctetStreamFlowHttpClient } from "@extraction/infrastructure/gateway/client/octet-stream-flow-http.client";
 import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
 import { UnzipClient } from "@extraction/infrastructure/gateway/common/unzip.client";
 import { Configuration } from "@extraction/configuration/configuration";
+import { OnFlowNameStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
@@ -30,22 +31,26 @@ export class GatewayContainerFactory {
 		const unzipClient = new UnzipClient();
 		const octetStreamHttpClient = new OctetStreamHttpClient(httpClient, fileSystemClient, uuidGenerator);
 
+		const basicFlowClient = new BasicFlowHttpClient(httpClient);
+		const compressedFlowClient = new CompressedFlowHttpClient(octetStreamHttpClient, unzipClient);
+		const octetStreamFlowClient = new OctetStreamFlowHttpClient(octetStreamHttpClient);
+
+		const flowStrategy = new OnFlowNameStrategy(
+			configuration,
+			basicFlowClient,
+			compressedFlowClient,
+			octetStreamFlowClient
+		);
+
 		return {
 			repositories: {
-				octetStreamFlowHttpClient : new OctetStreamFlowHttpClient(octetStreamHttpClient),
-				compressedFluxClient: new CompressedFlowHttpClient(octetStreamHttpClient, unzipClient),
-				fluxClient: new BasicFlowHttpClient(httpClient),
-			},
-			storages: {
-				fileSystemClient,
-				minioClient,
-				storageClient: new MinioStorageClient(
+				flowRepository: new MinioHttpFluxRepository(
 					configuration,
 					minioClient,
 					fileSystemClient,
-					uuidGenerator
+					uuidGenerator,
+					flowStrategy
 				),
-				uuidClient: uuidGenerator,
 			},
 		};
 	}

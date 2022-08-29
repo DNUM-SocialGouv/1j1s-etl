@@ -1,4 +1,4 @@
-import { Task } from "@shared/gateway/task";
+import { Task } from "@shared/infrastructure/task/task";
 import { TaskContainer as ExtractTasks } from "@extraction/configuration/tasks.container";
 import { TaskContainer as LoadTasks } from "@chargement/configuration/tasks.container";
 import { TaskContainer as TransformTasks } from "@transformation/configuration/tasks.container";

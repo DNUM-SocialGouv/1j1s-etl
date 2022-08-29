@@ -6,7 +6,7 @@ import * as http from "http";
 import { ConfigurationFactory } from "@configuration/configuration";
 import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
 import { LoggerFactory } from "@shared/logger.factory";
-import { MinioAdminStorageRepository } from "@shared/gateway/minio-admin-storage.repository";
+import { MinioAdminStorageRepository } from "@shared/infrastructure/gateway/repository/minio-admin-storage.repository";
 import { Setup } from "@configuration/setup";
 
 const configuration = ConfigurationFactory.create();

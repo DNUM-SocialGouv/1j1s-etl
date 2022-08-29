@@ -1,21 +1,19 @@
 import { DateService } from "@shared/date.service";
 import { Flux } from "@extraction/domain/flux";
-import { FluxClient } from "@extraction/domain/flux.client";
-import { StorageClient } from "@extraction/domain/storage.client";
+import { FluxRepository } from "@extraction/domain/flux.repository";
 
 export class ExtraireFluxDomainService {
 	static readonly SEPARATEUR_DE_CHEMIN = "/";
 	static readonly NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE = "latest";
 
 	constructor(
-		private readonly fluxClient: FluxClient,
-		private readonly storageClient: StorageClient,
+		private readonly fluxRepository: FluxRepository,
 		private readonly dateService: DateService,
 	) {
 	}
 
 	async extraire(flux: Readonly<Flux>): Promise<void> {
-		const contenuDuFlux = await this.fluxClient.recuperer(flux.url);
+		const contenuDuFlux = await this.fluxRepository.recuperer(flux);
 		await this.sauvegarderLeFlux(flux, contenuDuFlux);
 	}
 
@@ -26,12 +24,12 @@ export class ExtraireFluxDomainService {
 
 	private async historiserLeFlux(flux: Readonly<Flux>, contenuDuFlux: string): Promise<void> {
 		const nomDuFichierHistorise = this.creerNomDuFichierAHistoriser(flux);
-		await this.storageClient.enregistrer(nomDuFichierHistorise, contenuDuFlux, flux.nom);
+		await this.fluxRepository.enregistrer(nomDuFichierHistorise, contenuDuFlux, flux);
 	}
 
 	private async sauvegarderDerniereVersionDuFlux(flux: Readonly<Flux>, contenuDuFlux: string): Promise<void> {
 		const nomDuDernierFicher = this.creerNomDuDernierFichier(flux);
-		await this.storageClient.enregistrer(nomDuDernierFicher, contenuDuFlux, flux.nom);
+		await this.fluxRepository.enregistrer(nomDuDernierFicher, contenuDuFlux, flux);
 	}
 
 	private creerNomDuFichierAHistoriser(flux: Readonly<Flux>): string {

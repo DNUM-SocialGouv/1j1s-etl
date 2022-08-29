@@ -4,10 +4,10 @@ import { StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@
 import { PassThrough, Writable } from "stream";
 
 import { expect } from "@test/configuration";
-import { FileSystemClient } from "@extraction/infrastructure/gateway/common/node-file-system.client";
-import { LectureFluxErreur } from "@extraction/domain/flux.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
-import { UuidGenerator } from "@extraction/infrastructure/gateway/common/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { LectureFluxErreur } from "@extraction/domain/flux.repository";
 
 const url = "http://some.url";
 const fileName = "7d92007e-3f8a-40ad-b648-3b4c806b9647";

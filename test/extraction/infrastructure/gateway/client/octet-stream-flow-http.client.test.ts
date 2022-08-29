@@ -1,7 +1,7 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { LectureFluxErreur } from "@extraction/domain/flux.client";
-import { OctetStreamFlowHttpClient } from "@extraction/infrastructure/gateway/repository/octet-stream-flow-http.client";
+import { OctetStreamFlowHttpClient } from "@extraction/infrastructure/gateway/client/octet-stream-flow-http.client";
 import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
+import { LectureFluxErreur } from "@extraction/domain/flux.repository";
 
 let url: string;
 let contenu: Buffer;
@@ -23,7 +23,7 @@ describe("OctetStramFlowHttpTest", () => {
         });
 
         it("j'écris les données dans un fichier jusqu'à la fin du téléchargement", async () => {
-            const result = await octetstramFlowHttpClient.recuperer(url);
+            const result = await octetstramFlowHttpClient.fetch(url);
 
             expect(result).to.eql("<html>test</html>");
 
@@ -38,7 +38,7 @@ describe("OctetStramFlowHttpTest", () => {
         });
 
         it("je renvoie une erreur", async () => {
-            await expect(octetstramFlowHttpClient.recuperer(url)).to.be.rejectedWith(
+            await expect(octetstramFlowHttpClient.fetch(url)).to.be.rejectedWith(
                 LectureFluxErreur,
                 `Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`
             );

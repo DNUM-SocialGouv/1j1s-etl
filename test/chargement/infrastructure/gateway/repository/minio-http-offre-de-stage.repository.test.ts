@@ -8,8 +8,8 @@ import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,
 	RecupererOffresExistantesErreur,
-} from "@shared/gateway/offre-de-stage.repository";
-import { FileSystemClient } from "@chargement/infrastructure/gateway/node-file-system.client";
+} from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient, OffreDeStageHttp } from "@chargement/infrastructure/gateway/http.client";
 import { Logger } from "@shared/configuration/logger";
 import {
@@ -17,7 +17,7 @@ import {
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
-import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localFileNameIncludingPath = `./tmp/${uuid}`;
