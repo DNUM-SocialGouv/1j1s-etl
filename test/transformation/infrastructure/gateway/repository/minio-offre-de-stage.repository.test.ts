@@ -46,9 +46,12 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		offresDeStage = [OffreDeStageFixtureBuilder.build()];
 
 		minioStub = stubClass(Client);
+
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO_RAW_BUCKET_NAME = "raw";
 		configuration.MINIO_TRANSFORMED_BUCKET_NAME = "json";
+		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
+
 		contentParserRepository = stubInterface<ContentParser>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 		uuidClient = stubInterface<UuidGenerator>(sinon);

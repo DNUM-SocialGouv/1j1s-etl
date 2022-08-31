@@ -28,6 +28,7 @@ describe("MinioStorageClientTest", () => {
 
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO_RAW_BUCKET_NAME = "raw";
+		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
 
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 

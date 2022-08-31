@@ -13,7 +13,6 @@ import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@chargement/infrastructure/gateway/uuid.generator";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
-	static LOCAL_FILE_PATH = "./tmp/";
 	static NOM_DU_FICHIER_A_RECUPERER = "latest";
 
 	constructor(
@@ -65,7 +64,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 
 	async recupererMisesAJourDesOffres(nomDuFlux: string): Promise<UnJeune1Solution.OffreDeStage[]> {
 		const temporaryFileName = this.uuidGenerator.generate();
-		const localFileNameIncludingPath = MinioHttpOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
 		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO_TRANSFORMED_FILE_EXTENSION}`;
 
 		try {
@@ -100,7 +99,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 
 	async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
 		const temporaryFileName = this.uuidGenerator.generate();
-		const localFileNameIncludingPath = MinioHttpOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);

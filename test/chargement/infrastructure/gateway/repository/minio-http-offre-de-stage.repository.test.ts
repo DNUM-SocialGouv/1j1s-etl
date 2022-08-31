@@ -53,6 +53,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		configuration.MINIO_TRANSFORMED_BUCKET_NAME = "json";
 		configuration.MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
 		configuration.MINIO_RESULT_BUCKET_NAME = "result";
+		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
 
 		minioClient = stubClass(Client);
 

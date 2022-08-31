@@ -13,9 +13,7 @@ import OffreDeStageASupprimer = UnJeune1Solution.OffreDeStageASupprimer;
 import OffreDeStageAMettreAJour = UnJeune1Solution.OffreDeStageAMettreAJour;
 
 export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStageRepository {
-	static LOCAL_FILE_PATH = "./tmp/";
 	static NOM_DU_FICHIER_A_RECUPERER = "latest";
-
 
 	constructor(
 		configuration: Configuration,

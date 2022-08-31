@@ -7,7 +7,6 @@ import { UuidGenerator } from "@extraction/infrastructure/gateway/common/uuid.ge
 
 export class MinioStorageClient implements StorageClient {
 	static COMPRESSED_FILE_EXTENSION = ".gz";
-	static LOCAL_FILE_PATH = "./tmp/";
 
 	constructor(
 		private readonly configuration: Configuration,
@@ -25,7 +24,7 @@ export class MinioStorageClient implements StorageClient {
 	): Promise<void> {
 		const cleanedFilePath = skipExtension ? this.removeCompressedFileExtension(filePath) : filePath;
 		const fileName = this.uuidClient.generate();
-		const localFileNameIncludingPath = MinioStorageClient.LOCAL_FILE_PATH.concat(fileName);
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(fileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);

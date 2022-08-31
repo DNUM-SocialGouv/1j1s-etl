@@ -11,7 +11,6 @@ import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.gener
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 
 export class MinioOffreDeStageRepository implements OffreDeStageRepository {
-	private static LOCAL_FILE_PATH = "./tmp/";
 	private static readonly JSON_INDENTATION = 2;
 	private static readonly LATEST_FILE_NAME = "latest";
 	private static readonly JSON_REPLACER = null;
@@ -29,7 +28,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 
 	async recuperer<T>(configurationFlux: ConfigurationFlux): Promise<T> {
 		const fileNameToPull = this.getFileNameToFetch(configurationFlux);
-		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(this.generateFileName());
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(this.generateFileName());
 
 		try {
 			await this.minioClient.fGetObject(
@@ -49,7 +48,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flowConfiguration: ConfigurationFlux): Promise<void> {
 		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
-		const localFileNameIncludingPath = MinioOffreDeStageRepository.LOCAL_FILE_PATH.concat(temporaryFileName);
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, contentToSave);
