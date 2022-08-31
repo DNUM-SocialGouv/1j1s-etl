@@ -14,11 +14,18 @@ export class Setup {
 	private static BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE = "Les règles de cycle de vie sur les buckets ont été correctement créées";
 	private static IS_ALIVE_MESSAGE = "Main process is alive ...";
 
+	private flows: Array<string>;
+
 	constructor(
 		private readonly configuration: Configuration,
 		private readonly logger: Logger,
 		private readonly adminStorageClient: MinioAdminStorageRepository,
 	) {
+		this.flows = [
+			this.configuration.JOBTEASER.NAME,
+			this.configuration.STAGEFR_COMPRESSED.NAME,
+			this.configuration.STAGEFR_UNCOMPRESSED.NAME,
+		];
 	}
 
 	async init(): Promise<void> {
@@ -32,33 +39,21 @@ export class Setup {
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_STARTED_MESSAGE);
 
-			const flows = [
-				this.configuration.JOBTEASER.NAME,
-				this.configuration.STAGEFR_COMPRESSED.NAME,
-				this.configuration.STAGEFR_UNCOMPRESSED.NAME,
-			];
+			const rulesToCreateOnExtractionBucket = this.createRules();
+			const rulesToCreateOnTransformationBucket = this.createRules(true);
+			const rulesToCreateOnLoadingBucket = this.createRules();
 
-			const rulesToCreateOnTransformationBucket = this.createRules(flows, true);
-			const rulesToCreateOnLoadingBucket = this.createRules(flows);
+			await this.createRulesOnBucket(rulesToCreateOnExtractionBucket, rulesToCreateOnTransformationBucket, rulesToCreateOnLoadingBucket);
 
-			await this.adminStorageClient.setBucketLifecycle(
-				this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
-				rulesToCreateOnTransformationBucket,
-			);
-
-			await this.adminStorageClient.setBucketLifecycle(
-				this.configuration.MINIO_RESULT_BUCKET_NAME,
-				rulesToCreateOnLoadingBucket,
-			);
-
+			const existingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO_RAW_BUCKET_NAME);
 			const existingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO_TRANSFORMED_BUCKET_NAME);
 			const existingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO_RESULT_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info({
 				summary: {
-					rulesToCreate: [rulesToCreateOnTransformationBucket, rulesToCreateOnLoadingBucket],
-					existingRules: [existingRulesOnTransformationBucket, existingRulesOnLoadingBucket],
+					rulesToCreate: [rulesToCreateOnExtractionBucket, rulesToCreateOnTransformationBucket, rulesToCreateOnLoadingBucket],
+					existingRules: [existingRulesOnExtractionBucket, existingRulesOnTransformationBucket, existingRulesOnLoadingBucket],
 				},
 			});
 		} catch (e) {
@@ -69,10 +64,31 @@ export class Setup {
 		}
 	}
 
-	private createRules(flows: Array<string>, isInsideDirectory = false): LifecycleRules {
+	private async createRulesOnBucket(
+		rulesToCreateOnExtractionBucket: LifecycleRules,
+		rulesToCreateOnTransformationBucket: LifecycleRules,
+		rulesToCreateOnLoadingBucket: LifecycleRules
+	): Promise<void> {
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO_RAW_BUCKET_NAME,
+			rulesToCreateOnExtractionBucket
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+			rulesToCreateOnTransformationBucket,
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO_RESULT_BUCKET_NAME,
+			rulesToCreateOnLoadingBucket,
+		);
+	}
+
+	private createRules(isInsideDirectory = false): LifecycleRules {
 		const rules: Array<LifecycleRule> = [];
 
-		for (const flow of flows) {
+		for (const flow of this.flows) {
 			rules.push({
 				Expiration: {
 					Days: this.configuration.MINIO_DAYS_AFTER_EXPIRATION,

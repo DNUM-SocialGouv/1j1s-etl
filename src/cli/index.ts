@@ -4,7 +4,7 @@ import "module-alias/register";
 import { ChargementModule } from "@chargement/configuration";
 import { CliConfiguration } from "./cli.configuration";
 import { ConfigurationFactory } from "@configuration/configuration";
-import { ExtractionModule } from "@extraction/infrastructure/tasks";
+import { ExtractionModule } from "@extraction/configuration";
 import { TaskContainerFactory } from "./task.container";
 import { TransformationModule } from "@transformation/configuration";
 
