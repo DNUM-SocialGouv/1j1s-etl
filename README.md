@@ -26,8 +26,8 @@ npm run cli -- -a {action} -f {nom du flux}
 
 Liste des jobs disponibles : 
 
-| nom du flux\action | transform | load |
-| :----------------- | :-------: | :--: |
-| jobteaser          |     X     |  X   |
-| stagefr-compresse  |     X     |  X   |
-| stagefr-decompresse|     X     |  X   |
+| nom du flux\action | Extract | transform | load |
+| :----------------- | :----:  | :-------: | :--: |
+| jobteaser          |    X    |     X     |  X   |
+| stagefr-compresse  |    X    |     X     |  X   |
+| stagefr-decompresse|    X    |     X     |  X   |
