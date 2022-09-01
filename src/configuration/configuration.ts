@@ -1,5 +1,10 @@
 import { LogLevel } from "@shared/configuration/logger";
 
+export enum Environment {
+	DEVELOPMENT = "development",
+	PRODUCTION = "production",
+}
+
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	FLUX_URL: string
@@ -26,6 +31,8 @@ export type Configuration = {
 	MINIO_TRANSFORMED_BUCKET_NAME: string
 	MINIO_TRANSFORMED_FILE_EXTENSION: string
 	MINIO_URL: string
+	NODE_ENV: Environment
+	SENTRY_DSN: string
 	STAGEFR_COMPRESSED: TaskConfiguration
 	STAGEFR_UNCOMPRESSED: TaskConfiguration
 	STRAPI: {
@@ -72,6 +79,8 @@ export class ConfigurationFactory {
 			MINIO_TRANSFORMED_BUCKET_NAME: getOrDefault("MINIO_TRANSFORMED_BUCKET_NAME", DEFAULT_TRANSFORMED_BUCKET_NAME),
 			MINIO_TRANSFORMED_FILE_EXTENSION: getOrDefault("MINIO_TRANSFORMED_FILE_EXTENSION", DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION),
 			MINIO_URL: getOrError("MINIO_URL"),
+			NODE_ENV: getOrError("NODE_ENV") as Environment,
+			SENTRY_DSN: getOrError("SENTRY_DSN"),
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
 				FLUX_URL: getOrError("STAGEFR_COMPRESSED_FLUX_URL"),

@@ -17,17 +17,21 @@ export type TaskContainer = {
 
 export class TaskContainerFactory {
 	static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
-		const jobteaserLogger = LoggerFactory.create({
+		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
+		const jobteaserLogger = loggerFactory.create({
 			logLevel: configuration.LOGGER_LOG_LEVEL,
 			name: configuration.JOBTEASER.NAME,
+			env: configuration.NODE_ENV,
 		});
-		const stagefrCompresseLogger = LoggerFactory.create({
+		const stagefrCompresseLogger = loggerFactory.create({
 			logLevel: configuration.LOGGER_LOG_LEVEL,
 			name: configuration.STAGEFR_COMPRESSED.NAME,
+			env: configuration.NODE_ENV,
 		});
-		const stagefrDecompresseLogger = LoggerFactory.create({
+		const stagefrDecompresseLogger = loggerFactory.create({
 			logLevel: configuration.LOGGER_LOG_LEVEL,
 			name: configuration.STAGEFR_UNCOMPRESSED.NAME,
+			env: configuration.NODE_ENV,
 		});
 
 		return {
