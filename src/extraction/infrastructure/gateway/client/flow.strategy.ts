@@ -6,7 +6,7 @@ export interface FlowStrategy {
 }
 
 export interface FlowClient {
-	fetch(url: string): Promise<string>;
+	pull(url: string): Promise<string>;
 }
 
 export class OnFlowNameStrategy implements FlowStrategy {
@@ -21,11 +21,11 @@ export class OnFlowNameStrategy implements FlowStrategy {
 	async get(flow: Flux): Promise<string> {
 		switch (flow.nom) {
 			case this.configuration.JOBTEASER.NAME:
-				return this.basicFlowHttpClient.fetch(flow.url);
+				return this.basicFlowHttpClient.pull(flow.url);
 			case this.configuration.STAGEFR_COMPRESSED.NAME:
-				return this.compressedFlowHttpClient.fetch(flow.url);
+				return this.compressedFlowHttpClient.pull(flow.url);
 			case this.configuration.STAGEFR_UNCOMPRESSED.NAME:
-				return this.octetStreamFlowHttpClient.fetch(flow.url);
+				return this.octetStreamFlowHttpClient.pull(flow.url);
 			default:
 				throw new FluxNonGereErreur(flow.nom);
 		}

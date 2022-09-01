@@ -23,7 +23,7 @@ describe("OctetStramFlowHttpTest", () => {
         });
 
         it("j'écris les données dans un fichier jusqu'à la fin du téléchargement", async () => {
-            const result = await octetstramFlowHttpClient.fetch(url);
+            const result = await octetstramFlowHttpClient.pull(url);
 
             expect(result).to.eql("<html>test</html>");
 
@@ -38,7 +38,7 @@ describe("OctetStramFlowHttpTest", () => {
         });
 
         it("je renvoie une erreur", async () => {
-            await expect(octetstramFlowHttpClient.fetch(url)).to.be.rejectedWith(
+            await expect(octetstramFlowHttpClient.pull(url)).to.be.rejectedWith(
                 LectureFluxErreur,
                 `Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`
             );

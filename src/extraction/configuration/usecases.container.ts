@@ -15,20 +15,10 @@ export class UsecaseContainerFactory {
 			dateService
 		);
 
-		const extraireFluxCompresseDomainService = new ExtraireFluxDomainService(
-			gateways.repositories.flowRepository,
-			dateService,
-		);
-
-		const extraireFluxDeDonneesContinuDomainService = new ExtraireFluxDomainService(
-			gateways.repositories.flowRepository,
-			dateService,
-		);
-
 		return {
 			extraireJobteaser: new ExtraireJobteaser(extraireFluxDomainService),
-			extraireStagefrCompresse: new ExtraireStagefrCompresse(extraireFluxCompresseDomainService),
-			extraireStagefrDecompresse: new ExtraireStagefrDecompresse(extraireFluxDeDonneesContinuDomainService),
+			extraireStagefrCompresse: new ExtraireStagefrCompresse(extraireFluxDomainService),
+			extraireStagefrDecompresse: new ExtraireStagefrDecompresse(extraireFluxDomainService),
 		};
 	}
 }

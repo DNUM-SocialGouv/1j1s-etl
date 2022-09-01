@@ -23,7 +23,7 @@ describe("FluxHttpClientTest", () => {
 		});
 
 		it("je le retourne au format textuel", async () => {
-			const result = await fluxHttpClient.fetch(url);
+			const result = await fluxHttpClient.pull(url);
 
 			expect(result).to.eq("<p>Hello World</p>");
 		});
@@ -36,7 +36,7 @@ describe("FluxHttpClientTest", () => {
 		});
 
 		it("je lance une erreur", async () => {
-			await expect(fluxHttpClient.fetch(url)).to.be.rejectedWith(
+			await expect(fluxHttpClient.pull(url)).to.be.rejectedWith(
 				LectureFluxErreur,
 				`Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`
 			);

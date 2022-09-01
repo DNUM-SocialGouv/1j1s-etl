@@ -2,7 +2,6 @@ import { LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string
-	LOGGER_LOG_LEVEL: LogLevel
 	NAME: string
 	RAW_FILE_EXTENSION: string
 	TRANSFORMED_FILE_EXTENSION: string
@@ -10,6 +9,7 @@ export type TaskConfiguration = {
 
 export type Configuration = {
 	JOBTEASER: TaskConfiguration
+	LOGGER_LOG_LEVEL: LogLevel
 	MINIO_ACCESS_KEY: string
 	MINIO_HISTORY_DIRECTORY_NAME: string
 	MINIO_PORT: number
@@ -34,11 +34,11 @@ export class ConfigurationFactory {
 		return {
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
-				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
 				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
+			LOGGER_LOG_LEVEL: getOrDefault("TRANSFORM_LOG_LEVEL", "debug") as LogLevel,
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
@@ -49,14 +49,12 @@ export class ConfigurationFactory {
 			MINIO_URL: getOrError("MINIO_URL"),
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_COMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_COMPRESSED_NAME", "stagefr_compresse"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_TRANSFORMED_FILE_EXTENSION"),
 			},
 			STAGEFR_UNCOMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME", "stagefr_decompresse"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_UNCOMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_UNCOMPRESSED_NAME", "stagefr_decompresse"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_TRANSFORMED_FILE_EXTENSION"),

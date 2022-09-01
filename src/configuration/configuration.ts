@@ -3,7 +3,6 @@ import { LogLevel } from "@shared/configuration/logger";
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	FLUX_URL: string
-	LOGGER_LOG_LEVEL: LogLevel
 	NAME: string
 	RAW_FILE_EXTENSION: string
 	TRANSFORMED_FILE_EXTENSION: string
@@ -12,8 +11,10 @@ export type TaskConfiguration = {
 export type Configuration = {
 	APPLICATION_LOGGER_NAME: string
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
+	EXTRACT_LOG_LEVEL: LogLevel
 	FEATURE_FLIPPING_CHARGEMENT: boolean
 	JOBTEASER: TaskConfiguration
+	LOAD_LOG_LEVEL: LogLevel
 	MINIO_ACCESS_KEY: string
 	MINIO_DAYS_AFTER_EXPIRATION: number
 	MINIO_HISTORY_DIRECTORY_NAME: string
@@ -35,6 +36,7 @@ export type Configuration = {
 		USERNAME: string
 	}
 	TEMPORARY_DIRECTORY_PATH: string
+	TRANSFORM_LOG_LEVEL: LogLevel
 }
 
 export class ConfigurationFactory {
@@ -49,15 +51,16 @@ export class ConfigurationFactory {
 		return {
 			APPLICATION_LOGGER_NAME: getOrDefault("APPLICATION_LOGGER_NAME", "application"),
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
+			EXTRACT_LOG_LEVEL: getOrDefault("EXTRACT_LOG_LEVEL", "debug") as LogLevel,
 			FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("FEATURE_FLIPPING_CHARGEMENT", "false")),
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
 				FLUX_URL: getOrError("JOBTEASER_FLUX_URL"),
-				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
 				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
+			LOAD_LOG_LEVEL: getOrDefault("LOAD_LOG_LEVEL", "debug") as LogLevel,
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 			MINIO_DAYS_AFTER_EXPIRATION: Number(getOrError("MINIO_DAYS_AFTER_EXPIRATION")),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
@@ -72,7 +75,6 @@ export class ConfigurationFactory {
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
 				FLUX_URL: getOrError("STAGEFR_COMPRESSED_FLUX_URL"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_COMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_COMPRESSED_NAME", "stagefr_compresse"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_TRANSFORMED_FILE_EXTENSION"),
@@ -80,7 +82,6 @@ export class ConfigurationFactory {
 			STAGEFR_UNCOMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME", "stagefr_decompresse"),
 				FLUX_URL: getOrError("STAGEFR_UNCOMPRESSED_FLUX_URL"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_UNCOMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_UNCOMPRESSED_NAME", "stagefr_decompresse"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_TRANSFORMED_FILE_EXTENSION"),
@@ -93,6 +94,7 @@ export class ConfigurationFactory {
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
+			TRANSFORM_LOG_LEVEL: getOrDefault("TRANSFORM_LOG_LEVEL", "debug") as LogLevel,
 		};
 	}
 

@@ -18,15 +18,15 @@ export type TaskContainer = {
 export class TaskContainerFactory {
 	static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		const jobteaserLogger = LoggerFactory.create({
-			logLevel: configuration.JOBTEASER.LOGGER_LOG_LEVEL,
+			logLevel: configuration.LOGGER_LOG_LEVEL,
 			name: configuration.JOBTEASER.NAME,
 		});
 		const stagefrCompressedLogger = LoggerFactory.create({
-			logLevel: configuration.STAGEFR_COMPRESSED.LOGGER_LOG_LEVEL,
+			logLevel: configuration.LOGGER_LOG_LEVEL,
 			name: configuration.STAGEFR_COMPRESSED.NAME,
 		});
 		const stagefrUncompressedLogger = LoggerFactory.create({
-			logLevel: configuration.STAGEFR_UNCOMPRESSED.LOGGER_LOG_LEVEL,
+			logLevel: configuration.LOGGER_LOG_LEVEL,
 			name: configuration.STAGEFR_UNCOMPRESSED.NAME,
 		});
 

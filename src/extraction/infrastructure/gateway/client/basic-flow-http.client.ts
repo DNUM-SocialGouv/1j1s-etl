@@ -7,7 +7,7 @@ export class BasicFlowHttpClient implements FlowClient {
 	constructor(private readonly axios: Axios) {
 	}
 
-	async fetch(url: string): Promise<string> {
+	async pull(url: string): Promise<string> {
 		try {
 			return (await this.axios.get<string>(url)).data;
 		} catch (e) {

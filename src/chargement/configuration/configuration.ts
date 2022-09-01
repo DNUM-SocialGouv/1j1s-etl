@@ -2,7 +2,6 @@ import { LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string
-	LOGGER_LOG_LEVEL: LogLevel
 	NAME: string
 	TRANSFORMED_FILE_EXTENSION: string
 }
@@ -10,6 +9,7 @@ export type TaskConfiguration = {
 export type Configuration = {
 	FEATURE_FLIPPING_CHARGEMENT: boolean
 	JOBTEASER: TaskConfiguration
+	LOGGER_LOG_LEVEL: LogLevel
 	MINIO_ACCESS_KEY: string
 	MINIO_PORT: number
 	MINIO_RESULT_BUCKET_NAME: string
@@ -41,10 +41,10 @@ export class ConfigurationFactory {
 			FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("FEATURE_FLIPPING_CHARGEMENT", "false")),
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
-				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
+			LOGGER_LOG_LEVEL: getOrDefault("LOAD_LOG_LEVEL", "debug") as LogLevel,
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
 			MINIO_RESULT_BUCKET_NAME: getOrDefault("MINIO_RESULT_BUCKET_NAME", DEFAULT_RESULT_BUCKET_NAME),
@@ -54,13 +54,11 @@ export class ConfigurationFactory {
 			MINIO_URL: getOrError("MINIO_URL"),
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_COMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_COMPRESSED_NAME", "stagefr_compresse"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_TRANSFORMED_FILE_EXTENSION"),
 			},
 			STAGEFR_UNCOMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME", "stagefr_decompresse"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_UNCOMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_UNCOMPRESSED_NAME", "stagefr_decompresse"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_TRANSFORMED_FILE_EXTENSION"),
 			},
