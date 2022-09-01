@@ -8,7 +8,7 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	static create(tasks: { extract: ExtractTasks; transform: TransformTasks; load: LoadTasks }): TaskContainer {
+	public static create(tasks: { extract: ExtractTasks; transform: TransformTasks; load: LoadTasks }): TaskContainer {
 		return {
 			extract: {
 				jobteaser: tasks.extract.jobteaser,

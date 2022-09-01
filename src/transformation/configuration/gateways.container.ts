@@ -13,7 +13,7 @@ import { NodeUuidGenerator } from "@transformation/infrastructure/gateway/uuid.g
 import { XmlContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 
 export class GatewayContainerFactory {
-	static create(configuration: Configuration): GatewayContainer {
+	public static create(configuration: Configuration): GatewayContainer {
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const minioClient = new Client({
 			accessKey: configuration.MINIO_ACCESS_KEY,

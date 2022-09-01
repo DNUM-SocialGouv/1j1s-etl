@@ -17,7 +17,7 @@ import { StrapiOffreDeStageHttpClient } from "@chargement/infrastructure/gateway
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
 export class GatewayContainerFactory {
-	static create(configuration: Configuration): GatewayContainer {
+	public static create(configuration: Configuration): GatewayContainer {
 		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const minioClient = new Client({
@@ -59,7 +59,7 @@ export class GatewayContainerFactory {
 		};
 	}
 
-	static buildOffreDeStageRepository(
+	public static buildOffreDeStageRepository(
 		configuration: Configuration,
 		minioClient: Client,
 		fileSystemClient: FileSystemClient,

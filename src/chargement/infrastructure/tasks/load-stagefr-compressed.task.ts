@@ -9,7 +9,7 @@ export class LoadStagefrCompressedTask implements Task {
 	) {
 	}
 
-	async run(): Promise<void> {
+	public async run(): Promise<void> {
 		try {
 			this.logger.info("Starting load of [stagefr-compresse] flow");
 			await this.chargerStagefrCompresse.executer();

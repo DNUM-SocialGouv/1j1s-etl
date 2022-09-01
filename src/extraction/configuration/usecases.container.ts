@@ -7,7 +7,7 @@ import { GatewayContainer } from "@extraction/infrastructure/gateway";
 import { UsecaseContainer } from "@extraction/usecase";
 
 export class UsecaseContainerFactory {
-	static create(gateways: GatewayContainer): UsecaseContainer {
+	public static create(gateways: GatewayContainer): UsecaseContainer {
 		const dateService = new DateService();
 
 		const extraireFluxDomainService = new ExtraireFluxDomainService(

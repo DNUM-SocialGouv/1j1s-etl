@@ -29,7 +29,7 @@ export class LoggerFactory {
 		this.sentryConfiguration = createWriteStream({ dsn });
 	}
 
-	static getInstance(dsn: string): LoggerFactory {
+	public static getInstance(dsn: string): LoggerFactory {
 		if (this.instance) {
 			return this.instance;
 		}
@@ -37,7 +37,7 @@ export class LoggerFactory {
 		return new LoggerFactory(dsn);
 	}
 
-	create(configuration: LoggerConfiguration): Logger {
+	public create(configuration: LoggerConfiguration): Logger {
 		if (configuration.env === Environment.PRODUCTION) {
 			return pino(configuration, this.sentryConfiguration);
 		}

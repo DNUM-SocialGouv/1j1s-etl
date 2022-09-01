@@ -3,8 +3,8 @@ import { Flux } from "@extraction/domain/flux";
 import { FluxRepository } from "@extraction/domain/flux.repository";
 
 export class ExtraireFluxDomainService {
-	static readonly SEPARATEUR_DE_CHEMIN = "/";
-	static readonly NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE = "latest";
+	private static readonly SEPARATEUR_DE_CHEMIN = "/";
+	private static readonly NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE = "latest";
 
 	constructor(
 		private readonly fluxRepository: FluxRepository,
@@ -12,7 +12,7 @@ export class ExtraireFluxDomainService {
 	) {
 	}
 
-	async extraire(flux: Readonly<Flux>): Promise<void> {
+	public async extraire(flux: Readonly<Flux>): Promise<void> {
 		const contenuDuFlux = await this.fluxRepository.recuperer(flux);
 		await this.sauvegarderLeFlux(flux, contenuDuFlux);
 	}

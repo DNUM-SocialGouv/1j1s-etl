@@ -4,7 +4,7 @@ import { Jobteaser } from "@transformation/domain/jobteaser";
 import { StagefrCompresse } from "@transformation/domain/stagefr-compresse";
 import { StagefrDecompresse } from "@transformation/domain/stagefr-decompresse";
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
-import { 
+import {
 	TransformerFluxStagefrCompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 import {
@@ -13,7 +13,7 @@ import {
 import { UsecaseContainer } from "@transformation/usecase";
 
 export class UsecaseContainerFactory {
-	static create(gateways: GatewayContainer): UsecaseContainer {
+	public static create(gateways: GatewayContainer): UsecaseContainer {
 		const dateService = new DateService();
 		const convertirOffreDeStageJobteaser = new Jobteaser.Convertir(
 			dateService,

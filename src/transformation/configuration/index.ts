@@ -7,7 +7,7 @@ import { TaskContainer, TaskContainerFactory } from "@transformation/configurati
 import { UsecaseContainerFactory } from "@transformation/configuration/usecases.container";
 
 export class TransformationModule {
-	static export(): TaskContainer {
+	public static export(): TaskContainer {
 		const configuration = ConfigurationFactory.create();
 		const gateways = GatewayContainerFactory.create(configuration);
 		const usecases = UsecaseContainerFactory.create(gateways);

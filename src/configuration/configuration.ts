@@ -47,7 +47,7 @@ export type Configuration = {
 }
 
 export class ConfigurationFactory {
-	static create(): Configuration {
+	public static create(): Configuration {
 		const { getOrError, getOrDefault, toBoolean, toValidEnableStatus } = ConfigurationFactory;
 		const DEFAULT_RAW_BUCKET_NAME = "raw";
 		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
@@ -107,7 +107,7 @@ export class ConfigurationFactory {
 		};
 	}
 
-	static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
+	private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
 		const environmentVariable = process.env[environmentVariableKey];
 		if (!environmentVariable) {
 			return defaultValue;
@@ -115,7 +115,7 @@ export class ConfigurationFactory {
 		return environmentVariable;
 	}
 
-	static getOrError(environmentVariableKey: string): string {
+	private static getOrError(environmentVariableKey: string): string {
 		const environmentVariable = process.env[environmentVariableKey];
 		if (!environmentVariable) {
 			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
@@ -123,11 +123,11 @@ export class ConfigurationFactory {
 		return environmentVariable;
 	}
 
-	static toBoolean(value: string): boolean {
+	private static toBoolean(value: string): boolean {
 		return value.trim().toLowerCase() === "true";
 	}
 
-	static toValidEnableStatus(value: string): "Enabled" | "Disabled" {
+	private static toValidEnableStatus(value: string): "Enabled" | "Disabled" {
 		return (value === "Enabled" || value === "Disabled") ? value : "Disabled";
 	}
 }

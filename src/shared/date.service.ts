@@ -1,5 +1,5 @@
 export class DateService {
-	maintenant(): Date {
+	public maintenant(): Date {
 		return new Date();
 	}
 }

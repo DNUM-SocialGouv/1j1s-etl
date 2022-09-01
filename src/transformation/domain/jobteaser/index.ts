@@ -72,7 +72,7 @@ export namespace Jobteaser {
 			this.correspondanceDomaines.set(Domaine.WEBDESIGN_ERGONOMIE, UnJeune1Solution.Domaine.DESIGN);
 		}
 
-		depuisJobteaser(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
+		public depuisJobteaser(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
 			const maintenant = this.dateService.maintenant().toISOString();
 
 			return {

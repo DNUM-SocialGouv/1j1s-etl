@@ -6,7 +6,7 @@ export class ExtraireStagefrCompresse implements Usecase {
 	constructor(private readonly extraireFlux: ExtraireFluxDomainService) {
 	}
 
-	executer(flux: Flux): Promise<void> {
+	public executer(flux: Flux): Promise<void> {
 		return this.extraireFlux.extraire(flux);
 	}
 }

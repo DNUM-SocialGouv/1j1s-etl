@@ -7,7 +7,7 @@ import { TaskContainer, TaskContainerFactory } from "@chargement/configuration/t
 import { UsecaseContainerFactory } from "@chargement/configuration/usecases.container";
 
 export class ChargementModule {
-	static export(): TaskContainer {
+	public static export(): TaskContainer {
 		const configuration = ConfigurationFactory.create();
 		const gateways = GatewayContainerFactory.create(configuration);
 		const usecases = UsecaseContainerFactory.create(gateways);

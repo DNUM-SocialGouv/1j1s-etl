@@ -11,7 +11,7 @@ export class ExtractFluxStagefrCompressedTask implements Task {
 	) {
 	}
 
-	async run(): Promise<void> {
+	public async run(): Promise<void> {
 		try {
 			await this.usecase.executer({
 				url: this.configuration.STAGEFR_COMPRESSED.FLUX_URL,

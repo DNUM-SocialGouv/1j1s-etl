@@ -28,7 +28,7 @@ export class Setup {
 		];
 	}
 
-	async init(): Promise<void> {
+	public async init(): Promise<void> {
 		try {
 			this.logger.info(Setup.BUCKET_CREATION_STARTED_MESSAGE);
 

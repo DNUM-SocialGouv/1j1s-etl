@@ -11,7 +11,7 @@ export class ExtractFluxJobteaserTask implements Task {
 	) {
 	}
 
-	async run(): Promise<void> {
+	public async run(): Promise<void> {
 		try {
 			const flow = {
 				url: this.configuration.JOBTEASER.FLUX_URL,

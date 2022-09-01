@@ -7,7 +7,7 @@ import { TaskContainer, TaskContainerFactory } from "@extraction/configuration/t
 import { UsecaseContainerFactory } from "@extraction/configuration/usecases.container";
 
 export class ExtractionModule {
-	static export(): TaskContainer {
+	public static export(): TaskContainer {
 		const configuration = ConfigurationFactory.create();
 		const gateways = GatewayContainerFactory.create(configuration);
 		const usecases = UsecaseContainerFactory.create(gateways);

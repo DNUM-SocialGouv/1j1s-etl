@@ -12,7 +12,7 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
+	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
 		const loadJobteaserLogger = loggerFactory.create({
 			name: configuration.JOBTEASER.NAME,

@@ -5,7 +5,7 @@ export interface UuidGenerator {
 }
 
 export class NodeUuidGenerator implements UuidGenerator {
-	generate(): string {
+	public generate(): string {
 		return crypto.randomUUID();
 	}
 }

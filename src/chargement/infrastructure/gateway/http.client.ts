@@ -31,8 +31,8 @@ export type OffreDeStageHttp = {
 }
 
 export class StrapiOffreDeStageHttpClient implements HttpClient {
-	static FIELDS_TO_RETRIEVE = "identifiantSource,id,sourceUpdatedAt";
-	static OCCURENCIES_NUMBER_PER_PAGE = 100;
+	private static FIELDS_TO_RETRIEVE = "identifiantSource,id,sourceUpdatedAt";
+	private static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
 	constructor(
 		private readonly axios: AxiosInstance,
@@ -41,12 +41,12 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 	) {
 	}
 
-	async delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void> {
+	public async delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void> {
 		await this.authClient.handleAuthentication(this.axios);
 		return this.axios.delete(`${this.offreDeStageUrl}/${offreDeStage.id}`);
 	}
 
-	async getAll(source: string): Promise<Array<OffreDeStageHttp>> {
+	public async getAll(source: string): Promise<Array<OffreDeStageHttp>> {
 		const result = await this.axios.get<StrapiResponse>(
 			this.offreDeStageUrl,
 			{
@@ -81,13 +81,13 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 		return intershipOffers;
 	}
 
-	async post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void> {
+	public async post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void> {
 		await this.authClient.handleAuthentication(this.axios);
 		const body = { data: offreDeStage.recupererAttributs() };
 		return this.axios.post(this.offreDeStageUrl, body);
 	}
 
-	async put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void> {
+	public async put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void> {
 		await this.authClient.handleAuthentication(this.axios);
 		return this.axios.put(`${this.offreDeStageUrl}/${offreDeStage.id}`, { data: offreDeStage.recupererAttributs() });
 	}

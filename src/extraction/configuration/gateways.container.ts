@@ -14,7 +14,7 @@ import { UnzipClient } from "@extraction/infrastructure/gateway/common/unzip.cli
 import { OnFlowNameStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
 
 export class GatewayContainerFactory {
-	static create(configuration: Configuration): GatewayContainer {
+	public static create(configuration: Configuration): GatewayContainer {
 		const httpClient = axios.create({
 			maxBodyLength: Infinity,
 			maxContentLength: Infinity,

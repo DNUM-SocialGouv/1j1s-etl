@@ -26,7 +26,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	) {
 	}
 
-	async recuperer<T>(flow: Flux): Promise<T> {
+	public async recuperer<T>(flow: Flux): Promise<T> {
 		const fileNameToPull = this.getFileNameToFetch(flow);
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(this.generateFileName());
 
@@ -45,7 +45,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: Flux): Promise<void> {
+	public async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: Flux): Promise<void> {
 		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);

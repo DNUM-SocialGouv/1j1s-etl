@@ -10,7 +10,7 @@ export class CompressedFlowHttpClient implements FlowClient {
 	) {
 	}
 
-	async pull(url: string): Promise<string> {
+	public async pull(url: string): Promise<string> {
 		const fileContent = await this.octetStreamHttpClient.readStream(url);
 
 		try {

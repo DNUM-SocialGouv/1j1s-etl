@@ -36,7 +36,7 @@ export namespace StagefrCompresse {
         constructor(private readonly dateService: DateService, private readonly assainisseurDeTexte: AssainisseurDeTexte) {
         }
 
-        depuisStagefrCompresse(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
+        public depuisStagefrCompresse(offreDeStage: OffreDeStage): UnJeune1Solution.OffreDeStage {
             return {
                 identifiantSource: offreDeStage.guid.toString(),
                 titre: this.assainisseurDeTexte.nettoyer(offreDeStage.title),

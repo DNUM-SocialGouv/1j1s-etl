@@ -9,7 +9,7 @@ import { GatewayContainer } from "@chargement/infrastructure/gateway";
 import { UsecaseContainer } from "@chargement/usecase";
 
 export class UsecaseContainerFactory {
-	static create(gateways: GatewayContainer): UsecaseContainer {
+	public static create(gateways: GatewayContainer): UsecaseContainer {
 		const dateService = new DateService();
 		const chargerOffresDeStageDomainService = new ChargerOffresDeStageDomainService(
 			gateways.offreDeStageRepository,

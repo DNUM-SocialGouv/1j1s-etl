@@ -11,8 +11,6 @@ import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStageRepository {
-	static NOM_DU_FICHIER_A_RECUPERER = "latest";
-
 	constructor(
 		configuration: Configuration,
 		minioClient: Client,
@@ -24,7 +22,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		super(configuration, minioClient, fileSystemClient, uuidGenerator, httpClient, logger);
 	}
 
-	charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
+	public charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
 		let offresDeStageAPublierCount = 0;
 		let offresDeStageAMettreAJourCount = 0;
 		let offresDeStageASupprimerCount = 0;
@@ -46,7 +44,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		return Promise.resolve([]);
 	}
 
-	enregistrer(): Promise<void> {
+	public enregistrer(): Promise<void> {
 		return Promise.resolve();
 	}
 }

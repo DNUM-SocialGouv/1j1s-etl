@@ -155,10 +155,7 @@ export class ChargerOffresDeStageDomainService {
 	}
 
 	private creerLeNomDuFichierDeResultat(
-		nomDuFlux: string,
-		nomDuFichier: Date,
-		extensionDuFichier: string,
-		type: string
+		nomDuFlux: string, nomDuFichier: Date, extensionDuFichier: string, type: string
 	): string {
 		return `${nomDuFlux}/${nomDuFichier.toISOString()}_${type}${extensionDuFichier}`;
 	}

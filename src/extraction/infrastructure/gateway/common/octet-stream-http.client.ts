@@ -6,7 +6,7 @@ import { LectureFluxErreur } from "@extraction/domain/flux.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class OctetStreamHttpClient {
-    static TEMPORARY_DIR = "/tmp/";
+    private static TEMPORARY_DIR = "/tmp/";
 
     constructor(
         private readonly axios: AxiosInstance,
@@ -15,7 +15,7 @@ export class OctetStreamHttpClient {
     ){
     }
 
-    async readStream(url: string): Promise<Buffer>{
+    public async readStream(url: string): Promise<Buffer>{
         let temporaryFilePathIncludingName = "";
 
         try {

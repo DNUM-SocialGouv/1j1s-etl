@@ -6,7 +6,7 @@ export class ExtraireJobteaser implements Usecase {
 	constructor(private readonly extraireFluxDomainService: ExtraireFluxDomainService) {
 	}
 
-	executer<T>(flux: Readonly<Flux>): Promise<void | T> {
+	public executer<T>(flux: Readonly<Flux>): Promise<void | T> {
 		return this.extraireFluxDomainService.extraire(flux);
 	}
 }
