@@ -52,8 +52,8 @@ describe("FlowClientStrategyTest", () => {
 		it("utilise le bon client pour Jobteaser", async () => {
 			await flowStrategy.get(flow);
 
-			expect(basicFlowClient.fetch).to.have.been.calledOnce;
-			expect(basicFlowClient.fetch).to.have.been.calledWith(url);
+			expect(basicFlowClient.pull).to.have.been.calledOnce;
+			expect(basicFlowClient.pull).to.have.been.calledWith(url);
 		});
 	});
 
@@ -70,8 +70,8 @@ describe("FlowClientStrategyTest", () => {
 		it("utilise le bon client pour Stage.fr compressé", async () => {
 			await flowStrategy.get(flow);
 
-			expect(compressedFlowClient.fetch).to.have.been.calledOnce;
-			expect(compressedFlowClient.fetch).to.have.been.calledWith(url);
+			expect(compressedFlowClient.pull).to.have.been.calledOnce;
+			expect(compressedFlowClient.pull).to.have.been.calledWith(url);
 		});
 	});
 
@@ -88,8 +88,8 @@ describe("FlowClientStrategyTest", () => {
 		it("utilise le bon client pour Stage.fr décompressé", async () => {
 			await flowStrategy.get(flow);
 
-			expect(octetStreamFlowClient.fetch).to.have.been.calledOnce;
-			expect(octetStreamFlowClient.fetch).to.have.been.calledWith(url);
+			expect(octetStreamFlowClient.pull).to.have.been.calledOnce;
+			expect(octetStreamFlowClient.pull).to.have.been.calledWith(url);
 		});
 	});
 
@@ -109,9 +109,9 @@ describe("FlowClientStrategyTest", () => {
 				`Le flux ${flow.nom} n'est pas actuellement géré`
 			);
 
-			expect(basicFlowClient.fetch).to.not.have.been.called;
-			expect(compressedFlowClient.fetch).to.not.have.been.called;
-			expect(octetStreamFlowClient.fetch).to.not.have.been.called;
+			expect(basicFlowClient.pull).to.not.have.been.called;
+			expect(compressedFlowClient.pull).to.not.have.been.called;
+			expect(octetStreamFlowClient.pull).to.not.have.been.called;
 		});
 	});
 });

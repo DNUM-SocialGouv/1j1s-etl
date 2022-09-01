@@ -3,13 +3,13 @@ import { LogLevel } from "@shared/configuration/logger";
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	FLUX_URL: string
-	LOGGER_LOG_LEVEL: LogLevel
 	NAME: string
 	RAW_FILE_EXTENSION: string
 }
 
 export type Configuration = {
 	JOBTEASER: TaskConfiguration
+	LOGGER_LOG_LEVEL: LogLevel
 	MINIO_ACCESS_KEY: string
 	MINIO_HISTORY_DIRECTORY_NAME: string
 	MINIO_PORT: number
@@ -31,10 +31,10 @@ export class ConfigurationFactory {
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
 				FLUX_URL: getOrError("JOBTEASER_FLUX_URL"),
-				LOGGER_LOG_LEVEL: getOrDefault("JOBTEASER_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
 				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
 			},
+			LOGGER_LOG_LEVEL: getOrDefault("EXTRACT_LOG_LEVEL", "debug") as LogLevel,
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
@@ -44,14 +44,12 @@ export class ConfigurationFactory {
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
 				FLUX_URL: getOrError("STAGEFR_COMPRESSED_FLUX_URL"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_COMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_COMPRESSED_NAME", "stagefr_compresse"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_RAW_FILE_EXTENSION"),
 			},
 			STAGEFR_UNCOMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME", "stagefr_decompresse"),
 				FLUX_URL: getOrError("STAGEFR_UNCOMPRESSED_FLUX_URL"),
-				LOGGER_LOG_LEVEL: getOrDefault("STAGEFR_UNCOMPRESSED_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 				NAME: getOrDefault("STAGEFR_UNCOMPRESSED_NAME", "stagefr_decompresse"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_RAW_FILE_EXTENSION"),
 			},

@@ -32,7 +32,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je retourne son contenu décompressé", async () => {
-			const result = await compressedFluxHttpClient.fetch(urlDuFlux);
+			const result = await compressedFluxHttpClient.pull(urlDuFlux);
 
 			expect(result).to.eql(contenuDecompresse);
 
@@ -50,7 +50,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je laisse passe une erreur", async () => {
-			await expect(compressedFluxHttpClient.fetch(urlDuFlux)).to.be.rejectedWith(
+			await expect(compressedFluxHttpClient.pull(urlDuFlux)).to.be.rejectedWith(
 				Error,
 				"Oops something went wrong !"
 			);
@@ -63,7 +63,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je lance une erreur", async () => {
-			await expect(compressedFluxHttpClient.fetch(urlDuFlux)).to.be.rejectedWith(
+			await expect(compressedFluxHttpClient.pull(urlDuFlux)).to.be.rejectedWith(
 				LectureFluxErreur,
 				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`
 			);

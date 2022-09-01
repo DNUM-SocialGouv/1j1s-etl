@@ -2,9 +2,9 @@ import "dotenv/config";
 import "module-alias/register";
 
 import * as http from "http";
+import { Client } from "minio";
 
 import { ConfigurationFactory } from "@configuration/configuration";
-import { GatewayContainerFactory } from "@transformation/configuration/gateways.container";
 import { LoggerFactory } from "@shared/configuration/logger";
 import { MinioAdminStorageRepository } from "@shared/infrastructure/gateway/repository/minio-admin-storage.repository";
 import { Setup } from "@configuration/setup";
@@ -14,8 +14,14 @@ const applicationLogger = LoggerFactory.create({
 	name: configuration.APPLICATION_LOGGER_NAME,
 	logLevel: configuration.APPLICATION_LOGGER_LOG_LEVEL,
 });
-const gatewayContainer = GatewayContainerFactory.create(configuration);
-const adminStorageClient = new MinioAdminStorageRepository(gatewayContainer.minioClient);
+const minioClient = new Client({
+	accessKey: configuration.MINIO_ACCESS_KEY,
+	secretKey: configuration.MINIO_SECRET_KEY,
+	port: configuration.MINIO_PORT,
+	endPoint: configuration.MINIO_URL,
+});
+
+const adminStorageClient = new MinioAdminStorageRepository(minioClient);
 const setup = new Setup(configuration, applicationLogger, adminStorageClient);
 
 const server = http.createServer();
