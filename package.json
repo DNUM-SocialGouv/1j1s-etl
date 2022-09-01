@@ -40,6 +40,7 @@
     "minio": "~7.0.28",
     "module-alias": "~2.2.2",
     "pino": "~8.4.2",
+    "pino-sentry": "^0.13.0",
     "turndown": "~7.1.1",
     "yargs": "~17.5.1"
   },

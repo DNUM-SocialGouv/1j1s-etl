@@ -1,3 +1,4 @@
+import { Environment } from "@configuration/configuration";
 import { LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
@@ -18,6 +19,8 @@ export type Configuration = {
 	MINIO_TRANSFORMED_BUCKET_NAME: string
 	MINIO_TRANSFORMED_FILE_EXTENSION: string
 	MINIO_URL: string
+	NODE_ENV: Environment
+	SENTRY_DSN: string
 	STAGEFR_COMPRESSED: TaskConfiguration
 	STAGEFR_UNCOMPRESSED: TaskConfiguration
 	TEMPORARY_DIRECTORY_PATH: string
@@ -39,6 +42,7 @@ export class ConfigurationFactory {
 				TRANSFORMED_FILE_EXTENSION: getOrError("JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
 			LOGGER_LOG_LEVEL: getOrDefault("TRANSFORM_LOG_LEVEL", "debug") as LogLevel,
+			SENTRY_DSN: getOrError("SENTRY_DSN"),
 			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
@@ -47,6 +51,7 @@ export class ConfigurationFactory {
 			MINIO_TRANSFORMED_BUCKET_NAME: getOrDefault("MINIO_TRANSFORMED_BUCKET_NAME", DEFAULT_TRANSFORMED_BUCKET_NAME),
 			MINIO_TRANSFORMED_FILE_EXTENSION: getOrDefault("MINIO_TRANSFORMED_FILE_EXTENSION", DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION),
 			MINIO_URL: getOrError("MINIO_URL"),
+			NODE_ENV: getOrError("NODE_ENV") as Environment,
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
 				NAME: getOrDefault("STAGEFR_COMPRESSED_NAME", "stagefr_compresse"),

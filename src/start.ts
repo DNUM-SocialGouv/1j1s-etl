@@ -10,9 +10,11 @@ import { MinioAdminStorageRepository } from "@shared/infrastructure/gateway/repo
 import { Setup } from "@configuration/setup";
 
 const configuration = ConfigurationFactory.create();
-const applicationLogger = LoggerFactory.create({
+const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
+const applicationLogger = loggerFactory.create({
 	name: configuration.APPLICATION_LOGGER_NAME,
 	logLevel: configuration.APPLICATION_LOGGER_LOG_LEVEL,
+	env: configuration.NODE_ENV,
 });
 const minioClient = new Client({
 	accessKey: configuration.MINIO_ACCESS_KEY,

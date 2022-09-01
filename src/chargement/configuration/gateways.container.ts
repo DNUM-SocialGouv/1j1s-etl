@@ -18,6 +18,7 @@ import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 
 export class GatewayContainerFactory {
 	static create(configuration: Configuration): GatewayContainer {
+		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const minioClient = new Client({
 			accessKey: configuration.MINIO_ACCESS_KEY,
@@ -40,9 +41,10 @@ export class GatewayContainerFactory {
 			authenticationClient,
 			configuration.STRAPI.OFFRE_DE_STAGE_URL
 		);
-		const httpClientLogger = LoggerFactory.create({
+		const httpClientLogger = loggerFactory.create({
 			name: "http-client",
 			logLevel: "debug",
+			env: configuration.NODE_ENV,
 		});
 
 		return {

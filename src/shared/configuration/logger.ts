@@ -1,4 +1,8 @@
+import { createWriteStream } from "pino-sentry";
+import internal from "stream";
 import pino from "pino";
+
+import { Environment } from "@configuration/configuration";
 
 export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
@@ -13,11 +17,30 @@ export interface Logger {
 
 export type LoggerConfiguration = {
 	logLevel: LogLevel,
-	name: string
+	name: string,
+	env: Environment
 }
 
 export class LoggerFactory {
-	static create(configuration: LoggerConfiguration): Logger {
+	private static instance: LoggerFactory;
+	private readonly sentryConfiguration: internal.Duplex;
+
+	private constructor(dsn: string) {
+		this.sentryConfiguration = createWriteStream({ dsn });
+	}
+
+	static getInstance(dsn: string): LoggerFactory {
+		if (this.instance) {
+			return this.instance;
+		}
+
+		return new LoggerFactory(dsn);
+	}
+
+	create(configuration: LoggerConfiguration): Logger {
+		if (configuration.env === Environment.PRODUCTION) {
+			return pino(configuration, this.sentryConfiguration);
+		}
 		return pino(configuration);
 	}
 }
