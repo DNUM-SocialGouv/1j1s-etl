@@ -112,3 +112,6 @@ build/
 
 # Temporary
 tmp/
+
+# Tools
+tool/
