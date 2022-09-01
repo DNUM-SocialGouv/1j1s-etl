@@ -16,7 +16,7 @@ export class AuthenticationClient {
 		this.token = initialToken;
 	}
 
-	async handleAuthentication(axiosInstance: AxiosInstance): Promise<void> {
+	public async handleAuthentication(axiosInstance: AxiosInstance): Promise<void> {
 		if (!this.isAuthenticated()) {
 			this.token = await this.authenticate(axiosInstance);
 			axiosInstance.interceptors.request.use((config) => {
@@ -24,6 +24,10 @@ export class AuthenticationClient {
 				return config;
 			});
 		}
+	}
+
+	public getToken(): string {
+		return this.token;
 	}
 
 	private isAuthenticated(): boolean {
@@ -37,10 +41,6 @@ export class AuthenticationClient {
 
 	private credentialsToBody(): { identifier: string, password: string } {
 		return { identifier: this.credentials.username, password: this.credentials.password };
-	}
-
-	getToken(): string {
-		return this.token;
 	}
 }
 

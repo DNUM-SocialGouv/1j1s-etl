@@ -4,13 +4,13 @@ import {
 import { Usecase } from "@shared/usecase";
 
 export class ChargerFluxStagefrDecompresse implements Usecase {
-	static NOM_DU_FLUX = "stagefr-decompresse";
-	static EXTENSION_DU_FICHIER_DE_RESULTAT = ".json";
+	private static NOM_DU_FLUX = "stagefr-decompresse";
+	private static EXTENSION_DU_FICHIER_DE_RESULTAT = ".json";
 
 	constructor(private readonly chargerOffresDeStages: ChargerOffresDeStageDomainService) {
 	}
 
-	async executer(): Promise<void> {
+	public async executer(): Promise<void> {
 		await this.chargerOffresDeStages.charger(
 			ChargerFluxStagefrDecompresse.NOM_DU_FLUX,
 			ChargerFluxStagefrDecompresse.EXTENSION_DU_FICHIER_DE_RESULTAT

@@ -18,7 +18,7 @@ export class OnFlowNameStrategy implements FlowStrategy {
 	) {
 	}
 
-	async get(flow: Flux): Promise<string> {
+	public async get(flow: Flux): Promise<string> {
 		switch (flow.nom) {
 			case this.configuration.JOBTEASER.NAME:
 				return this.basicFlowHttpClient.pull(flow.url);

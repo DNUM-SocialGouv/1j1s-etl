@@ -12,17 +12,17 @@ export class NodeFileSystemClient implements FileSystemClient {
 	constructor(private readonly temporaryDirPath: string) {
 	}
 
-	delete(filePathIncludingFileName: string): Promise<void> {
+	public delete(filePathIncludingFileName: string): Promise<void> {
 		fs.unlinkSync(filePathIncludingFileName);
 		return Promise.resolve();
 	}
 
-	read(filePathIncludingFileName: string): Promise<string> {
+	public read(filePathIncludingFileName: string): Promise<string> {
 		const fileContent = fs.readFileSync(filePathIncludingFileName, this.encoding);
 		return Promise.resolve(fileContent);
 	}
 
-	write(filePath: string, fileContent: string): Promise<void> {
+	public write(filePath: string, fileContent: string): Promise<void> {
 		if (!fs.existsSync(this.temporaryDirPath)) {
 			fs.mkdirSync(this.temporaryDirPath);
 		}

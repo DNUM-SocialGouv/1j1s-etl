@@ -11,7 +11,7 @@ export class TransformerFluxJobteaser implements Usecase {
 	) {
 	}
 
-	async executer<T>(flux: Readonly<Flux>): Promise<void | T> {
+	public async executer<T>(flux: Readonly<Flux>): Promise<void | T> {
 		const contenuDuFlux = await this.offreDeStageRepository.recuperer<Jobteaser.Contenu>(flux);
 
 		const contenuTransforme: Array<UnJeune1Solution.OffreDeStage>

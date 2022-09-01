@@ -5,7 +5,7 @@ export class OctetStreamFlowHttpClient implements FlowClient {
     constructor(private readonly octetStreamHttpClient: OctetStreamHttpClient) {
     }
 
-    async pull(url: string): Promise<string> {
+    public async pull(url: string): Promise<string> {
         return (await this.octetStreamHttpClient.readStream(url)).toString();
     }
 }

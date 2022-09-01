@@ -12,7 +12,7 @@ export class TransformFlowJobteaserTask implements Task {
 	) {
 	}
 
-	async run(): Promise<void> {
+	public async run(): Promise<void> {
 		const flux: Flux = {
 			nom: this.configuration.JOBTEASER.NAME,
 			extensionFichierTransforme: this.configuration.JOBTEASER.TRANSFORMED_FILE_EXTENSION,

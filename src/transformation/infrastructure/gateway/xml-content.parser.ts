@@ -8,7 +8,7 @@ export class XmlContentParser implements ContentParser {
 	constructor(private readonly parser: XMLParser,) {
 	}
 
-	parse<T>(xmlContent: string | Buffer): T {
+	public parse<T>(xmlContent: string | Buffer): T {
 		return this.parser.parse(xmlContent) as T;
 	}
 }

@@ -12,7 +12,7 @@ export class TransformerFluxStagefrDecompresse implements Usecase {
 	) {
 	}
 
-	async executer(flux: Readonly<Flux>): Promise<void> {
+	public async executer(flux: Readonly<Flux>): Promise<void> {
 		const contenu = await this.offreDeStageRepository.recuperer<StagefrDecompresse.Contenu>(flux);
 
 		const contenuTransforme = this.transformerVers1Jeune1Solution(contenu);

@@ -13,7 +13,7 @@ import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
-	static NOM_DU_FICHIER_A_RECUPERER = "latest";
+	protected static NOM_DU_FICHIER_A_RECUPERER = "latest";
 
 	constructor(
 		protected readonly configuration: Configuration,
@@ -25,7 +25,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 	) {
 	}
 
-	async charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
+	public async charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
 		const offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur> = [];
 
 		for (const offreDeStage of offresDeStages) {
@@ -33,6 +33,59 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 		}
 
 		return offresDeStageEnErreur;
+	}
+
+	public async recupererMisesAJourDesOffres(nomDuFlux: string): Promise<UnJeune1Solution.OffreDeStage[]> {
+		const temporaryFileName = this.uuidGenerator.generate();
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
+		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO_TRANSFORMED_FILE_EXTENSION}`;
+
+		try {
+			await this.minioClient.fGetObject(
+				this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+				sourceFilePath,
+				localFileNameIncludingPath
+			);
+			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
+			return (<Array<UnJeune1Solution.AttributsDOffreDeStage>>JSON.parse(fileContent.toString()))
+				.map((offreDeStage) => new UnJeune1Solution.OffreDeStage(offreDeStage));
+		} catch (e) {
+			throw new RecupererContenuErreur();
+		} finally {
+			await this.fileSystemClient.delete(localFileNameIncludingPath);
+		}
+	}
+
+	public async recupererOffresExistantes(source: string): Promise<Array<UnJeune1Solution.OffreDeStageExistante>> {
+		try {
+			const offresDeStagesExistantesHttp = await this.httpClient.getAll(source);
+
+			return offresDeStagesExistantesHttp.map((offreDeStageHttp) => new UnJeune1Solution.OffreDeStageExistante(
+				offreDeStageHttp.id,
+				offreDeStageHttp.attributes.identifiantSource,
+				offreDeStageHttp.attributes.sourceUpdatedAt,
+			));
+		} catch (e) {
+			throw new RecupererOffresExistantesErreur();
+		}
+	}
+
+	public async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
+		const temporaryFileName = this.uuidGenerator.generate();
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
+
+		try {
+			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);
+			await this.minioClient.fPutObject(
+				this.configuration.MINIO_RESULT_BUCKET_NAME,
+				filePath,
+				localFileNameIncludingPath
+			);
+		} catch (e) {
+			throw new EcritureFluxErreur(fluxName);
+		} finally {
+			await this.fileSystemClient.delete(localFileNameIncludingPath);
+		}
 	}
 
 	private async chargerOffreDeStageSelonType(
@@ -59,59 +112,6 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 				contenuDeLOffre: offreDeStage,
 				motif: (<Error>e).stack || (<Error>e).message,
 			});
-		}
-	}
-
-	async recupererMisesAJourDesOffres(nomDuFlux: string): Promise<UnJeune1Solution.OffreDeStage[]> {
-		const temporaryFileName = this.uuidGenerator.generate();
-		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
-		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO_TRANSFORMED_FILE_EXTENSION}`;
-
-		try {
-			await this.minioClient.fGetObject(
-				this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
-				sourceFilePath,
-				localFileNameIncludingPath
-			);
-			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-			return (<Array<UnJeune1Solution.AttributsDOffreDeStage>>JSON.parse(fileContent.toString()))
-				.map((offreDeStage) => new UnJeune1Solution.OffreDeStage(offreDeStage));
-		} catch (e) {
-			throw new RecupererContenuErreur();
-		} finally {
-			await this.fileSystemClient.delete(localFileNameIncludingPath);
-		}
-	}
-
-	async recupererOffresExistantes(source: string): Promise<Array<UnJeune1Solution.OffreDeStageExistante>> {
-		try {
-			const offresDeStagesExistantesHttp = await this.httpClient.getAll(source);
-
-			return offresDeStagesExistantesHttp.map((offreDeStageHttp) => new UnJeune1Solution.OffreDeStageExistante(
-				offreDeStageHttp.id,
-				offreDeStageHttp.attributes.identifiantSource,
-				offreDeStageHttp.attributes.sourceUpdatedAt,
-			));
-		} catch (e) {
-			throw new RecupererOffresExistantesErreur();
-		}
-	}
-
-	async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
-		const temporaryFileName = this.uuidGenerator.generate();
-		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
-
-		try {
-			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);
-			await this.minioClient.fPutObject(
-				this.configuration.MINIO_RESULT_BUCKET_NAME,
-				filePath,
-				localFileNameIncludingPath
-			);
-		} catch (e) {
-			throw new EcritureFluxErreur(fluxName);
-		} finally {
-			await this.fileSystemClient.delete(localFileNameIncludingPath);
 		}
 	}
 }

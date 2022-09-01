@@ -9,7 +9,7 @@ export class LoadJobteaserTask implements Task {
 	) {
 	}
 
-	async run(): Promise<void> {
+	public async run(): Promise<void> {
 		try {
 			this.logger.info("Starting load of [jobteaser] flow");
 			await this.chargerJobteaser.executer();

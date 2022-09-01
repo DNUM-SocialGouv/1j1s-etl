@@ -17,16 +17,16 @@ export class NodeFileSystemClient implements FileSystemClient {
 		this.finished = promisify(finished);
 	}
 
-	delete(filePathIncludingFileName: string): Promise<void> {
+	public delete(filePathIncludingFileName: string): Promise<void> {
 		fs.unlinkSync(filePathIncludingFileName);
 		return Promise.resolve();
 	}
 
-	read(filePathIncludingFileName: string): Promise<Buffer> {
+	public read(filePathIncludingFileName: string): Promise<Buffer> {
 		return Promise.resolve(fs.readFileSync(filePathIncludingFileName));
 	}
 
-	write(filePath: string, fileContent: string | Buffer): Promise<void> {
+	public write(filePath: string, fileContent: string | Buffer): Promise<void> {
 		if (!fs.existsSync(this.temporaryDirPath)) {
 			fs.mkdirSync(this.temporaryDirPath);
 		}
@@ -35,7 +35,7 @@ export class NodeFileSystemClient implements FileSystemClient {
 		return Promise.resolve();
 	}
 
-	async writeStream(filePath: string, fileContent: Stream): Promise<void> {
+	public async writeStream(filePath: string, fileContent: Stream): Promise<void> {
 		const writer = createWriteStream(filePath);
 		fileContent.pipe(writer);
 		await this.finished(writer);

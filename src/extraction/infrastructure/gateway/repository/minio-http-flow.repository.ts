@@ -8,8 +8,8 @@ import { Flux } from "@extraction/domain/flux";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class MinioHttpFlowRepository implements FluxRepository {
-	static COMPRESSED_FILE_EXTENSION = ".gz";
-	static LOCAL_FILE_PATH = "./tmp/";
+	private static COMPRESSED_FILE_EXTENSION = ".gz";
+	private static LOCAL_FILE_PATH = "./tmp/";
 
 	constructor(
 		private readonly configuration: Configuration,
@@ -20,11 +20,11 @@ export class MinioHttpFlowRepository implements FluxRepository {
 	) {
 	}
 
-	recuperer(flow: Flux): Promise<string> {
+	public recuperer(flow: Flux): Promise<string> {
         return this.flowStrategy.get(flow);
     }
 
-	async enregistrer(
+	public async enregistrer(
 		cheminFichierIncluantNom: string,
 		contenuFlux: string,
 		flow: Flux,

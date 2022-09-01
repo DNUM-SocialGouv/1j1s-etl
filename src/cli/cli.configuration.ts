@@ -5,7 +5,7 @@ import { Configuration } from "@configuration/configuration";
 type Commands = { [p: string]: unknown, a: string, f: string, _: (string | number)[], $0: string };
 
 export class CliConfiguration {
-	static create(configuration: Configuration): Commands {
+	public static create(configuration: Configuration): Commands {
 		const actionChoices = ["extract", "transform", "load"];
 		const fluxChoices = [
 			configuration.JOBTEASER.NAME,
