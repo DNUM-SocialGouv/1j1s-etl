@@ -1,6 +1,20 @@
 import { Environment } from "@configuration/configuration";
 import { LogLevel } from "@shared/configuration/logger";
 
+type MinioConfiguration = {
+	ACCESS_KEY: string
+	HISTORY_DIRECTORY_NAME: string
+	PORT: number
+	RAW_BUCKET_NAME: string
+	SECRET_KEY: string
+	URL: string
+}
+
+type SentryConfiguration = {
+	DSN: string
+	PROJECT: string
+}
+
 export type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	FLUX_URL: string
@@ -11,14 +25,10 @@ export type TaskConfiguration = {
 export type Configuration = {
 	JOBTEASER: TaskConfiguration
 	LOGGER_LOG_LEVEL: LogLevel
-	MINIO_ACCESS_KEY: string
-	MINIO_HISTORY_DIRECTORY_NAME: string
-	MINIO_PORT: number
-	MINIO_RAW_BUCKET_NAME: string
-	MINIO_SECRET_KEY: string
-	MINIO_URL: string
+	MINIO: MinioConfiguration
 	NODE_ENV: Environment
-	SENTRY_DSN: string
+	RELEASE: string
+	SENTRY: SentryConfiguration
 	STAGEFR_COMPRESSED: TaskConfiguration
 	STAGEFR_UNCOMPRESSED: TaskConfiguration
 	TEMPORARY_DIRECTORY_PATH: string
@@ -38,14 +48,20 @@ export class ConfigurationFactory {
 				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
 			},
 			LOGGER_LOG_LEVEL: getOrDefault("EXTRACT_LOG_LEVEL", "debug") as LogLevel,
-			SENTRY_DSN: getOrError("SENTRY_DSN"),
-			MINIO_ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
-			MINIO_HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
-			MINIO_PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
-			MINIO_RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
-			MINIO_SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
-			MINIO_URL: getOrError("MINIO_URL"),
+			MINIO: {
+				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
+				HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
+				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
+				RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
+				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
+				URL: getOrError("MINIO_URL"),
+			},
 			NODE_ENV: getOrError("NODE_ENV") as Environment,
+			RELEASE: getOrError("npm_package_version"),
+			SENTRY: {
+				DSN: getOrError("SENTRY_DSN"),
+				PROJECT: getOrError("SENTRY_PROJECT"),
+			},
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
 				FLUX_URL: getOrError("STAGEFR_COMPRESSED_FLUX_URL"),

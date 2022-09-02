@@ -17,7 +17,7 @@ export class TransformFlowJobteaserTask implements Task {
 			nom: this.configuration.JOBTEASER.NAME,
 			extensionFichierTransforme: this.configuration.JOBTEASER.TRANSFORMED_FILE_EXTENSION,
 			extensionFichierBrut: this.configuration.JOBTEASER.RAW_FILE_EXTENSION,
-			dossierHistorisation: this.configuration.MINIO_HISTORY_DIRECTORY_NAME,
+			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 		};
 
 		this.logger.info(`Start transformation of flux [${flux.nom}]`);

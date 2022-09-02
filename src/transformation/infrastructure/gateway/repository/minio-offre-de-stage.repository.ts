@@ -32,7 +32,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 
 		try {
 			await this.minioClient.fGetObject(
-				this.configuration.MINIO_RAW_BUCKET_NAME,
+				this.configuration.MINIO.RAW_BUCKET_NAME,
 				fileNameToPull,
 				localFileNameIncludingPath
 			);
@@ -105,7 +105,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 
 	private async saveOnMinio(filePath: string, localFileNameIncludingPath: string): Promise<void> {
 		await this.minioClient.fPutObject(
-			this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+			this.configuration.MINIO.TRANSFORMED_BUCKET_NAME,
 			filePath,
 			localFileNameIncludingPath
 		);

@@ -15,7 +15,7 @@ export class ExtractFluxStagefrCompressedTask implements Task {
 		try {
 			await this.usecase.executer({
 				url: this.configuration.STAGEFR_COMPRESSED.FLUX_URL,
-				dossierHistorisation: this.configuration.MINIO_HISTORY_DIRECTORY_NAME,
+				dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 				nom: this.configuration.STAGEFR_COMPRESSED.NAME,
 				extension: this.configuration.STAGEFR_COMPRESSED.RAW_FILE_EXTENSION,
 			});

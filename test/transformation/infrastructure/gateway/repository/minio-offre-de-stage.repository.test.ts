@@ -48,8 +48,8 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		minioStub = stubClass(Client);
 
 		configuration = stubInterface<Configuration>(sinon);
-		configuration.MINIO_RAW_BUCKET_NAME = "raw";
-		configuration.MINIO_TRANSFORMED_BUCKET_NAME = "json";
+		configuration.MINIO.RAW_BUCKET_NAME = "raw";
+		configuration.MINIO.TRANSFORMED_BUCKET_NAME = "json";
 		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
 
 		contentParserRepository = stubInterface<ContentParser>(sinon);
@@ -81,12 +81,12 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 			expect(minioStub.fPutObject).to.have.been.calledTwice;
 			expect(minioStub.fPutObject.firstCall.args).to.have.deep.members([
-				configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+				configuration.MINIO.TRANSFORMED_BUCKET_NAME,
 				historyFileNameIncludingPath,
 				localFileNameIncludingPath,
 			]);
 			expect(minioStub.fPutObject.secondCall.args).to.have.deep.members([
-				configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+				configuration.MINIO.TRANSFORMED_BUCKET_NAME,
 				latestFileNameIncludingPath,
 				localFileNameIncludingPath,
 			]);
@@ -128,7 +128,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 	context("Lorsque je récupère le contenu d'un fichier", () => {
 		beforeEach(() => {
 			configuration = stubInterface<Configuration>(sinon);
-			configuration.MINIO_RAW_BUCKET_NAME = "raw";
+			configuration.MINIO.RAW_BUCKET_NAME = "raw";
 
 			uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
 			localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
@@ -161,7 +161,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 			expect(uuidClient.generate).to.have.been.calledOnce;
 			expect(minioStub.fGetObject).to.have.been.calledOnce;
 			expect(minioStub.fGetObject).to.have.been.calledWith(
-				configuration.MINIO_RAW_BUCKET_NAME,
+				configuration.MINIO.RAW_BUCKET_NAME,
 				"source/latest.xml",
 				localFileNameIncludingPath
 			);
@@ -177,7 +177,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 	context("Lorsque je récupère le contenu d'un fichier qui n'existe pas", () => {
 		beforeEach(() => {
 			configuration = stubInterface<Configuration>(sinon);
-			configuration.MINIO_RAW_BUCKET_NAME = "raw";
+			configuration.MINIO.RAW_BUCKET_NAME = "raw";
 
 			uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
 			localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
@@ -201,7 +201,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 	context("Lorsque je ne réussis pas à lire le contenu d'un fichier", () => {
 		beforeEach(() => {
 			configuration = stubInterface<Configuration>(sinon);
-			configuration.MINIO_RAW_BUCKET_NAME = "raw";
+			configuration.MINIO.RAW_BUCKET_NAME = "raw";
 
 			uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
 			localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
