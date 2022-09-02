@@ -6,7 +6,7 @@ import {
 import {
 	ExtractFluxStagefrUncompressedTask,
 } from "@extraction/infrastructure/tasks/extract-flux-stagefr-uncompressed.task";
-import { LoggerFactory } from "@shared/configuration/logger";
+import { LoggerContainer } from "@extraction/configuration/logger.container";
 import { UsecaseContainer } from "@extraction/usecase";
 
 export type TaskContainer = {
@@ -16,28 +16,11 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
-		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
-		const jobteaserLogger = loggerFactory.create({
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			name: configuration.JOBTEASER.NAME,
-			env: configuration.NODE_ENV,
-		});
-		const stagefrCompressedLogger = loggerFactory.create({
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			name: configuration.STAGEFR_COMPRESSED.NAME,
-			env: configuration.NODE_ENV,
-		});
-		const stagefrUncompressedLogger = loggerFactory.create({
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			name: configuration.STAGEFR_UNCOMPRESSED.NAME,
-			env: configuration.NODE_ENV,
-		});
-
+	public static create(configuration: Configuration, usecases: UsecaseContainer, loggers: LoggerContainer): TaskContainer {
 		return {
-			jobteaser: new ExtractFluxJobteaserTask(usecases.extraireJobteaser, configuration, jobteaserLogger),
-			"stagefr-compresse": new ExtractFluxStagefrCompressedTask(usecases.extraireStagefrCompresse, configuration, stagefrCompressedLogger),
-			"stagefr-decompresse": new ExtractFluxStagefrUncompressedTask(usecases.extraireStagefrDecompresse, configuration, stagefrUncompressedLogger),
+			jobteaser: new ExtractFluxJobteaserTask(usecases.extraireJobteaser, configuration, loggers.jobteaser),
+			"stagefr-compresse": new ExtractFluxStagefrCompressedTask(usecases.extraireStagefrCompresse, configuration, loggers["stagefr-compressed"]),
+			"stagefr-decompresse": new ExtractFluxStagefrUncompressedTask(usecases.extraireStagefrDecompresse, configuration, loggers["stagefr-uncompressed"]),
 		};
 	}
 }

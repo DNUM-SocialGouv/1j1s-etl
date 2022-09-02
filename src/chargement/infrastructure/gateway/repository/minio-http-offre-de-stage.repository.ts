@@ -8,12 +8,13 @@ import {
 } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
-import { Logger } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@shared/configuration/logger";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	protected static NOM_DU_FICHIER_A_RECUPERER = "latest";
+	protected static UNKNOWN_FLOW = "unknown";
 
 	constructor(
 		protected readonly configuration: Configuration,
@@ -21,24 +22,27 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 		protected readonly fileSystemClient: FileSystemClient,
 		protected readonly uuidGenerator: UuidGenerator,
 		protected readonly httpClient: HttpClient,
-		protected readonly logger: Logger,
+		protected readonly loggerStrategy: LoggerStrategy,
 	) {
 	}
 
 	public async charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
+		this.loggerStrategy.get(<string>(offresDeStages[0].source)).info(`Starting to load internship offers from flow ${offresDeStages[0].source || MinioHttpOffreDeStageRepository.UNKNOWN_FLOW}`);
 		const offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur> = [];
 
 		for (const offreDeStage of offresDeStages) {
 			await this.chargerOffreDeStageSelonType(offreDeStage, offresDeStageEnErreur);
 		}
 
+		this.loggerStrategy.get(<string>(offresDeStages[0].source)).info(`Ending to load internship offers from flow ${offresDeStages[0].source || MinioHttpOffreDeStageRepository.UNKNOWN_FLOW}`);
 		return offresDeStageEnErreur;
 	}
 
-	public async recupererMisesAJourDesOffres(nomDuFlux: string): Promise<UnJeune1Solution.OffreDeStage[]> {
+	public async recupererMisesAJourDesOffres(flowName: string): Promise<UnJeune1Solution.OffreDeStage[]> {
+		this.loggerStrategy.get(flowName).info(`Starting to pull latest internship offers from flow ${flowName}`);
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
-		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
+		const sourceFilePath = `${flowName}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
 
 		try {
 			await this.minioClient.fGetObject(
@@ -53,10 +57,12 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 			throw new RecupererContenuErreur();
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
+			this.loggerStrategy.get(flowName).info(`End of pulling latest internship offers from flow ${flowName}`);
 		}
 	}
 
 	public async recupererOffresExistantes(source: string): Promise<Array<UnJeune1Solution.OffreDeStageExistante>> {
+		this.loggerStrategy.get(source).info(`Starting to pull existing internship offers from flow ${source}`);
 		try {
 			const offresDeStagesExistantesHttp = await this.httpClient.getAll(source);
 
@@ -67,10 +73,13 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 			));
 		} catch (e) {
 			throw new RecupererOffresExistantesErreur();
+		} finally {
+			this.loggerStrategy.get(source).info(`End of pulling existing internship offers from flow ${source}`);
 		}
 	}
 
-	public async enregistrer(filePath: string, fileContent: string, fluxName: string): Promise<void> {
+	public async enregistrer(filePath: string, fileContent: string, flowName: string): Promise<void> {
+		this.loggerStrategy.get(flowName).info(`Starting to save flow ${flowName}`);
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
 
@@ -82,9 +91,10 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 				localFileNameIncludingPath
 			);
 		} catch (e) {
-			throw new EcritureFluxErreur(fluxName);
+			throw new EcritureFluxErreur(flowName);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
+			this.loggerStrategy.get(flowName).info(`End of saving flow ${flowName}`);
 		}
 	}
 
@@ -100,14 +110,17 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 			} else if (offreDeStage instanceof UnJeune1Solution.OffreDeStageAMettreAJour) {
 				await this.httpClient.put(offreDeStage);
 			} else {
-				this.logger.error(`L'offre de stage avec l'identifiant ${offreDeStage.identifiantSource || "undefined"} n'a pas pu être catégorisée`);
+				this.loggerStrategy.get(<string>(offreDeStage.source)).error({
+					extra: { offreDeStage },
+					msg: `L'offre de stage avec l'identifiant ${offreDeStage.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
+				});
 				offresDeStageEnErreur.push({
 					contenuDeLOffre: offreDeStage,
 					motif: `L'offre de stage avec l'identifiant ${offreDeStage.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
 				});
 			}
 		} catch (e) {
-			this.logger.error(e);
+			this.loggerStrategy.get(<string>(offreDeStage.source)).error({ extra: { offreDeStage }, msg: e });
 			offresDeStageEnErreur.push({
 				contenuDeLOffre: offreDeStage,
 				motif: (<Error>e).stack || (<Error>e).message,

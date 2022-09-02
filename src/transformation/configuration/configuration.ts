@@ -1,4 +1,4 @@
-import { Environment } from "@configuration/configuration";
+import { Environment, SentryConfiguration } from "@configuration/configuration";
 import { LogLevel } from "@shared/configuration/logger";
 
 type MinioConfiguration = {
@@ -10,11 +10,6 @@ type MinioConfiguration = {
 	TRANSFORMED_BUCKET_NAME: string
 	TRANSFORMED_FILE_EXTENSION: string
 	URL: string
-}
-
-type SentryConfiguration = {
-	DSN: string
-	PROJECT: string
 }
 
 export type TaskConfiguration = {
@@ -66,7 +61,7 @@ export class ConfigurationFactory {
 			RELEASE: getOrError("npm_package_version"),
 			SENTRY: {
 				DSN: getOrError("SENTRY_DSN"),
-				PROJECT: getOrError("SENTRY_PROJECT"),
+				PROJECT: getOrError("npm_package_name"),
 			},
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),

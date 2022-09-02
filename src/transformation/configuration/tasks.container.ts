@@ -1,5 +1,5 @@
 import { Configuration } from "@transformation/configuration/configuration";
-import { LoggerFactory } from "@shared/configuration/logger";
+import { LoggerContainer } from "@transformation/configuration/logger.container";
 import { TransformFlowJobteaserTask } from "@transformation/infrastructure/tasks/transform-flow-jobteaser.task";
 import {
 	TransformFlowStagefrCompressedTask,
@@ -16,28 +16,15 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
-		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
-		const jobteaserLogger = loggerFactory.create({
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			name: configuration.JOBTEASER.NAME,
-			env: configuration.NODE_ENV,
-		});
-		const stagefrCompresseLogger = loggerFactory.create({
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			name: configuration.STAGEFR_COMPRESSED.NAME,
-			env: configuration.NODE_ENV,
-		});
-		const stagefrDecompresseLogger = loggerFactory.create({
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			name: configuration.STAGEFR_UNCOMPRESSED.NAME,
-			env: configuration.NODE_ENV,
-		});
-
+	public static create(
+		configuration: Configuration,
+		usecases: UsecaseContainer,
+		loggers: LoggerContainer,
+	): TaskContainer {
 		return {
-			jobteaser: new TransformFlowJobteaserTask(usecases.transformerFluxJobteaser, configuration, jobteaserLogger),
-			"stagefr-compresse": new TransformFlowStagefrCompressedTask(usecases.transformerFluxStagefrCompresse, configuration, stagefrCompresseLogger),
-			"stagefr-decompresse": new TransformFlowStagefrUncompressedTask(usecases.transformerFluxStagefrDecompresse, configuration, stagefrDecompresseLogger),
+			jobteaser: new TransformFlowJobteaserTask(usecases.transformerFluxJobteaser, configuration, loggers.jobteaser),
+			"stagefr-compresse": new TransformFlowStagefrCompressedTask(usecases.transformerFluxStagefrCompresse, configuration, loggers["stagefr-compressed"]),
+			"stagefr-decompresse": new TransformFlowStagefrUncompressedTask(usecases.transformerFluxStagefrDecompresse, configuration, loggers["stagefr-uncompressed"]),
 		};
 	}
 }

@@ -6,6 +6,7 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { UnzipClient } from "@extraction/infrastructure/gateway/common/unzip.client";
 import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
 import { LectureFluxErreur } from "@extraction/domain/flux.repository";
+import { Logger } from "@shared/configuration/logger";
 
 const contenuDecompresse = "<toto>Contenu du fichier</toto>";
 const urlDuFlux = "https://some.url.xml.gz";
@@ -14,14 +15,16 @@ let contenu: Buffer;
 
 let octetStreamHttpClient: StubbedClass<OctetStreamHttpClient>;
 let unzipClient: StubbedType<UnzipClient>;
+let logger: StubbedType<Logger>;
 let compressedFluxHttpClient: CompressedFlowHttpClient;
 
-describe("CompressedFluxHttpClientTest", () => {
+describe("CompressedFlowHttpClientTest", () => {
 	beforeEach(() => {
 		contenu = Buffer.from("<toto>Coucou</toto>");
 
 		octetStreamHttpClient = stubClass(OctetStreamHttpClient);
 		unzipClient = stubInterface<UnzipClient>(sinon);
+		logger = stubInterface<Logger>(sinon);
 		compressedFluxHttpClient = new CompressedFlowHttpClient(octetStreamHttpClient, unzipClient);
 	});
 
@@ -32,7 +35,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je retourne son contenu décompressé", async () => {
-			const result = await compressedFluxHttpClient.pull(urlDuFlux);
+			const result = await compressedFluxHttpClient.pull(urlDuFlux, logger);
 
 			expect(result).to.eql(contenuDecompresse);
 
@@ -50,9 +53,9 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je laisse passe une erreur", async () => {
-			await expect(compressedFluxHttpClient.pull(urlDuFlux)).to.be.rejectedWith(
-				Error,
-				"Oops something went wrong !"
+			await expect(compressedFluxHttpClient.pull(urlDuFlux, logger)).to.be.rejectedWith(
+				LectureFluxErreur,
+				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`
 			);
 		});
 	});
@@ -63,7 +66,7 @@ describe("CompressedFluxHttpClientTest", () => {
 		});
 
 		it("Je lance une erreur", async () => {
-			await expect(compressedFluxHttpClient.pull(urlDuFlux)).to.be.rejectedWith(
+			await expect(compressedFluxHttpClient.pull(urlDuFlux, logger)).to.be.rejectedWith(
 				LectureFluxErreur,
 				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`
 			);

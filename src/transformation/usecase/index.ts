@@ -1,7 +1,5 @@
 import { TransformerFluxJobteaser } from "@transformation/usecase/transformer-flux-jobteaser.usecase";
-import { 
-	TransformerFluxStagefrCompresse, 
-} from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
+import { TransformerFluxStagefrCompresse, } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@transformation/usecase/transformer-flux-stagefr-decompresse.usecase";

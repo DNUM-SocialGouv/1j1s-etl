@@ -19,9 +19,10 @@ export class ExtractFluxStagefrCompressedTask implements Task {
 				nom: this.configuration.STAGEFR_COMPRESSED.NAME,
 				extension: this.configuration.STAGEFR_COMPRESSED.RAW_FILE_EXTENSION,
 			});
-			this.logger.info(`Flux ${this.configuration.STAGEFR_COMPRESSED.NAME} has been succesfully extracted.`);
 		} catch (e) {
-			this.logger.error(e);
+			this.logger.fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
+		} finally {
+			this.logger.info(`End of extraction from flow [${this.configuration.STAGEFR_COMPRESSED.NAME}]`);
 		}
 	}
 }

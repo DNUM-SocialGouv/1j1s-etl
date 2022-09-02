@@ -13,20 +13,20 @@ export class TransformFlowJobteaserTask implements Task {
 	}
 
 	public async run(): Promise<void> {
-		const flux: Flux = {
+		this.logger.info(`Starting transformation of flow [${this.configuration.JOBTEASER.NAME}]`);
+		const flow: Flux = {
 			nom: this.configuration.JOBTEASER.NAME,
 			extensionFichierTransforme: this.configuration.JOBTEASER.TRANSFORMED_FILE_EXTENSION,
 			extensionFichierBrut: this.configuration.JOBTEASER.RAW_FILE_EXTENSION,
 			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 		};
 
-		this.logger.info(`Start transformation of flux [${flux.nom}]`);
-
 		try {
-			await this.usecase.executer(flux);
-			this.logger.info(`Flux [${flux.nom}] has been successfully transformed`);
+			await this.usecase.executer(flow);
 		} catch (e) {
-			this.logger.error(e);
+			this.logger.fatal({ msg: (<Error> e).message, extra: { stackTrace: (<Error> e).stack } });
+		} finally {
+			this.logger.info(`End of transformation of flow [${flow.nom}]`);
 		}
 	}
 }

@@ -11,11 +11,12 @@ export class LoadJobteaserTask implements Task {
 
 	public async run(): Promise<void> {
 		try {
-			this.logger.info("Starting load of [jobteaser] flow");
+			this.logger.info("Starting load from [jobteaser] flow");
 			await this.chargerJobteaser.executer();
-			this.logger.info("Ending load of [jobteaser] flow");
 		} catch (e) {
-			this.logger.error(e);
+			this.logger.fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
+		} finally {
+			this.logger.info("Ending load frm [jobteaser] flow");
 		}
 	}
 }

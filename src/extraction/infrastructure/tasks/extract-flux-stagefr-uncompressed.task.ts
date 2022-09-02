@@ -13,15 +13,17 @@ export class ExtractFluxStagefrUncompressedTask implements Task {
 
 	public async run(): Promise<void> {
         try {
+			this.logger.info(`Starting extraction from flow [${this.configuration.STAGEFR_UNCOMPRESSED.NAME}]`);
 			await this.usecase.executer({
 				url: this.configuration.STAGEFR_UNCOMPRESSED.FLUX_URL,
 				dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 				nom: this.configuration.STAGEFR_UNCOMPRESSED.NAME,
 				extension: this.configuration.STAGEFR_UNCOMPRESSED.RAW_FILE_EXTENSION,
 			});
-			this.logger.info(`Flux ${this.configuration.STAGEFR_UNCOMPRESSED.NAME} has been succesfully extracted.`);
 		} catch (e) {
-			this.logger.error(e);
-		}
+			this.logger.fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
+		} finally {
+			this.logger.info(`End of extraction from flow [${this.configuration.STAGEFR_UNCOMPRESSED.NAME}]`);
+        }
     }
 }

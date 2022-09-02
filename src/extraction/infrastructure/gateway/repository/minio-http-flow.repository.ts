@@ -6,6 +6,7 @@ import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-fil
 import { FlowStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
 import { Flux } from "@extraction/domain/flux";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { LoggerStrategy } from "@shared/configuration/logger";
 
 export class MinioHttpFlowRepository implements FluxRepository {
 	private static COMPRESSED_FILE_EXTENSION = ".gz";
@@ -16,12 +17,14 @@ export class MinioHttpFlowRepository implements FluxRepository {
 		private readonly minioClient: Client,
 		private readonly fileSystemClient: FileSystemClient,
 		private readonly uuidGenerator: UuidGenerator,
-		private readonly flowStrategy: FlowStrategy
+		private readonly flowStrategy: FlowStrategy,
+		private readonly loggerStrategy: LoggerStrategy,
 	) {
 	}
 
 	public recuperer(flow: Flux): Promise<string> {
-        return this.flowStrategy.get(flow);
+		const logger = this.loggerStrategy.get(flow.nom);
+		return this.flowStrategy.get(flow, logger);
     }
 
 	public async enregistrer(
@@ -30,6 +33,7 @@ export class MinioHttpFlowRepository implements FluxRepository {
 		flow: Flux,
 		omettreExtension?: boolean
 	): Promise<void> {
+		this.loggerStrategy.get(flow.nom).info(`Starting to save extracted internship offers from flow ${flow.nom}`);
 		const cleanedFilePath = omettreExtension ? this.removeCompressedFileExtension(cheminFichierIncluantNom) : cheminFichierIncluantNom;
 		const fileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = MinioHttpFlowRepository.LOCAL_FILE_PATH.concat(fileName);
@@ -45,6 +49,7 @@ export class MinioHttpFlowRepository implements FluxRepository {
 			throw new EcritureFluxErreur(flow.nom);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
+			this.loggerStrategy.get(flow.nom).info(`End of saving extracted internship offers from flow ${flow.nom}`);
 		}
 	}
 
