@@ -9,6 +9,7 @@ import {
 	OnFlowNameStrategy,
 } from "@extraction/infrastructure/gateway/client/flow.strategy";
 import { Flux } from "@extraction/domain/flux";
+import { Logger } from "@shared/configuration/logger";
 
 const url = "http://some.url";
 
@@ -17,6 +18,7 @@ let flow: Flux;
 let basicFlowClient: StubbedType<FlowClient>;
 let compressedFlowClient: StubbedType<FlowClient>;
 let octetStreamFlowClient: StubbedType<FlowClient>;
+let logger: StubbedType<Logger>;
 
 let flowStrategy: OnFlowNameStrategy;
 
@@ -30,6 +32,7 @@ describe("FlowClientStrategyTest", () => {
 		basicFlowClient = stubInterface<FlowClient>(sinon);
 		compressedFlowClient = stubInterface<FlowClient>(sinon);
 		octetStreamFlowClient = stubInterface<FlowClient>(sinon);
+		logger = stubInterface<Logger>(sinon);
 
 		flowStrategy = new OnFlowNameStrategy(
 			configuration,
@@ -50,7 +53,7 @@ describe("FlowClientStrategyTest", () => {
 		});
 
 		it("utilise le bon client pour Jobteaser", async () => {
-			await flowStrategy.get(flow);
+			await flowStrategy.get(flow, logger);
 
 			expect(basicFlowClient.pull).to.have.been.calledOnce;
 			expect(basicFlowClient.pull).to.have.been.calledWith(url);
@@ -68,7 +71,7 @@ describe("FlowClientStrategyTest", () => {
 		});
 
 		it("utilise le bon client pour Stage.fr compressé", async () => {
-			await flowStrategy.get(flow);
+			await flowStrategy.get(flow, logger);
 
 			expect(compressedFlowClient.pull).to.have.been.calledOnce;
 			expect(compressedFlowClient.pull).to.have.been.calledWith(url);
@@ -86,7 +89,7 @@ describe("FlowClientStrategyTest", () => {
 		});
 
 		it("utilise le bon client pour Stage.fr décompressé", async () => {
-			await flowStrategy.get(flow);
+			await flowStrategy.get(flow, logger);
 
 			expect(octetStreamFlowClient.pull).to.have.been.calledOnce;
 			expect(octetStreamFlowClient.pull).to.have.been.calledWith(url);
@@ -104,7 +107,7 @@ describe("FlowClientStrategyTest", () => {
 		});
 
 		it("lance une erreur", async () => {
-			await expect(flowStrategy.get(flow)).to.be.rejectedWith(
+			await expect(flowStrategy.get(flow, logger)).to.be.rejectedWith(
 				FluxNonGereErreur,
 				`Le flux ${flow.nom} n'est pas actuellement géré`
 			);

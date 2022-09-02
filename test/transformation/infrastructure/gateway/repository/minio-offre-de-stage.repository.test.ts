@@ -15,6 +15,7 @@ import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gate
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;
@@ -25,6 +26,8 @@ let historyFileNameIncludingPath: string;
 let configuration: StubbedType<Configuration>;
 let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
+let loggerStrategy: StubbedClass<LoggerStrategy>;
+let logger: StubbedType<Logger>;
 let flux: Flux;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
@@ -47,6 +50,10 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 		minioStub = stubClass(Client);
 
+		loggerStrategy = stubClass(LoggerStrategy);
+		logger = stubInterface<Logger>(sinon);
+		loggerStrategy.get.returns(logger);
+
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO.RAW_BUCKET_NAME = "raw";
 		configuration.MINIO.TRANSFORMED_BUCKET_NAME = "json";
@@ -65,7 +72,8 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 			fileSystemClient,
 			uuidClient,
 			contentParserRepository,
-			dateService
+			dateService,
+			loggerStrategy,
 		);
 	});
 

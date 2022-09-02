@@ -57,8 +57,13 @@ export class Setup {
 				},
 			});
 		} catch (e) {
-			this.logger.error({ reason: Setup.BUCKET_CREATION_FAILURE_MESSAGE });
-			this.logger.trace(e as Error);
+			this.logger.error({
+				msg: (<Error> e).message,
+				extra: {
+					reason: Setup.BUCKET_CREATION_FAILURE_MESSAGE,
+					stackTrace: (<Error> e).stack,
+				},
+			});
 		} finally {
 			setInterval(() => this.logger.info(Setup.IS_ALIVE_MESSAGE), 3600000);
 		}

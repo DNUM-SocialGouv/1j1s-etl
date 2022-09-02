@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import { finished, Stream } from "stream";
 import { createWriteStream } from "fs";
+import { finished, Stream } from "stream";
 import { promisify } from "util";
 
 export interface FileSystemClient {

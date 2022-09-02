@@ -2,7 +2,7 @@ import { Configuration } from "@chargement/configuration/configuration";
 import { LoadJobteaserTask } from "@chargement/infrastructure/tasks/load-jobteaser.task";
 import { LoadStagefrCompressedTask } from "@chargement/infrastructure/tasks/load-stagefr-compressed.task";
 import { LoadStagefrUncompressedTask } from "@chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
-import { LoggerFactory } from "@shared/configuration/logger";
+import { LoggerContainer } from "@chargement/configuration/logger.container";
 import { UsecaseContainer } from "@chargement/usecase";
 
 export type TaskContainer = {
@@ -12,33 +12,16 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
-		const loggerFactory = LoggerFactory.getInstance(configuration.SENTRY_DSN);
-		const loadJobteaserLogger = loggerFactory.create({
-			name: configuration.JOBTEASER.NAME,
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			env: configuration.NODE_ENV,
-		});
-		const loadStagefrCompressedLogger = loggerFactory.create({
-			name: configuration.STAGEFR_COMPRESSED.NAME,
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			env: configuration.NODE_ENV,
-		});
-		const loadStagefrUncompressedLogger = loggerFactory.create({
-			name: configuration.STAGEFR_UNCOMPRESSED.NAME,
-			logLevel: configuration.LOGGER_LOG_LEVEL,
-			env: configuration.NODE_ENV,
-		});
-
+	public static create(configuration: Configuration, usecases: UsecaseContainer, loggers: LoggerContainer): TaskContainer {
 		return {
-			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, loadJobteaserLogger),
+			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, loggers.jobteaser),
 			"stagefr-compresse" : new LoadStagefrCompressedTask(
 				usecases.chargerFluxStagefrCompresse,
-				loadStagefrCompressedLogger,
+				loggers["stagefr-compressed"],
 			),
 			"stagefr-decompresse": new LoadStagefrUncompressedTask(
 				usecases.chargerFluxStagefrDecompresse,
-				loadStagefrUncompressedLogger
+				loggers["stagefr-uncompressed"],
 			),
 		};
 	}

@@ -11,7 +11,7 @@ import {
 } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient, OffreDeStageHttp } from "@chargement/infrastructure/gateway/http.client";
-import { Logger } from "@shared/configuration/logger";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
@@ -42,6 +42,7 @@ let minioClient: StubbedClass<Client>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidGenerator: StubbedType<UuidGenerator>;
 let httpClient: StubbedType<HttpClient>;
+let loggerStrategy: StubbedClass<LoggerStrategy>;
 let logger: StubbedType<Logger>;
 let minioHttpOffreDeStageRepository: MinioHttpOffreDeStageRepository;
 
@@ -64,7 +65,9 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 
 		httpClient = stubInterface<HttpClient>(sinon);
 
+		loggerStrategy = stubClass(LoggerStrategy);
 		logger = stubInterface<Logger>(sinon);
+		loggerStrategy.get.returns(logger);
 
 		minioHttpOffreDeStageRepository = new MinioHttpOffreDeStageRepository(
 			configuration,
@@ -72,7 +75,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			fileSystemClient,
 			uuidGenerator,
 			httpClient,
-			logger
+			loggerStrategy
 		);
 	});
 
@@ -381,8 +384,10 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 				const resultat = await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
 
 				expect(logger.error).to.have.been.calledOnce;
-				expect(logger.error).to.have.been.calledWith(
-					`L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`
+				expect(logger.error).to.have.been.calledWith({
+					msg: `L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
+					extra: { offreDeStage: OffreDeStageFixtureBuilder.buildOffreDeStage() },
+			}
 				);
 
 				expect(resultat).to.have.deep.members([{
@@ -400,9 +405,10 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 					const resultat = await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
 
 					expect(logger.error).to.have.been.calledOnce;
-					expect(logger.error).to.have.been.calledWith(
-						"L'offre de stage avec l'identifiant undefined n'a pas pu être catégorisée"
-					);
+					expect(logger.error).to.have.been.calledWith({
+						msg: "L'offre de stage avec l'identifiant undefined n'a pas pu être catégorisée",
+						extra: { offreDeStage: offreDeStageNonCategorisable },
+					});
 
 					expect(resultat).to.have.deep.members([{
 						contenuDeLOffre: OffreDeStageFixtureBuilder.buildOffreDeStage({ identifiantSource: undefined }),

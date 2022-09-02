@@ -19,7 +19,7 @@ type MinioConfiguration = {
 	URL: string
 }
 
-type SentryConfiguration = {
+export type SentryConfiguration = {
 	DSN: string
 	PROJECT: string
 }
@@ -95,7 +95,7 @@ export class ConfigurationFactory {
 			RELEASE: getOrError("npm_package_version"),
 			SENTRY: {
 				DSN: getOrError("SENTRY_DSN"),
-				PROJECT: getOrError("SENTRY_PROJECT"),
+				PROJECT: getOrError("npm_package_name"),
 			},
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),

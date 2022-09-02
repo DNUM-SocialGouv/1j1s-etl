@@ -3,9 +3,13 @@ import { Client } from "minio";
 import { Configuration } from "@transformation/configuration/configuration";
 import { ContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
+import {
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+} from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { Flux } from "@transformation/domain/flux";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
+import { LoggerStrategy } from "@shared/configuration/logger";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
@@ -22,11 +26,13 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		private readonly fileSystemClient: FileSystemClient,
 		private readonly uuidGenerator: UuidGenerator,
 		private readonly contentParserRepository: ContentParser,
-		private readonly dateService: DateService
+		private readonly dateService: DateService,
+		private readonly loggerStrategy: LoggerStrategy,
 	) {
 	}
 
 	public async recuperer<T>(flow: Flux): Promise<T> {
+		this.loggerStrategy.get(flow.nom).info(`Starting to pull flow ${flow.nom}`);
 		const fileNameToPull = this.getFileNameToFetch(flow);
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(this.generateFileName());
 
@@ -42,10 +48,12 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 			throw new RecupererContenuErreur();
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
+			this.loggerStrategy.get(flow.nom).info(`End of pulling flow ${flow.nom}`);
 		}
 	}
 
 	public async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: Flux): Promise<void> {
+		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed internship offers from flow ${flow.nom}`);
 		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
@@ -59,6 +67,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 			throw new EcritureFluxErreur(flow.nom);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
+			this.loggerStrategy.get(flow.nom).info(`End of saving transformed internship offers from flow ${flow.nom}`);
 		}
 	}
 

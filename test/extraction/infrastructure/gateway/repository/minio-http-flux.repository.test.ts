@@ -10,6 +10,7 @@ import { FlowStrategy } from "@extraction/infrastructure/gateway/client/flow.str
 import { Flux } from "@extraction/domain/flux";
 import { MinioHttpFlowRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 
 const localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let flow: Flux;
@@ -21,6 +22,8 @@ let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
 let flowStrategy: StubbedType<FlowStrategy>;
+let loggerStrategy: StubbedClass<LoggerStrategy>;
+let logger: StubbedType<Logger>;
 let flowRepository: MinioHttpFlowRepository;
 
 describe("MinioHttpFluxRepositoryTest", () => {
@@ -49,12 +52,17 @@ describe("MinioHttpFluxRepositoryTest", () => {
 		flowStrategy = stubInterface<FlowStrategy>(sinon);
 		flowStrategy.get.withArgs(flow).resolves("<some>contenu</some>");
 
+		loggerStrategy = stubClass(LoggerStrategy);
+		logger = stubInterface<Logger>(sinon);
+		loggerStrategy.get.returns(logger);
+
 		flowRepository = new MinioHttpFlowRepository(
 			configuration,
 			minioStub,
 			fileSystemClient,
 			uuidClient,
-			flowStrategy
+			flowStrategy,
+			loggerStrategy,
 		);
 	});
 

@@ -7,13 +7,16 @@ import { CountryToIso } from "@transformation/infrastructure/gateway/country-to-
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/html-to-markdown.sanitizer";
-import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
+import { LoggerStrategy } from "@shared/configuration/logger";
+import {
+	MinioOffreDeStageRepository,
+} from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { NodeFileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { NodeUuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { XmlContentParser } from "@transformation/infrastructure/gateway/xml-content.parser";
 
 export class GatewayContainerFactory {
-	public static create(configuration: Configuration): GatewayContainer {
+	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const minioClient = new Client({
 			accessKey: configuration.MINIO.ACCESS_KEY,
@@ -38,7 +41,8 @@ export class GatewayContainerFactory {
 				fileSystemClient,
 				uuidClient,
 				contentParserRepository,
-				dateService
+				dateService,
+				loggerStrategy,
 			),
 			textSanitizer: assainisseurDeTexte,
 		};

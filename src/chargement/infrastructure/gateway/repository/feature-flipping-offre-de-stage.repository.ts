@@ -3,7 +3,7 @@ import { Client } from "minio";
 import { Configuration } from "@chargement/configuration/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
-import { Logger } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
@@ -17,9 +17,9 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		fileSystemClient: FileSystemClient,
 		uuidGenerator: UuidGenerator,
 		httpClient: HttpClient,
-		logger: Logger
+		loggerStrategy: LoggerStrategy
 	) {
-		super(configuration, minioClient, fileSystemClient, uuidGenerator, httpClient, logger);
+		super(configuration, minioClient, fileSystemClient, uuidGenerator, httpClient, loggerStrategy);
 	}
 
 	public charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
@@ -36,10 +36,10 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 				offresDeStageASupprimerCount++;
 			}
 		}
-		this.logger.debug(offresDeStages.length);
-		this.logger.debug(`Nombre d'offres de stage à publier : ${offresDeStageAPublierCount}`);
-		this.logger.debug(`Nombre d'offres de stage à mettre à jour : ${offresDeStageAMettreAJourCount}`);
-		this.logger.debug(`Nombre d'offres de stage à supprimer : ${offresDeStageASupprimerCount}`);
+		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(offresDeStages.length);
+		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à publier : ${offresDeStageAPublierCount}`);
+		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à mettre à jour : ${offresDeStageAMettreAJourCount}`);
+		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à supprimer : ${offresDeStageASupprimerCount}`);
 
 		return Promise.resolve([]);
 	}

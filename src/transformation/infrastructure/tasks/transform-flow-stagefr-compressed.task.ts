@@ -13,6 +13,7 @@ export class TransformFlowStagefrCompressedTask implements Task {
 	}
 
 	public async run(): Promise<void> {
+		this.logger.info(`Starting transformation of flow [${this.configuration.STAGEFR_COMPRESSED.NAME}]`);
 		const flow: Flux = {
 			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 			extensionFichierBrut: this.configuration.STAGEFR_COMPRESSED.RAW_FILE_EXTENSION,
@@ -26,7 +27,9 @@ export class TransformFlowStagefrCompressedTask implements Task {
 			await this.usecase.executer(flow);
 			this.logger.info(`Flux [${flow.nom}] has been successfully transformed`);
 		} catch (e) {
-			this.logger.error(e);
+			this.logger.fatal({ msg: (<Error> e).message, extra: { stackTrace: (<Error> e).stack } });
+		} finally {
+			this.logger.info(`End of transformation of flow [${flow.nom}]`);
 		}
 	}
 }

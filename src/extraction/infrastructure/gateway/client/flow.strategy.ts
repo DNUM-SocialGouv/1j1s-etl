@@ -1,12 +1,13 @@
 import { Configuration } from "@extraction/configuration/configuration";
 import { Flux } from "@extraction/domain/flux";
+import { Logger } from "@shared/configuration/logger";
 
 export interface FlowStrategy {
-	get(flow: Flux): Promise<string>;
+	get(flow: Flux, logger: Logger): Promise<string>;
 }
 
 export interface FlowClient {
-	pull(url: string): Promise<string>;
+	pull(url: string, logger: Logger): Promise<string>;
 }
 
 export class OnFlowNameStrategy implements FlowStrategy {
@@ -18,14 +19,14 @@ export class OnFlowNameStrategy implements FlowStrategy {
 	) {
 	}
 
-	public async get(flow: Flux): Promise<string> {
+	public async get(flow: Flux, logger: Logger): Promise<string> {
 		switch (flow.nom) {
 			case this.configuration.JOBTEASER.NAME:
-				return this.basicFlowHttpClient.pull(flow.url);
+				return this.basicFlowHttpClient.pull(flow.url, logger);
 			case this.configuration.STAGEFR_COMPRESSED.NAME:
-				return this.compressedFlowHttpClient.pull(flow.url);
+				return this.compressedFlowHttpClient.pull(flow.url, logger);
 			case this.configuration.STAGEFR_UNCOMPRESSED.NAME:
-				return this.octetStreamFlowHttpClient.pull(flow.url);
+				return this.octetStreamFlowHttpClient.pull(flow.url, logger);
 			default:
 				throw new FluxNonGereErreur(flow.nom);
 		}
