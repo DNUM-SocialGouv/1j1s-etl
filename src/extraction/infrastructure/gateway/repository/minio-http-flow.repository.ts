@@ -37,7 +37,7 @@ export class MinioHttpFlowRepository implements FluxRepository {
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, contenuFlux);
 			await this.minioClient.fPutObject(
-				this.configuration.MINIO_RAW_BUCKET_NAME,
+				this.configuration.MINIO.RAW_BUCKET_NAME,
 				cleanedFilePath,
 				localFileNameIncludingPath
 			);

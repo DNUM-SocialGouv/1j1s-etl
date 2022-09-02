@@ -14,7 +14,7 @@ export class TransformFlowStagefrCompressedTask implements Task {
 
 	public async run(): Promise<void> {
 		const flow: Flux = {
-			dossierHistorisation: this.configuration.MINIO_HISTORY_DIRECTORY_NAME,
+			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 			extensionFichierBrut: this.configuration.STAGEFR_COMPRESSED.RAW_FILE_EXTENSION,
 			extensionFichierTransforme: this.configuration.STAGEFR_COMPRESSED.TRANSFORMED_FILE_EXTENSION,
 			nom: this.configuration.STAGEFR_COMPRESSED.NAME,

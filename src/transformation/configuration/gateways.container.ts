@@ -16,10 +16,10 @@ export class GatewayContainerFactory {
 	public static create(configuration: Configuration): GatewayContainer {
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const minioClient = new Client({
-			accessKey: configuration.MINIO_ACCESS_KEY,
-			secretKey: configuration.MINIO_SECRET_KEY,
-			port: configuration.MINIO_PORT,
-			endPoint: configuration.MINIO_URL,
+			accessKey: configuration.MINIO.ACCESS_KEY,
+			secretKey: configuration.MINIO.SECRET_KEY,
+			port: configuration.MINIO.PORT,
+			endPoint: configuration.MINIO.URL,
 		});
 		const uuidClient = new NodeUuidGenerator();
 		const xmlParser = new XMLParser({ trimValues: true });

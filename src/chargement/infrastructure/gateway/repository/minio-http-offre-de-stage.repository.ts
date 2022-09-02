@@ -38,11 +38,11 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 	public async recupererMisesAJourDesOffres(nomDuFlux: string): Promise<UnJeune1Solution.OffreDeStage[]> {
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
-		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO_TRANSFORMED_FILE_EXTENSION}`;
+		const sourceFilePath = `${nomDuFlux}/${MinioHttpOffreDeStageRepository.NOM_DU_FICHIER_A_RECUPERER}${this.configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
 
 		try {
 			await this.minioClient.fGetObject(
-				this.configuration.MINIO_TRANSFORMED_BUCKET_NAME,
+				this.configuration.MINIO.TRANSFORMED_BUCKET_NAME,
 				sourceFilePath,
 				localFileNameIncludingPath
 			);
@@ -77,7 +77,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, fileContent);
 			await this.minioClient.fPutObject(
-				this.configuration.MINIO_RESULT_BUCKET_NAME,
+				this.configuration.MINIO.RESULT_BUCKET_NAME,
 				filePath,
 				localFileNameIncludingPath
 			);

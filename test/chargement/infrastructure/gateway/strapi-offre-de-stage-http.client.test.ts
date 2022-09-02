@@ -65,7 +65,7 @@ describe("StrapiHttpClientTest", () => {
 			.reply(200)
 			.put(`/offres-de-stage/${offreDeStageAMettreAJour.id}`)
 			.reply(200)
-			.get(`/offres-de-stage?filters[source][$eq]=${encodeURI(source)}&fields=${StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE}&pagination[pageSize]=${StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE}&sort=identifiantSource`)
+			.get(`/offres-de-stage?filters[source][$eq]=${encodeURI(source)}&fields=identifiantSource,id,sourceUpdatedAt&pagination[pageSize]=100&sort=identifiantSource`)
 			.reply(200, { data: offresHttp, meta: { pagination: { page: 1, pageSize: 100, pageCount: 1, total: 2 } } });
 
 		strapiOffreDeStageHttpClient = new StrapiOffreDeStageHttpClient(axiosInstance, authClient, offreDeStageUrl);
@@ -143,8 +143,8 @@ describe("StrapiHttpClientTest", () => {
 			expect(spyOnGet).to.have.been.calledWith(offreDeStageUrl, {
 				params: {
 					"filters[source][$eq]": encodeURI(source),
-					"fields": StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE,
-					"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
+					"fields": "identifiantSource,id,sourceUpdatedAt",
+					"pagination[pageSize]": 100,
 					"sort": "identifiantSource",
 				},
 			});

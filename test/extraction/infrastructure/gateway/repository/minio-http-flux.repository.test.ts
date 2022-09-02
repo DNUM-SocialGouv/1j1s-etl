@@ -38,7 +38,7 @@ describe("MinioHttpFluxRepositoryTest", () => {
 		minioStub = stubClass(Client);
 
 		configuration = stubInterface<Configuration>(sinon);
-		configuration.MINIO_RAW_BUCKET_NAME = "raw";
+		configuration.MINIO.RAW_BUCKET_NAME = "raw";
 		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
 
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
@@ -67,7 +67,7 @@ describe("MinioHttpFluxRepositoryTest", () => {
 			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, fileContent);
 			expect(minioStub.fPutObject).to.have.been.calledOnce;
 			expect(minioStub.fPutObject).to.have.been.calledWith(
-				configuration.MINIO_RAW_BUCKET_NAME,
+				configuration.MINIO.RAW_BUCKET_NAME,
 				fileNameIncludingPath,
 				localFileNameIncludingPath
 			);
@@ -90,7 +90,7 @@ describe("MinioHttpFluxRepositoryTest", () => {
 			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, fileContent);
 			expect(minioStub.fPutObject).to.have.been.calledOnce;
 			expect(minioStub.fPutObject).to.have.been.calledWith(
-				configuration.MINIO_RAW_BUCKET_NAME,
+				configuration.MINIO.RAW_BUCKET_NAME,
 				fileNameIncludingPath.replace(".gz", ""),
 				localFileNameIncludingPath
 			);

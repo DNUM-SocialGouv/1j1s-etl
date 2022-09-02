@@ -15,7 +15,7 @@ export class ExtractFluxJobteaserTask implements Task {
 		try {
 			const flow = {
 				url: this.configuration.JOBTEASER.FLUX_URL,
-				dossierHistorisation: this.configuration.MINIO_HISTORY_DIRECTORY_NAME,
+				dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 				nom: this.configuration.JOBTEASER.NAME,
 				extension: this.configuration.JOBTEASER.RAW_FILE_EXTENSION,
 			};

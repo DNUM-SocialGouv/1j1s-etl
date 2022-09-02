@@ -50,9 +50,9 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		nomDuFlux = "source";
 
 		configuration = stubInterface<Configuration>(sinon);
-		configuration.MINIO_TRANSFORMED_BUCKET_NAME = "json";
-		configuration.MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
-		configuration.MINIO_RESULT_BUCKET_NAME = "result";
+		configuration.MINIO.TRANSFORMED_BUCKET_NAME = "json";
+		configuration.MINIO.TRANSFORMED_FILE_EXTENSION = ".json";
+		configuration.MINIO.RESULT_BUCKET_NAME = "result";
 		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
 
 		minioClient = stubClass(Client);
@@ -422,7 +422,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			expect(fileSystemClient.write).to.have.been.calledWith(localFileNameIncludingPath, contenu);
 			expect(minioClient.fPutObject).to.have.been.calledOnce;
 			expect(minioClient.fPutObject).to.have.been.calledWith(
-				configuration.MINIO_RESULT_BUCKET_NAME,
+				configuration.MINIO.RESULT_BUCKET_NAME,
 				filePathForMinio,
 				localFileNameIncludingPath
 			);
