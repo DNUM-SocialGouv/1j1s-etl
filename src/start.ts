@@ -13,9 +13,9 @@ const configuration = ConfigurationFactory.create();
 const loggerFactory = LoggerFactory.getInstance(
 	configuration.SENTRY.DSN,
 	configuration.SENTRY.PROJECT,
-	configuration.RELEASE,
+	configuration.SENTRY.RELEASE,
 	configuration.NODE_ENV,
-	"setup",
+	configuration.APPLICATION_CONTEXT,
 	configuration.APPLICATION_LOGGER_LOG_LEVEL,
 );
 const applicationLogger = loggerFactory.create({ name: configuration.APPLICATION_LOGGER_NAME });

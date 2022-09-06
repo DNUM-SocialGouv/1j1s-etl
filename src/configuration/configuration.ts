@@ -22,6 +22,7 @@ type MinioConfiguration = {
 export type SentryConfiguration = {
 	DSN: string
 	PROJECT: string
+	RELEASE: string
 }
 
 export type TaskConfiguration = {
@@ -35,13 +36,14 @@ export type TaskConfiguration = {
 export type Configuration = {
 	APPLICATION_LOGGER_NAME: string
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
+	APPLICATION_CONTEXT: string
 	EXTRACT_LOG_LEVEL: LogLevel
 	FEATURE_FLIPPING_CHARGEMENT: boolean
+	FLOWS: Array<string>
 	JOBTEASER: TaskConfiguration
 	LOAD_LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration
 	NODE_ENV: Environment
-	RELEASE: string
 	SENTRY: SentryConfiguration
 	STAGEFR_COMPRESSED: TaskConfiguration
 	STAGEFR_UNCOMPRESSED: TaskConfiguration
@@ -68,12 +70,18 @@ export class ConfigurationFactory {
 		return {
 			APPLICATION_LOGGER_NAME: getOrDefault("APPLICATION_LOGGER_NAME", "application"),
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
+			APPLICATION_CONTEXT: "application",
 			EXTRACT_LOG_LEVEL: getOrDefault("EXTRACT_LOG_LEVEL", "debug") as LogLevel,
 			FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("FEATURE_FLIPPING_CHARGEMENT", "false")),
+			FLOWS: [
+				getOrError("JOBTEASER_NAME"),
+				getOrError("STAGEFR_COMPRESSED_NAME"),
+				getOrError("STAGEFR_UNCOMPRESSED_NAME"),
+			],
 			JOBTEASER: {
-				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
+				DIRECTORY_NAME: getOrError("JOBTEASER_DIRECTORY_NAME"),
 				FLUX_URL: getOrError("JOBTEASER_FLUX_URL"),
-				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
+				NAME: getOrError("JOBTEASER_NAME"),
 				RAW_FILE_EXTENSION: getOrError("JOBTEASER_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
@@ -92,22 +100,22 @@ export class ConfigurationFactory {
 				URL: getOrError("MINIO_URL"),
 			},
 			NODE_ENV: getOrError("NODE_ENV") as Environment,
-			RELEASE: getOrError("npm_package_version"),
 			SENTRY: {
 				DSN: getOrError("SENTRY_DSN"),
 				PROJECT: getOrError("npm_package_name"),
+				RELEASE: getOrError("npm_package_version"),
 			},
 			STAGEFR_COMPRESSED: {
-				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
+				DIRECTORY_NAME: getOrError("STAGEFR_COMPRESSED_DIRECTORY_NAME"),
 				FLUX_URL: getOrError("STAGEFR_COMPRESSED_FLUX_URL"),
-				NAME: getOrDefault("STAGEFR_COMPRESSED_NAME", "stagefr_compresse"),
+				NAME: getOrError("STAGEFR_COMPRESSED_NAME"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_COMPRESSED_TRANSFORMED_FILE_EXTENSION"),
 			},
 			STAGEFR_UNCOMPRESSED: {
-				DIRECTORY_NAME: getOrDefault("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME", "stagefr_decompresse"),
+				DIRECTORY_NAME: getOrError("STAGEFR_UNCOMPRESSED_DIRECTORY_NAME"),
 				FLUX_URL: getOrError("STAGEFR_UNCOMPRESSED_FLUX_URL"),
-				NAME: getOrDefault("STAGEFR_UNCOMPRESSED_NAME", "stagefr_decompresse"),
+				NAME: getOrError("STAGEFR_UNCOMPRESSED_NAME"),
 				RAW_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("STAGEFR_UNCOMPRESSED_TRANSFORMED_FILE_EXTENSION"),
 			},
