@@ -20,11 +20,12 @@ export type TaskConfiguration = {
 }
 
 export type Configuration = {
+	CONTEXT: string
+	FLOWS: Array<string>
 	JOBTEASER: TaskConfiguration
 	LOGGER_LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration
 	NODE_ENV: Environment
-	RELEASE: string
 	SENTRY: SentryConfiguration
 	STAGEFR_COMPRESSED: TaskConfiguration
 	STAGEFR_UNCOMPRESSED: TaskConfiguration
@@ -40,6 +41,12 @@ export class ConfigurationFactory {
 		const DEFAULT_MINIO_PORT = "9000";
 
 		return {
+			CONTEXT: "transformation",
+			FLOWS: [
+				getOrError("JOBTEASER_NAME"),
+				getOrError("STAGEFR_COMPRESSED_NAME"),
+				getOrError("STAGEFR_UNCOMPRESSED_NAME"),
+			],
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("JOBTEASER_DIRECTORY_NAME", "jobteaser"),
 				NAME: getOrDefault("JOBTEASER_NAME", "jobteaser"),
@@ -58,10 +65,10 @@ export class ConfigurationFactory {
 				URL: getOrError("MINIO_URL"),
 			},
 			NODE_ENV: getOrError("NODE_ENV") as Environment,
-			RELEASE: getOrError("npm_package_version"),
 			SENTRY: {
 				DSN: getOrError("SENTRY_DSN"),
 				PROJECT: getOrError("npm_package_name"),
+				RELEASE: getOrError("npm_package_version"),
 			},
 			STAGEFR_COMPRESSED: {
 				DIRECTORY_NAME: getOrDefault("STAGEFR_COMPRESSED_DIRECTORY_NAME", "stagefr_compresse"),
