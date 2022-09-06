@@ -9,7 +9,7 @@ import {
 } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { Flux } from "@transformation/domain/flux";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
-import { LoggerStrategy } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@transformation/configuration/logger-strategy";
 import { OffreDeStageRepository } from "@transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";

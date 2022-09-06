@@ -3,7 +3,7 @@ import { Client } from "minio";
 import { Configuration } from "@chargement/configuration/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
-import { LoggerStrategy } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@chargement/configuration/logger-strategy";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";

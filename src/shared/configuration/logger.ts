@@ -20,30 +20,6 @@ export type LoggerConfiguration = {
 	name: string,
 }
 
-export class LoggerStrategy {
-	private loggers: Map<string, Logger>;
-
-	constructor(
-		jobteaserLogger: Logger,
-		stagefrCompressedLogger: Logger,
-		stagefrUncompressedLogger: Logger,
-	) {
-		this.loggers = new Map([
-			["jobteaser", jobteaserLogger],
-			["stagefr-compresse", stagefrCompressedLogger],
-			["stagefr-decompresse", stagefrUncompressedLogger],
-		]);
-	}
-
-	get(flowName: string): Logger {
-		const logger = this.loggers.get(flowName);
-		if (logger) {
-			return logger;
-		}
-		throw new Error("");
-	}
-}
-
 export class LoggerFactory {
 	private static instance: LoggerFactory;
 	private readonly sentryConfiguration: internal.Duplex;

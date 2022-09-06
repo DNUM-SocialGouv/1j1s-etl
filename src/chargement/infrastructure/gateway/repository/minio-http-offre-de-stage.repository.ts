@@ -8,9 +8,9 @@ import {
 } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@chargement/infrastructure/gateway/http.client";
-import { LoggerStrategy } from "@shared/configuration/logger";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { LoggerStrategy } from "@chargement/configuration/logger-strategy";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	protected static NOM_DU_FICHIER_A_RECUPERER = "latest";

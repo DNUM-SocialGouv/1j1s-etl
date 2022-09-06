@@ -2,7 +2,6 @@ import { Configuration } from "@chargement/configuration/configuration";
 import { LoadJobteaserTask } from "@chargement/infrastructure/tasks/load-jobteaser.task";
 import { LoadStagefrCompressedTask } from "@chargement/infrastructure/tasks/load-stagefr-compressed.task";
 import { LoadStagefrUncompressedTask } from "@chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
-import { LoggerContainer } from "@chargement/configuration/logger.container";
 import { UsecaseContainer } from "@chargement/usecase";
 
 export type TaskContainer = {
@@ -12,17 +11,11 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	public static create(configuration: Configuration, usecases: UsecaseContainer, loggers: LoggerContainer): TaskContainer {
+	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		return {
-			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, loggers.jobteaser),
-			"stagefr-compresse" : new LoadStagefrCompressedTask(
-				usecases.chargerFluxStagefrCompresse,
-				loggers["stagefr-compressed"],
-			),
-			"stagefr-decompresse": new LoadStagefrUncompressedTask(
-				usecases.chargerFluxStagefrDecompresse,
-				loggers["stagefr-uncompressed"],
-			),
+			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser),
+			"stagefr-compresse" : new LoadStagefrCompressedTask(usecases.chargerFluxStagefrCompresse),
+			"stagefr-decompresse": new LoadStagefrUncompressedTask(usecases.chargerFluxStagefrDecompresse),
 		};
 	}
 }

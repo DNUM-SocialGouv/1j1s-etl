@@ -1,35 +1,22 @@
 import { Configuration } from "@transformation/configuration/configuration";
-import { Flux } from "@transformation/domain/flux";
-import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/infrastructure/task/task";
+import { TaskLog } from "@transformation/configuration/log.decorator";
 import { TransformerFluxStagefrCompresse } from "@transformation/usecase/transformer-flux-stagefr-compresse.usecase";
 
 export class TransformFlowStagefrCompressedTask implements Task {
 	constructor(
 		private readonly usecase: TransformerFluxStagefrCompresse,
 		private readonly configuration: Configuration,
-		private readonly logger: Logger
 	) {
 	}
 
+	@TaskLog("stagefr-compresse")
 	public async run(): Promise<void> {
-		this.logger.info(`Starting transformation of flow [${this.configuration.STAGEFR_COMPRESSED.NAME}]`);
-		const flow: Flux = {
+		await this.usecase.executer({
 			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
 			extensionFichierBrut: this.configuration.STAGEFR_COMPRESSED.RAW_FILE_EXTENSION,
 			extensionFichierTransforme: this.configuration.STAGEFR_COMPRESSED.TRANSFORMED_FILE_EXTENSION,
 			nom: this.configuration.STAGEFR_COMPRESSED.NAME,
-		};
-
-		this.logger.info(`Start transformation of flux [${flow.nom}]`);
-
-		try {
-			await this.usecase.executer(flow);
-			this.logger.info(`Flux [${flow.nom}] has been successfully transformed`);
-		} catch (e) {
-			this.logger.fatal({ msg: (<Error> e).message, extra: { stackTrace: (<Error> e).stack } });
-		} finally {
-			this.logger.info(`End of transformation of flow [${flow.nom}]`);
-		}
+		});
 	}
 }

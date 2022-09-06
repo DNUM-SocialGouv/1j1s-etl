@@ -11,13 +11,14 @@ import {
 } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient, OffreDeStageHttp } from "@chargement/infrastructure/gateway/http.client";
-import { Logger, LoggerStrategy } from "@shared/configuration/logger";
+import { Logger} from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { LoggerStrategy } from "@chargement/configuration/logger-strategy";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localFileNameIncludingPath = `./tmp/${uuid}`;

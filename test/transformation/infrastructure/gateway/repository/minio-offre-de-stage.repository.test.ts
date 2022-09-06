@@ -11,11 +11,12 @@ import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructu
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@transformation/infrastructure/gateway/node-file-system.client";
 import { Flux } from "@transformation/domain/flux";
+import { Logger} from "@shared/configuration/logger";
+import { LoggerStrategy } from "@transformation/configuration/logger-strategy";
 import { MinioOffreDeStageRepository } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/transformation/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@transformation/infrastructure/gateway/uuid.generator";
-import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;

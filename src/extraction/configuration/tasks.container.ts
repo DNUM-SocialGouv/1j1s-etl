@@ -6,7 +6,6 @@ import {
 import {
 	ExtractFluxStagefrUncompressedTask,
 } from "@extraction/infrastructure/tasks/extract-flux-stagefr-uncompressed.task";
-import { LoggerContainer } from "@extraction/configuration/logger.container";
 import { UsecaseContainer } from "@extraction/usecase";
 
 export type TaskContainer = {
@@ -16,11 +15,11 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	public static create(configuration: Configuration, usecases: UsecaseContainer, loggers: LoggerContainer): TaskContainer {
+	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		return {
-			jobteaser: new ExtractFluxJobteaserTask(usecases.extraireJobteaser, configuration, loggers.jobteaser),
-			"stagefr-compresse": new ExtractFluxStagefrCompressedTask(usecases.extraireStagefrCompresse, configuration, loggers["stagefr-compressed"]),
-			"stagefr-decompresse": new ExtractFluxStagefrUncompressedTask(usecases.extraireStagefrDecompresse, configuration, loggers["stagefr-uncompressed"]),
+			jobteaser: new ExtractFluxJobteaserTask(usecases.extraireJobteaser, configuration),
+			"stagefr-compresse": new ExtractFluxStagefrCompressedTask(usecases.extraireStagefrCompresse, configuration),
+			"stagefr-decompresse": new ExtractFluxStagefrUncompressedTask(usecases.extraireStagefrDecompresse, configuration),
 		};
 	}
 }

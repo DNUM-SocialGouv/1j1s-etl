@@ -8,7 +8,7 @@ import {
 	FeatureFlippingOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
 import { FileSystemClient, NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { LoggerStrategy } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@chargement/configuration/logger-strategy";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
