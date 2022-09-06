@@ -10,7 +10,7 @@
     "build": "tsc -p tsconfig.prod.json",
     "cli": "node --max-old-space-size=512 ./build/src/cli",
     "coverage": "nyc mocha",
-    "dev": "ts-node",
+    "dev": "ts-node -r tsconfig-paths/register -r dotenv/config",
     "lint": "eslint src test",
     "start": "node build/src/start.js",
     "test": "mocha"
