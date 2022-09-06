@@ -99,7 +99,7 @@ export class Setup {
 					Days: this.configuration.MINIO.DAYS_AFTER_EXPIRATION,
 				},
 				Filter: {
-					Prefix: isInsideDirectory ? `/${flow}/${this.configuration.MINIO.HISTORY_DIRECTORY_NAME}` : `/${flow}`,
+					Prefix: isInsideDirectory ? `${flow}/${this.configuration.MINIO.HISTORY_DIRECTORY_NAME}` : `${flow}`,
 				},
 				Status: this.configuration.MINIO.LIFECYCLE_RULES_STATUS,
 				ID: isInsideDirectory ? `${flow}-${this.configuration.MINIO.HISTORY_DIRECTORY_NAME}` : `${flow}`,
