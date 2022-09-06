@@ -10,7 +10,7 @@ import { MinioAdminStorageRepository } from "@shared/infrastructure/gateway/repo
 import { Setup } from "@configuration/setup";
 
 const configuration = ConfigurationFactory.create();
-const loggerFactory = LoggerFactory.getInstance(
+const loggerFactory = new LoggerFactory(
 	configuration.SENTRY.DSN,
 	configuration.SENTRY.PROJECT,
 	configuration.SENTRY.RELEASE,

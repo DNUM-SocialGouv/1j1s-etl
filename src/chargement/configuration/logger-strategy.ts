@@ -5,7 +5,7 @@ export class LoggerStrategy {
 	private readonly loggers: Map<string, Logger>;
 
 	constructor(configuration: Configuration) {
-		const loggerFactory = LoggerFactory.getInstance(
+		const loggerFactory = new LoggerFactory(
 			configuration.SENTRY.DSN,
 			configuration.SENTRY.PROJECT,
 			configuration.SENTRY.RELEASE,
