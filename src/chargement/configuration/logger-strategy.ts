@@ -1,5 +1,5 @@
 import { Configuration } from "@chargement/configuration/configuration";
-import { Logger, LoggerFactory } from "@shared/configuration/logger";
+import { Logger, LoggerFactory, LoggerStrategyError } from "@shared/configuration/logger";
 
 export class LoggerStrategy {
 	private readonly loggers: Map<string, Logger>;
@@ -24,6 +24,6 @@ export class LoggerStrategy {
 		if (logger) {
 			return logger;
 		}
-		throw new Error("");
+		throw new LoggerStrategyError(flowName);
 	}
 }

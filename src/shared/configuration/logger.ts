@@ -17,6 +17,12 @@ export interface Logger {
 
 export type LoggerConfiguration = { name: string }
 
+export class LoggerStrategyError extends Error {
+	constructor(flowName: string) {
+		super(`No logger available for flow ${flowName}`);
+	}
+}
+
 export class LoggerFactory {
 	private static instance: LoggerFactory;
 	private readonly sentryConfiguration: internal.Duplex;
