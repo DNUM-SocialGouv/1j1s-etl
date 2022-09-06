@@ -15,10 +15,7 @@ export interface Logger {
 	warn(...args: Array<unknown>): void;
 }
 
-export type LoggerConfiguration = {
-	logLevel: LogLevel
-	name: string,
-}
+export type LoggerConfiguration = { name: string }
 
 export class LoggerFactory {
 	private static instance: LoggerFactory;
@@ -27,6 +24,7 @@ export class LoggerFactory {
 	private readonly project: string;
 	private readonly release: string;
 	private readonly environment: Environment;
+	private readonly logLevel: LogLevel;
 
 	private constructor(
 		sentryDsn: string,
@@ -34,6 +32,7 @@ export class LoggerFactory {
 		release: string,
 		environment: Environment,
 		context: string,
+		logLevel: LogLevel
 	) {
 		const now = new Date().toISOString().split("T")[0];
 		this.sentryDsn = sentryDsn;
@@ -54,6 +53,7 @@ export class LoggerFactory {
 		this.project = project;
 		this.release = release;
 		this.environment = environment;
+		this.logLevel = logLevel;
 	}
 
 	public static getInstance(
@@ -62,25 +62,27 @@ export class LoggerFactory {
 		release: string,
 		environment: Environment,
 		context: string,
+		logLevel: LogLevel,
 	): LoggerFactory {
-		if (this.instance) {
-			return this.instance;
+		if (!this.instance) {
+			this.instance = new LoggerFactory(
+				sentryDsn,
+				project,
+				release,
+				environment,
+				context,
+				logLevel,
+			);
 		}
 
-		return new LoggerFactory(
-			sentryDsn,
-			project,
-			release,
-			environment,
-			context,
-		);
+		return this.instance;
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
 		if (this.environment === Environment.PRODUCTION) {
 			Sentry.setTag("flow", configuration.name);
-			return pino(configuration, this.sentryConfiguration);
+			return pino({ ...configuration, level: this.logLevel }, this.sentryConfiguration);
 		}
-		return pino(configuration);
+		return pino({ ...configuration, level: this.logLevel });
 	}
 }
