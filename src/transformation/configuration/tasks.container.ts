@@ -1,5 +1,4 @@
 import { Configuration } from "@transformation/configuration/configuration";
-import { LoggerContainer } from "@transformation/configuration/logger.container";
 import { TransformFlowJobteaserTask } from "@transformation/infrastructure/tasks/transform-flow-jobteaser.task";
 import {
 	TransformFlowStagefrCompressedTask,
@@ -16,15 +15,11 @@ export type TaskContainer = {
 }
 
 export class TaskContainerFactory {
-	public static create(
-		configuration: Configuration,
-		usecases: UsecaseContainer,
-		loggers: LoggerContainer,
-	): TaskContainer {
+	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		return {
-			jobteaser: new TransformFlowJobteaserTask(usecases.transformerFluxJobteaser, configuration, loggers.jobteaser),
-			"stagefr-compresse": new TransformFlowStagefrCompressedTask(usecases.transformerFluxStagefrCompresse, configuration, loggers["stagefr-compressed"]),
-			"stagefr-decompresse": new TransformFlowStagefrUncompressedTask(usecases.transformerFluxStagefrDecompresse, configuration, loggers["stagefr-uncompressed"]),
+			jobteaser: new TransformFlowJobteaserTask(usecases.transformerFluxJobteaser, configuration),
+			"stagefr-compresse": new TransformFlowStagefrCompressedTask(usecases.transformerFluxStagefrCompresse, configuration),
+			"stagefr-decompresse": new TransformFlowStagefrUncompressedTask(usecases.transformerFluxStagefrDecompresse, configuration),
 		};
 	}
 }

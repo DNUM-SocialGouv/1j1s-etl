@@ -1,22 +1,13 @@
 import { ChargerFluxJobteaser } from "@chargement/usecase/charger-flux-jobteaser.usecase";
-import { Logger } from "@shared/configuration/logger";
 import { Task } from "@shared/infrastructure/task/task";
+import { TaskLog } from "@chargement/configuration/log.decorator";
 
 export class LoadJobteaserTask implements Task {
-	constructor(
-		private readonly chargerJobteaser: ChargerFluxJobteaser,
-		private readonly logger: Logger,
-	) {
+	constructor(private readonly chargerJobteaser: ChargerFluxJobteaser) {
 	}
 
+	@TaskLog("jobteaser")
 	public async run(): Promise<void> {
-		try {
-			this.logger.info("Starting load from [jobteaser] flow");
-			await this.chargerJobteaser.executer();
-		} catch (e) {
-			this.logger.fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
-		} finally {
-			this.logger.info("Ending load frm [jobteaser] flow");
-		}
+		await this.chargerJobteaser.executer();
 	}
 }

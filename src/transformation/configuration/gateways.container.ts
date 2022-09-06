@@ -7,7 +7,7 @@ import { CountryToIso } from "@transformation/infrastructure/gateway/country-to-
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@transformation/infrastructure/gateway/html-to-markdown.sanitizer";
-import { LoggerStrategy } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@transformation/configuration/logger-strategy";
 import {
 	MinioOffreDeStageRepository,
 } from "@transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";

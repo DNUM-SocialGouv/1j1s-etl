@@ -5,7 +5,7 @@ import { BasicFlowHttpClient } from "@extraction/infrastructure/gateway/client/b
 import { CompressedFlowHttpClient } from "@extraction/infrastructure/gateway/client/compressed-flow-http.client";
 import { Configuration } from "@extraction/configuration/configuration";
 import { GatewayContainer } from "@extraction/infrastructure/gateway";
-import { LoggerStrategy } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@extraction/configuration/logger-strategy";
 import { MinioHttpFlowRepository } from "@extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
