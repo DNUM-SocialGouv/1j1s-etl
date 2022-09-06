@@ -24,7 +24,6 @@ export class LoggerStrategyError extends Error {
 }
 
 export class LoggerFactory {
-	private static instance: LoggerFactory;
 	private readonly sentryConfiguration: internal.Duplex;
 	private readonly sentryDsn: string;
 	private readonly project: string;
@@ -32,7 +31,7 @@ export class LoggerFactory {
 	private readonly environment: Environment;
 	private readonly logLevel: LogLevel;
 
-	private constructor(
+	constructor(
 		sentryDsn: string,
 		project: string,
 		release: string,
@@ -60,28 +59,6 @@ export class LoggerFactory {
 		this.release = release;
 		this.environment = environment;
 		this.logLevel = logLevel;
-	}
-
-	public static getInstance(
-		sentryDsn: string,
-		project: string,
-		release: string,
-		environment: Environment,
-		context: string,
-		logLevel: LogLevel,
-	): LoggerFactory {
-		if (!this.instance) {
-			this.instance = new LoggerFactory(
-				sentryDsn,
-				project,
-				release,
-				environment,
-				context,
-				logLevel,
-			);
-		}
-
-		return this.instance;
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
