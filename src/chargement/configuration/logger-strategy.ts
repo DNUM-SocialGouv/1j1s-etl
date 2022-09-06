@@ -11,29 +11,12 @@ export class LoggerStrategy {
 			configuration.RELEASE,
 			configuration.NODE_ENV,
 			"chargement",
+			configuration.LOGGER_LOG_LEVEL,
 		);
 		this.loggers = new Map([
-			[
-				configuration.JOBTEASER.NAME,
-				loggerFactory.create({
-					name: configuration.JOBTEASER.NAME,
-					logLevel: configuration.LOGGER_LOG_LEVEL,
-				}),
-			],
-			[
-				configuration.STAGEFR_COMPRESSED.NAME,
-				loggerFactory.create({
-					name: configuration.STAGEFR_COMPRESSED.NAME,
-					logLevel: configuration.LOGGER_LOG_LEVEL,
-				}),
-			],
-			[
-				configuration.STAGEFR_UNCOMPRESSED.NAME,
-				loggerFactory.create({
-					name: configuration.STAGEFR_UNCOMPRESSED.NAME,
-					logLevel: configuration.LOGGER_LOG_LEVEL,
-				}),
-			],
+			[configuration.JOBTEASER.NAME, loggerFactory.create({ name: configuration.JOBTEASER.NAME })],
+			[configuration.STAGEFR_COMPRESSED.NAME, loggerFactory.create({ name: configuration.STAGEFR_COMPRESSED.NAME })],
+			[configuration.STAGEFR_UNCOMPRESSED.NAME, loggerFactory.create({ name: configuration.STAGEFR_UNCOMPRESSED.NAME })],
 		]);
 	}
 

@@ -15,12 +15,10 @@ const loggerFactory = LoggerFactory.getInstance(
 	configuration.SENTRY.PROJECT,
 	configuration.RELEASE,
 	configuration.NODE_ENV,
-	"setup"
+	"setup",
+	configuration.APPLICATION_LOGGER_LOG_LEVEL,
 );
-const applicationLogger = loggerFactory.create({
-	name: configuration.APPLICATION_LOGGER_NAME,
-	logLevel: configuration.APPLICATION_LOGGER_LOG_LEVEL,
-});
+const applicationLogger = loggerFactory.create({ name: configuration.APPLICATION_LOGGER_NAME });
 const minioClient = new Client({
 	accessKey: configuration.MINIO.ACCESS_KEY,
 	secretKey: configuration.MINIO.SECRET_KEY,
