@@ -61,7 +61,6 @@ export class LoggerFactory {
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
-		console.info(configuration);
 		if (this.environment === Environment.PRODUCTION) {
 			const pinoSentryStream = createWriteStream({
 				...this.sentryConfiguration,
