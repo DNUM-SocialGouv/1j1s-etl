@@ -15,7 +15,7 @@ export function TaskLog(flowName: string): (target: unknown, propertyKey: string
 			} catch (e) {
 				loggerStrategy.get(flowName).fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
 			} finally {
-				loggerStrategy.get(flowName).info("End of extracting from [jobteaser] flow");
+				loggerStrategy.get(flowName).info(`End of extracting from [${flowName}] flow`);
 			}
 		};
 
