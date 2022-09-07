@@ -1,5 +1,4 @@
-import { createWriteStream, Sentry, Severity } from "pino-sentry";
-import internal from "stream";
+import { createWriteStream, PinoSentryOptions, Severity } from "pino-sentry";
 import pino from "pino";
 
 import { Environment } from "@configuration/configuration";
@@ -24,12 +23,14 @@ export class LoggerStrategyError extends Error {
 }
 
 export class LoggerFactory {
-	private readonly sentryConfiguration: internal.Duplex;
+	private sentryConfiguration: PinoSentryOptions;
 	private readonly sentryDsn: string;
 	private readonly project: string;
 	private readonly release: string;
 	private readonly environment: Environment;
+	private readonly context: string;
 	private readonly logLevel: LogLevel;
+	private readonly now: string;
 
 	constructor(
 		sentryDsn: string,
@@ -39,9 +40,9 @@ export class LoggerFactory {
 		context: string,
 		logLevel: LogLevel
 	) {
-		const now = new Date().toISOString().split("T")[0];
+		this.now = new Date().toISOString().split("T")[0];
 		this.sentryDsn = sentryDsn;
-		this.sentryConfiguration = createWriteStream({
+		this.sentryConfiguration = {
 			dsn: sentryDsn,
 			release: project.concat("@").concat(release),
 			level: Severity.Info,
@@ -50,21 +51,25 @@ export class LoggerFactory {
 				Severity.Error,
 				Severity.Fatal,
 			],
-			decorateScope: ((data, scope) => {
-				scope.setTags({ context, date: now });
-			}),
-		});
+		};
 
 		this.project = project;
 		this.release = release;
 		this.environment = environment;
+		this.context = context;
 		this.logLevel = logLevel;
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
+		console.info(configuration);
 		if (this.environment === Environment.PRODUCTION) {
-			Sentry.setTag("flow", configuration.name);
-			return pino({ ...configuration, level: this.logLevel }, this.sentryConfiguration);
+			const pinoSentryStream = createWriteStream({
+				...this.sentryConfiguration,
+				decorateScope: ((data: unknown, scope: { setTags: (tags: Record<string, string>) => void }): void => {
+					scope.setTags({ context: this.context, date: this.now, flow: configuration.name });
+				}),
+			});
+			return pino({ ...configuration, level: this.logLevel }, pinoSentryStream);
 		}
 		return pino({ ...configuration, level: this.logLevel });
 	}

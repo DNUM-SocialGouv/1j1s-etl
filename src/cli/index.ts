@@ -8,6 +8,8 @@ import { ExtractionModule } from "@extraction/configuration";
 import { TaskContainerFactory } from "./task.container";
 import { TransformationModule } from "@transformation/configuration";
 
+process.setMaxListeners(18);
+
 const configuration = ConfigurationFactory.create();
 
 const extractTasks = ExtractionModule.export();
