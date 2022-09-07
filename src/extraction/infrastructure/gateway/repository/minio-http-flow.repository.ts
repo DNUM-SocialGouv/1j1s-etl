@@ -10,7 +10,7 @@ import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.genera
 
 export class MinioHttpFlowRepository implements FluxRepository {
 	private static COMPRESSED_FILE_EXTENSION = ".gz";
-	private static LOCAL_FILE_PATH = "./tmp/";
+	private static LOCAL_FILE_PATH = "/tmp/";
 
 	constructor(
 		private readonly configuration: Configuration,
