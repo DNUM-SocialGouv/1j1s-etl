@@ -120,7 +120,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 				});
 			}
 		} catch (e) {
-			this.loggerStrategy.get(<string>(offreDeStage.source)).error({ extra: { offreDeStage }, msg: e });
+			this.loggerStrategy.get(<string>(offreDeStage.source)).error({ extra: { offreDeStage }, msg: JSON.stringify(e) });
 			offresDeStageEnErreur.push({
 				contenuDeLOffre: offreDeStage,
 				motif: (<Error>e).stack || (<Error>e).message,

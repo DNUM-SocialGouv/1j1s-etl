@@ -10,7 +10,6 @@ import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.genera
 
 export class MinioHttpFlowRepository implements FluxRepository {
 	private static COMPRESSED_FILE_EXTENSION = ".gz";
-	private static LOCAL_FILE_PATH = "/tmp/";
 
 	constructor(
 		private readonly configuration: Configuration,
@@ -36,7 +35,7 @@ export class MinioHttpFlowRepository implements FluxRepository {
 		this.loggerStrategy.get(flow.nom).info(`Starting to save extracted internship offers from flow ${flow.nom}`);
 		const cleanedFilePath = omettreExtension ? this.removeCompressedFileExtension(cheminFichierIncluantNom) : cheminFichierIncluantNom;
 		const fileName = this.uuidGenerator.generate();
-		const localFileNameIncludingPath = MinioHttpFlowRepository.LOCAL_FILE_PATH.concat(fileName);
+		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(fileName);
 
 		try {
 			await this.fileSystemClient.write(localFileNameIncludingPath, contenuFlux);

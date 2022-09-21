@@ -6,12 +6,11 @@ import { LectureFluxErreur } from "@extraction/domain/flux.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class OctetStreamHttpClient {
-    private static TEMPORARY_DIR = "/tmp/";
-
     constructor(
         private readonly axios: AxiosInstance,
         private readonly fileSystemClient: FileSystemClient,
-        private readonly uuidGenerator: UuidGenerator
+        private readonly uuidGenerator: UuidGenerator,
+        private readonly temporaryFilePath: string
     ){
     }
 
@@ -37,6 +36,6 @@ export class OctetStreamHttpClient {
 
     private generateTemporaryFilePath(): string {
         const fileName = this.uuidGenerator.generate();
-        return OctetStreamHttpClient.TEMPORARY_DIR.concat(fileName);
+        return this.temporaryFilePath.concat(fileName);
     }
 }
