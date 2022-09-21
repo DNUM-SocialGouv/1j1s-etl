@@ -43,7 +43,7 @@ describe("MinioHttpFluxRepositoryTest", () => {
 
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO.RAW_BUCKET_NAME = "raw";
-		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
+		configuration.TEMPORARY_DIRECTORY_PATH = "/tmp/";
 
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 

@@ -30,7 +30,12 @@ export class GatewayContainerFactory {
 		});
 		const uuidGenerator = new NodeUuidGenerator();
 		const unzipClient = new UnzipClient();
-		const octetStreamHttpClient = new OctetStreamHttpClient(httpClient, fileSystemClient, uuidGenerator);
+		const octetStreamHttpClient = new OctetStreamHttpClient(
+			httpClient,
+			fileSystemClient,
+			uuidGenerator,
+			configuration.TEMPORARY_DIRECTORY_PATH,
+		);
 
 		const basicFlowClient = new BasicFlowHttpClient(httpClient);
 		const compressedFlowClient = new CompressedFlowHttpClient(octetStreamHttpClient, unzipClient);

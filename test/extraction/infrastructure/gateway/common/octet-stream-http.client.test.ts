@@ -31,7 +31,7 @@ describe("OctetStreamHttpClientTest", () => {
 
 		uuidGenerator.generate.returns(fileName);
 
-		octetStreamHttpClient = new OctetStreamHttpClient(axios, fileSystemClient, uuidGenerator);
+		octetStreamHttpClient = new OctetStreamHttpClient(axios, fileSystemClient, uuidGenerator, "/tmp/");
 
 		axios.get.withArgs(url).resolves({ data: valeurSousFormeDeStream });
 		fileSystemClient.read.resolves(valeurDeRetour);
