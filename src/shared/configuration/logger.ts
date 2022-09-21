@@ -45,7 +45,7 @@ export class LoggerFactory {
 		this.sentryConfiguration = {
 			dsn: sentryDsn,
 			release: project.concat("@").concat(release),
-			level: Severity.Info,
+			level: Severity.Error,
 			sentryExceptionLevels: [
 				Severity.Critical,
 				Severity.Error,
@@ -68,7 +68,7 @@ export class LoggerFactory {
 					scope.setTags({ context: this.context, date: this.now, flow: configuration.name });
 				}),
 			});
-			return pino({ ...configuration, level: this.logLevel }, pinoSentryStream);
+			return pino({ ...configuration, level: this.logLevel }, pino.multistream([pinoSentryStream, { stream: process.stdout }]));
 		}
 		return pino({ ...configuration, level: this.logLevel });
 	}
