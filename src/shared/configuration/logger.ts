@@ -45,7 +45,7 @@ export class LoggerFactory {
 		this.sentryConfiguration = {
 			dsn: sentryDsn,
 			release: project.concat("@").concat(release),
-			level: Severity.Error,
+			level: Severity.Info,
 			sentryExceptionLevels: [
 				Severity.Critical,
 				Severity.Error,
@@ -61,7 +61,7 @@ export class LoggerFactory {
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
-		if (this.environment === Environment.PRODUCTION) {
+		if (this.environment === Environment.PRODUCTION || this.environment === Environment.QUALIFICATION) {
 			const pinoSentryStream = createWriteStream({
 				...this.sentryConfiguration,
 				decorateScope: ((data: unknown, scope: { setTags: (tags: Record<string, string>) => void }): void => {
