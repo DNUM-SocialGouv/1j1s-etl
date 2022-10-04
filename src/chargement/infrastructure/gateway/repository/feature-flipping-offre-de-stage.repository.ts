@@ -37,11 +37,21 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 			}
 		}
 		
+<<<<<<< HEAD
 		this.loggerStrategy.get(source).debug(offresDeStages.length);
 		this.loggerStrategy.get(source).debug(`Nombre d'offres de stage à publier : ${offresDeStageAPublierCount}`);
 		this.loggerStrategy.get(source).debug(`Nombre d'offres de stage à mettre à jour : ${offresDeStageAMettreAJourCount}`);
 		this.loggerStrategy.get(source).debug(`Nombre d'offres de stage à supprimer : ${offresDeStageASupprimerCount}`);
 	
+=======
+		if(offresDeStages.length !== 0){
+			this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(offresDeStages.length);
+			this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à publier : ${offresDeStageAPublierCount}`);
+			this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à mettre à jour : ${offresDeStageAMettreAJourCount}`);
+			this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à supprimer : ${offresDeStageASupprimerCount}`);
+		}
+
+>>>>>>> 7fbc845 (fix(load): update feature flipping)
 		return Promise.resolve([]);
 	}
 
