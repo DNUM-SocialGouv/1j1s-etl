@@ -27,7 +27,7 @@ export class ChargerOffresDeStageDomainService {
 		const offresDeStageAPublier = this.extaireLesOffresAPublier(offresDeStageAvecEmployeur, identifiantsSourceDesOffresExistantes);
 		const offresDeStageASupprimer = this.extaireLesOffresASupprimer(offresDeStageExistantes, this.extaireLesIdentifiantsDeLaMiseAJourDesOffres(offresDeStageMisesAJour));
 
-		const offresDeStageEnErreur = await this.offreDeStageRepository.charger([
+		const offresDeStageEnErreur = await this.offreDeStageRepository.charger(nomDuFlux, [
 			...offresDeStageAMettreAJour,
 			...offresDeStageAPublier,
 			...offresDeStageASupprimer,
