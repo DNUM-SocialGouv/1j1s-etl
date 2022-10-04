@@ -80,6 +80,25 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		);
 	});
 
+	context("Lorsque je n'ai pas d'offres de stage à charger", () => {
+		beforeEach(() => {
+			offresMisesAJourAttendues = [];
+		});
+
+		it("je ne renvoie pas d'erreur", () => {
+			expect(
+				async () => minioHttpOffreDeStageRepository.charger(nomDuFlux, offresMisesAJourAttendues)
+				).to.not.throw();
+		});
+
+
+		it("je retourne un tableau vide", async () => {
+			const result = await minioHttpOffreDeStageRepository.charger(nomDuFlux, offresMisesAJourAttendues);
+
+			expect(result).to.deep.equal([]);
+		});
+	});
+
 	context("Lorsque je récupère la mise à jour des offres de stage avec le nom du flux", () => {
 		beforeEach(() => {
 			offresMisesAJourAttendues = [
@@ -207,7 +226,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 
 			context("avec une stacktrace", () => {
 				it("je retourne les offres que je n'ai pas pu charger", async () => {
-					const resultat = await minioHttpOffreDeStageRepository.charger([...offresDeStagePourException]);
+					const resultat = await minioHttpOffreDeStageRepository.charger(nomDuFlux, [...offresDeStagePourException]);
 
 					expect(resultat).to.have.deep.members([
 						{
@@ -264,7 +283,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 				});
 
 				it("je retourne les offres que je n'ai pas pu charger", async () => {
-					const resultat = await minioHttpOffreDeStageRepository.charger([...offresDeStagePourException]);
+					const resultat = await minioHttpOffreDeStageRepository.charger(nomDuFlux, [...offresDeStagePourException]);
 
 					expect(resultat).to.have.deep.members([
 						{
@@ -320,7 +339,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			});
 
 			it("j'envoie la donnée", async () => {
-				await minioHttpOffreDeStageRepository.charger([offreDeStageAPublier]);
+				await minioHttpOffreDeStageRepository.charger(nomDuFlux, [offreDeStageAPublier]);
 
 				expect(httpClient.post).to.have.been.calledOnce;
 				expect(httpClient.post).to.have.been.calledWith(offreDeStageAPublier);
@@ -333,7 +352,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			});
 
 			it("j'envoie la donnée", async () => {
-				await minioHttpOffreDeStageRepository.charger([offreDeStageASupprimer]);
+				await minioHttpOffreDeStageRepository.charger(nomDuFlux, [offreDeStageASupprimer]);
 
 				expect(httpClient.delete).to.have.been.calledOnce;
 				expect(httpClient.delete).to.have.been.calledWith(offreDeStageASupprimer);
@@ -346,7 +365,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			});
 
 			it("j'envoie la donnée", async () => {
-				await minioHttpOffreDeStageRepository.charger([offreDeStageAMettreAJour]);
+				await minioHttpOffreDeStageRepository.charger(nomDuFlux, [offreDeStageAMettreAJour]);
 
 				expect(httpClient.put).to.have.been.calledOnce;
 				expect(httpClient.put).to.have.been.calledWith(offreDeStageAMettreAJour);
@@ -361,7 +380,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			});
 
 			it("j'envoie la donnée", async () => {
-				await minioHttpOffreDeStageRepository.charger([
+				await minioHttpOffreDeStageRepository.charger(nomDuFlux, [
 					offreDeStageAMettreAJour,
 					offreDeStageAPublier,
 					offreDeStageASupprimer,
@@ -382,7 +401,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			});
 
 			it("j'ajoute l'offre de stage dans les offres en erreur", async () => {
-				const resultat = await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
+				const resultat = await minioHttpOffreDeStageRepository.charger(nomDuFlux, [offreDeStageNonCategorisable]);
 
 				expect(logger.error).to.have.been.calledOnce;
 				expect(logger.error).to.have.been.calledWith({
@@ -403,7 +422,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 				});
 
 				it("j'ajoute l'offre de stage dans les offres en erreur", async () => {
-					const resultat = await minioHttpOffreDeStageRepository.charger([offreDeStageNonCategorisable]);
+					const resultat = await minioHttpOffreDeStageRepository.charger(nomDuFlux, [offreDeStageNonCategorisable]);
 
 					expect(logger.error).to.have.been.calledOnce;
 					expect(logger.error).to.have.been.calledWith({

@@ -120,7 +120,7 @@ export namespace UnJeune1Solution {
 
 
 	export interface OffreDeStageRepository {
-		charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>>;
+		charger(source: string, offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>>;
 		recupererMisesAJourDesOffres(nomDuFlux: string): Promise<Array<OffreDeStage>>;
 		recupererOffresExistantes(nomDuFlux: string): Promise<Array<{ identifiantSource: string, sourceUpdatedAt: Date, id: string }>>;
 		enregistrer(cheminDuFichier: string, contenu: string, nomDuFlux: string): Promise<void>;

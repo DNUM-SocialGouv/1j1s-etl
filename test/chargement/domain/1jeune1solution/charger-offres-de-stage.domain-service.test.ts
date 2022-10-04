@@ -35,6 +35,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 		domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
 	});
 
+
 	context("Lorsque je charge le flux dont on me donne le nom", () => {
 		context("Lorsque l'on connait le(s) employeur(s) d'une ou plusieurs offre(s) de stage(s)", () => {
 			beforeEach(() => {
@@ -91,7 +92,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				expect(offreDeStageRepository.recupererOffresExistantes).to.have.been.calledWith(nomDuFlux);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
-				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageAPublier]);
+				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageAPublier]);
 			});
 		});
 
@@ -139,7 +140,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
-				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageAPublier]);
+				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageAPublier]);
 			});
 
 			it("J'enregistre le résultat", async () => {
@@ -173,7 +174,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
-				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageAMettreAJour]);
+				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageAMettreAJour]);
 			});
 
 			it("J'enregistre le résultat", async () => {
@@ -212,7 +213,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
-				expect(offreDeStageRepository.charger).to.have.been.calledWith([]);
+				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, []);
 
 				expect(offreDeStageRepository.enregistrer.getCall(1).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_updated.json`,
@@ -245,7 +246,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
-				expect(offreDeStageRepository.charger).to.have.been.calledWith([offreDeStageASupprimer]);
+				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageASupprimer]);
 			});
 
 			it("J'enregistre le résultat", async () => {
@@ -319,7 +320,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				offreDeStageRepository.recupererOffresExistantes.resolves([]);
 
 				offreDeStageRepository.charger
-					.withArgs([offreDeStageAPublier])
+					.withArgs(nomDuFlux, [offreDeStageAPublier])
 					.resolves([offreDeStageEnErreur]);
 			});
 
