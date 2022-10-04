@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.1...v1.0.2) (2022-10-04)
+
+
+### Bug Fixes
+
+* **load:** chargement des offres de stage ([4db9b40](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/4db9b40717c989a80e348f0033a13033b84c6424))
+
 ## [1.0.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.0...v1.0.1) (2022-09-21)
 
 
