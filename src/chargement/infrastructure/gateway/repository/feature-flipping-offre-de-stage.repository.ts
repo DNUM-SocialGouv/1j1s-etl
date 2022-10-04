@@ -22,7 +22,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		super(configuration, minioClient, fileSystemClient, uuidGenerator, httpClient, loggerStrategy);
 	}
 
-	public charger(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
+	public charger(source: string, offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
 		let offresDeStageAPublierCount = 0;
 		let offresDeStageAMettreAJourCount = 0;
 		let offresDeStageASupprimerCount = 0;
@@ -36,11 +36,12 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 				offresDeStageASupprimerCount++;
 			}
 		}
-		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(offresDeStages.length);
-		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à publier : ${offresDeStageAPublierCount}`);
-		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à mettre à jour : ${offresDeStageAMettreAJourCount}`);
-		this.loggerStrategy.get(<string>(offresDeStages[0].source)).debug(`Nombre d'offres de stage à supprimer : ${offresDeStageASupprimerCount}`);
-
+		
+		this.loggerStrategy.get(source).debug(offresDeStages.length);
+		this.loggerStrategy.get(source).debug(`Nombre d'offres de stage à publier : ${offresDeStageAPublierCount}`);
+		this.loggerStrategy.get(source).debug(`Nombre d'offres de stage à mettre à jour : ${offresDeStageAMettreAJourCount}`);
+		this.loggerStrategy.get(source).debug(`Nombre d'offres de stage à supprimer : ${offresDeStageASupprimerCount}`);
+	
 		return Promise.resolve([]);
 	}
 
