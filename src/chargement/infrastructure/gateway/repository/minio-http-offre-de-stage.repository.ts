@@ -14,7 +14,6 @@ import { LoggerStrategy } from "@chargement/configuration/logger-strategy";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	protected static NOM_DU_FICHIER_A_RECUPERER = "latest";
-	protected static UNKNOWN_FLOW = "unknown";
 
 	constructor(
 		protected readonly configuration: Configuration,
@@ -27,19 +26,19 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 	}
 
 	public async charger(source: string, offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
-		const loggerInfoMethod = this.loggerStrategy.get(source).info;
-		loggerInfoMethod(`Starting to load internship offers from flow ${source}`);
-		loggerInfoMethod(`The ${source} flow have ${offresDeStages.length} internship offers outdated`);
-		
+		const logger = this.loggerStrategy.get(source);
+		logger.info(`Starting to load internship offers from flow ${source}`);
+		logger.info(`The ${source} flow have ${offresDeStages.length} internship offers outdated`);
+
 		const offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur> = [];
 
 		for (const offreDeStage of offresDeStages) {
 			await this.chargerOffreDeStageSelonType(offreDeStage, offresDeStageEnErreur);
 		}
 
-		loggerInfoMethod(`The ${source} flow have ${offresDeStageEnErreur.length} intership offers not updated`);
-		loggerInfoMethod(`Ending to load internship offers from flow ${source}`);
-		
+		logger.info(`The ${source} flow have ${offresDeStageEnErreur.length} intership offers not updated`);
+		logger.info(`Ending to load internship offers from flow ${source}`);
+
 		return offresDeStageEnErreur;
 	}
 
