@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.4...v1.0.5) (2022-10-06)
+
+
+### Bug Fixes
+
+* **load:** update feature flipping ([ae71d56](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/ae71d566c1ee17592fa38c5bf87892da49b3a525))
+
 ## [1.0.4](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.3...v1.0.4) (2022-10-05)
 
 
