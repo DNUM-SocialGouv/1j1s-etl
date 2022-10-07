@@ -22,10 +22,12 @@ describe("AuthenticationClientTest", () => {
 			request: {
 				use: sinon.stub(),
 				eject: sinon.stub(),
+				clear: sinon.stub(),
 			},
 			response: {
 				use: sinon.stub(),
 				eject: sinon.stub(),
+				clear: sinon.stub(),
 			},
 		};
 
