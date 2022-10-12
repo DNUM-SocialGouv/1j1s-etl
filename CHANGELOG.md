@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.6](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.5...v1.0.6) (2022-10-12)
+
+
+### Bug Fixes
+
+* **Chargement:** charmgement de l'identifiant fixé en type string ([e0c345d](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/e0c345d2733f7714ccbb3eadf6d6535d53a18a55))
+* **Tâche:** log le bon flux en fin de tâche ([65a87e3](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/65a87e3146c4399ddf38c52fa0dc60df04bb9fa1))
+
 ## [1.0.5](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.4...v1.0.5) (2022-10-07)
 
 
