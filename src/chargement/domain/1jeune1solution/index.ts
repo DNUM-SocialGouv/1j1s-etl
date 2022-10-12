@@ -81,7 +81,7 @@ export namespace UnJeune1Solution {
 				sourceCreatedAt: this.sourceCreatedAt ? this.sourceCreatedAt.toISOString() : undefined,
 				sourceUpdatedAt: this.sourceUpdatedAt.toISOString(),
 				sourcePublishedAt: this.sourcePublishedAt ? this.sourcePublishedAt.toISOString() : undefined,
-				identifiantSource: this.identifiantSource,
+				identifiantSource: this.identifiantSource?.toString(),
 				domaines: this.domaines,
 				dureeEnJour: this.dureeEnJour,
 				dureeEnJourMax: this.dureeEnJourMax,
