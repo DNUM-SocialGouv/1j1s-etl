@@ -1,6 +1,6 @@
 {
   "name": "1j1s-orchestrateur-etl",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Dépôt qui regroupe les opérations de transformation et de chargement des données issues de flux pour les stages du site 1j1s",
   "main": "start.ts",
   "directories": {
