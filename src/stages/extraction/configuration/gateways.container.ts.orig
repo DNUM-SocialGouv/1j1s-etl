@@ -8,12 +8,20 @@ import { GatewayContainer } from "@stages/extraction/infrastructure/gateway";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { MinioHttpFlowRepository } from "@stages/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+<<<<<<< HEAD:src/stages/extraction/configuration/gateways.container.ts
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { OctetStreamFlowHttpClient } from "@shared/infrastructure/gateway/client/octet-stream-flow-http.client";
 import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
 import { StagesOnFlowNameStrategy } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
 import { UnzipClient } from "@shared/infrastructure/gateway/unzip.client";
-import { ChunkedHttpClient } from "@shared/infrastructure/gateway/client/chunked-http.client";
+=======
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { OctetStreamFlowHttpClient } from "@extraction/infrastructure/gateway/client/octet-stream-flow-http.client";
+import { OctetStreamHttpClient } from "@extraction/infrastructure/gateway/common/octet-stream-http.client";
+import { OnFlowNameStrategy } from "@extraction/infrastructure/gateway/client/flow.strategy";
+import { UnzipClient } from "@extraction/infrastructure/gateway/common/unzip.client";
+import { ChunkedHttpClient } from "@extraction/infrastructure/gateway/client/chunked-http.client";
+>>>>>>> 25b8eac (feat(Extract): Extraction du flux Hello work):src/extraction/configuration/gateways.container.ts
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {

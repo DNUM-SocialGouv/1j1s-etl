@@ -41,10 +41,16 @@ export class ConfigurationFactory {
 			CONTEXT: "extraction",
 			DOMAINE: "Stages",
 			FLOWS: [
+<<<<<<< HEAD:src/stages/extraction/configuration/configuration.ts
 				getOrError("INTERNSHIPS_JOBTEASER_NAME"),
-				getOrError("HELLO_WORK_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_UNCOMPRESSED_NAME"),
+=======
+				getOrError("JOBTEASER_NAME"),
+				getOrError("HELLO_WORK_NAME"),
+				getOrError("STAGEFR_COMPRESSED_NAME"),
+				getOrError("STAGEFR_UNCOMPRESSED_NAME"),
+>>>>>>> 25b8eac (feat(Extract): Extraction du flux Hello work):src/extraction/configuration/configuration.ts
 			],
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("INTERNSHIPS_JOBTEASER_DIRECTORY_NAME", "jobteaser"),
@@ -52,13 +58,17 @@ export class ConfigurationFactory {
 				NAME: getOrDefault("INTERNSHIPS_JOBTEASER_NAME", "jobteaser"),
 				RAW_FILE_EXTENSION: getOrError("INTERNSHIPS_JOBTEASER_RAW_FILE_EXTENSION"),
 			},
+<<<<<<< HEAD:src/stages/extraction/configuration/configuration.ts
+			LOGGER_LOG_LEVEL: getOrDefault("INTERNSHIPS_EXTRACT_LOG_LEVEL", "debug") as LogLevel,
+=======
 			HELLO_WORK: {
 				DIRECTORY_NAME: getOrDefault("HELLO_WORK_DIRECTORY_NAME", "hello-work"),
 				FLUX_URL: getOrError("HELLO_WORK_FLUX_URL"),
 				NAME: getOrDefault("HELLO_WORK_NAME", "hello-work"),
 				RAW_FILE_EXTENSION: getOrError("HELLO_WORK_RAW_FILE_EXTENSION"),
 			},
-			LOGGER_LOG_LEVEL: getOrDefault("INTERNSHIPS_EXTRACT_LOG_LEVEL", "debug") as LogLevel,
+			LOGGER_LOG_LEVEL: getOrDefault("EXTRACT_LOG_LEVEL", "debug") as LogLevel,
+>>>>>>> 25b8eac (feat(Extract): Extraction du flux Hello work):src/extraction/configuration/configuration.ts
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),

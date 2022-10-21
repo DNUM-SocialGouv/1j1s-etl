@@ -12,6 +12,7 @@ export class OctetStreamFlowHttpClient implements FlowClient {
             logger.info(`Starting to pull flow from url ${url}`);
             return (await this.octetStreamHttpClient.readStream(url)).toString();
         } catch (e) {
+            logger.fatal(e);
             throw new LectureFluxErreur(url);
         } finally {
             logger.info(`End of pulling flow from url ${url}`);

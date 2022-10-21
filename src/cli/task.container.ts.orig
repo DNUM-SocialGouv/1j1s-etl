@@ -31,6 +31,7 @@ export class TaskContainerFactory {
 		}
 	}): TaskContainer {
 		return {
+<<<<<<< HEAD
 			events: {
 				extract: {
 					"tous-mobilises": tasks.events.extract["tous-mobilises"],
@@ -41,6 +42,13 @@ export class TaskContainerFactory {
 				load: {
 					"tous-mobilises": tasks.events.load["tous-mobilises"],
 				},
+=======
+			extract: {
+				jobteaser: tasks.extract.jobteaser,
+				"hello-work": tasks.extract["hello-work"],
+				"stagefr-compresse": tasks.extract["stagefr-compresse"],
+				"stagefr-decompresse": tasks.extract["stagefr-decompresse"],
+>>>>>>> 25b8eac (feat(Extract): Extraction du flux Hello work)
 			},
 			housing: {
 				extract: {
@@ -59,7 +67,6 @@ export class TaskContainerFactory {
 			internships: {
 				extract: {
 					jobteaser: tasks.internships.extract.jobteaser,
-					"hello-work": tasks.internships.extract["hello-work"],
 					"stagefr-compresse": tasks.internships.extract["stagefr-compresse"],
 					"stagefr-decompresse": tasks.internships.extract["stagefr-decompresse"],
 				},

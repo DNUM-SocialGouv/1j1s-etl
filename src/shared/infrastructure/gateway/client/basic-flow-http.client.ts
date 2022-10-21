@@ -13,6 +13,7 @@ export class BasicFlowHttpClient implements FlowClient {
 			logger.info(`Starting to pull flow from url ${url}`);
 			return (await this.axios.get<string>(url)).data;
 		} catch (e) {
+			logger.fatal(e);
 			throw new LectureFluxErreur(url);
 		} finally {
 			logger.info(`End of pulling flow from url ${url}`);
