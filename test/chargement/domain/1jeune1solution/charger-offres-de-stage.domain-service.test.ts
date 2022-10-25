@@ -96,6 +96,51 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 		});
 
+		context("Lorsque l'on ne connait pas le(s) employeur(s) d'une ou plusieurs offre(s) de stage(s)", () => {
+			beforeEach(() => {
+				offresDeStagesMisesAJour = [
+					OffreDeStageFixtureBuilder.buildOffreDeStage(),
+					OffreDeStageFixtureBuilder.buildOffreDeStage({
+						employeur: {
+							nom: "",
+							logoUrl: "",
+							siteUrl: "",
+						},
+					}),
+				];
+
+				offresDeStagesExistantes = [];
+
+				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
+				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
+			});
+
+			it("Je ne renvoie pas d'erreur", async () => {
+				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+
+				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
+				expect(offreDeStageRepository.charger).to.not.throw();
+				
+			});
+
+			it("Je sauvegarde les offres sans employeur", async () => {
+				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+
+				expect(offreDeStageRepository.enregistrer.getCall(4).args).to.have.deep.members([
+					`${nomDuFlux}/${maintenant}_sans_employeur.json`,
+					JSON.stringify(
+						[OffreDeStageFixtureBuilder.buildOffreDeStage({
+							employeur: {
+								nom: "",
+								logoUrl: "",
+								siteUrl: "",
+							},
+						})], null, 2),
+					nomDuFlux,
+				]);
+			});
+		});
+
 		context("Lorsqu'il y a de nouvelles offres de stage", () => {
 			beforeEach(() => {
 				offresDeStagesMisesAJour = [OffreDeStageFixtureBuilder.buildOffreDeStage()];
@@ -299,10 +344,10 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
 
-			it("Enregistre les résultats de création, mises à jour, suppression des offres et des offres en erreur", async () => {
+			it("Enregistre les résultats de création, mises à jour, suppression des offres et des offres en erreur et des offre sans employeur", async () => {
 				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
 
-				expect(offreDeStageRepository.enregistrer.callCount).to.eql(4);
+				expect(offreDeStageRepository.enregistrer.callCount).to.eql(5);
 			});
 		});
 

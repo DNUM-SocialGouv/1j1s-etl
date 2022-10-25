@@ -8,6 +8,7 @@ export class ChargerOffresDeStageDomainService {
 	static readonly UPDATED = "updated";
 	static readonly DELETED = "deleted";
 	static readonly ERROR = "error";
+	static readonly SANS_EMPLOYEUR = "sans_employeur";
 
 	constructor(
 		private readonly offreDeStageRepository: UnJeune1Solution.OffreDeStageRepository,
@@ -21,7 +22,8 @@ export class ChargerOffresDeStageDomainService {
 
 		const identifiantsSourceDesOffresExistantes = this.extraireLesIdentifiantsSourceDesOffresExistantes(offresDeStageExistantes);
 
-		const offresDeStageAvecEmployeur = this.filtrerLesOffresDeStagesSansEmployeur(offresDeStageMisesAJour);
+		const offresDeStageSansEmployeur = this.filtrerLesOffresDeStagesSansEmployeur(offresDeStageMisesAJour);
+		const offresDeStageAvecEmployeur = this.filtrerLesOffresDeStagesAvecEmployeur(offresDeStageMisesAJour, offresDeStageSansEmployeur);
 
 		const offresDeStageAMettreAJour = this.extaireLesOffresAMettreAJour(offresDeStageAvecEmployeur, identifiantsSourceDesOffresExistantes, offresDeStageExistantes);
 		const offresDeStageAPublier = this.extaireLesOffresAPublier(offresDeStageAvecEmployeur, identifiantsSourceDesOffresExistantes);
@@ -39,8 +41,13 @@ export class ChargerOffresDeStageDomainService {
 			offresDeStageAPublier,
 			offresDeStageAMettreAJour,
 			offresDeStageASupprimer,
-			offresDeStageEnErreur
+			offresDeStageEnErreur,
+			offresDeStageSansEmployeur
 		);
+	}
+
+	private filtrerLesOffresDeStagesAvecEmployeur(offresDeStageMisesAJour: UnJeune1Solution.OffreDeStage[], offresDeStageSansEmployeur: UnJeune1Solution.OffreDeStage[]): Array<UnJeune1Solution.OffreDeStage> {
+		return offresDeStageMisesAJour.filter((offreDeStage) => !offresDeStageSansEmployeur.includes(offreDeStage));
 	}
 
 	private async enregistrerLesResultatsDuChargement(
@@ -49,9 +56,10 @@ export class ChargerOffresDeStageDomainService {
 		offresDeStageAPublier: Array<UnJeune1Solution.OffreDeStageAPublier>,
 		offresDeStageAMettreAJour: Array<UnJeune1Solution.OffreDeStageAMettreAJour>,
 		offresDeStageASupprimer: Array<UnJeune1Solution.OffreDeStageASupprimer>,
-		offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur>
+		offresDeStageEnErreur: Array<UnJeune1Solution.OffreDeStageEnErreur>,
+		offresDeStageSansEmployeur: Array<UnJeune1Solution.OffreDeStage>,
 	): Promise<void> {
-		const { CREATED, UPDATED, DELETED, ERROR } = ChargerOffresDeStageDomainService;
+		const { CREATED, UPDATED, DELETED, ERROR, SANS_EMPLOYEUR } = ChargerOffresDeStageDomainService;
 		const parametresDesFichiersDeResultat = {
 			nomDuFlux,
 			nomDuFichier: this.dateService.maintenant(),
@@ -62,6 +70,7 @@ export class ChargerOffresDeStageDomainService {
 		await this.enregistrerLeResultat(UPDATED, offresDeStageAMettreAJour, parametresDesFichiersDeResultat);
 		await this.enregistrerLeResultat(DELETED, offresDeStageASupprimer, parametresDesFichiersDeResultat);
 		await this.enregistrerLeResultat(ERROR, offresDeStageEnErreur, parametresDesFichiersDeResultat);
+		await this.enregistrerLeResultat(SANS_EMPLOYEUR, offresDeStageSansEmployeur, parametresDesFichiersDeResultat);
 	}
 
 	private extaireLesOffresASupprimer(
@@ -131,7 +140,10 @@ export class ChargerOffresDeStageDomainService {
 	}
 
 	private filtrerLesOffresDeStagesSansEmployeur(offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Array<UnJeune1Solution.OffreDeStage> {
-		return offresDeStages.filter((offreDeStage) => offreDeStage.employeur);
+		return [
+			...offresDeStages.filter((offreDeStage) => !offreDeStage.employeur),
+			...offresDeStages.filter((offreDeStage) => offreDeStage.employeur?.nom === ""),
+		];
 	}
 
 	private async enregistrerLeResultat(
