@@ -1,27 +1,28 @@
 import "dotenv/config";
 import "module-alias/register";
 
-import { ChargementModule } from "@chargement/configuration";
-import { CliConfiguration } from "./cli.configuration";
+import { CliConfiguration } from "@cli/cli.configuration";
 import { ConfigurationFactory } from "@configuration/configuration";
-import { ExtractionModule } from "@extraction/configuration";
-import { TaskContainerFactory } from "./task.container";
-import { TransformationModule } from "@transformation/configuration";
+import { Stages } from "@stages/index";
+import { TaskContainerFactory } from "@cli/task.container";
 
 process.setMaxListeners(18);
 
 const configuration = ConfigurationFactory.create();
 
-const extractTasks = ExtractionModule.export();
-const transformTasks = TransformationModule.export();
-const loadTasks = ChargementModule.export();
+const logementsTasks = {};
+const stagesTasks = {
+	extract: Stages.ExtractionModule.export(),
+	transform: Stages.TransformationModule.export(),
+	load: Stages.ChargementModule.export(),
+};
 
-const tasks = TaskContainerFactory.create({ extract: extractTasks, transform: transformTasks, load: loadTasks });
-const { a: actionArg, f: flux } = CliConfiguration.create(configuration);
+const tasks = TaskContainerFactory.create({ logements: logementsTasks, stages: stagesTasks });
+const { domain, action, flux } = CliConfiguration.create(configuration);
 
-const action = tasks[actionArg];
+const associatedTask = tasks[domain][action];
 
-if (action) {
-	const task = action[flux];
+if (associatedTask) {
+	const task = associatedTask[flux];
 	task.run();
 }

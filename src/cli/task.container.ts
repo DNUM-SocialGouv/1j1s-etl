@@ -1,29 +1,36 @@
 import { Task } from "@shared/infrastructure/task/task";
-import { TaskContainer as ExtractTasks } from "@extraction/configuration/tasks.container";
-import { TaskContainer as LoadTasks } from "@chargement/configuration/tasks.container";
-import { TaskContainer as TransformTasks } from "@transformation/configuration/tasks.container";
+import { TaskContainer as ExtractTasks } from "@stages/extraction/configuration/tasks.container";
+import { TaskContainer as LoadTasks } from "@stages/chargement/configuration/tasks.container";
+import { TaskContainer as TransformTasks } from "@stages/transformation/configuration/tasks.container";
 
-export type TaskContainer = {
-	[command: string]: { [key: string]: Task }
-}
+export type TaskContainer = Record<string, Record<string, Record<string, Task>>>
 
 export class TaskContainerFactory {
-	public static create(tasks: { extract: ExtractTasks; transform: TransformTasks; load: LoadTasks }): TaskContainer {
+	public static create(tasks: {
+		logements: Record<string, unknown>,
+		stages: {
+			extract: ExtractTasks;
+			transform: TransformTasks;
+			load: LoadTasks;
+		}
+	}): TaskContainer {
 		return {
-			extract: {
-				jobteaser: tasks.extract.jobteaser,
-				"stagefr-compresse": tasks.extract["stagefr-compresse"],
-				"stagefr-decompresse": tasks.extract["stagefr-decompresse"],
-			},
-			load: {
-				jobteaser: tasks.load.jobteaser,
-				"stagefr-compresse": tasks.load["stagefr-compresse"],
-				"stagefr-decompresse": tasks.load["stagefr-decompresse"],
-			},
-			transform: {
-				jobteaser: tasks.transform.jobteaser,
-				"stagefr-compresse": tasks.transform["stagefr-compresse"],
-				"stagefr-decompresse": tasks.transform["stagefr-decompresse"],
+			stages: {
+				extract: {
+					jobteaser: tasks.stages.extract.jobteaser,
+					"stagefr-compresse": tasks.stages.extract["stagefr-compresse"],
+					"stagefr-decompresse": tasks.stages.extract["stagefr-decompresse"],
+				},
+				load: {
+					jobteaser: tasks.stages.load.jobteaser,
+					"stagefr-compresse": tasks.stages.load["stagefr-compresse"],
+					"stagefr-decompresse": tasks.stages.load["stagefr-decompresse"],
+				},
+				transform: {
+					jobteaser: tasks.stages.transform.jobteaser,
+					"stagefr-compresse": tasks.stages.transform["stagefr-compresse"],
+					"stagefr-decompresse": tasks.stages.transform["stagefr-decompresse"],
+				},
 			},
 		};
 	}

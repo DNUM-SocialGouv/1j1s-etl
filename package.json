@@ -17,11 +17,10 @@
   },
   "_moduleAliases": {
     "@root": "./",
+    "@cli": "build/src/cli",
     "@configuration": "build/src/configuration",
-    "@chargement": "build/src/chargement",
-    "@extraction": "build/src/extraction",
-    "@shared": "build/src/shared",
-    "@transformation": "build/src/transformation"
+    "@stages": "build/src/stages",
+    "@shared": "build/src/shared"
   },
   "repository": {
     "type": "git",
