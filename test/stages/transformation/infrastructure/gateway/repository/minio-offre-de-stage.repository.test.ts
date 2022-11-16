@@ -7,7 +7,6 @@ import {
 	ContentParser,
 } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
 import { Flux } from "@stages/transformation/domain/flux";
@@ -17,6 +16,7 @@ import { MinioOffreDeStageRepository } from "@stages/transformation/infrastructu
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@stages/transformation/infrastructure/gateway/uuid.generator";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;

@@ -5,14 +5,3 @@ export interface FluxRepository {
 	recuperer(flow: Flux): Promise<string>;
 }
 
-export class EcritureFluxErreur extends Error {
-	constructor(nomFlux: string) {
-		super(`Le flux ${nomFlux} n'a pas été extrait car une erreur d'écriture est survenue`);
-	}
-}
-
-export class LectureFluxErreur extends Error {
-	constructor(urlDuFlux: string) {
-		super(`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`);
-	}
-}

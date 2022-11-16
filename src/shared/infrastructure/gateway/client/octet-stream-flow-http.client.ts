@@ -1,7 +1,7 @@
-import { FlowClient } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
-import { LectureFluxErreur } from "@stages/extraction/domain/flux.repository";
+import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy";
+import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { Logger } from "@shared/configuration/logger";
-import { OctetStreamHttpClient } from "@stages/extraction/infrastructure/gateway/common/octet-stream-http.client";
+import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
 
 export class OctetStreamFlowHttpClient implements FlowClient {
     constructor(private readonly octetStreamHttpClient: OctetStreamHttpClient) {

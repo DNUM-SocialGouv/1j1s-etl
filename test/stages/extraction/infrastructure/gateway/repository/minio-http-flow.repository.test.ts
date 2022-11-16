@@ -4,13 +4,15 @@ import sinon from "sinon";
 
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@stages/extraction/configuration/configuration";
-import { EcritureFluxErreur } from "@stages/extraction/domain/flux.repository";
+import { EcritureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { FlowStrategy } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
+import { FlowStrategy } from "@shared/infrastructure/gateway/client/flow.strategy";
 import { Flux } from "@stages/extraction/domain/flux";
-import { Logger} from "@shared/configuration/logger";
-import { LoggerStrategy } from "@stages/extraction/configuration/logger-strategy";
-import { MinioHttpFlowRepository } from "@stages/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
+import { Logger } from "@shared/configuration/logger";
+import { LoggerStrategy } from "@shared/configuration/logger.strategy";
+import {
+	MinioHttpFlowRepository,
+} from "@stages/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 const localFileNameIncludingPath = "/tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
@@ -23,11 +25,11 @@ let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
 let flowStrategy: StubbedType<FlowStrategy>;
-let loggerStrategy: StubbedClass<LoggerStrategy>;
+let loggerStrategy: StubbedType<LoggerStrategy>;
 let logger: StubbedType<Logger>;
 let flowRepository: MinioHttpFlowRepository;
 
-describe("MinioHttpFluxRepositoryTest", () => {
+describe("MinioHttpFlowRepositoryTest", () => {
 	beforeEach(() => {
 		fileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
 		fileContent = "<toto>contenu du fichier</toto>\n";
@@ -53,7 +55,7 @@ describe("MinioHttpFluxRepositoryTest", () => {
 		flowStrategy = stubInterface<FlowStrategy>(sinon);
 		flowStrategy.get.withArgs(flow).resolves("<some>contenu</some>");
 
-		loggerStrategy = stubClass(LoggerStrategy);
+		loggerStrategy = stubInterface<LoggerStrategy>(sinon);
 		logger = stubInterface<Logger>(sinon);
 		loggerStrategy.get.returns(logger);
 

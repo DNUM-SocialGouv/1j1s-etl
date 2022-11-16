@@ -1,16 +1,16 @@
 import { Client } from "minio";
 
 import { Configuration } from "@stages/chargement/configuration/configuration";
-import {
-	EcritureFluxErreur,
-	RecupererContenuErreur,
-	RecupererOffresExistantesErreur,
-} from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { LoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
+import {
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+	RecupererOffresExistantesErreur,
+} from "@shared/infrastructure/gateway/flux.erreur";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {
 	protected static NOM_DU_FICHIER_A_RECUPERER = "latest";

@@ -1,7 +1,7 @@
 import { Configuration } from "@stages/extraction/configuration/configuration";
 import { Logger, LoggerFactory, LoggerStrategyError } from "@shared/configuration/logger";
 
-export class LoggerStrategy {
+export class StagesLoggerStrategy {
 	private readonly loggers: Map<string, Logger>;
 
 	constructor(configuration: Configuration) {
