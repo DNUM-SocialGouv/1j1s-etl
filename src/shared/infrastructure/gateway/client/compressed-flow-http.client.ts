@@ -1,8 +1,8 @@
-import { FlowClient } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
-import { LectureFluxErreur } from "@stages/extraction/domain/flux.repository";
-import { OctetStreamHttpClient } from "@stages/extraction/infrastructure/gateway/common/octet-stream-http.client";
-import { UnzipClient } from "@stages/extraction/infrastructure/gateway/common/unzip.client";
+import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy";
+import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { Logger } from "@shared/configuration/logger";
+import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
+import { UnzipClient } from "@shared/infrastructure/gateway/common/unzip.client";
 
 export class CompressedFlowHttpClient implements FlowClient {
 	constructor(

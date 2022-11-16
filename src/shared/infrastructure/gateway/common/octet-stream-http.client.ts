@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { Stream } from "stream";
 
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { LectureFluxErreur } from "@stages/extraction/domain/flux.repository";
+import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 export class OctetStreamHttpClient {

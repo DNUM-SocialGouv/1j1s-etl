@@ -3,13 +3,12 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Configuration } from "@stages/extraction/configuration/configuration";
 import { expect } from "@test/configuration";
-import {
-	FlowClient,
-	FluxNonGereErreur,
-	OnFlowNameStrategy,
-} from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
+import { FlowClient, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
 import { Flux } from "@stages/extraction/domain/flux";
 import { Logger } from "@shared/configuration/logger";
+import {
+	StagesOnFlowNameStrategy,
+} from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
 
 const url = "http://some.url";
 
@@ -20,9 +19,9 @@ let compressedFlowClient: StubbedType<FlowClient>;
 let octetStreamFlowClient: StubbedType<FlowClient>;
 let logger: StubbedType<Logger>;
 
-let flowStrategy: OnFlowNameStrategy;
+let flowStrategy: StagesOnFlowNameStrategy;
 
-describe("FlowClientStrategyTest", () => {
+describe("StagesOnFlowNameStrategyTest", () => {
 	beforeEach(() => {
 		const configuration = stubInterface<Configuration>(sinon);
 		configuration.JOBTEASER.NAME = "jobteaser";
@@ -34,7 +33,7 @@ describe("FlowClientStrategyTest", () => {
 		octetStreamFlowClient = stubInterface<FlowClient>(sinon);
 		logger = stubInterface<Logger>(sinon);
 
-		flowStrategy = new OnFlowNameStrategy(
+		flowStrategy = new StagesOnFlowNameStrategy(
 			configuration,
 			basicFlowClient,
 			compressedFlowClient,

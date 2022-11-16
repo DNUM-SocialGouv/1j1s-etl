@@ -1,16 +1,9 @@
 import { Configuration } from "@stages/extraction/configuration/configuration";
+import { FlowClient, FlowStrategy, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
 import { Flux } from "@stages/extraction/domain/flux";
 import { Logger } from "@shared/configuration/logger";
 
-export interface FlowStrategy {
-	get(flow: Flux, logger: Logger): Promise<string>;
-}
-
-export interface FlowClient {
-	pull(url: string, logger: Logger): Promise<string>;
-}
-
-export class OnFlowNameStrategy implements FlowStrategy {
+export class StagesOnFlowNameStrategy implements FlowStrategy {
 	constructor(
 		private readonly configuration: Configuration,
 		private readonly basicFlowHttpClient: FlowClient,
@@ -30,11 +23,5 @@ export class OnFlowNameStrategy implements FlowStrategy {
 			default:
 				throw new FluxNonGereErreur(flow.nom);
 		}
-	}
-}
-
-export class FluxNonGereErreur extends Error {
-	constructor(nomDuFlux: string) {
-		super(`Le flux ${nomDuFlux} n'est pas actuellement géré`);
 	}
 }

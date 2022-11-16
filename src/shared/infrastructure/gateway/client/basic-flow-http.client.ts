@@ -1,7 +1,7 @@
 import { Axios } from "axios";
 
-import { FlowClient } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
-import { LectureFluxErreur } from "@stages/extraction/domain/flux.repository";
+import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy";
+import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { Logger } from "@shared/configuration/logger";
 
 export class BasicFlowHttpClient implements FlowClient {

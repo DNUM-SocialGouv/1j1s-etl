@@ -8,7 +8,7 @@ import {
 	FeatureFlippingOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
 import { FileSystemClient, NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { LoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
+import { StagesChargementLoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
@@ -17,7 +17,7 @@ import { StrapiOffreDeStageHttpClient } from "@stages/chargement/infrastructure/
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
 
 export class GatewayContainerFactory {
-	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {
+	public static create(configuration: Configuration, loggerStrategy: StagesChargementLoggerStrategy): GatewayContainer {
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const minioClient = new Client({
 			accessKey: configuration.MINIO.ACCESS_KEY,
@@ -59,7 +59,7 @@ export class GatewayContainerFactory {
 		fileSystemClient: FileSystemClient,
 		uuidGenerator: UuidGenerator,
 		offreDeStageHttpClient: StrapiOffreDeStageHttpClient,
-		loggerStrategy: LoggerStrategy,
+		loggerStrategy: StagesChargementLoggerStrategy,
 	): UnJeune1Solution.OffreDeStageRepository {
 		if (configuration.FEATURE_FLIPPING_CHARGEMENT) {
 			return new FeatureFlippingOffreDeStageRepository(
