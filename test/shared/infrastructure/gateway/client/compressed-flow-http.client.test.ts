@@ -1,12 +1,12 @@
 import sinon from "sinon";
 
-import { CompressedFlowHttpClient } from "@stages/extraction/infrastructure/gateway/client/compressed-flow-http.client";
+import { CompressedFlowHttpClient } from "@shared/infrastructure/gateway/client/compressed-flow-http.client";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { UnzipClient } from "@stages/extraction/infrastructure/gateway/common/unzip.client";
-import { OctetStreamHttpClient } from "@stages/extraction/infrastructure/gateway/common/octet-stream-http.client";
-import { LectureFluxErreur } from "@stages/extraction/domain/flux.repository";
 import { Logger } from "@shared/configuration/logger";
+import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { UnzipClient } from "@shared/infrastructure/gateway/common/unzip.client";
 
 const contenuDecompresse = "<toto>Contenu du fichier</toto>";
 const urlDuFlux = "https://some.url.xml.gz";

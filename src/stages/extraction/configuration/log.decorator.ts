@@ -1,8 +1,8 @@
 import { ConfigurationFactory } from "@stages/extraction/configuration/configuration";
-import { LoggerStrategy } from "@stages/extraction/configuration/logger-strategy";
+import { StagesExtractionLoggerStrategy } from "@stages/extraction/configuration/logger.strategy";
 
 const configuration = ConfigurationFactory.create();
-const loggerStrategy = new LoggerStrategy(configuration);
+const loggerStrategy = new StagesExtractionLoggerStrategy(configuration);
 
 export function TaskLog(flowName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
 	return function (target: unknown, propertyKey: string, descriptor: TypedPropertyDescriptor<() => Promise<void>>): PropertyDescriptor {

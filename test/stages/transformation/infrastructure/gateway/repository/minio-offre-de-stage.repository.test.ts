@@ -3,17 +3,16 @@ import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Configuration } from "@stages/transformation/configuration/configuration";
-import {
-	ContentParser,
-} from "@stages/transformation/infrastructure/gateway/xml-content.parser";
+import { ContentParser } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
 import { Flux } from "@stages/transformation/domain/flux";
-import { Logger} from "@shared/configuration/logger";
-import { LoggerStrategy } from "@stages/transformation/configuration/logger-strategy";
-import { MinioOffreDeStageRepository } from "@stages/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
+import {
+	MinioOffreDeStageRepository,
+} from "@stages/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@stages/transformation/infrastructure/gateway/uuid.generator";
@@ -27,7 +26,7 @@ let historyFileNameIncludingPath: string;
 let configuration: StubbedType<Configuration>;
 let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
-let loggerStrategy: StubbedClass<LoggerStrategy>;
+let loggerStrategy: StubbedType<LoggerStrategy>;
 let logger: StubbedType<Logger>;
 let flux: Flux;
 let uuidClient: StubbedType<UuidGenerator>;
@@ -51,7 +50,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 		minioStub = stubClass(Client);
 
-		loggerStrategy = stubClass(LoggerStrategy);
+		loggerStrategy = stubInterface<LoggerStrategy>(sinon);
 		logger = stubInterface<Logger>(sinon);
 		loggerStrategy.get.returns(logger);
 

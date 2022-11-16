@@ -3,13 +3,10 @@ import { Client } from "minio";
 import { Configuration } from "@stages/transformation/configuration/configuration";
 import { ContentParser } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
-import {
-	EcritureFluxErreur,
-	RecupererContenuErreur,
-} from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { Flux } from "@stages/transformation/domain/flux";
 import { FileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
-import { LoggerStrategy } from "@stages/transformation/configuration/logger-strategy";
+import { LoggerStrategy } from "@shared/configuration/logger";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@stages/transformation/infrastructure/gateway/uuid.generator";
 import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";

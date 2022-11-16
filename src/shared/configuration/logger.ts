@@ -5,6 +5,8 @@ import { Environment } from "@configuration/configuration";
 
 export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
+export type LoggerConfiguration = { name: string }
+
 export interface Logger {
 	debug(...args: Array<unknown>): void;
 	error(...args: Array<unknown>): void;
@@ -14,7 +16,9 @@ export interface Logger {
 	warn(...args: Array<unknown>): void;
 }
 
-export type LoggerConfiguration = { name: string }
+export interface LoggerStrategy {
+	get(flowName: string): Logger;
+}
 
 export class LoggerStrategyError extends Error {
 	constructor(flowName: string) {

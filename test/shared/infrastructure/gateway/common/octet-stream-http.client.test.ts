@@ -5,9 +5,9 @@ import { PassThrough, Writable } from "stream";
 
 import { expect } from "@test/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { OctetStreamHttpClient } from "@stages/extraction/infrastructure/gateway/common/octet-stream-http.client";
+import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
-import { LectureFluxErreur } from "@stages/extraction/domain/flux.repository";
 
 const url = "http://some.url";
 const fileName = "7d92007e-3f8a-40ad-b648-3b4c806b9647";

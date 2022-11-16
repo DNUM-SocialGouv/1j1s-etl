@@ -3,7 +3,7 @@ import { Client } from "minio";
 import { Configuration } from "@stages/chargement/configuration/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
-import { LoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
+import { StagesChargementLoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
@@ -17,7 +17,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		fileSystemClient: FileSystemClient,
 		uuidGenerator: UuidGenerator,
 		httpClient: HttpClient,
-		loggerStrategy: LoggerStrategy
+		loggerStrategy: StagesChargementLoggerStrategy
 	) {
 		super(configuration, minioClient, fileSystemClient, uuidGenerator, httpClient, loggerStrategy);
 	}

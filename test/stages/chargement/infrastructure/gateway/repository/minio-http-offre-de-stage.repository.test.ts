@@ -4,21 +4,20 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Configuration } from "@stages/chargement/configuration/configuration";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import {
-	EcritureFluxErreur,
-	RecupererContenuErreur,
-	RecupererOffresExistantesErreur,
-} from "@shared/infrastructure/gateway/repository/offre-de-stage.repository";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient, OffreDeStageHttp } from "@stages/chargement/infrastructure/gateway/http.client";
-import { Logger} from "@shared/configuration/logger";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
-import { LoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
+import {
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+	RecupererOffresExistantesErreur,
+} from "@shared/infrastructure/gateway/flux.erreur";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localFileNameIncludingPath = `./tmp/${uuid}`;
@@ -43,7 +42,7 @@ let minioClient: StubbedClass<Client>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidGenerator: StubbedType<UuidGenerator>;
 let httpClient: StubbedType<HttpClient>;
-let loggerStrategy: StubbedClass<LoggerStrategy>;
+let loggerStrategy: StubbedType<LoggerStrategy>;
 let logger: StubbedType<Logger>;
 let minioHttpOffreDeStageRepository: MinioHttpOffreDeStageRepository;
 
@@ -66,7 +65,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 
 		httpClient = stubInterface<HttpClient>(sinon);
 
-		loggerStrategy = stubClass(LoggerStrategy);
+		loggerStrategy = stubInterface<LoggerStrategy>(sinon);
 		logger = stubInterface<Logger>(sinon);
 		loggerStrategy.get.returns(logger);
 
