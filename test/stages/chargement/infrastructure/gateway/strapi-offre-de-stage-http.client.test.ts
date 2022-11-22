@@ -47,7 +47,7 @@ describe("StrapiHttpClientTest", () => {
 
 		authClient = new AuthenticationClient(
 			"/auth/local",
-			{ username: "login@example.com", password: "somePassWord123" }
+			{ username: "login@example.com", password: "somePassWord123" },
 		);
 
 		spyOnDelete = spy(axiosInstance, "delete");
@@ -76,8 +76,8 @@ describe("StrapiHttpClientTest", () => {
 			await strapiOffreDeStageHttpClient.delete(
 				new UnJeune1Solution.OffreDeStageASupprimer(
 					offreDeStageASupprimer.recupererAttributs(),
-					offreDeStageASupprimer.id
-				)
+					offreDeStageASupprimer.id,
+				),
 			);
 
 			expect(spyOnDelete).to.have.been.calledOnce;
@@ -93,8 +93,8 @@ describe("StrapiHttpClientTest", () => {
 			await strapiOffreDeStageHttpClient.put(
 				new UnJeune1Solution.OffreDeStageAMettreAJour(
 					offreDeStageAMettreAJour.recupererAttributs(),
-					offreDeStageAMettreAJour.id
-				)
+					offreDeStageAMettreAJour.id,
+				),
 			);
 
 			expect(spyOnPut).to.have.been.calledWith(
@@ -110,7 +110,7 @@ describe("StrapiHttpClientTest", () => {
 	context("Lorsque j'ajoute une nouvelle offre de stage", () => {
 		it("je fais un appel HTTP avec le bon contenu", async () => {
 			await strapiOffreDeStageHttpClient.post(
-				new UnJeune1Solution.OffreDeStageAPublier(offreDeStageAPublier.recupererAttributs())
+				new UnJeune1Solution.OffreDeStageAPublier(offreDeStageAPublier.recupererAttributs()),
 			);
 
 			expect(spyOnPost).to.have.been.calledWith(

@@ -7,7 +7,9 @@ import { expect } from "@test/configuration";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
-import { OffreDeStageStagefrCompresseFixtureBuilder } from "../fixture/offre-de-stage-stagefr-compresse.fixture-builder";
+import {
+	OffreDeStageStagefrCompresseFixtureBuilder,
+} from "../fixture/offre-de-stage-stagefr-compresse.fixture-builder";
 import { StagefrCompresse } from "@stages/transformation/domain/stagefr-compresse";
 import {
 	TransformerFluxStagefrCompresse,
@@ -35,7 +37,7 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 		beforeEach(() => {
 			const offreDeStage1Jeune1Solution = OffreDeStageFixtureBuilder.build(
 				{
-					identifiantSource : "100",
+					identifiantSource: "100",
 					source: UnJeune1Solution.Source.STAGEFR_COMPRESSE,
 				},
 				{ latitude: 10, longitude: 30 },
@@ -70,7 +72,7 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 
 			usecase = new TransformerFluxStagefrCompresse(
 				offreDeStageRepository,
-				convertir
+				convertir,
 			);
 		});
 
@@ -79,7 +81,7 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
 			expect(offreDeStageRepository.recuperer).to.have.been.calledWith(
-				new FluxTransformation("stagefr-compresse", "test", ".xml", ".json")
+				new FluxTransformation("stagefr-compresse", "test", ".xml", ".json"),
 			);
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;

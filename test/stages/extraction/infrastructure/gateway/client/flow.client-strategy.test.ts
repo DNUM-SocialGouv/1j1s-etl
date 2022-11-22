@@ -6,9 +6,7 @@ import { expect } from "@test/configuration";
 import { FlowClient, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
 import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { Logger } from "@shared/configuration/logger";
-import {
-	StagesOnFlowNameStrategy,
-} from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
+import { StagesOnFlowNameStrategy } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
 
 const url = "http://some.url";
 
@@ -37,7 +35,7 @@ describe("StagesOnFlowNameStrategyTest", () => {
 			configuration,
 			basicFlowClient,
 			compressedFlowClient,
-			octetStreamFlowClient
+			octetStreamFlowClient,
 		);
 	});
 
@@ -88,7 +86,7 @@ describe("StagesOnFlowNameStrategyTest", () => {
 		it("lance une erreur", async () => {
 			await expect(flowStrategy.get(flow, logger)).to.be.rejectedWith(
 				FluxNonGereErreur,
-				`Le flux ${flow.nom} n'est pas actuellement géré`
+				`Le flux ${flow.nom} n'est pas actuellement géré`,
 			);
 
 			expect(basicFlowClient.pull).to.not.have.been.called;

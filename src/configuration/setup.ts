@@ -38,6 +38,8 @@ export class Setup {
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
 
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSINGS_RAW_BUCKET_NAME);
+
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_STARTED_MESSAGE);
 
@@ -84,6 +86,11 @@ export class Setup {
 		);
 		await this.adminStorageClient.setBucketLifecycle(
 			this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME,
+			rulesToCreateOnExtractionBucket
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO.HOUSINGS_RAW_BUCKET_NAME,
 			rulesToCreateOnExtractionBucket
 		);
 

@@ -75,7 +75,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			fileSystemClient,
 			uuidGenerator,
 			httpClient,
-			loggerStrategy
+			loggerStrategy,
 		);
 	});
 
@@ -86,8 +86,8 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 
 		it("je ne renvoie pas d'erreur", () => {
 			expect(
-				async () => minioHttpOffreDeStageRepository.charger(nomDuFlux, offresMisesAJourAttendues)
-				).to.not.throw();
+				async () => minioHttpOffreDeStageRepository.charger(nomDuFlux, offresMisesAJourAttendues),
+			).to.not.throw();
 		});
 
 
@@ -123,7 +123,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			expect(minioClient.fGetObject).to.have.been.calledWith(
 				"json",
 				`${nomDuFlux}/latest.json`,
-				localFileNameIncludingPath
+				localFileNameIncludingPath,
 			);
 
 			expect(fileSystemClient.read).to.have.been.calledOnce;
@@ -142,7 +142,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		it("je retourne la liste mise à jour des offres de stage pour ce dernier", async () => {
 			await expect(minioHttpOffreDeStageRepository.recupererMisesAJourDesOffres(nomDuFlux)).to.be.rejectedWith(
 				RecupererContenuErreur,
-				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
+				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu",
 			);
 		});
 	});
@@ -155,7 +155,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		it("je retourne la liste mise à jour des offres de stage pour ce dernier", async () => {
 			await expect(minioHttpOffreDeStageRepository.recupererMisesAJourDesOffres(nomDuFlux)).to.be.rejectedWith(
 				RecupererContenuErreur,
-				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
+				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu",
 			);
 		});
 	});
@@ -206,7 +206,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		it("je lance une erreur de lecture", async () => {
 			await expect(minioHttpOffreDeStageRepository.recupererOffresExistantes(nomDuFlux)).to.be.rejectedWith(
 				RecupererOffresExistantesErreur,
-				"Une erreur est survenue lors de la récupération des offres existantes"
+				"Une erreur est survenue lors de la récupération des offres existantes",
 			);
 		});
 	});
@@ -404,9 +404,9 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 
 				expect(logger.error).to.have.been.calledOnce;
 				expect(logger.error).to.have.been.calledWith({
-					msg: `L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
-					extra: { offreDeStage: OffreDeStageFixtureBuilder.buildOffreDeStage() },
-			}
+						msg: `L'offre de stage avec l'identifiant ${offreDeStageNonCategorisable.identifiantSource || "undefined"} n'a pas pu être catégorisée`,
+						extra: { offreDeStage: OffreDeStageFixtureBuilder.buildOffreDeStage() },
+					},
 				);
 
 				expect(resultat).to.have.deep.members([{
@@ -449,7 +449,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			expect(minioClient.fPutObject).to.have.been.calledWith(
 				configuration.MINIO.RESULT_BUCKET_NAME,
 				filePathForMinio,
-				localFileNameIncludingPath
+				localFileNameIncludingPath,
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -464,7 +464,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(minioHttpOffreDeStageRepository.enregistrer(filePathForMinio, contenu, nomDuFlux)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${nomDuFlux} n'a pas été extrait car une erreur d'écriture est survenue`
+				`Le flux ${nomDuFlux} n'a pas été extrait car une erreur d'écriture est survenue`,
 			);
 		});
 	});
@@ -478,7 +478,7 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(minioHttpOffreDeStageRepository.enregistrer(filePathForMinio, contenu, nomDuFlux)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${nomDuFlux} n'a pas été extrait car une erreur d'écriture est survenue`
+				`Le flux ${nomDuFlux} n'a pas été extrait car une erreur d'écriture est survenue`,
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -491,13 +491,13 @@ class MinioHttpOffreDeStageRepositoryTest {
 		httpClient.post.withArgs(
 			OffreDeStageFixtureBuilder.buildOffreDeStageAPublier({
 				identifiantSource: "Un premier identifiant source",
-			})
+			}),
 		).rejects(erreurDePublication);
 
 		httpClient.put.withArgs(
 			OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({
 				identifiantSource: "Un troisième identifiant source",
-			}, "Un premier identifiant technique")
+			}, "Un premier identifiant technique"),
 		).rejects(erreurDeMiseAJour);
 
 		httpClient.delete.withArgs(

@@ -73,7 +73,7 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
 			expect(offreDeStageRepository.recuperer).to.have.been.calledWith(
-				new FluxTransformation("stagefr-decompresse", "test", ".xml", ".json")
+				new FluxTransformation("stagefr-decompresse", "test", ".xml", ".json"),
 			);
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;

@@ -19,6 +19,7 @@
     "@root": "./",
     "@cli": "build/src/cli",
     "@configuration": "build/src/configuration",
+    "@logements": "build/src/logements",
     "@stages": "build/src/stages",
     "@evenements": "build/src/evenements",
     "@shared": "build/src/shared"

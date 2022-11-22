@@ -79,7 +79,7 @@ describe("MinioHttpFlowRepositoryTest", () => {
 			expect(minioStub.fPutObject).to.have.been.calledWith(
 				configuration.MINIO.RAW_BUCKET_NAME,
 				fileNameIncludingPath,
-				localFileNameIncludingPath
+				localFileNameIncludingPath,
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -107,7 +107,7 @@ describe("MinioHttpFlowRepositoryTest", () => {
 			expect(minioStub.fPutObject).to.have.been.calledWith(
 				configuration.MINIO.RAW_BUCKET_NAME,
 				fileNameIncludingPath.replace(".gz", ""),
-				localFileNameIncludingPath
+				localFileNameIncludingPath,
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -122,7 +122,7 @@ describe("MinioHttpFlowRepositoryTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(flowRepository.enregistrer(fileNameIncludingPath, fileContent, flow)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${flow.nom} n'a pas été extrait car une erreur d'écriture est survenue`
+				`Le flux ${flow.nom} n'a pas été extrait car une erreur d'écriture est survenue`,
 			);
 		});
 	});
@@ -136,7 +136,7 @@ describe("MinioHttpFlowRepositoryTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(flowRepository.enregistrer(fileNameIncludingPath, fileContent, flow)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				`Le flux ${flow.nom} n'a pas été extrait car une erreur d'écriture est survenue`
+				`Le flux ${flow.nom} n'a pas été extrait car une erreur d'écriture est survenue`,
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -156,7 +156,7 @@ describe("MinioHttpFlowRepositoryTest", () => {
 					".xml",
 					"history",
 					"http://some.url",
-				)
+				),
 			);
 		});
 	});

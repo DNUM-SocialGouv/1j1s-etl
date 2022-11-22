@@ -3,6 +3,7 @@ import { TaskContainer as ExtractTasks } from "@stages/extraction/configuration/
 import { TaskContainer as EventsExtractTasks } from "@evenements/extraction/configuration/tasks.container";
 import { TaskContainer as LoadTasks } from "@stages/chargement/configuration/tasks.container";
 import { TaskContainer as TransformTasks } from "@stages/transformation/configuration/tasks.container";
+import { TaskContainer as HousingExtractTask } from "@logements/extraction/configuration/tasks.container";
 
 export type TaskContainer = Record<string, Record<string, Record<string, Task>>>
 
@@ -11,7 +12,9 @@ export class TaskContainerFactory {
 		events: {
 			extract: EventsExtractTasks
 		},
-		housing: Record<string, unknown>,
+		housing: {
+			extract: HousingExtractTask
+		},
 		internships: {
 			extract: ExtractTasks;
 			transform: TransformTasks;
@@ -22,6 +25,11 @@ export class TaskContainerFactory {
 			events: {
 				extract: {
 					"tous-mobilises": tasks.events.extract["tous-mobilises"],
+				},
+			},
+			housing: {
+				extract: {
+					immojeune: tasks.housing.extract.immojeune,
 				},
 			},
 			internships: {

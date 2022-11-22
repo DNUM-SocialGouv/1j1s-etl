@@ -1,7 +1,5 @@
 import { expect } from "@test/configuration";
-import {
-	XmlContentParser,
-} from "@stages/transformation/infrastructure/gateway/xml-content.parser";
+import { XmlContentParser } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
 import { XMLParser } from "fast-xml-parser";
 
 describe("XmlContentParserRepository", () => {

@@ -43,21 +43,21 @@ export class OffreDeStageFixtureBuilder {
 
 	static buildOffreDeStageAMettreAJour(
 		offreDeStage?: Partial<UnJeune1Solution.AttributsDOffreDeStage>,
-		idTechnique?: string
+		idTechnique?: string,
 	): UnJeune1Solution.OffreDeStageAMettreAJour {
 		return new UnJeune1Solution.OffreDeStageAMettreAJour(
 			{ ...OffreDeStageFixtureBuilder.DEFAULTS_ATTRIBUTS, ...offreDeStage },
-			idTechnique || this.DEFAULT_ID
+			idTechnique || this.DEFAULT_ID,
 		);
 	}
 
 	static buildOffreDeStageASupprimer(
 		offreDeStage?: Partial<UnJeune1Solution.AttributsDOffreDeStage>,
-		idTechnique?: string
+		idTechnique?: string,
 	): UnJeune1Solution.OffreDeStageASupprimer {
 		return new UnJeune1Solution.OffreDeStageASupprimer(
 			{ ...OffreDeStageFixtureBuilder.DEFAULTS_ATTRIBUTS, ...offreDeStage },
-			idTechnique || this.DEFAULT_ID
+			idTechnique || this.DEFAULT_ID,
 		);
 	}
 }

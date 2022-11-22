@@ -43,7 +43,7 @@ describe("FluxHttpClientTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(fluxHttpClient.pull(url, logger)).to.be.rejectedWith(
 				LectureFluxErreur,
-				`Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`
+				`Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`,
 			);
 		});
 	});
