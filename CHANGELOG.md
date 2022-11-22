@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.7...v2.0.0) (2022-11-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* remaniement architecture ETL
+
+### Code Refactoring
+
+* remaniement architecture ETL ([17ba133](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/17ba133025e9b60517e6eb17a5e098d77a2b2317))
+
 ## [1.0.7](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.6...v1.0.7) (2022-10-25)
 
 
