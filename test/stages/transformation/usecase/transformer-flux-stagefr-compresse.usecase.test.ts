@@ -4,7 +4,7 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
 import { expect } from "@test/configuration";
-import { Flux } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { OffreDeStageStagefrCompresseFixtureBuilder } from "../fixture/offre-de-stage-stagefr-compresse.fixture-builder";
@@ -16,7 +16,7 @@ import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution"
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 
-let config: Flux;
+let flux: FluxTransformation;
 let offresDeStage1Jeune1Solution: Array<UnJeune1Solution.OffreDeStage>;
 let offresDeStageStagefrCompresse: Array<StagefrCompresse.OffreDeStage>;
 
@@ -28,12 +28,7 @@ let usecase: TransformerFluxStagefrCompresse;
 
 describe("TransformerFluxStagefrCompresseTest", () => {
 	before(() => {
-		config = {
-			nom: "stagefr-compresse",
-			dossierHistorisation: "test",
-			extensionFichierBrut: ".xml",
-			extensionFichierTransforme: ".json",
-		};
+		flux = new FluxTransformation("stagefr-compresse", "test", ".xml", ".json");
 	});
 
 	context("Lorsque je souhaite transformer le flux stagefr compressé et que tout va bien", () => {
@@ -60,7 +55,7 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 			offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 			offreDeStageRepository
 				.recuperer
-				.withArgs(config)
+				.withArgs(flux)
 				.resolves({ jobs: { job: offresDeStageStagefrCompresse } });
 
 			dateService = stubInterface<DateService>(sinon);
@@ -80,10 +75,12 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 		});
 
 		it("je le sauvegarde au format 1Jeune1Solution", async () => {
-			await usecase.executer(config);
+			await usecase.executer(flux);
 
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-			expect(offreDeStageRepository.recuperer).to.have.been.calledWith({ ...config });
+			expect(offreDeStageRepository.recuperer).to.have.been.calledWith(
+				new FluxTransformation("stagefr-compresse", "test", ".xml", ".json")
+			);
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
 			expect(offreDeStageRepository.sauvegarder.getCall(0).firstArg).to.have.deep.members(offresDeStage1Jeune1Solution);

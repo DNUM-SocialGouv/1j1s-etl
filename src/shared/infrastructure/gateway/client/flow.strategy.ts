@@ -1,4 +1,4 @@
-import { Flux } from "@stages/extraction/domain/flux";
+import { Flux } from "@shared/flux";
 import { Logger } from "@shared/configuration/logger";
 
 export interface FlowStrategy {

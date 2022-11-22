@@ -4,7 +4,7 @@ import { Configuration } from "@stages/transformation/configuration/configuratio
 import { ContentParser } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { Flux } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { FileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
@@ -28,7 +28,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	) {
 	}
 
-	public async recuperer<T>(flow: Flux): Promise<T> {
+	public async recuperer<T>(flow: FluxTransformation): Promise<T> {
 		this.loggerStrategy.get(flow.nom).info(`Starting to pull flow ${flow.nom}`);
 		const fileNameToPull = this.getFileNameToFetch(flow);
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(this.generateFileName());
@@ -49,7 +49,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	public async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: Flux): Promise<void> {
+	public async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: FluxTransformation): Promise<void> {
 		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed internship offers from flow ${flow.nom}`);
 		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
@@ -68,7 +68,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	private getFileNameToFetch(flow: Flux): string {
+	private getFileNameToFetch(flow: FluxTransformation): string {
 		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
 		return flow.nom
 			.concat(PATH_SEPARATOR)
@@ -81,17 +81,17 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		return JSON.stringify(internshipOffers, JSON_REPLACER, JSON_INDENTATION);
 	}
 
-	private async saveHistoryFile(flow: Readonly<Flux>, temporaryFileName: string): Promise<void> {
+	private async saveHistoryFile(flow: FluxTransformation, temporaryFileName: string): Promise<void> {
 		const historyFileName = this.createHistoryFileName(flow);
 		await this.saveOnMinio(historyFileName, temporaryFileName);
 	}
 
-	private async saveLatestFile(flow: Readonly<Flux>, temporaryFileName: string): Promise<void> {
+	private async saveLatestFile(flow: FluxTransformation, temporaryFileName: string): Promise<void> {
 		const latestFileName = this.createCloneFileName(flow);
 		await this.saveOnMinio(latestFileName, temporaryFileName);
 	}
 
-	private createCloneFileName(flow: Readonly<Flux>): string {
+	private createCloneFileName(flow: FluxTransformation): string {
 		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
 		return flow.nom
 			.concat(PATH_SEPARATOR)
@@ -99,7 +99,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 			.concat(flow.extensionFichierTransforme);
 	}
 
-	private createHistoryFileName(flow: Readonly<Flux>): string {
+	private createHistoryFileName(flow: FluxTransformation): string {
 		const { PATH_SEPARATOR } = MinioOffreDeStageRepository;
 		return flow.nom
 			.concat(PATH_SEPARATOR)

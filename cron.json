@@ -1,39 +1,39 @@
 {
   "jobs": [
     {
-      "command": "0 7 * * * npm run cli -- -d stages -a extract -f jobteaser",
+      "command": "0 7 * * * npm run cli -- -d internships -a extract -f jobteaser",
       "size": "S"
     },
     {
-      "command": "30 7 * * * npm run cli -- -d stages -a transform -f jobteaser",
+      "command": "30 7 * * * npm run cli -- -d internships -a transform -f jobteaser",
       "size": "L"
     },
     {
-      "command": "45 7 * * * npm run cli -- -d stages -a load -f jobteaser",
+      "command": "45 7 * * * npm run cli -- -d internships -a load -f jobteaser",
       "size": "L"
     },
     {
-      "command": "0 6 * * * npm run cli -- -d stages -a extract -f stagefr-compresse",
+      "command": "0 6 * * * npm run cli -- -d internships -a extract -f stagefr-compresse",
       "size": "S"
     },
     {
-      "command": "30 6 * * * npm run cli -- -d stages -a transform -f stagefr-compresse",
+      "command": "30 6 * * * npm run cli -- -d internships -a transform -f stagefr-compresse",
       "size": "L"
     },
     {
-      "command": "45 6 * * * npm run cli -- -d stages -a load -f stagefr-compresse",
+      "command": "45 6 * * * npm run cli -- -d internships -a load -f stagefr-compresse",
       "size": "L"
     },
     {
-      "command": "0 6 * * * npm run cli -- -d stages -a extract -f stagefr-decompresse",
+      "command": "0 6 * * * npm run cli -- -d internships -a extract -f stagefr-decompresse",
       "size": "S"
     },
     {
-      "command": "30 6 * * * npm run cli -- -d stages -a transform -f stagefr-decompresse",
+      "command": "30 6 * * * npm run cli -- -d internships -a transform -f stagefr-decompresse",
       "size": "L"
     },
     {
-      "command": "45 6 * * * npm run cli -- -d stages -a load -f stagefr-decompresse",
+      "command": "45 6 * * * npm run cli -- -d internships -a load -f stagefr-decompresse",
       "size": "L"
     }
   ]

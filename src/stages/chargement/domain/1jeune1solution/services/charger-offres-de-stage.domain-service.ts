@@ -1,4 +1,5 @@
 import { DateService } from "@shared/date.service";
+import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
 
 export class ChargerOffresDeStageDomainService {
@@ -16,9 +17,9 @@ export class ChargerOffresDeStageDomainService {
 	) {
 	}
 
-	public async charger(nomDuFlux: string, extensionDuFichierDeResultat: string): Promise<void> {
-		const offresDeStageMisesAJour = await this.offreDeStageRepository.recupererMisesAJourDesOffres(nomDuFlux);
-		const offresDeStageExistantes = await this.offreDeStageRepository.recupererOffresExistantes(nomDuFlux);
+	public async charger(flux: FluxChargement): Promise<void> {
+		const offresDeStageMisesAJour = await this.offreDeStageRepository.recupererMisesAJourDesOffres(flux.nom);
+		const offresDeStageExistantes = await this.offreDeStageRepository.recupererOffresExistantes(flux.nom);
 
 		const identifiantsSourceDesOffresExistantes = this.extraireLesIdentifiantsSourceDesOffresExistantes(offresDeStageExistantes);
 
@@ -29,15 +30,15 @@ export class ChargerOffresDeStageDomainService {
 		const offresDeStageAPublier = this.extaireLesOffresAPublier(offresDeStageAvecEmployeur, identifiantsSourceDesOffresExistantes);
 		const offresDeStageASupprimer = this.extaireLesOffresASupprimer(offresDeStageExistantes, this.extaireLesIdentifiantsDeLaMiseAJourDesOffres(offresDeStageMisesAJour));
 
-		const offresDeStageEnErreur = await this.offreDeStageRepository.charger(nomDuFlux, [
+		const offresDeStageEnErreur = await this.offreDeStageRepository.charger(flux.nom, [
 			...offresDeStageAMettreAJour,
 			...offresDeStageAPublier,
 			...offresDeStageASupprimer,
 		]);
 
 		await this.enregistrerLesResultatsDuChargement(
-			nomDuFlux,
-			extensionDuFichierDeResultat,
+			flux.nom,
+			flux.extension,
 			offresDeStageAPublier,
 			offresDeStageAMettreAJour,
 			offresDeStageASupprimer,

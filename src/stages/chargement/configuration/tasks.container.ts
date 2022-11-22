@@ -13,9 +13,9 @@ export type TaskContainer = {
 export class TaskContainerFactory {
 	public static create(configuration: Configuration, usecases: UsecaseContainer): TaskContainer {
 		return {
-			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser),
-			"stagefr-compresse" : new LoadStagefrCompressedTask(usecases.chargerFluxStagefrCompresse),
-			"stagefr-decompresse": new LoadStagefrUncompressedTask(usecases.chargerFluxStagefrDecompresse),
+			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, configuration),
+			"stagefr-compresse" : new LoadStagefrCompressedTask(usecases.chargerFluxStagefrCompresse, configuration),
+			"stagefr-decompresse": new LoadStagefrUncompressedTask(usecases.chargerFluxStagefrDecompresse, configuration),
 		};
 	}
 }

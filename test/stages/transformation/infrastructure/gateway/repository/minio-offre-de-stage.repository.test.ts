@@ -8,7 +8,7 @@ import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
-import { Flux } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioOffreDeStageRepository,
@@ -28,7 +28,7 @@ let contentParserRepository: StubbedType<ContentParser>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let loggerStrategy: StubbedType<LoggerStrategy>;
 let logger: StubbedType<Logger>;
-let flux: Flux;
+let flux: FluxTransformation;
 let uuidClient: StubbedType<UuidGenerator>;
 let minioStub: StubbedClass<Client>;
 let dateService: StubbedClass<DateService>;
@@ -39,12 +39,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		latestFileNameIncludingPath = "source/latest.json";
 		historyFileNameIncludingPath = "source/history/2022-01-01T00:00:00.000Z.json";
 		fileContent = "<toto>contenu du fichier</toto>";
-		flux = {
-			nom: "source",
-			extensionFichierBrut: ".xml",
-			extensionFichierTransforme: ".json",
-			dossierHistorisation: "history",
-		};
+		flux = new FluxTransformation("source", "history", ".xml", ".json");
 
 		offresDeStage = [OffreDeStageFixtureBuilder.build()];
 
@@ -153,12 +148,9 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je récupère le contenu du fichier", async () => {
-			const result = await minioOffreDeStageRepository.recuperer({
-				nom: "source",
-				extensionFichierBrut: ".xml",
-				dossierHistorisation: "history",
-				extensionFichierTransforme: ".json",
-			});
+			const result = await minioOffreDeStageRepository.recuperer(
+				new FluxTransformation("source", "history", ".xml", ".json")
+			);
 
 			expect(result).to.eql({
 				root: {
@@ -194,12 +186,9 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(minioOffreDeStageRepository.recuperer({
-				nom: "source",
-				extensionFichierBrut: ".xml",
-				dossierHistorisation: "history",
-				extensionFichierTransforme: ".json",
-			})).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer(
+				new FluxTransformation("source", "history", ".xml", ".json")
+			)).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);
@@ -219,12 +208,9 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		});
 
 		it("je lance une erreur de lecture", async () => {
-			await expect(minioOffreDeStageRepository.recuperer({
-				nom: "source",
-				extensionFichierBrut: ".xml",
-				dossierHistorisation: "history",
-				extensionFichierTransforme: ".json",
-			})).to.be.rejectedWith(
+			await expect(minioOffreDeStageRepository.recuperer(
+				new FluxTransformation("source", "history", ".xml", ".json",)
+			)).to.be.rejectedWith(
 				RecupererContenuErreur,
 				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
 			);

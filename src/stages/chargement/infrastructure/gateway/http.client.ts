@@ -58,11 +58,11 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 				},
 			},
 		);
-		const intershipOffers = result.data.data;
+		const internshipOffers = result.data.data;
 		const pageCount = result.data.meta.pagination.pageCount;
 
 		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {
-			intershipOffers.push(...
+			internshipOffers.push(...
 				(await this.axios.get<StrapiResponse>(
 					this.offreDeStageUrl,
 					{
@@ -78,7 +78,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 			);
 		}
 
-		return intershipOffers;
+		return internshipOffers;
 	}
 
 	public async post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void> {

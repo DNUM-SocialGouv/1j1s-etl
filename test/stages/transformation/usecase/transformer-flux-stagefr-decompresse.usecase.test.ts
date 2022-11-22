@@ -2,7 +2,7 @@ import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
-import { Flux } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { DateService } from "@shared/date.service";
 import { expect } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
@@ -18,7 +18,7 @@ import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution"
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 
-let flux: Flux;
+let flux: FluxTransformation;
 let offresDeStage1Jeune1Solution: Array<UnJeune1Solution.OffreDeStage>;
 let offresDeStageStagefrDecompresse: Array<StagefrDecompresse.OffreDeStage>;
 
@@ -30,12 +30,7 @@ let usecase: TransformerFluxStagefrDecompresse;
 
 describe("TransformerFluxStagefrDecompresseTest", () => {
 	before(() => {
-		flux = {
-			nom: "stagefr-decompresse",
-			dossierHistorisation: "test",
-			extensionFichierBrut: ".xml",
-			extensionFichierTransforme: ".json",
-		};
+		flux = new FluxTransformation("stagefr-decompresse", "test", ".xml", ".json");
 	});
 
 	context("Lorsque je souhaite transformer le flux stagefr decompressé et que tout va bien", () => {
@@ -77,7 +72,9 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 			await usecase.executer(flux);
 
 			expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-			expect(offreDeStageRepository.recuperer).to.have.been.calledWith({ ...flux });
+			expect(offreDeStageRepository.recuperer).to.have.been.calledWith(
+				new FluxTransformation("stagefr-decompresse", "test", ".xml", ".json")
+			);
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledWith(offresDeStage1Jeune1Solution);

@@ -2,16 +2,28 @@ import yargs from "yargs";
 
 import { Configuration } from "@configuration/configuration";
 
-type Commands = { [p: string]: unknown, domain: string, action: string, flux: string, _: (string | number)[], $0: string };
+type Commands = { [p: string]: unknown, domain: string, action: string, flow: string, _: (string | number)[], $0: string };
+
+class CliError extends Error {
+	constructor(domain: string, flow: string) {
+		super(`Flow ${flow} doesn't exist within ${domain}`);
+	}
+}
 
 export class CliConfiguration {
 	public static create(configuration: Configuration): Commands {
-		const domainChoices = ["stages", "logements"];
+		const domainChoices = configuration.DOMAINS;
 		const actionChoices = ["extract", "transform", "load"];
-		const fluxChoices = [
-			configuration.JOBTEASER.NAME,
-			configuration.STAGEFR_COMPRESSED.NAME,
-			configuration.STAGEFR_UNCOMPRESSED.NAME,
+
+		const flowsByDomain = new Map<string, Array<string>>();
+		flowsByDomain.set("events", configuration.EVENTS.FLOWS);
+		flowsByDomain.set("housing", configuration.HOUSING.FLOWS);
+		flowsByDomain.set("internships", configuration.INTERNSHIPS.FLOWS);
+
+		const flowChoices = [
+			...configuration.EVENTS.FLOWS,
+			...configuration.HOUSING.FLOWS,
+			...configuration.INTERNSHIPS.FLOWS,
 		];
 
 		const options = {
@@ -29,9 +41,9 @@ export class CliConfiguration {
 				desc: "Tell the CLI which action you wish to perform",
 				string: true,
 			},
-			flux: {
+			flow: {
 				alias: "f",
-				choices: fluxChoices,
+				choices: flowChoices,
 				demandOption: true,
 				desc: "Tell the CLI which flux you wish to perform the action on",
 				string: true,
@@ -42,6 +54,20 @@ export class CliConfiguration {
 			.usage("\nUse this CLI to run specific cronjob on application")
 			.options(options)
 			.help(true)
+			.check(({ domain, flow }: { domain?: string, action?: string, flow?: string }) => {
+				if (domain && flow && this.isFlowNotWithinDomain(domain, flow, flowsByDomain)) {
+					throw new CliError(domain, flow);
+				}
+				return true;
+			})
 			.argv as Commands;
+	}
+
+	private static isFlowNotWithinDomain(domainToCheck: string, flow: string, flowsByDomain: Map<string, Array<string>>): boolean {
+		if (domainToCheck && flow) {
+			const flowsForDomain = flowsByDomain.get(domainToCheck);
+			return !(flowsForDomain !== undefined && flowsForDomain.includes(flow));
+		}
+		return false;
 	}
 }

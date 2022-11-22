@@ -36,7 +36,7 @@ export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDe
 			await this.chargerOffreDeStageSelonType(offreDeStage, offresDeStageEnErreur);
 		}
 
-		logger.info(`The ${source} flow have ${offresDeStageEnErreur.length} intership offers not updated`);
+		logger.info(`The ${source} flow have ${offresDeStageEnErreur.length} internship offers not updated`);
 		logger.info(`Ending to load internship offers from flow ${source}`);
 
 		return offresDeStageEnErreur;
