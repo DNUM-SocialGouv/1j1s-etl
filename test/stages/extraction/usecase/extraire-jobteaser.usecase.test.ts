@@ -30,7 +30,7 @@ describe("ExtraireJobteaserTest", () => {
 					".xml",
 					"history",
 					"http://some.url",
-				)
+				),
 			);
 		});
 	});

@@ -33,7 +33,6 @@ export type Configuration = {
 export class ConfigurationFactory {
 	public static create(): Configuration {
 		const { getOrError, getOrDefault } = ConfigurationFactory;
-		const DEFAULT_RAW_BUCKET_NAME = "raw";
 		const DEFAULT_MINIO_PORT = "9000";
 
 		return {
@@ -54,7 +53,7 @@ export class ConfigurationFactory {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
-				RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
+				RAW_BUCKET_NAME: getOrError("INTERNSHIPS_MINIO_RAW_BUCKET_NAME"),
 				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 				URL: getOrError("MINIO_URL"),
 			},

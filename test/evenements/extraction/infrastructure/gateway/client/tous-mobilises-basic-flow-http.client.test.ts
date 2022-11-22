@@ -1,8 +1,7 @@
 import { Axios, AxiosError } from "axios";
 import sinon from "sinon";
 
-import { AuthentificationErreur, LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { Configuration } from "@evenements/extraction/configuration/configuration";
+import { AuthentificationErreur, LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";import { Configuration } from "@evenements/extraction/configuration/configuration";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Logger } from "@shared/configuration/logger";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
@@ -22,7 +21,7 @@ describe("EventsBasicFlowHttpClientTest", () => {
 	beforeEach(() => {
 		configuration = stubInterface<Configuration>(sinon);
 		logger = stubInterface<Logger>(sinon);
-		axios = stubClass(Axios,{});
+		axios = stubClass(Axios, {});
 		url = "http://flux";
 		token = "bearertoken";
 		eventsBasicFlowHttpClient = new TousMobilisesBasicFlowHttpClient(axios, configuration);
@@ -60,7 +59,7 @@ describe("EventsBasicFlowHttpClientTest", () => {
 		it("je retourne une erreur d'authentification", async () => {
 			await expect(eventsBasicFlowHttpClient.pull(url, logger)).to.be.rejectedWith(
 				AuthentificationErreur,
-				"Une erreur est survenue lors de l'authentification pour le flux NAME"
+				"Une erreur est survenue lors de l'authentification pour le flux NAME",
 			);
 		});
 	});
@@ -75,7 +74,7 @@ describe("EventsBasicFlowHttpClientTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(eventsBasicFlowHttpClient.pull(url, logger)).to.be.rejectedWith(
 				LectureFluxErreur,
-				`Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`
+				`Le flux à l'adresse ${url} n'a pas été extrait car une erreur de lecture est survenue`,
 			);
 		});
 	});

@@ -210,10 +210,10 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					sourceUpdatedAt: "2022-01-10T00:00:00.000Z",
 				})];
 
-				offresDeStagesExistantes = [new UnJeune1Solution.OffreDeStageExistante("Identifiant technique", "Identifiant source", "2022-01-01T00:00:00.000Z",)];
+				offresDeStagesExistantes = [new UnJeune1Solution.OffreDeStageExistante("Identifiant technique", "Identifiant source", "2022-01-01T00:00:00.000Z")];
 
 				offreDeStageAMettreAJour = new UnJeune1Solution.OffreDeStageAMettreAJour(
-					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id
+					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id,
 				);
 
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
@@ -251,7 +251,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				)];
 
 				offreDeStageAMettreAJour = new UnJeune1Solution.OffreDeStageAMettreAJour(
-					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id
+					offresDeStagesMisesAJour[0].recupererAttributs(), offresDeStagesExistantes[0].id,
 				);
 
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);
@@ -332,7 +332,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				)];
 
 				offreDeStageAPublier = new UnJeune1Solution.OffreDeStageAPublier(
-					offresDeStagesMisesAJour[1].recupererAttributs()
+					offresDeStagesMisesAJour[1].recupererAttributs(),
 				);
 
 				offreDeStageASupprimer = new UnJeune1Solution.OffreDeStageASupprimer({
@@ -342,7 +342,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 				offreDeStageAMettreAJour = new UnJeune1Solution.OffreDeStageAMettreAJour(
 					offresDeStagesMisesAJour[0].recupererAttributs(),
-					"Identifiant technique 1"
+					"Identifiant technique 1",
 				);
 
 				offreDeStageRepository.recupererMisesAJourDesOffres.resolves(offresDeStagesMisesAJour);

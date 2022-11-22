@@ -32,7 +32,7 @@ describe("ExtraireEvenementTousMobilisesUsecase", () => {
 					".json",
 					"history",
 					"http://some.url",
-				)
+				),
 			);
 		});
 	});

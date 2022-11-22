@@ -22,7 +22,7 @@ describe("ExtraireFluxTest", () => {
 		dateService.maintenant.returns(new Date(date));
 		usecase = new ExtraireFluxDomainService(
 			fluxRepository,
-			dateService
+			dateService,
 		);
 
 		flux = new FluxExtraction(
@@ -48,7 +48,12 @@ describe("ExtraireFluxTest", () => {
 				{ nom, url, extension, dossierHistorisation },
 			]);
 			expect(fluxRepository.enregistrer.getCall(1).args)
-				.to.have.deep.members(["tousmobilises/latest.json", fluxContent, { nom, url, extension, dossierHistorisation }]);
+				.to.have.deep.members(["tousmobilises/latest.json", fluxContent, {
+				nom,
+				url,
+				extension,
+				dossierHistorisation,
+			}]);
 		});
 	});
 
@@ -60,7 +65,7 @@ describe("ExtraireFluxTest", () => {
 		it("je laisse passer les erreurs", async () => {
 			await expect(usecase.extraire(flux)).to.be.rejectedWith(
 				Error,
-				"Oops! Something went wrong :-("
+				"Oops! Something went wrong :-(",
 			);
 		});
 	});

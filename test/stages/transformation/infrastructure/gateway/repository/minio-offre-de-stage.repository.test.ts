@@ -107,7 +107,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, flux)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue"
+				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue",
 			);
 		});
 	});
@@ -121,7 +121,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 		it("je lance une erreur", async () => {
 			await expect(minioOffreDeStageRepository.sauvegarder(offresDeStage, flux)).to.be.rejectedWith(
 				EcritureFluxErreur,
-				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue"
+				"Le flux source n'a pas été extrait car une erreur d'écriture est survenue",
 			);
 			expect(fileSystemClient.delete).to.have.been.calledOnce;
 			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
@@ -149,7 +149,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 		it("je récupère le contenu du fichier", async () => {
 			const result = await minioOffreDeStageRepository.recuperer(
-				new FluxTransformation("source", "history", ".xml", ".json")
+				new FluxTransformation("source", "history", ".xml", ".json"),
 			);
 
 			expect(result).to.eql({
@@ -163,7 +163,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 			expect(minioStub.fGetObject).to.have.been.calledWith(
 				configuration.MINIO.RAW_BUCKET_NAME,
 				"source/latest.xml",
-				localFileNameIncludingPath
+				localFileNameIncludingPath,
 			);
 			expect(fileSystemClient.read).to.have.been.calledOnce;
 			expect(fileSystemClient.read).to.have.been.calledWith(localFileNameIncludingPath);
@@ -187,10 +187,10 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 		it("je lance une erreur de lecture", async () => {
 			await expect(minioOffreDeStageRepository.recuperer(
-				new FluxTransformation("source", "history", ".xml", ".json")
+				new FluxTransformation("source", "history", ".xml", ".json"),
 			)).to.be.rejectedWith(
 				RecupererContenuErreur,
-				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
+				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu",
 			);
 		});
 	});
@@ -209,10 +209,10 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 
 		it("je lance une erreur de lecture", async () => {
 			await expect(minioOffreDeStageRepository.recuperer(
-				new FluxTransformation("source", "history", ".xml", ".json",)
+				new FluxTransformation("source", "history", ".xml", ".json"),
 			)).to.be.rejectedWith(
 				RecupererContenuErreur,
-				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu"
+				"Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu",
 			);
 		});
 	});

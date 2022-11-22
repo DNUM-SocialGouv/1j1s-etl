@@ -41,9 +41,6 @@ export type Configuration = {
 export class ConfigurationFactory {
 	public static create(): Configuration {
 		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
-		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
-		const DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
-		const DEFAULT_RESULT_BUCKET_NAME = "result";
 		const DEFAULT_MINIO_PORT = "9000";
 
 		return {
@@ -63,10 +60,10 @@ export class ConfigurationFactory {
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
-				RESULT_BUCKET_NAME: getOrDefault("MINIO_RESULT_BUCKET_NAME", DEFAULT_RESULT_BUCKET_NAME),
+				RESULT_BUCKET_NAME: getOrError("INTERNSHIPS_MINIO_RESULT_BUCKET_NAME"),
 				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
-				TRANSFORMED_BUCKET_NAME: getOrDefault("MINIO_TRANSFORMED_BUCKET_NAME", DEFAULT_TRANSFORMED_BUCKET_NAME),
-				TRANSFORMED_FILE_EXTENSION: getOrDefault("MINIO_TRANSFORMED_FILE_EXTENSION", DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION),
+				TRANSFORMED_BUCKET_NAME: getOrError("INTERNSHIPS_MINIO_TRANSFORMED_BUCKET_NAME"),
+				TRANSFORMED_FILE_EXTENSION: getOrError("MINIO_TRANSFORMED_FILE_EXTENSION"),
 				URL: getOrError("MINIO_URL"),
 			},
 			NODE_ENV: getOrError("NODE_ENV") as Environment,

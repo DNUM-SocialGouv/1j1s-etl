@@ -38,6 +38,7 @@
     "paths": {
        "@cli/*": ["src/cli/*"],
        "@configuration/*": ["src/configuration/*"],
+       "@logements/*": ["src/logements/*"],
        "@shared/*": ["src/shared/*"],
        "@stages/*": ["src/stages/*"],
        "@evenements/*": ["src/evenements/*"],

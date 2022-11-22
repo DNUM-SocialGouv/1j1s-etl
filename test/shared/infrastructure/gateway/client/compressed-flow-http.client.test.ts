@@ -55,7 +55,7 @@ describe("CompressedFlowHttpClientTest", () => {
 		it("Je laisse passe une erreur", async () => {
 			await expect(compressedFluxHttpClient.pull(urlDuFlux, logger)).to.be.rejectedWith(
 				LectureFluxErreur,
-				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`
+				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`,
 			);
 		});
 	});
@@ -68,7 +68,7 @@ describe("CompressedFlowHttpClientTest", () => {
 		it("Je lance une erreur", async () => {
 			await expect(compressedFluxHttpClient.pull(urlDuFlux, logger)).to.be.rejectedWith(
 				LectureFluxErreur,
-				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`
+				`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`,
 			);
 		});
 	});

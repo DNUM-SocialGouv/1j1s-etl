@@ -30,7 +30,7 @@ describe("ExtraireStageFRcompresseTest", () => {
 					".xml",
 					"history",
 					"http://some.url",
-				)
+				),
 			);
 		});
 	});
