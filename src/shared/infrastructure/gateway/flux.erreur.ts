@@ -21,3 +21,9 @@ export class RecupererOffresExistantesErreur extends Error {
 		super("Une erreur est survenue lors de la récupération des offres existantes");
 	}
 }
+
+export class AuthentificationErreur extends Error {
+	constructor(nomFlux: string) {
+		super(`Une erreur est survenue lors de l'authentification pour le flux ${nomFlux}`);
+	}
+}
