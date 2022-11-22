@@ -10,6 +10,7 @@ process.setMaxListeners(18);
 
 const configuration = ConfigurationFactory.create();
 
+const evenementsTasks = {};
 const logementsTasks = {};
 const stagesTasks = {
 	extract: Stages.ExtractionModule.export(),
@@ -17,12 +18,13 @@ const stagesTasks = {
 	load: Stages.ChargementModule.export(),
 };
 
-const tasks = TaskContainerFactory.create({ logements: logementsTasks, stages: stagesTasks });
-const { domain, action, flux } = CliConfiguration.create(configuration);
+const tasks = TaskContainerFactory.create({ events: evenementsTasks, housing: logementsTasks, internships: stagesTasks });
+const { domain, action, flow } = CliConfiguration.create(configuration);
+
 
 const associatedTask = tasks[domain][action];
 
 if (associatedTask) {
-	const task = associatedTask[flux];
+	const task = associatedTask[flow];
 	task.run();
 }

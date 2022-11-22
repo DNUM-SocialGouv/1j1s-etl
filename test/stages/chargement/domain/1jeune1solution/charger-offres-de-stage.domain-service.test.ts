@@ -8,10 +8,13 @@ import { DateService } from "@shared/date.service";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
+import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
 
 const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;
 let extensionDuFichierDeResultat: string;
+let flux: FluxChargement;
+
 let offresDeStagesMisesAJour: Array<UnJeune1Solution.OffreDeStage>;
 let offresDeStagesExistantes: Array<UnJeune1Solution.OffreDeStageExistante>;
 let offreDeStageAPublier: UnJeune1Solution.OffreDeStageAPublier;
@@ -27,6 +30,8 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 	beforeEach(() => {
 		nomDuFlux = "jobteaser";
 		extensionDuFichierDeResultat = ".json";
+
+		flux = new FluxChargement(nomDuFlux, extensionDuFichierDeResultat);
 
 		dateService = stubClass(DateService);
 		dateService.maintenant.returns(new Date(maintenant));
@@ -83,7 +88,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Je charge les mises à jour des offres de stage dont on connaît l'employeur", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.recupererMisesAJourDesOffres).to.have.been.calledOnce;
 				expect(offreDeStageRepository.recupererMisesAJourDesOffres).to.have.been.calledWith(nomDuFlux);
@@ -116,7 +121,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Je ne renvoie pas d'erreur", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.not.throw();
@@ -124,7 +129,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Je sauvegarde les offres sans employeur", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.enregistrer.getCall(4).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_sans_employeur.json`,
@@ -182,14 +187,14 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Je charge de nouvelles offres de stage", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageAPublier]);
 			});
 
 			it("J'enregistre le résultat", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.enregistrer.getCall(0).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_created.json`,
@@ -216,14 +221,14 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Je charge les mise à jours nécéssaires", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageAMettreAJour]);
 			});
 
 			it("J'enregistre le résultat", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.enregistrer.getCall(1).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_updated.json`,
@@ -255,7 +260,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 
 			//TODO ajouter ces offres à nos cas d'erreurs
 			it("Je ne charge pas ces offres de stage", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, []);
@@ -288,14 +293,14 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Je charge les mises à jour nécessaires", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.charger).to.have.been.calledOnce;
 				expect(offreDeStageRepository.charger).to.have.been.calledWith(nomDuFlux, [offreDeStageASupprimer]);
 			});
 
 			it("J'enregistre le résultat", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.enregistrer.getCall(2).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_deleted.json`,
@@ -345,7 +350,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("Enregistre les résultats de création, mises à jour, suppression des offres et des offres en erreur et des offre sans employeur", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.enregistrer.callCount).to.eql(5);
 			});
@@ -370,7 +375,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			});
 
 			it("J'enregistre le résultat des offres en erreur", async () => {
-				await domainService.charger(nomDuFlux, extensionDuFichierDeResultat);
+				await domainService.charger(flux);
 
 				expect(offreDeStageRepository.enregistrer.getCall(3).args).to.have.deep.members([
 					`${nomDuFlux}/${maintenant}_error.json`,

@@ -4,6 +4,7 @@ import { TaskLog } from "@stages/transformation/configuration/log.decorator";
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@stages/transformation/usecase/transformer-flux-stagefr-decompresse.usecase";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 
 export class TransformFlowStagefrUncompressedTask implements Task {
 	constructor(
@@ -14,11 +15,13 @@ export class TransformFlowStagefrUncompressedTask implements Task {
 
 	@TaskLog("stagefr-decompresse")
 	public async run(): Promise<void> {
-		await this.usecase.executer({
-			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
-			extensionFichierBrut: this.configuration.STAGEFR_UNCOMPRESSED.RAW_FILE_EXTENSION,
-			extensionFichierTransforme: this.configuration.STAGEFR_UNCOMPRESSED.TRANSFORMED_FILE_EXTENSION,
-			nom: this.configuration.STAGEFR_UNCOMPRESSED.NAME,
-		});
+		await this.usecase.executer(
+			new FluxTransformation(
+				this.configuration.STAGEFR_UNCOMPRESSED.NAME,
+				this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
+				this.configuration.STAGEFR_UNCOMPRESSED.RAW_FILE_EXTENSION,
+				this.configuration.STAGEFR_UNCOMPRESSED.TRANSFORMED_FILE_EXTENSION,
+			),
+		);
 	}
 }

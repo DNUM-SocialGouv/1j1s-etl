@@ -4,7 +4,7 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Configuration } from "@stages/extraction/configuration/configuration";
 import { expect } from "@test/configuration";
 import { FlowClient, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { Flux } from "@stages/extraction/domain/flux";
+import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { Logger } from "@shared/configuration/logger";
 import {
 	StagesOnFlowNameStrategy,
@@ -12,7 +12,7 @@ import {
 
 const url = "http://some.url";
 
-let flow: Flux;
+let flow: FluxExtraction;
 
 let basicFlowClient: StubbedType<FlowClient>;
 let compressedFlowClient: StubbedType<FlowClient>;
@@ -43,12 +43,7 @@ describe("StagesOnFlowNameStrategyTest", () => {
 
 	context("Lorsque je récupère le contenu du flux Jobteaser", () => {
 		beforeEach(() => {
-			flow = {
-				nom: "jobteaser",
-				extension: ".xml",
-				dossierHistorisation: "history",
-				url: "http://some.url",
-			};
+			flow = new FluxExtraction("jobteaser", ".xml", "history", "http://some.url");
 		});
 
 		it("utilise le bon client pour Jobteaser", async () => {
@@ -61,12 +56,7 @@ describe("StagesOnFlowNameStrategyTest", () => {
 
 	context("Lorsque je récupère le contenu du flux Stage.fr compressé", () => {
 		beforeEach(() => {
-			flow = {
-				nom: "stagefr-compresse",
-				extension: ".xml",
-				dossierHistorisation: "history",
-				url: "http://some.url",
-			};
+			flow = new FluxExtraction("stagefr-compresse", ".xml", "history", "http://some.url");
 		});
 
 		it("utilise le bon client pour Stage.fr compressé", async () => {
@@ -79,12 +69,7 @@ describe("StagesOnFlowNameStrategyTest", () => {
 
 	context("Lorsque je récupère le contenu du flux Stage.fr décompressé", () => {
 		beforeEach(() => {
-			flow = {
-				nom: "stagefr-decompresse",
-				extension: ".xml",
-				dossierHistorisation: "history",
-				url: "http://some.url",
-			};
+			flow = new FluxExtraction("stagefr-decompresse", ".xml", "history", "http://some.url");
 		});
 
 		it("utilise le bon client pour Stage.fr décompressé", async () => {
@@ -97,12 +82,7 @@ describe("StagesOnFlowNameStrategyTest", () => {
 
 	context("Lorsque j'essaie de récupérer le contenu d'un flux dont le nom n'est pas présent", () => {
 		beforeEach(() => {
-			flow = {
-				nom: "unknown-flow",
-				extension: ".xml",
-				dossierHistorisation: "history",
-				url: "http://some.url",
-			};
+			flow = new FluxExtraction("unknown-flow", ".xml", "history", "http://some.url");
 		});
 
 		it("lance une erreur", async () => {
@@ -117,4 +97,3 @@ describe("StagesOnFlowNameStrategyTest", () => {
 		});
 	});
 });
-

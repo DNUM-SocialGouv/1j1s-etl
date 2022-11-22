@@ -4,7 +4,7 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { DateService } from "@shared/date.service";
-import { Flux } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { Jobteaser } from "@stages/transformation/domain/jobteaser";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import {
@@ -19,7 +19,7 @@ const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;
 let nomDuFlux: string;
 let dossierDHistorisation: string;
-let flux: Flux;
+let flux: FluxTransformation;
 
 let dateService: StubbedClass<DateService>;
 let offreDeStageRepository: StubbedType<OffreDeStageRepository>;
@@ -50,12 +50,12 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(
+					nomDuFlux,
+					dossierDHistorisation,
+					".xml",
+					".json",
+				);
 
 				dateService = stubClass(DateService);
 				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
@@ -133,12 +133,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
 
 				convertirOffreDeStage = new Jobteaser.Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
 
@@ -218,12 +213,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
 
 				dateService = stubClass(DateService);
 				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
@@ -304,12 +294,12 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(
+					nomDuFlux,
+					dossierDHistorisation,
+					".xml",
+					".json",
+				);
 
 				dateService = stubClass(DateService);
 				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
@@ -384,12 +374,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
 
 				dateService = stubClass(DateService);
 				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
@@ -469,12 +454,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
 
 				dateService = stubClass(DateService);
 				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
@@ -554,12 +534,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				delete resultatTransformation[0].remunerationBase;
 				delete resultatTransformation[0].teletravailPossible;
 
-				flux = {
-					dossierHistorisation: dossierDHistorisation,
-					nom: nomDuFlux,
-					extensionFichierBrut: ".xml",
-					extensionFichierTransforme: ".json",
-				};
+				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
 
 				dateService = stubClass(DateService);
 				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);

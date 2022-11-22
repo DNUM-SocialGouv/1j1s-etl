@@ -1,5 +1,6 @@
 import { Configuration } from "@stages/extraction/configuration/configuration";
 import { ExtraireJobteaser } from "@stages/extraction/usecase/extraire-jobteaser.usecase";
+import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { Task } from "@shared/infrastructure/task/task";
 import { TaskLog } from "@stages/extraction/configuration/log.decorator";
 
@@ -12,11 +13,13 @@ export class ExtractFluxJobteaserTask implements Task {
 
 	@TaskLog("jobteaser")
 	public async run(): Promise<void> {
-		await this.usecase.executer({
-			url: this.configuration.JOBTEASER.FLUX_URL,
-			dossierHistorisation: this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
-			nom: this.configuration.JOBTEASER.NAME,
-			extension: this.configuration.JOBTEASER.RAW_FILE_EXTENSION,
-		});
+		await this.usecase.executer(
+			new FluxExtraction(
+				this.configuration.JOBTEASER.NAME,
+				this.configuration.JOBTEASER.RAW_FILE_EXTENSION,
+				this.configuration.MINIO.HISTORY_DIRECTORY_NAME,
+				this.configuration.JOBTEASER.FLUX_URL,
+			),
+		);
 	}
 }

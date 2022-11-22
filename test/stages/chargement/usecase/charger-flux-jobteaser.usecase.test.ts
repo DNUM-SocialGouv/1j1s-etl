@@ -3,9 +3,11 @@ import {
 	ChargerOffresDeStageDomainService,
 } from "@stages/chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
 import { ChargerFluxJobteaser } from "@stages/chargement/usecase/charger-flux-jobteaser.usecase";
+import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
 
 let extension: string;
 let nomDuFlux: string;
+let flux: FluxChargement;
 
 let domainService: StubbedClass<ChargerOffresDeStageDomainService>;
 let usecase: ChargerFluxJobteaser;
@@ -16,15 +18,17 @@ describe("ChargerFluxJobteaserTest", () => {
 			nomDuFlux = "jobteaser";
 			extension = ".json";
 
+			flux = new FluxChargement(nomDuFlux, extension);
+
 			domainService = stubClass(ChargerOffresDeStageDomainService);
 			usecase = new ChargerFluxJobteaser(domainService);
 		});
 
 		it("Je charge ce dernier", async () => {
-			await usecase.executer();
+			await usecase.executer(flux);
 
 			expect(domainService.charger).to.have.been.calledOnce;
-			expect(domainService.charger).to.have.been.calledWith(nomDuFlux, extension);
+			expect(domainService.charger).to.have.been.calledWith(flux);
 		});
 	});
 });

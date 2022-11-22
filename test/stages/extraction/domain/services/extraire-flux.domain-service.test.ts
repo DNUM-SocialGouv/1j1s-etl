@@ -4,12 +4,12 @@ import sinon from "sinon";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { DateService } from "@shared/date.service";
 import { ExtraireFluxDomainService } from "@stages/extraction/domain/services/extraire-flux.domain-service";
-import { Flux } from "@stages/extraction/domain/flux";
+import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { FluxRepository } from "@stages/extraction/domain/flux.repository";
 
 const date = new Date("2022-01-01T00:00:00Z");
 const fluxContent = "<toto>Le Contenu</toto>";
-let flux: Flux;
+let flux: FluxExtraction;
 let fluxRepository: StubbedType<FluxRepository>;
 let dateService: StubbedClass<DateService>;
 let usecase: ExtraireFluxDomainService;
@@ -25,12 +25,12 @@ describe("ExtraireFluxTest", () => {
 			dateService
 		);
 
-		flux = {
-			dossierHistorisation: "history",
-			extension: ".xml",
-			nom: "jobteaser",
-			url: "http://some.url",
-		};
+		flux = new FluxExtraction(
+			"jobteaser",
+			".xml",
+			"history",
+			"http://some.url",
+		);
 	});
 
 	context("Lorsque j'extrais un flux avec la bonne configuration", () => {

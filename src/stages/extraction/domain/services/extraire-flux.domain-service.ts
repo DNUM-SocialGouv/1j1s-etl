@@ -1,5 +1,5 @@
 import { DateService } from "@shared/date.service";
-import { Flux } from "@stages/extraction/domain/flux";
+import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { FluxRepository } from "@stages/extraction/domain/flux.repository";
 
 export class ExtraireFluxDomainService {
@@ -12,27 +12,27 @@ export class ExtraireFluxDomainService {
 	) {
 	}
 
-	public async extraire(flux: Readonly<Flux>): Promise<void> {
+	public async extraire(flux: FluxExtraction): Promise<void> {
 		const contenuDuFlux = await this.fluxRepository.recuperer(flux);
 		await this.sauvegarderLeFlux(flux, contenuDuFlux);
 	}
 
-	private async sauvegarderLeFlux(flux: Readonly<Flux>, contenuDuFlux: string): Promise<void> {
+	private async sauvegarderLeFlux(flux: FluxExtraction, contenuDuFlux: string): Promise<void> {
 		await this.historiserLeFlux(flux, contenuDuFlux);
 		await this.sauvegarderDerniereVersionDuFlux(flux, contenuDuFlux);
 	}
 
-	private async historiserLeFlux(flux: Readonly<Flux>, contenuDuFlux: string): Promise<void> {
+	private async historiserLeFlux(flux: FluxExtraction, contenuDuFlux: string): Promise<void> {
 		const nomDuFichierHistorise = this.creerNomDuFichierAHistoriser(flux);
 		await this.fluxRepository.enregistrer(nomDuFichierHistorise, contenuDuFlux, flux);
 	}
 
-	private async sauvegarderDerniereVersionDuFlux(flux: Readonly<Flux>, contenuDuFlux: string): Promise<void> {
+	private async sauvegarderDerniereVersionDuFlux(flux: FluxExtraction, contenuDuFlux: string): Promise<void> {
 		const nomDuDernierFicher = this.creerNomDuDernierFichier(flux);
 		await this.fluxRepository.enregistrer(nomDuDernierFicher, contenuDuFlux, flux);
 	}
 
-	private creerNomDuFichierAHistoriser(flux: Readonly<Flux>): string {
+	private creerNomDuFichierAHistoriser(flux: FluxExtraction): string {
 		const { SEPARATEUR_DE_CHEMIN } = ExtraireFluxDomainService;
 		const nomDuFichierHistorise = flux.nom
 			.concat(SEPARATEUR_DE_CHEMIN)
@@ -43,7 +43,7 @@ export class ExtraireFluxDomainService {
 		return nomDuFichierHistorise;
 	}
 
-	private creerNomDuDernierFichier(flux: Readonly<Flux>): string {
+	private creerNomDuDernierFichier(flux: FluxExtraction): string {
 		const {
 			SEPARATEUR_DE_CHEMIN,
 			NOM_DE_LA_DERNIERE_VERSION_DU_FICHIER_CLONE,

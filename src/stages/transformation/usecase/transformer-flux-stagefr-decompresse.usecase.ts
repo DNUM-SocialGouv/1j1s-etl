@@ -1,4 +1,4 @@
-import { Flux } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { StagefrDecompresse } from "@stages/transformation/domain/stagefr-decompresse";
 import { Usecase } from "@shared/usecase";
@@ -12,7 +12,7 @@ export class TransformerFluxStagefrDecompresse implements Usecase {
 	) {
 	}
 
-	public async executer(flux: Readonly<Flux>): Promise<void> {
+	public async executer(flux: FluxTransformation): Promise<void> {
 		const contenu = await this.offreDeStageRepository.recuperer<StagefrDecompresse.Contenu>(flux);
 
 		const contenuTransforme = this.transformerVers1Jeune1Solution(contenu);

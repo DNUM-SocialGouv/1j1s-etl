@@ -22,9 +22,9 @@ export class Setup {
 		private readonly adminStorageClient: MinioAdminStorageRepository,
 	) {
 		this.flows = [
-			this.configuration.JOBTEASER.NAME,
-			this.configuration.STAGEFR_COMPRESSED.NAME,
-			this.configuration.STAGEFR_UNCOMPRESSED.NAME,
+			this.configuration.INTERNSHIPS.JOBTEASER.NAME,
+			this.configuration.INTERNSHIPS.STAGEFR_COMPRESSED.NAME,
+			this.configuration.INTERNSHIPS.STAGEFR_UNCOMPRESSED.NAME,
 		];
 	}
 

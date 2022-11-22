@@ -7,7 +7,7 @@ import { Configuration } from "@stages/extraction/configuration/configuration";
 import { EcritureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FlowStrategy } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { Flux } from "@stages/extraction/domain/flux";
+import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpFlowRepository,
@@ -15,7 +15,7 @@ import {
 import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 const localFileNameIncludingPath = "/tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
-let flow: Flux;
+let flow: FluxExtraction;
 
 let fileContent: string;
 let fileNameIncludingPath: string;
@@ -33,12 +33,12 @@ describe("MinioHttpFlowRepositoryTest", () => {
 		fileNameIncludingPath = "./history/source/2022-01-01T00:00:00Z_source.xml";
 		fileContent = "<toto>contenu du fichier</toto>\n";
 
-		flow = {
-			nom: "flowName",
-			url: "http://some.url",
-			dossierHistorisation: "history",
-			extension: ".xml",
-		};
+		flow = new FluxExtraction(
+			"flowName",
+			".xml",
+			"history",
+			"http://some.url",
+		);
 
 		minioStub = stubClass(Client);
 
@@ -88,7 +88,12 @@ describe("MinioHttpFlowRepositoryTest", () => {
 
 	context("Lorsque j'écris le contenu d'un fichier compressé qui existe bien et qu'il est bien nommé dans un dossier racine existant", () => {
 		beforeEach(() => {
-			flow.extension = ".xml.gz";
+			flow = new FluxExtraction(
+				"flowName",
+				".xml.gz",
+				"history",
+				"http://some.url",
+			);
 			fileNameIncludingPath = fileNameIncludingPath.concat(".gz");
 		});
 
@@ -145,7 +150,14 @@ describe("MinioHttpFlowRepositoryTest", () => {
 			expect(result).to.eql("<some>contenu</some>");
 
 			expect(flowStrategy.get).to.have.been.calledOnce;
-			expect(flowStrategy.get).to.have.been.calledWith({ ...flow });
+			expect(flowStrategy.get).to.have.been.calledWith(
+				new FluxExtraction(
+					"flowName",
+					".xml",
+					"history",
+					"http://some.url",
+				)
+			);
 		});
 	});
 });

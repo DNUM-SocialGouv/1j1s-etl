@@ -1,6 +1,6 @@
 import { Configuration } from "@stages/extraction/configuration/configuration";
 import { FlowClient, FlowStrategy, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { Flux } from "@stages/extraction/domain/flux";
+import { FluxExtraction } from "@stages/extraction/domain/flux";
 import { Logger } from "@shared/configuration/logger";
 
 export class StagesOnFlowNameStrategy implements FlowStrategy {
@@ -12,7 +12,7 @@ export class StagesOnFlowNameStrategy implements FlowStrategy {
 	) {
 	}
 
-	public async get(flow: Flux, logger: Logger): Promise<string> {
+	public async get(flow: FluxExtraction, logger: Logger): Promise<string> {
 		switch (flow.nom) {
 			case this.configuration.JOBTEASER.NAME:
 				return this.basicFlowHttpClient.pull(flow.url, logger);

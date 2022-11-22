@@ -7,29 +7,30 @@ export type TaskContainer = Record<string, Record<string, Record<string, Task>>>
 
 export class TaskContainerFactory {
 	public static create(tasks: {
-		logements: Record<string, unknown>,
-		stages: {
+		events: Record<string, unknown>,
+		housing: Record<string, unknown>,
+		internships: {
 			extract: ExtractTasks;
 			transform: TransformTasks;
 			load: LoadTasks;
 		}
 	}): TaskContainer {
 		return {
-			stages: {
+			internships: {
 				extract: {
-					jobteaser: tasks.stages.extract.jobteaser,
-					"stagefr-compresse": tasks.stages.extract["stagefr-compresse"],
-					"stagefr-decompresse": tasks.stages.extract["stagefr-decompresse"],
+					jobteaser: tasks.internships.extract.jobteaser,
+					"stagefr-compresse": tasks.internships.extract["stagefr-compresse"],
+					"stagefr-decompresse": tasks.internships.extract["stagefr-decompresse"],
 				},
 				load: {
-					jobteaser: tasks.stages.load.jobteaser,
-					"stagefr-compresse": tasks.stages.load["stagefr-compresse"],
-					"stagefr-decompresse": tasks.stages.load["stagefr-decompresse"],
+					jobteaser: tasks.internships.load.jobteaser,
+					"stagefr-compresse": tasks.internships.load["stagefr-compresse"],
+					"stagefr-decompresse": tasks.internships.load["stagefr-decompresse"],
 				},
 				transform: {
-					jobteaser: tasks.stages.transform.jobteaser,
-					"stagefr-compresse": tasks.stages.transform["stagefr-compresse"],
-					"stagefr-decompresse": tasks.stages.transform["stagefr-decompresse"],
+					jobteaser: tasks.internships.transform.jobteaser,
+					"stagefr-compresse": tasks.internships.transform["stagefr-compresse"],
+					"stagefr-decompresse": tasks.internships.transform["stagefr-decompresse"],
 				},
 			},
 		};
