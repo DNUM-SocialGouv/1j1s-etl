@@ -5,12 +5,15 @@ import { CliConfiguration } from "@cli/cli.configuration";
 import { ConfigurationFactory } from "@configuration/configuration";
 import { Stages } from "@stages/index";
 import { TaskContainerFactory } from "@cli/task.container";
+import {Evenements} from "@evenements/index";
 
 process.setMaxListeners(18);
 
 const configuration = ConfigurationFactory.create();
 
-const evenementsTasks = {};
+const evenementsTasks = {
+	extract: Evenements.ExtractionModule.export(),
+};
 const logementsTasks = {};
 const stagesTasks = {
 	extract: Stages.ExtractionModule.export(),

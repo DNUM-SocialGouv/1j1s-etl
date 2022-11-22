@@ -12,7 +12,8 @@ type MinioConfiguration = {
 	HISTORY_DIRECTORY_NAME: string
 	LIFECYCLE_RULES_STATUS: "Enabled" | "Disabled"
 	PORT: number
-	RAW_BUCKET_NAME: string
+	INTERNSHIPS_RAW_BUCKET_NAME: string
+	EVENTS_RAW_BUCKET_NAME: string
 	RESULT_BUCKET_NAME: string
 	SECRET_KEY: string
 	TRANSFORMED_BUCKET_NAME: string
@@ -83,7 +84,8 @@ export type Configuration = {
 export class ConfigurationFactory {
 	public static create(): Configuration {
 		const { getOrError, getOrDefault, toBoolean, toValidEnableStatus } = ConfigurationFactory;
-		const DEFAULT_RAW_BUCKET_NAME = "raw";
+		const DEFAULT_INTERNSHIPS_RAW_BUCKET_NAME = "stages-raw";
+		const DEFAULT_EVENTS_RAW_BUCKET_NAME = "evenements-raw";
 		const DEFAULT_TRANSFORMED_BUCKET_NAME = "json";
 		const DEFAULT_MINIO_TRANSFORMED_FILE_EXTENSION = ".json";
 		const DEFAULT_RESULT_BUCKET_NAME = "result";
@@ -97,7 +99,9 @@ export class ConfigurationFactory {
 			DOMAINS,
 			EVENTS: {
 				EXTRACT_LOG_LEVEL: getOrDefault("EVENTS_EXTRACT_LOG_LEVEL", "debug") as LogLevel,
-				FLOWS: [],
+				FLOWS: [
+					getOrError("EVENTS_TOUS_MOBILISES_NAME"),
+				],
 				LOAD_LOG_LEVEL: getOrDefault("EVENTS_LOAD_LOG_LEVEL", "debug") as LogLevel,
 				TRANSFORM_LOG_LEVEL: getOrDefault("EVENTS_LOAD_LOG_LEVEL", "debug") as LogLevel,
 			},
@@ -113,7 +117,8 @@ export class ConfigurationFactory {
 				HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
 				LIFECYCLE_RULES_STATUS: toValidEnableStatus(getOrError("MINIO_LIFECYCLE_RULES_STATUS")),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
-				RAW_BUCKET_NAME: getOrDefault("MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
+				INTERNSHIPS_RAW_BUCKET_NAME: getOrDefault("INTERNSHIPS_RAW_BUCKET_NAME", DEFAULT_INTERNSHIPS_RAW_BUCKET_NAME),
+				EVENTS_RAW_BUCKET_NAME: getOrDefault("EVENTS_RAW_BUCKET_NAME", DEFAULT_EVENTS_RAW_BUCKET_NAME),
 				RESULT_BUCKET_NAME: getOrDefault("MINIO_RESULT_BUCKET_NAME", DEFAULT_RESULT_BUCKET_NAME),
 				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 				TRANSFORMED_BUCKET_NAME: getOrDefault("MINIO_TRANSFORMED_BUCKET_NAME", DEFAULT_TRANSFORMED_BUCKET_NAME),
