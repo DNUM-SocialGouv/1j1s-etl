@@ -24,4 +24,12 @@ describe("DateServiceTest", () => {
 			expect(result).to.eql(maintenant);
 		});
 	});
+
+	context("Lorsque j'ai une date et un horaire au frenchi format", () => {
+		it("retourne la date au format iso 8601", () => {
+			const result = dateService.toIsoDate("24/11/2022", "09:00");
+
+			expect(result).to.eql("2022-11-24T08:00:00.000Z");
+		});
+	});
 });
