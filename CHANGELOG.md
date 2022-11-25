@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.0.0...v2.1.0) (2022-11-25)
+
+
+### Features
+
+* **evenement/extraction:** ajout flux tousmobilises ([576864e](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/576864ecf456d80a708da613a9c9bd56a219d491))
+* **evenement:** ajout evenement flux ([576864e](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/576864ecf456d80a708da613a9c9bd56a219d491))
+
 ## [2.0.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v1.0.7...v2.0.0) (2022-11-22)
 
 
