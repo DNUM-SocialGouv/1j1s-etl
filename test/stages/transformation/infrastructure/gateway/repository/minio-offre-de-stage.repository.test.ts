@@ -3,11 +3,11 @@ import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Configuration } from "@stages/transformation/configuration/configuration";
-import { ContentParser } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
+import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { FileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@stages/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
-import { UuidGenerator } from "@stages/transformation/infrastructure/gateway/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;

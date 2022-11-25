@@ -1,17 +1,17 @@
 import { Client } from "minio";
 
-import { Configuration } from "@stages/transformation/configuration/configuration";
-import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
+import { Configuration } from "@evenements/transformation/configuration/configuration";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { FluxTransformation } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@evenements/transformation/domain/flux";
 import { FileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
-import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
+import { UnjeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
+import { EvenementsRepository } from "@evenements/transformation/domain/evenements.repository";
+import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 
-export class MinioOffreDeStageRepository implements OffreDeStageRepository {
+export class MinioEvenementRepository implements EvenementsRepository {
 	private static readonly JSON_INDENTATION = 2;
 	private static readonly LATEST_FILE_NAME = "latest";
 	private static readonly JSON_REPLACER = null;
@@ -22,9 +22,9 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		private readonly minioClient: Client,
 		private readonly fileSystemClient: FileSystemClient,
 		private readonly uuidGenerator: UuidGenerator,
-		private readonly contentParserRepository: ContentParser,
 		private readonly dateService: DateService,
 		private readonly loggerStrategy: LoggerStrategy,
+		private readonly contentParser: ContentParser,
 	) {
 	}
 
@@ -40,7 +40,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 				localFileNameIncludingPath
 			);
 			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-			return await this.contentParserRepository.parse<T>(fileContent);
+			return await this.contentParser.parse<T>(fileContent);
 		} catch (e) {
 			throw new RecupererContenuErreur();
 		} finally {
@@ -49,7 +49,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		}
 	}
 
-	public async sauvegarder(internshipOffers: UnJeune1Solution.OffreDeStage[], flow: FluxTransformation): Promise<void> {
+	public async sauvegarder(internshipOffers: UnjeuneUneSolution.Evenement[], flow: FluxTransformation): Promise<void> {
 		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed internship offers from flow ${flow.nom}`);
 		const contentToSave = this.toReadableJson(internshipOffers);
 		const temporaryFileName = this.generateFileName();
@@ -69,15 +69,15 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	}
 
 	private getFileNameToFetch(flow: FluxTransformation): string {
-		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
+		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioEvenementRepository;
 		return flow.nom
 			.concat(PATH_SEPARATOR)
 			.concat(LATEST_FILE_NAME)
 			.concat(flow.extensionFichierBrut);
 	}
 
-	private toReadableJson(internshipOffers: Array<UnJeune1Solution.OffreDeStage>): string {
-		const { JSON_INDENTATION, JSON_REPLACER } = MinioOffreDeStageRepository;
+	private toReadableJson(internshipOffers: Array<UnjeuneUneSolution.Evenement>): string {
+		const { JSON_INDENTATION, JSON_REPLACER } = MinioEvenementRepository;
 		return JSON.stringify(internshipOffers, JSON_REPLACER, JSON_INDENTATION);
 	}
 
@@ -92,7 +92,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	}
 
 	private createCloneFileName(flow: FluxTransformation): string {
-		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioOffreDeStageRepository;
+		const { PATH_SEPARATOR, LATEST_FILE_NAME } = MinioEvenementRepository;
 		return flow.nom
 			.concat(PATH_SEPARATOR)
 			.concat(LATEST_FILE_NAME)
@@ -100,7 +100,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	}
 
 	private createHistoryFileName(flow: FluxTransformation): string {
-		const { PATH_SEPARATOR } = MinioOffreDeStageRepository;
+		const { PATH_SEPARATOR } = MinioEvenementRepository;
 		return flow.nom
 			.concat(PATH_SEPARATOR)
 			.concat(flow.dossierHistorisation)

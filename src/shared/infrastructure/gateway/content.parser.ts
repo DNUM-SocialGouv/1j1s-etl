@@ -12,3 +12,9 @@ export class XmlContentParser implements ContentParser {
 		return this.parser.parse(xmlContent) as T;
 	}
 }
+
+export class JsonContentParser implements ContentParser {
+	public parse<T>(jsonContent: string): T {
+		return JSON.parse(jsonContent) as T;
+	}
+}

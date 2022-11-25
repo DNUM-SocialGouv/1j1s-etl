@@ -11,9 +11,9 @@ import { StagesTransformationLoggerStrategy } from "@stages/transformation/confi
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
-import { NodeFileSystemClient } from "@stages/transformation/infrastructure/gateway/node-file-system.client";
-import { NodeUuidGenerator } from "@stages/transformation/infrastructure/gateway/uuid.generator";
-import { XmlContentParser } from "@stages/transformation/infrastructure/gateway/xml-content.parser";
+import { NodeFileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import { XmlContentParser } from "@shared/infrastructure/gateway/content.parser";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: StagesTransformationLoggerStrategy): GatewayContainer {

@@ -12,8 +12,8 @@ import {
 } from "@test/stages/transformation/fixture/offre-de-stage-jobteaser.fixture-builder";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { Pays } from "@shared/pays";
-import { TransformerFluxJobteaser } from "@stages/transformation/usecase/transformer-flux-jobteaser.usecase";
 import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
+import { TransformerFluxJobteaser } from "@stages/transformation/usecase/transformer-flux-jobteaser.usecase";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;
