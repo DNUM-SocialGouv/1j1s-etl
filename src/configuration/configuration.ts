@@ -11,7 +11,7 @@ type MinioConfiguration = {
 	DAYS_AFTER_EXPIRATION: number
 	EVENTS_RAW_BUCKET_NAME: string
 	HISTORY_DIRECTORY_NAME: string
-	HOUSINGS_RAW_BUCKET_NAME: string
+	HOUSING_RAW_BUCKET_NAME: string
 	INTERNSHIPS_RAW_BUCKET_NAME: string
 	LIFECYCLE_RULES_STATUS: "Enabled" | "Disabled"
 	PORT: number
@@ -45,7 +45,7 @@ export type Configuration = {
 		LOAD_LOG_LEVEL: LogLevel
 		TRANSFORM_LOG_LEVEL: LogLevel
 	},
-	HOUSINGS: {
+	HOUSING: {
 		EXTRACT_LOG_LEVEL: LogLevel
 		FLOWS: Array<string>
 		LOAD_LOG_LEVEL: LogLevel
@@ -93,18 +93,18 @@ export class ConfigurationFactory {
 				LOAD_LOG_LEVEL: getOrDefault("EVENTS_LOAD_LOG_LEVEL", "debug") as LogLevel,
 				TRANSFORM_LOG_LEVEL: getOrDefault("EVENTS_LOAD_LOG_LEVEL", "debug") as LogLevel,
 			},
-			HOUSINGS: {
-				EXTRACT_LOG_LEVEL: getOrDefault("HOUSINGS_EXTRACT_LOG_LEVEL", "debug") as LogLevel,
-				FLOWS: [getOrError("HOUSINGS_IMMOJEUNE_NAME")],
-				LOAD_LOG_LEVEL: getOrDefault("HOUSINGS_LOAD_LOG_LEVEL", "debug") as LogLevel,
-				TRANSFORM_LOG_LEVEL: getOrDefault("HOUSINGS_LOAD_LOG_LEVEL", "debug") as LogLevel,
+			HOUSING: {
+				EXTRACT_LOG_LEVEL: getOrDefault("HOUSING_EXTRACT_LOG_LEVEL", "debug") as LogLevel,
+				FLOWS: [getOrError("HOUSING_IMMOJEUNE_NAME")],
+				LOAD_LOG_LEVEL: getOrDefault("HOUSING_LOAD_LOG_LEVEL", "debug") as LogLevel,
+				TRANSFORM_LOG_LEVEL: getOrDefault("HOUSING_LOAD_LOG_LEVEL", "debug") as LogLevel,
 			},
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				DAYS_AFTER_EXPIRATION: Number(getOrError("MINIO_DAYS_AFTER_EXPIRATION")),
 				EVENTS_RAW_BUCKET_NAME: getOrDefault("EVENTS_RAW_BUCKET_NAME", DEFAULT_EVENTS_RAW_BUCKET_NAME),
 				HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", "history"),
-				HOUSINGS_RAW_BUCKET_NAME: getOrError("HOUSINGS_MINIO_RAW_BUCKET_NAME"),
+				HOUSING_RAW_BUCKET_NAME: getOrError("HOUSING_MINIO_RAW_BUCKET_NAME"),
 				INTERNSHIPS_RAW_BUCKET_NAME: getOrDefault("INTERNSHIPS_RAW_BUCKET_NAME", DEFAULT_INTERNSHIPS_RAW_BUCKET_NAME),
 				LIFECYCLE_RULES_STATUS: toValidEnableStatus(getOrError("MINIO_LIFECYCLE_RULES_STATUS")),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),

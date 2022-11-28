@@ -29,7 +29,6 @@ export class MinioHttpFlowRepository implements FluxRepository {
 		cheminFichierIncluantNom: string,
 		contenuFlux: string,
 		flow: FluxExtraction,
-		omettreExtension?: boolean,
 	): Promise<void> {
 		this.loggerStrategy.get(flow.nom).info(`Starting to save extracted housing offers from flow ${flow.nom}`);
 		const fileName = this.uuidGenerator.generate();
