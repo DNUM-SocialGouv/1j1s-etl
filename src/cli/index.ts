@@ -14,6 +14,7 @@ const configuration = ConfigurationFactory.create();
 
 const evenementsTasks = {
 	extract: Evenements.ExtractionModule.export(),
+	transform: Evenements.TransformationModule.export(),
 };
 const logementsTasks = {
 	extract: Logements.ExtractionModule.export(),

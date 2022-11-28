@@ -1,7 +1,7 @@
 import { Configuration } from "@evenements/extraction/configuration/configuration";
 import {
 	ExtractFluxEvenementTousMobilisesTask,
-} from "@evenements/extraction/infrastucture/tasks/extract-flux-evement-tous-mobilites.task";
+} from "@evenements/extraction/infrastucture/tasks/extract-flux-evenement-tous-mobilites.task";
 import { UsecaseContainer } from "@evenements/extraction/usecase";
 
 export type TaskContainer = {

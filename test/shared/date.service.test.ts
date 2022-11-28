@@ -29,7 +29,7 @@ describe("DateServiceTest", () => {
 		it("retourne la date au format iso 8601", () => {
 			const result = dateService.toIsoDate("24/11/2022", "09:00");
 
-			expect(result).to.eql("2022-11-24T08:00:00.000Z");
+			expect(result).to.eql("2022-11-24T09:00:00");
 		});
 	});
 });
