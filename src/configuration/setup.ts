@@ -22,9 +22,9 @@ export class Setup {
 		private readonly adminStorageClient: MinioAdminStorageRepository,
 	) {
 		this.flows = [
-			this.configuration.INTERNSHIPS.JOBTEASER.NAME,
-			this.configuration.INTERNSHIPS.STAGEFR_COMPRESSED.NAME,
-			this.configuration.INTERNSHIPS.STAGEFR_UNCOMPRESSED.NAME,
+			...this.configuration.EVENTS.FLOWS,
+			...this.configuration.HOUSINGS.FLOWS,
+			...this.configuration.INTERNSHIPS.FLOWS,
 		];
 	}
 
@@ -54,12 +54,19 @@ export class Setup {
 			const existingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.RESULT_BUCKET_NAME);
 
 			const eventsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
+			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSINGS_RAW_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info({
 				summary: {
 					rulesToCreate: [rulesToCreateOnExtractionBucket, rulesToCreateOnTransformationBucket, rulesToCreateOnLoadingBucket],
-					existingRules: [internshipsExistingRulesOnExtractionBucket, existingRulesOnTransformationBucket, existingRulesOnLoadingBucket, eventsExistingRulesOnExtractionBucket],
+					existingRules: [
+						eventsExistingRulesOnExtractionBucket,
+						housingExistingRulesOnExtractionBucket,
+						internshipsExistingRulesOnExtractionBucket,
+						existingRulesOnTransformationBucket,
+						existingRulesOnLoadingBucket,
+					],
 				},
 			});
 		} catch (e) {
