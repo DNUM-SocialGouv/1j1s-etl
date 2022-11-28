@@ -23,7 +23,7 @@ export class Setup {
 	) {
 		this.flows = [
 			...this.configuration.EVENTS.FLOWS,
-			...this.configuration.HOUSINGS.FLOWS,
+			...this.configuration.HOUSING.FLOWS,
 			...this.configuration.INTERNSHIPS.FLOWS,
 		];
 	}
@@ -38,7 +38,7 @@ export class Setup {
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
 
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSINGS_RAW_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_STARTED_MESSAGE);
@@ -54,7 +54,7 @@ export class Setup {
 			const existingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.RESULT_BUCKET_NAME);
 
 			const eventsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
-			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSINGS_RAW_BUCKET_NAME);
+			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info({
@@ -97,7 +97,7 @@ export class Setup {
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.HOUSINGS_RAW_BUCKET_NAME,
+			this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME,
 			rulesToCreateOnExtractionBucket
 		);
 

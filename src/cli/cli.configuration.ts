@@ -17,12 +17,12 @@ export class CliConfiguration {
 
 		const flowsByDomain = new Map<string, Array<string>>();
 		flowsByDomain.set("events", configuration.EVENTS.FLOWS);
-		flowsByDomain.set("housing", configuration.HOUSINGS.FLOWS);
+		flowsByDomain.set("housing", configuration.HOUSING.FLOWS);
 		flowsByDomain.set("internships", configuration.INTERNSHIPS.FLOWS);
 
 		const flowChoices = [
 			...configuration.EVENTS.FLOWS,
-			...configuration.HOUSINGS.FLOWS,
+			...configuration.HOUSING.FLOWS,
 			...configuration.INTERNSHIPS.FLOWS,
 		];
 
