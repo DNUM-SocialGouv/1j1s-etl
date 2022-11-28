@@ -1,8 +1,8 @@
-import {Axios} from "axios";
-import {AuthentificationErreur, LectureFluxErreur} from "@shared/infrastructure/gateway/flux.erreur";
-import {Logger} from "@shared/configuration/logger";
-import {Configuration} from "@evenements/extraction/configuration/configuration";
-import {FlowClient} from "@shared/infrastructure/gateway/client/flow.strategy";
+import { Axios } from "axios";
+import { AuthentificationErreur, LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { Configuration } from "@evenements/extraction/configuration/configuration";
+import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy";
+import { Logger } from "@shared/configuration/logger";
 
 type TokenResponse = {
     access_token: string;
@@ -16,7 +16,7 @@ export class TousMobilisesBasicFlowHttpClient implements FlowClient {
         const token = await this.getToken(logger);
         try {
             logger.info(`Starting to pull flow from url ${url}`);
-            const response = await this.axios.get<string>(url, {headers: {Authorization: `Bearer ${token}`}});
+            const response = await this.axios.get<string>(url, { headers: { Authorization: `Bearer ${token}` } });
             return JSON.stringify(response.data);
         } catch (e) {
             throw new LectureFluxErreur(url);
@@ -37,7 +37,7 @@ export class TousMobilisesBasicFlowHttpClient implements FlowClient {
             const responseAuth = await this.axios.post<TokenResponse>(
                 this.configuration.TOUS_MOBILISES.AUTH_URL,
                 paramsForAuth,
-                {headers: {"Content-Type": "application/x-www-form-urlencoded"}},
+                { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
             );
             return responseAuth.data.access_token;
         } catch (e) {

@@ -1,6 +1,6 @@
-import {DateService} from "@shared/date.service";
-import {FluxExtraction} from "@evenements/extraction/domain/flux";
-import {FluxRepository} from "@evenements/extraction/domain/flux.repository";
+import { DateService } from "@shared/date.service";
+import { FluxExtraction } from "@evenements/extraction/domain/flux";
+import { FluxRepository } from "@evenements/extraction/domain/flux.repository";
 
 export class ExtraireFluxDomainService {
 	private static readonly SEPARATEUR_DE_CHEMIN = "/";

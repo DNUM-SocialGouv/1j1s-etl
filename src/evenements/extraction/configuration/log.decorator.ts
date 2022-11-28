@@ -1,5 +1,5 @@
-import {ConfigurationFactory} from "@evenements/extraction/configuration/configuration";
-import {EvenementsExtractionLoggerStrategy} from "@evenements/extraction/configuration/logger.strategy";
+import { ConfigurationFactory } from "@evenements/extraction/configuration/configuration";
+import { EvenementsExtractionLoggerStrategy } from "@evenements/extraction/configuration/logger.strategy";
 
 const configuration = ConfigurationFactory.create();
 const loggerStrategy = new EvenementsExtractionLoggerStrategy(configuration);

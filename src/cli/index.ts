@@ -3,9 +3,9 @@ import "module-alias/register";
 
 import { CliConfiguration } from "@cli/cli.configuration";
 import { ConfigurationFactory } from "@configuration/configuration";
+import { Evenements } from "@evenements/index";
 import { Stages } from "@stages/index";
 import { TaskContainerFactory } from "@cli/task.container";
-import {Evenements} from "@evenements/index";
 
 process.setMaxListeners(18);
 

@@ -1,5 +1,5 @@
-import {LogLevel} from "@shared/configuration/logger";
-import {Environment, SentryConfiguration} from "@configuration/configuration";
+import { Environment, SentryConfiguration } from "@configuration/configuration";
+import { LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
     DIRECTORY_NAME: string
