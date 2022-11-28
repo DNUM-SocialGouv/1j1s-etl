@@ -1,4 +1,4 @@
-import {ExtractionModule} from "@evenements/extraction/configuration";
+import { ExtractionModule } from "@evenements/extraction/configuration";
 
 export const Evenements = {
   ExtractionModule,

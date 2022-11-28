@@ -1,10 +1,10 @@
 import axios from "axios";
-import {Client} from "minio";
-import {Configuration} from "@evenements/extraction/configuration/configuration";
-import {LoggerStrategy} from "@shared/configuration/logger";
-import {NodeFileSystemClient} from "@shared/infrastructure/gateway/common/node-file-system.client";
-import {NodeUuidGenerator} from "@shared/infrastructure/gateway/common/uuid.generator";
-import {GatewayContainer} from "@evenements/extraction/infrastucture/gateway";
+import { Client } from "minio";
+import { Configuration } from "@evenements/extraction/configuration/configuration";
+import { LoggerStrategy } from "@shared/configuration/logger";
+import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { GatewayContainer } from "@evenements/extraction/infrastucture/gateway";
 import {
 	MinioHttpFlowRepository,
 } from "@evenements/extraction/infrastucture/gateway/repository/minio-http-flow.repository";

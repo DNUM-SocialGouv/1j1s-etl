@@ -1,18 +1,18 @@
-import {StubbedType, stubInterface} from "@salesforce/ts-sinon";
-import {Client} from "minio";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { Client } from "minio";
 import sinon from "sinon";
 
-import {expect, StubbedClass, stubClass} from "@test/configuration";
-import {Configuration} from "@evenements/extraction/configuration/configuration";
-import {EcritureFluxErreur} from "@shared/infrastructure/gateway/flux.erreur";
-import {FileSystemClient} from "@shared/infrastructure/gateway/common/node-file-system.client";
-import {FlowClient} from "@shared/infrastructure/gateway/client/flow.strategy";
-import {FluxExtraction} from "@evenements/extraction/domain/flux";
-import {Logger, LoggerStrategy} from "@shared/configuration/logger";
-import {UuidGenerator} from "@shared/infrastructure/gateway/common/uuid.generator";
+import { Configuration } from "@evenements/extraction/configuration/configuration";
+import { EcritureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy";
+import { FluxExtraction } from "@evenements/extraction/domain/flux";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpFlowRepository,
 } from "@evenements/extraction/infrastucture/gateway/repository/minio-http-flow.repository";
+import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 
 const localFileNameIncludingPath = "/tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let flow: FluxExtraction;

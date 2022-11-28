@@ -1,13 +1,14 @@
-import {Axios, AxiosError} from "axios";
+import { Axios, AxiosError } from "axios";
 import sinon from "sinon";
-import {expect, StubbedClass, stubClass} from "@test/configuration";
-import {AuthentificationErreur, LectureFluxErreur} from "@shared/infrastructure/gateway/flux.erreur";
-import {Logger} from "@shared/configuration/logger";
-import {StubbedType, stubInterface} from "@salesforce/ts-sinon";
+
+import { AuthentificationErreur, LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { Configuration } from "@evenements/extraction/configuration/configuration";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
+import { Logger } from "@shared/configuration/logger";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import {
 	TousMobilisesBasicFlowHttpClient,
 } from "@evenements/extraction/infrastucture/gateway/client/tous-mobilises-basic-flow-http.client";
-import {Configuration} from "@evenements/extraction/configuration/configuration";
 
 let errorCode: number;
 let url: string;

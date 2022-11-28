@@ -1,10 +1,10 @@
-import {Task} from "@shared/infrastructure/task/task";
-import {Configuration} from "@evenements/extraction/configuration/configuration";
+import { Configuration } from "@evenements/extraction/configuration/configuration";
 import {
 	ExtraireEvenementTousMobilisesUsecase,
-} from "@evenements/extraction/usecase/extraire-evenementTousMobilises.usecase";
-import {TaskLog} from "@evenements/extraction/configuration/log.decorator";
-import {FluxExtraction} from "@evenements/extraction/domain/flux";
+} from "@evenements/extraction/usecase/extraire-evenement-tous-mobilises.usecase";
+import { FluxExtraction } from "@evenements/extraction/domain/flux";
+import { Task } from "@shared/infrastructure/task/task";
+import { TaskLog } from "@evenements/extraction/configuration/log.decorator";
 
 export class ExtractFluxEvenementTousMobilisesTask implements Task {
 
