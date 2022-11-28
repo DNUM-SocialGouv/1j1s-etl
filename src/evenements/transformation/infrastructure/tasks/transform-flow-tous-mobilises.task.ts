@@ -3,12 +3,12 @@ import { Task } from "@shared/infrastructure/task/task";
 import { TaskLog } from "@evenements/transformation/configuration/log.decorator";
 import { FluxTransformation } from "@evenements/transformation/domain/flux";
 import {
-	TransformerFluxTousMobilisesUsecase,
-} from "@evenements/transformation/usecase/transformer-flux-tous-mobilises.usecase";
+	TransformerFluxTousMobilisesUseCase,
+} from "@evenements/transformation/usecase/transformer-flux-tous-mobilises-use.case";
 
 export class TransformFlowJobteaserTask implements Task {
 	constructor(
-		private readonly usecase: TransformerFluxTousMobilisesUsecase,
+		private readonly usecase: TransformerFluxTousMobilisesUseCase,
 		private readonly configuration: Configuration,
 	) {
 	}

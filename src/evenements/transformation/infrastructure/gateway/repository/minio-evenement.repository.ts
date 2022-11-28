@@ -49,9 +49,9 @@ export class MinioEvenementRepository implements EvenementsRepository {
 		}
 	}
 
-	public async sauvegarder(internshipOffers: UnjeuneUneSolution.Evenement[], flow: FluxTransformation): Promise<void> {
-		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed internship offers from flow ${flow.nom}`);
-		const contentToSave = this.toReadableJson(internshipOffers);
+	public async sauvegarder(evenements: UnjeuneUneSolution.Evenement[], flow: FluxTransformation): Promise<void> {
+		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed events offers from flow ${flow.nom}`);
+		const contentToSave = this.toReadableJson(evenements);
 		const temporaryFileName = this.generateFileName();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
 
@@ -61,10 +61,11 @@ export class MinioEvenementRepository implements EvenementsRepository {
 			await this.saveHistoryFile(flow, localFileNameIncludingPath);
 			await this.saveLatestFile(flow, localFileNameIncludingPath);
 		} catch (e) {
+			this.loggerStrategy.get(flow.nom).info(e);
 			throw new EcritureFluxErreur(flow.nom);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
-			this.loggerStrategy.get(flow.nom).info(`End of saving transformed internship offers from flow ${flow.nom}`);
+			this.loggerStrategy.get(flow.nom).info(`End of saving transformed events offers from flow ${flow.nom}`);
 		}
 	}
 
@@ -76,9 +77,9 @@ export class MinioEvenementRepository implements EvenementsRepository {
 			.concat(flow.extensionFichierBrut);
 	}
 
-	private toReadableJson(internshipOffers: Array<UnjeuneUneSolution.Evenement>): string {
+	private toReadableJson(events: Array<UnjeuneUneSolution.Evenement>): string {
 		const { JSON_INDENTATION, JSON_REPLACER } = MinioEvenementRepository;
-		return JSON.stringify(internshipOffers, JSON_REPLACER, JSON_INDENTATION);
+		return JSON.stringify(events, JSON_REPLACER, JSON_INDENTATION);
 	}
 
 	private async saveHistoryFile(flow: FluxTransformation, temporaryFileName: string): Promise<void> {

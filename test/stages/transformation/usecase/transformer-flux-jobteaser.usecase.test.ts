@@ -1,10 +1,9 @@
 import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { DateService } from "@shared/date.service";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Jobteaser } from "@stages/transformation/domain/jobteaser";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
 import {
@@ -12,8 +11,9 @@ import {
 } from "@test/stages/transformation/fixture/offre-de-stage-jobteaser.fixture-builder";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { Pays } from "@shared/pays";
-import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { TransformerFluxJobteaser } from "@stages/transformation/usecase/transformer-flux-jobteaser.usecase";
+import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;

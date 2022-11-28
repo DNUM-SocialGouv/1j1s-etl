@@ -59,7 +59,7 @@ export class ConfigurationFactory {
                 RAW_BUCKET_NAME: getOrDefault("EVENTS_MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
                 SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
                 URL: getOrError("MINIO_URL"),
-                TRANSFORMED_BUCKET_NAME: getOrError("MINIO_TRANSFORMED_BUCKET_NAME"),
+                TRANSFORMED_BUCKET_NAME: getOrError("EVENTS_MINIO_TRANSFORMED_BUCKET_NAME"),
             },
             NODE_ENV: getOrError("NODE_ENV") as Environment,
             SENTRY: {

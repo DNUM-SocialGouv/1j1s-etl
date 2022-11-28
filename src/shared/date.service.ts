@@ -6,6 +6,6 @@ export class DateService {
 	}
 
 	public toIsoDate(date: string, horaire: string): string {
-		return DateTime.fromFormat(date+" "+horaire, "dd/MM/yyyy hh:mm").toJSDate().toISOString();
+		return DateTime.fromFormat(date+" "+horaire, "dd/MM/yyyy HH:mm").toFormat("yyyy-MM-dd'T'HH:mm:ss");
 	}
 }
