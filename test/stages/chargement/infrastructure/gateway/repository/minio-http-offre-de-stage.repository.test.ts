@@ -12,7 +12,7 @@ import {
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,

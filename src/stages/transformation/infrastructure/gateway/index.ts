@@ -1,7 +1,7 @@
 import { Client } from "minio";
 
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
 import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { Pays } from "@shared/pays";
 

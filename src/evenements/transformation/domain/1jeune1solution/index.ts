@@ -1,4 +1,4 @@
-export namespace UnjeuneUneSolution {
+export namespace UnJeuneUneSolution {
     export type Evenement = {
         dateDebut: string
         dateFin: string

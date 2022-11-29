@@ -6,12 +6,12 @@ import { Configuration } from "@stages/transformation/configuration/configuratio
 import { CountryToIso } from "@stages/transformation/infrastructure/gateway/country-to-iso";
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@stages/transformation/infrastructure/gateway";
-import { HtmlToMarkdownSanitizer } from "@stages/transformation/infrastructure/gateway/html-to-markdown.sanitizer";
+import { HtmlToMarkdownSanitizer } from "@shared/infrastructure/gateway/html-to-markdown.sanitizer";
 import { StagesTransformationLoggerStrategy } from "@stages/transformation/configuration/logger-strategy";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
-import { NodeFileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { XmlContentParser } from "@shared/infrastructure/gateway/content.parser";
 

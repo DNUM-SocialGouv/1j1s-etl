@@ -5,11 +5,11 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Configuration } from "@evenements/transformation/configuration/configuration";
 import { DateService } from "@shared/date.service";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { FileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FluxTransformation } from "@evenements/transformation/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { UnjeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
 import {
 	MinioEvenementRepository,
 } from "@evenements/transformation/infrastructure/gateway/repository/minio-evenement.repository";
@@ -17,7 +17,7 @@ import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 
 let localFileNameIncludingPath: string;
-let evenements: Array<UnjeuneUneSolution.Evenement>;
+let evenements: Array<UnJeuneUneSolution.Evenement>;
 let fileContent: string;
 let latestFileNameIncludingPath: string;
 let historyFileNameIncludingPath: string;

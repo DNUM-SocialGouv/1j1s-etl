@@ -7,7 +7,7 @@ import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { FileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
@@ -169,8 +169,7 @@ describe("MinioOffreDeStageRepositoryTest", () => {
 			expect(fileSystemClient.read).to.have.been.calledWith(localFileNameIncludingPath);
 			expect(contentParserRepository.parse).to.have.been.calledOnce;
 			expect(contentParserRepository.parse).to.have.been.calledWith(fileContent);
-			expect(fileSystemClient.delete).to.have.been.calledOnce;
-			expect(fileSystemClient.delete).to.have.been.calledWith(localFileNameIncludingPath);
+			expect(fileSystemClient.delete).to.have.been.calledOnceWith(localFileNameIncludingPath);
 		});
 	});
 

@@ -2,7 +2,7 @@ import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy"
 import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { Logger } from "@shared/configuration/logger";
 import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
-import { UnzipClient } from "@shared/infrastructure/gateway/common/unzip.client";
+import { UnzipClient } from "@shared/infrastructure/gateway/unzip.client";
 
 export class CompressedFlowHttpClient implements FlowClient {
 	constructor(

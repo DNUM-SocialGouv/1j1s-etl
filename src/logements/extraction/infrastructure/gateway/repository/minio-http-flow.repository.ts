@@ -7,7 +7,7 @@ import { FlowStrategy } from "@shared/infrastructure/gateway/client/flow.strateg
 import { FluxExtraction } from "@logements/extraction/domain/flux";
 import { FluxRepository } from "@logements/extraction/domain/flux.repository";
 import { LoggerStrategy } from "@shared/configuration/logger";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class MinioHttpFlowRepository implements FluxRepository {
 	constructor(

@@ -1,6 +1,3 @@
-import "dotenv/config";
-import "module-alias/register";
-
 import { ConfigurationFactory } from "@stages/transformation/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/transformation/configuration/gateways.container";
 import { StagesTransformationLoggerStrategy } from "@stages/transformation/configuration/logger-strategy";

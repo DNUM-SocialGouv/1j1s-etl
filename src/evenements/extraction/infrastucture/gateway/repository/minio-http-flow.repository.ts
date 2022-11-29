@@ -7,7 +7,7 @@ import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy"
 import { FluxExtraction } from "@evenements/extraction/domain/flux";
 import { FluxRepository } from "@evenements/extraction/domain/flux.repository";
 import { LoggerStrategy } from "@shared/configuration/logger";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class MinioHttpFlowRepository implements FluxRepository {
 	private static COMPRESSED_FILE_EXTENSION = ".gz";

@@ -1,15 +1,15 @@
 import { Client } from "minio";
 
 import { Configuration } from "@evenements/transformation/configuration/configuration";
+import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { EvenementsRepository } from "@evenements/transformation/domain/evenements.repository";
 import { FluxTransformation } from "@evenements/transformation/domain/flux";
-import { FileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { UnjeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
-import { EvenementsRepository } from "@evenements/transformation/domain/evenements.repository";
-import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
+import { UnJeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
 
 export class MinioEvenementRepository implements EvenementsRepository {
 	private static readonly JSON_INDENTATION = 2;
@@ -49,7 +49,7 @@ export class MinioEvenementRepository implements EvenementsRepository {
 		}
 	}
 
-	public async sauvegarder(evenements: UnjeuneUneSolution.Evenement[], flow: FluxTransformation): Promise<void> {
+	public async sauvegarder(evenements: UnJeuneUneSolution.Evenement[], flow: FluxTransformation): Promise<void> {
 		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed events offers from flow ${flow.nom}`);
 		const contentToSave = this.toReadableJson(evenements);
 		const temporaryFileName = this.generateFileName();
@@ -77,7 +77,7 @@ export class MinioEvenementRepository implements EvenementsRepository {
 			.concat(flow.extensionFichierBrut);
 	}
 
-	private toReadableJson(events: Array<UnjeuneUneSolution.Evenement>): string {
+	private toReadableJson(events: Array<UnJeuneUneSolution.Evenement>): string {
 		const { JSON_INDENTATION, JSON_REPLACER } = MinioEvenementRepository;
 		return JSON.stringify(events, JSON_REPLACER, JSON_INDENTATION);
 	}
