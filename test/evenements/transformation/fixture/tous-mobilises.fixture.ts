@@ -28,8 +28,6 @@ export function aTousMobilisesFlux(): TousMobilises.Contenu[] {
             "titreEvenement": "Pôle emploi - LACTALIS",
             "typeEvenement": "seance_information",
         },
-
-
     ];
 }
 

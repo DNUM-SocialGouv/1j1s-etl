@@ -1,7 +1,7 @@
 import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { DateService } from "@shared/date.service";
 import { expect } from "@test/configuration";

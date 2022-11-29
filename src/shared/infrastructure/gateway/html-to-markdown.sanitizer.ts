@@ -1,6 +1,6 @@
 import TurndownService from "turndown";
 
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 
 export class HtmlToMarkdownSanitizer implements AssainisseurDeTexte {
 	constructor(private readonly htmlToMarkdown: TurndownService) {

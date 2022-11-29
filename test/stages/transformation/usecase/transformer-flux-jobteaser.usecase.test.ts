@@ -1,6 +1,6 @@
 import sinon from "sinon";
 
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
 import { expect, StubbedClass, stubClass } from "@test/configuration";

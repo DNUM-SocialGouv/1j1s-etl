@@ -1,4 +1,4 @@
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
 import { OffreDeStage as _OffreDeStage } from "@stages/transformation/domain/stagefr-decompresse/offre-de-stage";
 import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";

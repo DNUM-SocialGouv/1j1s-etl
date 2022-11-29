@@ -8,11 +8,11 @@ import { GatewayContainer } from "@stages/extraction/infrastructure/gateway";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { MinioHttpFlowRepository } from "@stages/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { OctetStreamFlowHttpClient } from "@shared/infrastructure/gateway/client/octet-stream-flow-http.client";
 import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
 import { StagesOnFlowNameStrategy } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
-import { UnzipClient } from "@shared/infrastructure/gateway/common/unzip.client";
+import { UnzipClient } from "@shared/infrastructure/gateway/unzip.client";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {

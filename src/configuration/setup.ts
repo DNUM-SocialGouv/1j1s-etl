@@ -40,6 +40,7 @@ export class Setup {
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_TRANSFORMED_BUCKET_NAME);
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_TRANSFORMED_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_STARTED_MESSAGE);

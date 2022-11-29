@@ -8,7 +8,7 @@ import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStageRepository {
 	constructor(

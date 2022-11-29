@@ -1,7 +1,7 @@
 import { Jobteaser } from "@stages/transformation/domain/jobteaser";
 
 export class OffreDeStageJobteaserFixtureBuilder {
-	static build(
+	public static build(
 		offreDeStage?: Partial<Jobteaser.OffreDeStage>,
 		localisation?: Partial<Jobteaser.Localisation>,
 		employeur?: Partial<Jobteaser.Employeur>,

@@ -4,7 +4,7 @@ import { GatewayContainer } from "@logements/extraction/infrastructure/gateway";
 import axios from "axios";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { Client } from "minio";
-import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { HousingsOnFlowNameStrategy } from "@logements/extraction/infrastructure/gateway/client/flow.strategy";
 import {
 	MinioHttpFlowRepository,

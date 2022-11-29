@@ -5,7 +5,7 @@ import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { FluxTransformation } from "@stages/transformation/domain/flux";
-import { FileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { OffreDeStageRepository } from "@stages/transformation/domain/offre-de-stage.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";

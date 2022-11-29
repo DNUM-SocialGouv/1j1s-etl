@@ -3,7 +3,7 @@ import { Client } from "minio";
 import { Configuration } from "@evenements/extraction/configuration/configuration";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { GatewayContainer } from "@evenements/extraction/infrastucture/gateway";
 import {
 	MinioHttpFlowRepository,

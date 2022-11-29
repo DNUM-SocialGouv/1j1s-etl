@@ -4,7 +4,7 @@ import {
     aCorruptedFluxTousMobilises,
     aTousMobilisesFlux,
 } from "@test/evenements/transformation/fixture/tous-mobilises.fixture";
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
 import { EvenementsRepository } from "@evenements/transformation/domain/evenements.repository";
 import { expect } from "@test/configuration";

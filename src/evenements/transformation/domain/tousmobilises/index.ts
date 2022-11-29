@@ -1,6 +1,6 @@
-import { UnjeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { UnJeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
 
 export namespace TousMobilises {
     export type Contenu = {
@@ -23,7 +23,7 @@ export namespace TousMobilises {
             private readonly assainisseurDeTexte: AssainisseurDeTexte,
         ) {}
 
-        depuisTousMobilises(evenements: TousMobilises.Contenu[]): UnjeuneUneSolution.Evenement[] {
+        depuisTousMobilises(evenements: TousMobilises.Contenu[]): UnJeuneUneSolution.Evenement[] {
             return evenements.filter(evenement => evenement.date && evenement.description).map((evenement: TousMobilises.Contenu) => {
                 return {
                     dateDebut: this.dateService.toIsoDate(evenement.date, evenement.horaireDebutEvenement),

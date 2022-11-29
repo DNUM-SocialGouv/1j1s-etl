@@ -12,7 +12,7 @@ import { StagesChargementLoggerStrategy } from "@stages/chargement/configuration
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import { NodeUuidGenerator, UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
+import { NodeUuidGenerator, UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { StrapiOffreDeStageHttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
 

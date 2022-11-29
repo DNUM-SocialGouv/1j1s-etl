@@ -2,7 +2,7 @@ import { Client } from "minio";
 
 import { Configuration } from "@evenements/transformation/configuration/configuration";
 import { DateService } from "@shared/date.service";
-import { NodeFileSystemClient } from "@shared/infrastructure/gateway/node-file-system.client";
+import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { GatewayContainer } from "@evenements/transformation/infrastructure/gateway";

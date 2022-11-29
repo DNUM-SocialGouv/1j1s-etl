@@ -1,4 +1,4 @@
-import { AssainisseurDeTexte } from "@stages/transformation/domain/assainisseur-de-texte";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import {
 	Contenu as _Contenu,
 	Duree,

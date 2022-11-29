@@ -6,7 +6,7 @@ import { Logger } from "@shared/configuration/logger";
 import { LectureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { OctetStreamHttpClient } from "@shared/infrastructure/gateway/common/octet-stream-http.client";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { UnzipClient } from "@shared/infrastructure/gateway/common/unzip.client";
+import { UnzipClient } from "@shared/infrastructure/gateway/unzip.client";
 
 const contenuDecompresse = "<toto>Contenu du fichier</toto>";
 const urlDuFlux = "https://some.url.xml.gz";
