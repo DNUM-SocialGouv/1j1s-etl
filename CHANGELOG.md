@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.1.0...v2.2.0) (2022-11-29)
+
+
+### Features
+
+* **logements:** Ajout extraction pour flux immojeune ([c4b1e05](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/c4b1e05226f59c42c0177c0d75c178249d1d2b62))
+
 ## [2.1.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.0.0...v2.1.0) (2022-11-25)
 
 
