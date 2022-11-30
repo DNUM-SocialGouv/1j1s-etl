@@ -5,7 +5,7 @@ export class EcritureFluxErreur extends Error {
 }
 
 export class LectureFluxErreur extends Error {
-	constructor(urlDuFlux: string) {
+	constructor(urlDuFlux: string, statusCode?: string) {
 		super(`Le flux à l'adresse ${urlDuFlux} n'a pas été extrait car une erreur de lecture est survenue`);
 	}
 }
