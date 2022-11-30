@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.2.0...v2.2.1) (2022-11-30)
+
+
+### Bug Fixes
+
+* **logements:** retrait du S dans les variables d'env ([0e7edc4](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/0e7edc4cf5737e6865327beabbc5d88a086085c9))
+
 ## [2.2.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.1.0...v2.2.0) (2022-11-29)
 
 
