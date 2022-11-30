@@ -54,7 +54,7 @@ export class ConfigurationFactory {
                 AUTH_URL: getOrError("EVENTS_TOUS_MOBILISES_AUTH_URL"),
                 CLIENT_ID: getOrError("EVENTS_TOUS_MOBILISES_CLIENT_ID"),
                 CLIENT_SECRET: getOrError("EVENTS_TOUS_MOBILISES_CLIENT_SECRET"),
-                SCOPE: getOrError("EVENTS_TOUS_MOBILISES_SCOPE"),
+                SCOPE: getOrError("EVENTS_TOUS_MOBILISES_SCOPE").replaceAll(",", " "),
             },
             LOGGER_LOG_LEVEL: getOrDefault("EVENTS_EXTRACT_LOG_LEVEL", DEFAULT_LOG_LEVEL) as LogLevel,
             MINIO: {
