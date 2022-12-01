@@ -35,9 +35,7 @@ export type Configuration = {
 export class ConfigurationFactory {
     public static create(): Configuration {
         const { getOrError, getOrDefault } = ConfigurationFactory;
-        const DEFAULT_RAW_BUCKET_NAME = "raw";
         const DEFAULT_MINIO_PORT = "9000";
-        const DEFAULT_TOUS_MOBILISES_NAME = "tousmobilises";
         const DEFAULT_LOG_LEVEL = "debug";
         const DEFAULT_HISTORY_DIRECTORY_NAME = "history";
 
@@ -47,9 +45,9 @@ export class ConfigurationFactory {
                 getOrError("EVENTS_TOUS_MOBILISES_NAME"),
             ],
             TOUS_MOBILISES: {
-                DIRECTORY_NAME: getOrDefault("EVENTS_TOUS_MOBILISES_DIRECTORY_NAME", DEFAULT_TOUS_MOBILISES_NAME),
+                DIRECTORY_NAME: getOrError("EVENTS_TOUS_MOBILISES_DIRECTORY_NAME"),
                 FLUX_URL: getOrError("EVENTS_TOUS_MOBILISES_FLUX_URL"),
-                NAME: getOrDefault("EVENTS_TOUS_MOBILISES_NAME", DEFAULT_TOUS_MOBILISES_NAME),
+                NAME: getOrError("EVENTS_TOUS_MOBILISES_NAME"),
                 RAW_FILE_EXTENSION: getOrError("EVENTS_TOUS_MOBILISES_RAW_FILE_EXTENSION"),
                 AUTH_URL: getOrError("EVENTS_TOUS_MOBILISES_AUTH_URL"),
                 CLIENT_ID: getOrError("EVENTS_TOUS_MOBILISES_CLIENT_ID"),
@@ -61,7 +59,7 @@ export class ConfigurationFactory {
                 ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
                 HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", DEFAULT_HISTORY_DIRECTORY_NAME),
                 PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
-                RAW_BUCKET_NAME: getOrDefault("EVENTS_MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
+                RAW_BUCKET_NAME: getOrError("EVENTS_MINIO_RAW_BUCKET_NAME"),
                 SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
                 URL: getOrError("MINIO_URL"),
             },
