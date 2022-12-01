@@ -34,10 +34,11 @@ export class Setup {
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_RAW_BUCKET_NAME);
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_TRANSFORMED_BUCKET_NAME);
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.RESULT_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_RESULT_BUCKET_NAME);
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_TRANSFORMED_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_RESULT_BUCKET_NAME);
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_TRANSFORMED_BUCKET_NAME);
@@ -53,10 +54,11 @@ export class Setup {
 
 			const internshipsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_RAW_BUCKET_NAME);
 			const internshipsExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_TRANSFORMED_BUCKET_NAME);
-			const internshipsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.RESULT_BUCKET_NAME);
+			const internshipsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_RESULT_BUCKET_NAME);
 
 			const eventsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
 			const eventsExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_TRANSFORMED_BUCKET_NAME);
+			const eventsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_RESULT_BUCKET_NAME);
 
 			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
 
@@ -70,6 +72,7 @@ export class Setup {
 						internshipsExistingRulesOnLoadingBucket,
 						eventsExistingRulesOnExtractionBucket,
 						eventsExistingRulesOnTransformationBucket,
+						eventsExistingRulesOnLoadingBucket,
 						housingExistingRulesOnExtractionBucket,
 					],
 				},
@@ -117,7 +120,12 @@ export class Setup {
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.RESULT_BUCKET_NAME,
+			this.configuration.MINIO.EVENTS_RESULT_BUCKET_NAME,
+			rulesToCreateOnLoadingBucket,
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO.INTERNSHIPS_RESULT_BUCKET_NAME,
 			rulesToCreateOnLoadingBucket,
 		);
 	}

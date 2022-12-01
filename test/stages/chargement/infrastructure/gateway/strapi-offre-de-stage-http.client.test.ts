@@ -2,11 +2,11 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import nock from "nock";
 import sinon, { spy } from "sinon";
 
-import { AuthenticationClient } from "@stages/chargement/infrastructure/gateway/authentication.client";
+import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
 import { expect } from "@test/configuration";
 import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
-import { OffreDeStageHttp, StrapiOffreDeStageHttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
 import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
+import { OffreDeStageHttp, StrapiOffreDeStageHttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
 
 const offreDeStageASupprimer = OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({}, "1");
 const offreDeStageAMettreAJour = OffreDeStageFixtureBuilder.buildOffreDeStageAMettreAJour({}, "2");
