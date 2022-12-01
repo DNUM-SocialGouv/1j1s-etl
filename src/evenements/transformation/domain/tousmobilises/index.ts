@@ -35,10 +35,22 @@ export namespace TousMobilises {
                     online: evenement.online === "true",
                     organismeOrganisateur: evenement.organismeOrganisateur,
                     titreEvenement: evenement.titreEvenement,
-                    typeEvenement: evenement.typeEvenement,
+                    typeEvenement: this.desinfecteTypeEvenement(evenement.typeEvenement),
                     source: "tous-mobilises",
                 };
             });
+        }
+
+        private desinfecteTypeEvenement(typeEvenement: string): string {
+            switch (typeEvenement) {
+                case "Job dating": return "job_dating";
+                case "Atelier": return "atelier";
+                case "Réunion d'information": return "reunion_information";
+                case "Conférence": return "conference";
+                case "Salon en ligne": return "salon_en_ligne";
+                case "Forum": return "forum";
+                default: return typeEvenement;
+            }
         }
     }
 }

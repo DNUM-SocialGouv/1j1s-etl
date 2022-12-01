@@ -5,7 +5,6 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Configuration } from "@stages/chargement/configuration/configuration";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { HttpClient, OffreDeStageHttp } from "@stages/chargement/infrastructure/gateway/http.client";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,
@@ -18,6 +17,7 @@ import {
 	RecupererContenuErreur,
 	RecupererOffresExistantesErreur,
 } from "@shared/infrastructure/gateway/flux.erreur";
+import { HttpClient, OffreDeStageHttp } from "@stages/chargement/infrastructure/gateway/http.client";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localFileNameIncludingPath = `./tmp/${uuid}`;

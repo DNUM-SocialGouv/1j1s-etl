@@ -11,14 +11,22 @@ export class LectureFluxErreur extends Error {
 }
 
 export class RecupererContenuErreur extends Error {
-	constructor() {
-		super("Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu");
+	constructor(extra?: string) {
+		if(extra) {
+			super(`Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu à cause de : ${extra}`);
+		} else {
+			super("Une erreur de lecture ou de parsing est survenue lors de la récupération du contenu");
+		}
 	}
 }
 
 export class RecupererOffresExistantesErreur extends Error {
-	constructor() {
-		super("Une erreur est survenue lors de la récupération des offres existantes");
+	constructor(extra?: string) {
+		if(extra) {
+			super(`Une erreur est survenue lors de la récupération des offres existantes à cause de : ${extra}`);
+		} else {
+			super("Une erreur est survenue lors de la récupération des offres existantes");
+		}
 	}
 }
 
