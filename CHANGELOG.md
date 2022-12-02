@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.3.0...v2.3.1) (2022-12-02)
+
+
+### Bug Fixes
+
+* **stages/configuration:** correction d'une variable d'environnement ([aeec892](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/aeec89243dba3214af694bbcbb6c8bcdb6077baa))
+
 ## [2.3.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.2.1...v2.3.0) (2022-11-30)
 
 
