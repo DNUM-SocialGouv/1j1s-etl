@@ -1,6 +1,6 @@
 import { TousMobilises } from "@evenements/transformation/domain/tousmobilises";
-import { UnjeuneUneSolutionTransformation } from "@evenements/transformation/domain/1jeune1solution";
 import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
 
 export function aTousMobilisesFlux(): TousMobilises.Contenu[] {
     return [
@@ -52,7 +52,7 @@ export function aCorruptedFluxTousMobilises(): TousMobilises.Contenu[] {
     ];
 }
 
-export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre(): UnjeuneUneSolutionTransformation.Evenement[] {
+export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre(): UnJeuneUneSolution.Evenement[] {
     return [
         {
             dateDebut: "2022-11-24T09:00:00",
@@ -184,7 +184,7 @@ export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le
     ];
 }
 
-export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt1EvenementLe25Et1EvenementLe26(): UnjeuneUneSolutionTransformation.Evenement[] {
+export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt1EvenementLe25Et1EvenementLe26(): UnJeuneUneSolution.Evenement[] {
     return [
         ...aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre(),
         {
@@ -217,7 +217,7 @@ export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt1Ev
     ];
 }
 
-export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe25Novembre(): UnjeuneUneSolutionTransformation.Evenement[] {
+export function aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe25Novembre(): UnJeuneUneSolution.Evenement[] {
     return [
         {
             dateDebut: "2022-11-25T09:30:00",

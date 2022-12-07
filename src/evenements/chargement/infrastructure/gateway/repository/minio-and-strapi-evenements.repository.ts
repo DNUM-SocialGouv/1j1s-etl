@@ -2,17 +2,20 @@ import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeu
 import { Client } from "minio";
 import { Configuration } from "@evenements/chargement/configuration/configuration";
 import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
-import { RecupererContenuErreur, RecupererOffresExistantesErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import {
+    EcritureFluxErreur,
+    RecupererContenuErreur,
+    RecupererOffresExistantesErreur,
+} from "@shared/infrastructure/gateway/flux.erreur";
 import { LoggerStrategy } from "@shared/configuration/logger";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { DateService } from "@shared/date.service";
-import { FluxChargement } from "@evenements/chargement/domain/flux";
 import {
     StrapiEvenementHttpClient,
 } from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import Evenement = UnjeuneUneSolutionChargement.Evenement;
 import axios from "axios";
+import Evenement = UnjeuneUneSolutionChargement.Evenement;
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionChargement.EvenementsRepository {
     private readonly LATEST_FILE_NAME = "latest";
@@ -95,22 +98,37 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
         }
     }
 
-    async recupererEvenementsDejaCharges(source: string): Promise<UnjeuneUneSolutionChargement.EvenementDejaCharge[]> {
-        this.loggerStrategy.get(source).info(`Starting to pull last events loaded from flow ${source}`);
+    async recupererEvenementsDejaCharges(nomFlux: string): Promise<UnjeuneUneSolutionChargement.EvenementDejaCharge[]> {
+        this.loggerStrategy.get(nomFlux).info(`Starting to pull last events loaded from flow ${nomFlux}`);
         try {
-           return await this.strapiEvenementHttpClient.getAll(source);
+           return await this.strapiEvenementHttpClient.getAll(nomFlux);
         } catch (e) {
             if(axios.isAxiosError(e)) {
                 throw new RecupererOffresExistantesErreur(e.stack);
             }
             throw new RecupererOffresExistantesErreur();
         } finally {
-            this.loggerStrategy.get(source).info(`End of pulling existing events offers from flow ${source}`);
+            this.loggerStrategy.get(nomFlux).info(`End of pulling existing events offers from flow ${nomFlux}`);
         }
     }
 
-    async sauvegarder(fluxChargement: FluxChargement, evenements: UnjeuneUneSolutionChargement.Evenement[]): Promise<void> {
-        // TODO : gérer la sauvegarde des évenements en erreur
-        return Promise.resolve();
+    async sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnjeuneUneSolutionChargement.Evenement[]): Promise<void> {
+        this.loggerStrategy.get(nomFlux).info(`Starting to save flow ${nomFlux}`);
+        const temporaryFileName = this.uuidGenerator.generate();
+        const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
+
+        try {
+            await this.fileSystemClient.write(localFileNameIncludingPath, JSON.stringify(evenements));
+            await this.minioClient.fPutObject(
+              this.configuration.MINIO.RESULT_BUCKET_NAME,
+              `${nomFlux}/${this.dateService.maintenant().toISOString()}_${suffixHistoryFile}${this.configuration.TOUS_MOBILISES.TRANSFORMED_FILE_EXTENSION}`,
+              localFileNameIncludingPath
+            );
+        } catch (e) {
+            throw new EcritureFluxErreur(nomFlux);
+        } finally {
+            await this.fileSystemClient.delete(localFileNameIncludingPath);
+            this.loggerStrategy.get(nomFlux).info(`End of saving flow ${nomFlux}`);
+        }
     }
 }

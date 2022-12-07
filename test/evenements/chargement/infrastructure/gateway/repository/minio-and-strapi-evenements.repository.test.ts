@@ -3,7 +3,6 @@ import { Configuration } from "@evenements/chargement/configuration/configuratio
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Client } from "minio";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { UuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
     MinioAndStrapiEvenementsRepository,
@@ -11,19 +10,25 @@ import {
 import sinon from "sinon";
 import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
 import {
+    aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre,
     aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreDejaCharges,
     aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges,
 } from "@test/evenements/fixture/tous-mobilises.fixture";
-import { RecupererContenuErreur, RecupererOffresExistantesErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import {
+    EcritureFluxErreur,
+    RecupererContenuErreur,
+    RecupererOffresExistantesErreur,
+} from "@shared/infrastructure/gateway/flux.erreur";
 import { DateService } from "@shared/date.service";
 import {
     StrapiEvenementHttpClient,
 } from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
 import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeune1solution";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 
-describe("MinioEvenementsRepositoryTest", () => {
+describe("MinioAndStrapiEvenementsRepositoryTest", () => {
 
     const contentParser = new JsonContentParser();
     const nomFlux = "eventsflux";
@@ -45,6 +50,7 @@ describe("MinioEvenementsRepositoryTest", () => {
         configuration.MINIO.TRANSFORMED_FILE_EXTENSION = ".json";
         configuration.MINIO.RESULT_BUCKET_NAME = "result";
         configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
+        configuration.TOUS_MOBILISES.TRANSFORMED_FILE_EXTENSION = ".json";
 
         minioClient = stubClass(Client);
 
@@ -232,6 +238,53 @@ describe("MinioEvenementsRepositoryTest", () => {
 
                     expect(result).to.deep.equal([]);
                 });
+            });
+        });
+    });
+
+    context("Lorsque je veux sauvegarder sur le minio", () => {
+        it("j'écris avec le contenu des évènements", async () => {
+            await repo.sauvegarder("nomFlux", "suffixHistoryFile", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+
+            expect(uuidGenerator.generate).to.have.been.calledOnce;
+            expect(fileSystemClient.write).to.have.been.calledOnce;
+            expect(fileSystemClient.write).to.have.been.calledWith("./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073", JSON.stringify(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre()));
+            expect(minioClient.fPutObject).to.have.been.calledOnce;
+            expect(minioClient.fPutObject).to.have.been.calledWith(
+              configuration.MINIO.RESULT_BUCKET_NAME,
+              "nomFlux/2022-01-01T00:00:00.000Z_suffixHistoryFile.json",
+              "./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073",
+            );
+            expect(fileSystemClient.delete).to.have.been.calledOnce;
+            expect(fileSystemClient.delete).to.have.been.calledWith("./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073");
+        });
+
+        context("Lorsque je n'arrive pas à écrire le fichier chez moi", () => {
+            beforeEach(() => {
+                fileSystemClient.write.rejects();
+            });
+
+            it("je lance une erreur", async () => {
+                await expect(repo.sauvegarder("nomFlux", "suffixHistoryFile", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre())).to.be.rejectedWith(
+                  EcritureFluxErreur,
+                  "Le flux nomFlux n'a pas été extrait car une erreur d'écriture est survenue",
+                );
+            });
+        });
+
+        context("Lorsque j'écris le contenu d'un fichier dont je ne trouve pas le dossier racine ou que le nouveau nom du" +
+          " fichier est invalide", () => {
+            beforeEach(() => {
+                minioClient.fPutObject.rejects();
+            });
+
+            it("je lance une erreur", async () => {
+                await expect(repo.sauvegarder("nomFlux", "suffixHistoryFile", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre())).to.be.rejectedWith(
+                  EcritureFluxErreur,
+                  "Le flux nomFlux n'a pas été extrait car une erreur d'écriture est survenue",
+                );
+                expect(fileSystemClient.delete).to.have.been.calledOnce;
+                expect(fileSystemClient.delete).to.have.been.calledWith("./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073");
             });
         });
     });
