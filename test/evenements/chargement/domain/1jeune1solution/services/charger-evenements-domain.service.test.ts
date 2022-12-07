@@ -31,6 +31,7 @@ describe("ChargerEvenenementsDomainServiceTest", () => {
 				beforeEach(() => {
 					repository.recupererEvenementsDejaCharges.resolves([]);
 					repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+					repository.chargerEtEnregistrerLesErreurs.resolves([]);
 				});
 
 				it("je charge les nouveaux évenements", async () => {
@@ -74,6 +75,7 @@ describe("ChargerEvenenementsDomainServiceTest", () => {
 				beforeEach(() => {
 					repository.recupererEvenementsDejaCharges.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreDejaCharges());
 					repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25());
+					repository.chargerEtEnregistrerLesErreurs.resolves([]);
 				});
 
 				it("je charge les nouveaux évenements", async () => {
@@ -117,9 +119,10 @@ describe("ChargerEvenenementsDomainServiceTest", () => {
 				beforeEach(() => {
 					repository.recupererEvenementsDejaCharges.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges());
 					repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt1EvenementLe25Et1EvenementLe26());
+					repository.chargerEtEnregistrerLesErreurs.resolves([]);
 				});
 
-				it("je charge les nouveaux évenements", async () => {
+				it("je mets à jour ces nouveaux évenements", async () => {
 					await service.charger("nomFlux");
 
 					expect(repository.chargerEtEnregistrerLesErreurs).to.have.been.calledWith(
@@ -146,10 +149,11 @@ describe("ChargerEvenenementsDomainServiceTest", () => {
 				});
 			});
 
-			describe("quand j'ai des évenements qui n'existe plus dans  ", () => {
+			describe("quand j'ai des évenements qui n'existe plus dans les derniers évènements", () => {
 				beforeEach(() => {
 					repository.recupererEvenementsDejaCharges.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges());
 					repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe25Novembre());
+					repository.chargerEtEnregistrerLesErreurs.resolves([]);
 				});
 
 				it("je charge les évenements à supprimer", async () => {
@@ -167,12 +171,88 @@ describe("ChargerEvenenementsDomainServiceTest", () => {
 				beforeEach(() => {
 					repository.recupererEvenementsDejaCharges.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe25Novembre());
 					repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe25Novembre());
+					repository.chargerEtEnregistrerLesErreurs.resolves([]);
 				});
 
 				it("je ne charge rien", async () => {
 					await service.charger("nomFlux");
 
 					expect(repository.chargerEtEnregistrerLesErreurs).to.have.been.calledWith([], [], []);
+				});
+			});
+
+			context("puis quand tous le chargement c'est bien passé", () => {
+
+				describe("et que j'ai des évènements à ajouter", () => {
+					beforeEach(() => {
+						repository.recupererEvenementsDejaCharges.resolves([]);
+						repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+						repository.chargerEtEnregistrerLesErreurs.resolves([]);
+					});
+
+					it("j'appelle la sauvegarde sur le minio avec CREATED", async () => {
+						await service.charger("nomFlux");
+
+						expect(repository.sauvegarder).to.have.been.calledWith("nomFlux", "CREATED", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+					});
+				});
+
+				describe("et que j'ai des évènements mis à jour", () => {
+					beforeEach(() => {
+						repository.recupererEvenementsDejaCharges.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges());
+						repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt1EvenementLe25Et1EvenementLe26());
+						repository.chargerEtEnregistrerLesErreurs.resolves([]);
+					});
+
+					it("j'appelle la sauvegarde sur le minio avec UPDATED", async () => {
+						await service.charger("nomFlux");
+
+						expect(repository.sauvegarder).to.have.been.calledWith("nomFlux", "UPDATED", 						[
+							{
+								id: 3,
+								dateDebut: "2022-11-26T09:30:00",
+								dateFin: "2022-11-26T12:00:00",
+								description: "Evénement de Recrutement - Jeunes - Café de l'Emploi IAE\n" +
+									"de 9h30 à 12h à France Services Audierne",
+								idSource: "272739",
+								lieuEvenement: "Audierne",
+								modaliteInscription: "Inscription auprès de France Services Audierne au 02.98.70.08.78.",
+								online: false,
+								organismeOrganisateur: "Agence pôle emploi - DOUARNENEZ",
+								titreEvenement: "Pôle emploi - Café de l'Emploi IAE",
+								typeEvenement: "job_dating",
+								source: "tous-mobilises",
+							},
+						]);
+					});
+				});
+
+				describe("et que j'ai des évènements à supprimer", () => {
+					beforeEach(() => {
+						repository.recupererEvenementsDejaCharges.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges());
+						repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe25Novembre());
+						repository.chargerEtEnregistrerLesErreurs.resolves([]);
+					});
+
+					it("j'appelle la sauvegarde sur le minio avec UPDATED", async () => {
+						await service.charger("nomFlux");
+
+						expect(repository.sauvegarder).to.have.been.calledWith("nomFlux", "DELETED", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreDejaCharges());
+					});
+				});
+
+				describe("et que j'ai des évènements en erreur lors du chargement", () => {
+					beforeEach(() => {
+						repository.recupererEvenementsDejaCharges.resolves([]);
+						repository.recupererNouveauxEvenementsACharger.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+						repository.chargerEtEnregistrerLesErreurs.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+					});
+
+					it("j'appelle la sauvegarde sur le minio avec ERROR", async () => {
+						await service.charger("nomFlux");
+
+						expect(repository.sauvegarder).to.have.been.calledWith("nomFlux", "ERROR", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+					});
 				});
 			});
 		});

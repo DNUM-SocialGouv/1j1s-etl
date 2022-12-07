@@ -5,7 +5,6 @@ import { AuthenticationClient } from "@shared/infrastructure/gateway/authenticat
 import { Configuration } from "@evenements/chargement/configuration/configuration";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { EvenementsChargementLoggerStrategy } from "@evenements/chargement/configuration/logger-strategy";
-import { NodeUuidGenerator } from "@shared/infrastructure/gateway/common/uuid.generator";
 import { GatewayContainer } from "@evenements/chargement/infrastructure/gateway";
 import {
 	StrapiEvenementHttpClient,
@@ -15,6 +14,7 @@ import {
 } from "@evenements/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
 import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
+import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: EvenementsChargementLoggerStrategy): GatewayContainer {

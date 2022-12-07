@@ -33,8 +33,12 @@ export class ChargerEvenenementsDomainService {
 			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
 		}));
 
-		// TODO : gérer la sauvegarde des évenements en erreur
-		await this.evenementsRepository.chargerEtEnregistrerLesErreurs(evenementsAAjouter, evenementsAMettreAjour, evenementsASupprimer);
+		const evenementsEnErreur = await this.evenementsRepository.chargerEtEnregistrerLesErreurs(evenementsAAjouter, evenementsAMettreAjour, evenementsASupprimer);
+
+		evenementsEnErreur.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "ERROR", evenementsEnErreur);
+		evenementsAAjouter.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "CREATED", evenementsAAjouter);
+		evenementsAMettreAjour.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "UPDATED", evenementsAMettreAjour);
+		evenementsASupprimer.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "DELETED", evenementsASupprimer);
 
 		return Promise.resolve();
 	}

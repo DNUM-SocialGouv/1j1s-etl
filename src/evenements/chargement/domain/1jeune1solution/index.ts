@@ -1,5 +1,3 @@
-import { FluxChargement } from "@evenements/chargement/domain/flux";
-
 export namespace UnjeuneUneSolutionChargement {
     export interface Evenement {
         dateDebut: string
@@ -22,7 +20,7 @@ export namespace UnjeuneUneSolutionChargement {
     export interface EvenementAMettreAJour extends Evenement { id: number }
 
     export interface EvenementsRepository {
-        sauvegarder(fluxChargement: FluxChargement, evenements: UnjeuneUneSolutionChargement.Evenement[]): Promise<void>
+        sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnjeuneUneSolutionChargement.Evenement[]): Promise<void>
         recupererEvenementsDejaCharges(nomFlux: string): Promise<UnjeuneUneSolutionChargement.EvenementDejaCharge[]>;
         recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnjeuneUneSolutionChargement.Evenement[]>;
         chargerEtEnregistrerLesErreurs(
