@@ -10,10 +10,11 @@ import {
 import sinon from "sinon";
 import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
 import {
-    aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre,
-    aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreDejaCharges,
-    aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges,
-} from "@test/evenements/fixture/tous-mobilises.fixture";
+    evenement1Le24Novembre, evenement2Le24Novembre,
+    evenementDejaCharge1Le24Novembre,
+    evenementDejaCharge1Le25Novembre,
+    evenementDejaCharge2Le24Novembre, evenementDejaCharge2Le25Novembre,
+} from "@test/evenements/fixture/evenements-un-jeune-une-solution.fixture";
 import {
     EcritureFluxErreur,
     RecupererContenuErreur,
@@ -23,7 +24,7 @@ import { DateService } from "@shared/date.service";
 import {
     StrapiEvenementHttpClient,
 } from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
-import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
@@ -45,7 +46,6 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
 
     beforeEach(() => {
         configuration = stubInterface<Configuration>(sinon);
-        configuration.FEATURE_FLIPPING_CHARGEMENT = false;
         configuration.MINIO.TRANSFORMED_BUCKET_NAME = "json";
         configuration.MINIO.TRANSFORMED_FILE_EXTENSION = ".json";
         configuration.MINIO.RESULT_BUCKET_NAME = "result";
@@ -82,13 +82,13 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
 
     context("Lorsque je veux récupérer les derniers évenements qui ont été chargé", () => {
         beforeEach(() => {
-            strapiEvenementHttpClient.getAll.resolves(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreDejaCharges());
+            strapiEvenementHttpClient.getAll.resolves([evenementDejaCharge1Le24Novembre, evenementDejaCharge2Le24Novembre]);
         });
         describe("et que j'arrive a récupérer le fichier depuis le bucket", () => {
             it("je retourne une liste d'évenement depuis le bucket ou on stocke les résultats de chargement puis je supprime le fichier temporaire", async () => {
                 const result = await repo.recupererEvenementsDejaCharges(nomFlux);
 
-                expect(result).to.deep.equal(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreDejaCharges());
+                expect(result).to.deep.equal([evenementDejaCharge1Le24Novembre, evenementDejaCharge2Le24Novembre]);
             });
         });
 
@@ -109,13 +109,13 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
 
     context("Lorsque je veux récupérer les derniers évenements a chargé", () => {
         beforeEach(() => {
-            fileSystemClient.read.resolves(JSON.stringify(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges()));
+            fileSystemClient.read.resolves(JSON.stringify([evenementDejaCharge1Le24Novembre, evenementDejaCharge2Le24Novembre, evenementDejaCharge1Le25Novembre, evenementDejaCharge2Le25Novembre]));
         });
         describe("et que j'arrive a récupérer le fichier depuis le bucket", () => {
             it("je retourne une liste d'évenement depuis le bucket ou on stocke les résultats de la transformation puis je supprime le fichier temporaire", async () => {
                 const result = await repo.recupererNouveauxEvenementsACharger(nomFlux);
 
-                expect(result).to.deep.equal(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24NovembreEt2Le25DejaCharges());
+                expect(result).to.deep.equal([evenementDejaCharge1Le24Novembre, evenementDejaCharge2Le24Novembre, evenementDejaCharge1Le25Novembre, evenementDejaCharge2Le25Novembre]);
                 expect(minioClient.fGetObject).to.have.been.calledWith("json", "eventsflux/latest.json", "./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073");
                 expect(fileSystemClient.delete).to.have.been.calledWith("./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073");
             });
@@ -138,24 +138,10 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
 
     context("Lorsque je veux charger des données", () => {
         context("et que j'ai des évenements a ajouter", () => {
-            const evenementAAjouter: UnjeuneUneSolutionChargement.EvenementAAjouter = {
-                dateDebut: "2022-11-24T08:30:00",
-                description: "Evénement de Découverte métier/secteur - Jeunes - Le 24 novembre se déroulera une découverte des métiers de l'industrie alimentaire dans le cadre d'une visite de la société Lactalis de Clermont. Merci de contacter votre conseiller Pôle emploi afin de vous positionner. ",
-                idSource: "272510",
-                lieuEvenement: "Clermont",
-                modaliteInscription: "Merci de contacter votre conseiller Pôle emploi afin de vous positionner.",
-                online: false,
-                organismeOrganisateur: "Agence pôle emploi - CLERMONT FITZ JAMES",
-                titreEvenement: "Pôle emploi - LACTALIS",
-                typeEvenement: "seance_information",
-                source: "tous-mobilises",
-                dateFin: "2022-11-24T16:15:00",
-            };
-
             it("je dois faire un post sur strapi avec l'évenement à ajouter", async () => {
-                await repo.chargerEtEnregistrerLesErreurs([evenementAAjouter], [], []);
+                await repo.chargerEtEnregistrerLesErreurs([evenement1Le24Novembre], [], []);
 
-                expect(strapiEvenementHttpClient.post).to.have.been.calledWith(evenementAAjouter);
+                expect(strapiEvenementHttpClient.post).to.have.been.calledWith(evenement1Le24Novembre);
             });
 
             describe("mais que strapi tombe en erreur", () => {
@@ -164,27 +150,17 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
                 });
 
                 it("je dois retourner une liste d'évenement qui n'ont pas été réussi a etre chargé", async () => {
-                    const result = await repo.chargerEtEnregistrerLesErreurs([evenementAAjouter], [], []);
+                    const result = await repo.chargerEtEnregistrerLesErreurs([evenement1Le24Novembre], [], []);
 
-                    expect(result).to.deep.equal([evenementAAjouter]);
+                    expect(result).to.deep.equal([evenement1Le24Novembre]);
                 });
             });
         });
 
         context("et que j'ai des évenements a mettre à jour", () => {
-            const evenementAMettreAJour: UnjeuneUneSolutionChargement.EvenementAMettreAJour = {
+            const evenementAMettreAJour: UnJeuneUneSolution.EvenementAMettreAJour = {
                 id: 1,
-                dateDebut: "2022-11-24T08:30:00",
-                description: "Evénement de Découverte métier/secteur - Jeunes - Le 24 novembre se déroulera une découverte des métiers de l'industrie alimentaire dans le cadre d'une visite de la société Lactalis de Clermont. Merci de contacter votre conseiller Pôle emploi afin de vous positionner. ",
-                idSource: "272510",
-                lieuEvenement: "Clermont",
-                modaliteInscription: "Merci de contacter votre conseiller Pôle emploi afin de vous positionner.",
-                online: false,
-                organismeOrganisateur: "Agence pôle emploi - CLERMONT FITZ JAMES",
-                titreEvenement: "Pôle emploi - LACTALIS",
-                typeEvenement: "seance_information",
-                source: "tous-mobilises",
-                dateFin: "2022-11-24T16:15:00",
+                ...evenement1Le24Novembre,
             };
 
             it("je dois faire un post sur strapi avec l'évenement à ajouter", async () => {
@@ -207,19 +183,9 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
         });
 
         context("et que j'ai des évenements a supprimer", () => {
-            const evenementASupprimer: UnjeuneUneSolutionChargement.EvenementASupprimer = {
+            const evenementASupprimer: UnJeuneUneSolution.EvenementASupprimer = {
                 id: 1,
-                dateDebut: "2022-11-24T08:30:00",
-                description: "Evénement de Découverte métier/secteur - Jeunes - Le 24 novembre se déroulera une découverte des métiers de l'industrie alimentaire dans le cadre d'une visite de la société Lactalis de Clermont. Merci de contacter votre conseiller Pôle emploi afin de vous positionner. ",
-                idSource: "272510",
-                lieuEvenement: "Clermont",
-                modaliteInscription: "Merci de contacter votre conseiller Pôle emploi afin de vous positionner.",
-                online: false,
-                organismeOrganisateur: "Agence pôle emploi - CLERMONT FITZ JAMES",
-                titreEvenement: "Pôle emploi - LACTALIS",
-                typeEvenement: "seance_information",
-                source: "tous-mobilises",
-                dateFin: "2022-11-24T16:15:00",
+                ...evenement1Le24Novembre,
             };
 
             it("je dois faire un post sur strapi avec l'évenement à ajouter", async () => {
@@ -244,11 +210,11 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
 
     context("Lorsque je veux sauvegarder sur le minio", () => {
         it("j'écris avec le contenu des évènements", async () => {
-            await repo.sauvegarder("nomFlux", "suffixHistoryFile", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre());
+            await repo.sauvegarder("nomFlux", "suffixHistoryFile", [evenement1Le24Novembre, evenement2Le24Novembre ]);
 
             expect(uuidGenerator.generate).to.have.been.calledOnce;
             expect(fileSystemClient.write).to.have.been.calledOnce;
-            expect(fileSystemClient.write).to.have.been.calledWith("./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073", JSON.stringify(aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre()));
+            expect(fileSystemClient.write).to.have.been.calledWith("./tmp/081e4a7c-6c27-4614-a2dd-ecaad37b9073", JSON.stringify([evenement1Le24Novembre, evenement2Le24Novembre ]));
             expect(minioClient.fPutObject).to.have.been.calledOnce;
             expect(minioClient.fPutObject).to.have.been.calledWith(
               configuration.MINIO.RESULT_BUCKET_NAME,
@@ -265,7 +231,7 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
             });
 
             it("je lance une erreur", async () => {
-                await expect(repo.sauvegarder("nomFlux", "suffixHistoryFile", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre())).to.be.rejectedWith(
+                await expect(repo.sauvegarder("nomFlux", "suffixHistoryFile", [evenement1Le24Novembre, evenement2Le24Novembre ])).to.be.rejectedWith(
                   EcritureFluxErreur,
                   "Le flux nomFlux n'a pas été extrait car une erreur d'écriture est survenue",
                 );
@@ -279,7 +245,7 @@ describe("MinioAndStrapiEvenementsRepositoryTest", () => {
             });
 
             it("je lance une erreur", async () => {
-                await expect(repo.sauvegarder("nomFlux", "suffixHistoryFile", aUnJeuneUneSolutionTousMobilisesAvec2EvenementsLe24Novembre())).to.be.rejectedWith(
+                await expect(repo.sauvegarder("nomFlux", "suffixHistoryFile", [evenement1Le24Novembre, evenement2Le24Novembre ])).to.be.rejectedWith(
                   EcritureFluxErreur,
                   "Le flux nomFlux n'a pas été extrait car une erreur d'écriture est survenue",
                 );

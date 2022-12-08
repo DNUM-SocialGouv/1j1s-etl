@@ -1,4 +1,4 @@
-import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
 import { Client } from "minio";
 import { Configuration } from "@evenements/chargement/configuration/configuration";
 import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
@@ -14,10 +14,10 @@ import {
 } from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import axios from "axios";
-import Evenement = UnjeuneUneSolutionChargement.Evenement;
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import Evenement = UnJeuneUneSolution.Evenement;
 
-export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionChargement.EvenementsRepository {
+export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.EvenementsRepository {
     private readonly LATEST_FILE_NAME = "latest";
 
     constructor(
@@ -31,15 +31,9 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
         protected readonly dateService: DateService,
     ) {}
 
-
-    async chargerEtEnregistrerLesErreurs(evenenementsAAjouter: UnjeuneUneSolutionChargement.EvenementAAjouter[], evenementsAMettreAjour: UnjeuneUneSolutionChargement.EvenementAMettreAJour[], evenementsASupprimer: UnjeuneUneSolutionChargement.EvenementASupprimer[]): Promise<UnjeuneUneSolutionChargement.Evenement[]> {
+    public async chargerEtEnregistrerLesErreurs(evenenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter[], evenementsAMettreAjour: UnJeuneUneSolution.EvenementAMettreAJour[], evenementsASupprimer: UnJeuneUneSolution.EvenementASupprimer[]): Promise<UnJeuneUneSolution.Evenement[]> {
         const evenementsEnErreur: Evenement[] = [];
-        if(this.configuration.FEATURE_FLIPPING_CHARGEMENT) {
-            this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements à publier : ${evenenementsAAjouter.length}`);
-            this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements à mettre à jour : ${evenementsAMettreAjour.length}`);
-            this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements à supprimer : ${evenementsASupprimer.length}`);
-            return Promise.resolve([]);
-        }
+
         for (const evenenementAAjouter of evenenementsAAjouter) {
             try {
                 await this.strapiEvenementHttpClient.post(evenenementAAjouter);
@@ -47,7 +41,6 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
                 evenementsEnErreur.push(evenenementAAjouter);
             }
         }
-        this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements ayant été publié : ${evenenementsAAjouter.length}`);
 
         for (const evenementMettreAjour of evenementsAMettreAjour) {
             try {
@@ -56,7 +49,6 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
                 evenementsEnErreur.push(evenementMettreAjour);
             }
         }
-        this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements ayant été mis à jour : ${evenementsAMettreAjour.length}`);
 
         for (const evenementASupprimer of evenementsASupprimer) {
             try {
@@ -65,13 +57,11 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
                 evenementsEnErreur.push(evenementASupprimer);
             }
         }
-        this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements ayant été supprimé : ${evenementsASupprimer.length}`);
 
-        this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements tombé en erreur : ${evenementsEnErreur.length}`);
         return Promise.resolve(evenementsEnErreur);
     }
 
-    async recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnjeuneUneSolutionChargement.Evenement[]> {
+    public async recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnJeuneUneSolution.Evenement[]> {
         const temporaryFileName = this.uuidGenerator.generate();
         const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
         const sourceFilePath = `${nomFlux}/${this.LATEST_FILE_NAME}${this.configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
@@ -84,9 +74,7 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
                 localFileNameIncludingPath
             );
             const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-            const nouveauxEvenements = await this.contentParser.parse<UnjeuneUneSolutionChargement.Evenement[]>(fileContent.toString());
-            this.loggerStrategy.get(nomFlux).info(`Number of newest events to pull ${nouveauxEvenements.length}`);
-            return nouveauxEvenements;
+            return await this.contentParser.parse<UnJeuneUneSolution.Evenement[]>(fileContent.toString());
         } catch (e) {
             if(axios.isAxiosError(e)) {
                 throw new RecupererContenuErreur(e.stack);
@@ -98,7 +86,7 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
         }
     }
 
-    async recupererEvenementsDejaCharges(nomFlux: string): Promise<UnjeuneUneSolutionChargement.EvenementDejaCharge[]> {
+    public async recupererEvenementsDejaCharges(nomFlux: string): Promise<UnJeuneUneSolution.EvenementDejaCharge[]> {
         this.loggerStrategy.get(nomFlux).info(`Starting to pull last events loaded from flow ${nomFlux}`);
         try {
            return await this.strapiEvenementHttpClient.getAll(nomFlux);
@@ -112,7 +100,7 @@ export class MinioAndStrapiEvenementsRepository implements UnjeuneUneSolutionCha
         }
     }
 
-    async sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnjeuneUneSolutionChargement.Evenement[]): Promise<void> {
+    public async sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnJeuneUneSolution.Evenement[]): Promise<void> {
         this.loggerStrategy.get(nomFlux).info(`Starting to save flow ${nomFlux}`);
         const temporaryFileName = this.uuidGenerator.generate();
         const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);

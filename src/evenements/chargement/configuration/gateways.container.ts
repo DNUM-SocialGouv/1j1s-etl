@@ -15,6 +15,9 @@ import {
 import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import {
+	FeatureFlippingEvenementsRepository,
+} from "@evenements/chargement/infrastructure/gateway/repository/feature-flipping-evenements.repository";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: EvenementsChargementLoggerStrategy): GatewayContainer {
@@ -40,17 +43,32 @@ export class GatewayContainerFactory {
 			configuration.STRAPI.EVENEMENT_URL
 		);
 
-		return {
-			evenementsRepository: new MinioAndStrapiEvenementsRepository(
-				minioClient,
-				strapiEvenementHttpClient,
-				configuration,
-				new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH),
-				new JsonContentParser(),
-				loggerStrategy,
-				uuidGenerator,
-				new DateService(),
-			),
-		};
+		if(configuration.FEATURE_FLIPPING_CHARGEMENT) {
+			return {
+				evenementsRepository: new FeatureFlippingEvenementsRepository(
+					minioClient,
+					strapiEvenementHttpClient,
+					configuration,
+					loggerStrategy,
+					uuidGenerator,
+					new DateService(),
+				),
+			};
+		} else {
+			return {
+				evenementsRepository: new MinioAndStrapiEvenementsRepository(
+					minioClient,
+					strapiEvenementHttpClient,
+					configuration,
+					new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH),
+					new JsonContentParser(),
+					loggerStrategy,
+					uuidGenerator,
+					new DateService(),
+				),
+			};
+		}
+
+
 	}
 }

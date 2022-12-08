@@ -16,7 +16,7 @@
 | X    | Convention de commits                                    | Inspiré de [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), voir ici                                       | X            |
 | X    | Stratégie pour les branches                              | Branche principale `main`                                                                                                         | X            |
 | X    | Nom des branches                                         | `<type de ticket>/<description>` (ex: `feat/ma-feature-fait-ca`)                                                                  | X            |
-| X    | Suppression des commits "wip"                            | Oui.                                                                                                                              | X            |
+| X    | Suppression des commits "wip"kotlin block body                            | Oui.                                                                                                                              | X            |
 | X    | Merge intermédiaire sur de gros tickets                  | S'organiser par dépôt/binôme (pas de consensus)                                                                                   | X            |
 | X    | Stratégie des code reviews                               | 1 à 2 approvals (idéalement), [conventional comments](https://conventionalcomments.org/)                                          | X            |
 | X    | Squash des commits                                       | Non mais rebase interactif pour garder un arbre clair                                                                             | X            |

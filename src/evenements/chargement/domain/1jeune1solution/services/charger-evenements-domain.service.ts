@@ -1,23 +1,50 @@
-import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeune1solution";
-import Evenement = UnjeuneUneSolutionChargement.Evenement;
-import EvenementDejaCharge = UnjeuneUneSolutionChargement.EvenementDejaCharge;
-import EvenementASupprimer = UnjeuneUneSolutionChargement.EvenementASupprimer;
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
+import Evenement = UnJeuneUneSolution.Evenement;
 
 export class ChargerEvenenementsDomainService {
 	constructor(
-		private readonly evenementsRepository: UnjeuneUneSolutionChargement.EvenementsRepository,
-	) {
-	}
+		private readonly evenementsRepository: UnJeuneUneSolution.EvenementsRepository,
+	) {}
 
 	public async charger(nomFlux: string): Promise<void> {
 		const evenementsExistants = await this.evenementsRepository.recupererEvenementsDejaCharges(nomFlux);
 		const evenementsACharger = await this.evenementsRepository.recupererNouveauxEvenementsACharger(nomFlux);
 
-		const evenementsAAjouter = evenementsACharger.filter(evenementACharger =>
+		const evenementsAAjouter = this.getEvenementsAAjouter(evenementsACharger, evenementsExistants);
+
+		const evenementsAMettreAjour = this.getEvenementsAMettreAjour(evenementsACharger, evenementsExistants);
+
+		const evenementsASupprimer = this.getEvenementsASupprimer(evenementsExistants, evenementsACharger);
+
+		const evenementsEnErreur = await this.evenementsRepository.chargerEtEnregistrerLesErreurs(evenementsAAjouter, evenementsAMettreAjour, evenementsASupprimer);
+
+		await this.sauvegarderLesEvenements(evenementsEnErreur, nomFlux, evenementsAAjouter, evenementsAMettreAjour, evenementsASupprimer);
+	}
+
+	private async sauvegarderLesEvenements(evenementsEnErreur: UnJeuneUneSolution.EvenementEnErreur[], nomFlux: string, evenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter[], evenementsAMettreAjour: UnJeuneUneSolution.EvenementASupprimer[], evenementsASupprimer: UnJeuneUneSolution.EvenementAMettreAJour[]): Promise<void> {
+		evenementsEnErreur.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "ERROR", evenementsEnErreur);
+		evenementsAAjouter.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "CREATED", evenementsAAjouter);
+		evenementsAMettreAjour.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "UPDATED", evenementsAMettreAjour);
+		evenementsASupprimer.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "DELETED", evenementsASupprimer);
+	}
+
+	private getEvenementsAAjouter(evenementsACharger: UnJeuneUneSolution.Evenement[], evenementsExistants: UnJeuneUneSolution.EvenementDejaCharge[]): UnJeuneUneSolution.EvenementAAjouter[] {
+		return evenementsACharger.filter(evenementACharger =>
 			!evenementsExistants.find(evenementExistant => evenementExistant.idSource === evenementACharger.idSource)
 		);
+	}
 
-		const evenementsAMettreAjour = evenementsACharger.filter(evenementACharger =>
+	private getEvenementsASupprimer(evenementsExistants: UnJeuneUneSolution.EvenementDejaCharge[], evenementsACharger: UnJeuneUneSolution.Evenement[]): UnJeuneUneSolution.EvenementAMettreAJour[] {
+		return evenementsExistants.filter(evenementExistant =>
+			!evenementsACharger.find(evenementACharger => evenementACharger.idSource === evenementExistant.idSource)
+		).map(evenementAMettreAJour => ({
+			...evenementAMettreAJour,
+			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
+		}));
+	}
+
+	private getEvenementsAMettreAjour(evenementsACharger: UnJeuneUneSolution.Evenement[], evenementsExistants: UnJeuneUneSolution.EvenementDejaCharge[]): UnJeuneUneSolution.EvenementASupprimer[] {
+		return evenementsACharger.filter(evenementACharger =>
 			evenementsExistants.find(evenementExistant =>
 				evenementExistant.idSource === evenementACharger.idSource && !this.deepEqual(evenementExistant, evenementACharger)
 			)
@@ -25,25 +52,9 @@ export class ChargerEvenenementsDomainService {
 			...evenementAMettreAJour,
 			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
 		}));
-
-		const evenementsASupprimer: EvenementASupprimer[] = evenementsExistants.filter(evenementExistant =>
-			!evenementsACharger.find(evenementACharger => evenementACharger.idSource === evenementExistant.idSource)
-		).map(evenementAMettreAJour => ({
-			...evenementAMettreAJour,
-			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
-		}));
-
-		const evenementsEnErreur = await this.evenementsRepository.chargerEtEnregistrerLesErreurs(evenementsAAjouter, evenementsAMettreAjour, evenementsASupprimer);
-
-		evenementsEnErreur.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "ERROR", evenementsEnErreur);
-		evenementsAAjouter.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "CREATED", evenementsAAjouter);
-		evenementsAMettreAjour.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "UPDATED", evenementsAMettreAjour);
-		evenementsASupprimer.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "DELETED", evenementsASupprimer);
-
-		return Promise.resolve();
 	}
 
-	private deepEqual(evenementExistant: EvenementDejaCharge, nouvelEvenement: Evenement): boolean {
+	private deepEqual(evenementExistant: UnJeuneUneSolution.EvenementDejaCharge, nouvelEvenement: Evenement): boolean {
 		return evenementExistant.dateDebut === nouvelEvenement.dateDebut &&
 		evenementExistant.dateFin === nouvelEvenement.dateFin &&
 		evenementExistant.description === nouvelEvenement.description &&

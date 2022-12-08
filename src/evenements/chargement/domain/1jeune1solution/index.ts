@@ -1,4 +1,4 @@
-export namespace UnjeuneUneSolutionChargement {
+export namespace UnJeuneUneSolution {
     export interface Evenement {
         dateDebut: string
         dateFin: string
@@ -15,18 +15,18 @@ export namespace UnjeuneUneSolutionChargement {
 
     export type EvenementEnErreur = Evenement
     export type EvenementAAjouter = Evenement
-    export interface EvenementDejaCharge extends Evenement { id: number }
-    export interface EvenementASupprimer extends Evenement { id: number }
-    export interface EvenementAMettreAJour extends Evenement { id: number }
+    export type EvenementDejaCharge = Evenement & { id: number }
+    export type EvenementASupprimer = Evenement & { id: number }
+    export type EvenementAMettreAJour = Evenement & { id: number }
 
     export interface EvenementsRepository {
-        sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnjeuneUneSolutionChargement.Evenement[]): Promise<void>
-        recupererEvenementsDejaCharges(nomFlux: string): Promise<UnjeuneUneSolutionChargement.EvenementDejaCharge[]>;
-        recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnjeuneUneSolutionChargement.Evenement[]>;
+        sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnJeuneUneSolution.Evenement[]): Promise<void>
+        recupererEvenementsDejaCharges(nomFlux: string): Promise<UnJeuneUneSolution.EvenementDejaCharge[]>;
+        recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnJeuneUneSolution.Evenement[]>;
         chargerEtEnregistrerLesErreurs(
-            evenenementsAAjouter: UnjeuneUneSolutionChargement.EvenementAAjouter[],
-            evenementsAMettreAjour: UnjeuneUneSolutionChargement.EvenementAMettreAJour[],
-            evenementsASupprimer: UnjeuneUneSolutionChargement.EvenementASupprimer[],
-        ): Promise<UnjeuneUneSolutionChargement.EvenementEnErreur[]>;
+            evenenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter[],
+            evenementsAMettreAjour: UnJeuneUneSolution.EvenementAMettreAJour[],
+            evenementsASupprimer: UnJeuneUneSolution.EvenementASupprimer[],
+        ): Promise<UnJeuneUneSolution.EvenementEnErreur[]>;
     }
 }
