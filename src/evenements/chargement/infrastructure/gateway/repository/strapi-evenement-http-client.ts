@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
-import { UnjeuneUneSolutionChargement } from "@evenements/chargement/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
 import { DateTime } from "luxon";
 
 type StrapiEvenementResponse = {
@@ -46,12 +46,12 @@ export class StrapiEvenementHttpClient {
     ) {
     }
 
-    public async delete(evenement: UnjeuneUneSolutionChargement.EvenementASupprimer): Promise<void> {
+    public async delete(evenement: UnJeuneUneSolution.EvenementASupprimer): Promise<void> {
         await this.authClient.handleAuthentication(this.axios);
         return this.axios.delete(`${this.evenementUrl}/${evenement.id}`);
     }
 
-    public async getAll(source: string): Promise<UnjeuneUneSolutionChargement.EvenementDejaCharge[]> {
+    public async getAll(source: string): Promise<UnJeuneUneSolution.EvenementDejaCharge[]> {
         await this.authClient.handleAuthentication(this.axios);
         const result = await this.axios.get<StrapiEvenementResponse>(
             this.evenementUrl,
@@ -96,12 +96,12 @@ export class StrapiEvenementHttpClient {
         }));
     }
 
-    public async post(evenementsAAjouter: UnjeuneUneSolutionChargement.EvenementAAjouter): Promise<void> {
+    public async post(evenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter): Promise<void> {
         await this.authClient.handleAuthentication(this.axios);
         return this.axios.post(this.evenementUrl, { data: evenementsAAjouter });
     }
 
-    public async put(evenementAMettreAJour: UnjeuneUneSolutionChargement.EvenementAMettreAJour): Promise<void> {
+    public async put(evenementAMettreAJour: UnJeuneUneSolution.EvenementAMettreAJour): Promise<void> {
         await this.authClient.handleAuthentication(this.axios);
         return this.axios.put(`${this.evenementUrl}/${evenementAMettreAJour.id}`, { data: evenementAMettreAJour });
     }

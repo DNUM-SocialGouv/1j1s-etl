@@ -19,7 +19,7 @@ export class EvenementsChargementLoggerStrategy implements LoggerStrategy {
 		});
 	}
 
-	get(flowName: string): Logger {
+	public get(flowName: string): Logger {
 		const logger = this.loggers.get(flowName);
 		if (logger) {
 			return logger;
