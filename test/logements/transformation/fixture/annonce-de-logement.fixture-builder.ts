@@ -20,7 +20,7 @@ export class AnnonceDeLogementFixtureBuilder {
 			surfaceMax: 0,
 			meuble: true,
 			etage: 1,
-			type: UnJeune1solution.Type.APPARTEMENT,
+			type: UnJeune1solution.Type.RESIDENCE,
 			typeBien: UnJeune1solution.TypeBien.T1,
 			nombreDePieces: 1,
 			url: "https://some.url",

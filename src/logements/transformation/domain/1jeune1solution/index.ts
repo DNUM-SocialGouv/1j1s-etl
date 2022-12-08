@@ -5,16 +5,28 @@ export namespace UnJeune1solution {
 	}
 
 	export enum TypeBien {
+		APPARTEMENT = "appartement",
+		CHAMBRE = "chambre",
+		COLOCATION = "colocation",
+		IMMEUBLE = "immeuble",
+		MAISON = "maison",
 		STUDIO = "studio",
-		T1 = "T1",
-		T2 = "T2",
-		T3 = "T3",
-		NON_RENSEIGNE = "non renseigné"
+		T1 = "t1",
+		T1BIS = "t1bis",
+		T2 = "t2",
+		T3 = "t3",
+		T4 = "t4",
+		PLUS_GRAND = "> t4",
+		NON_RENSEIGNE = "non renseigné",
 	}
 
 	export enum Type {
-		APPARTEMENT = "appartement",
-		RESIDENCE = "residence",
+		COLOCATION = "colocation",
+		COURTE = "courte",
+		INTERGENERATIONNEL = "habitation intergénérationnelle",
+		LOCATION = "location",
+		RESIDENCE = "résidence",
+		SOUS_LOCATION = "sous-location",
 		NON_RENSEIGNE = "non renseigné"
 	}
 
