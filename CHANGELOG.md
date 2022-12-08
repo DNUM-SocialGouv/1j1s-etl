@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.3.1...v2.4.0) (2022-12-08)
+
+
+### Features
+
+* **logements/transformation:** transformer flux immojeune ([298d551](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/298d551e8a11ef465fe60f3b90e1599810432a5a))
+
 ## [2.3.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.3.0...v2.3.1) (2022-12-02)
 
 
