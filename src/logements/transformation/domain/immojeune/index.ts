@@ -1,6 +1,6 @@
+import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 
 export namespace Immojeune {
 	export type AnnonceDeLogement = {
@@ -64,15 +64,47 @@ export namespace Immojeune {
 	}
 
 	export enum TypeDeLogement {
-		RESIDENCE = "résidence",
-		APPARTEMENT = "appartement",
+		COLOCATION = "colocation",
+		COURTE = "courte",
+		INTERGENERATIONAL = "intergenerational",
+		LOCATION = "location",
+		RESIDENCE = "residence",
+		SUBLEASE = "sublease",
 	}
 
 	export enum TypeDeBien {
+		APPARTEMENT = "appartement",
+		CHAMBRE = "chambre",
+		COLOCATION = "colocation",
+		IMMEUBLE = "immeuble",
+		MAISON = "maison",
 		STUDIO = "studio",
-		T1 = "T1",
-		T2 = "T2",
-		T3 = "T3",
+		T1 = "t1",
+		T1BIS = "t1bis",
+		T2 = "t2",
+		T3 = "t3",
+		T4 = "t4",
+		T5 = "t5",
+		T6 = "t6",
+		T7 = "t7",
+		T8 = "t8",
+		T9 = "t9",
+		T10 = "t10",
+		T11 = "t11",
+		T12 = "t12",
+		T13 = "t13",
+		T14 = "t14",
+		T15 = "t15",
+		T16 = "t16",
+		T17 = "t17",
+		T18 = "t18",
+		T19 = "t19",
+		T20 = "t20",
+		T21 = "t21",
+		T22 = "t22",
+		T23 = "t23",
+		T24 = "t24",
+		T25 = "t25",
 	}
 
 	export class Convertir {
@@ -83,7 +115,7 @@ export namespace Immojeune {
 
 		constructor(
 			private readonly assainisseurDeTexte: AssainisseurDeTexte,
-			private readonly dateService: DateService
+			private readonly dateService: DateService,
 		) {
 			this.correspondancesServicesInclus = this.initialiserServicesInclus();
 			this.correspondancesServicesOptionnels = this.initialiserServicesOptionnels();
@@ -127,8 +159,8 @@ export namespace Immojeune {
 				source: UnJeune1solution.Source.IMMOJEUNE,
 				servicesInclus: this.traduireLesServicesInclus(annonceDeLogement.includedServices as Array<Immojeune.ServiceInclus>),
 				servicesOptionnels: this.traduireLesServicesOptionnels(annonceDeLogement.optionalServices as Array<Immojeune.ServiceOptionnel>),
-				type: this.traduireLeTypeDeLogement(annonceDeLogement.type),
-				typeBien: this.traduireLeTypeDeBien(annonceDeLogement.property_type),
+				type: this.traduireLeTypeDeLogement(annonceDeLogement.type.toLowerCase() as TypeDeLogement),
+				typeBien: this.traduireLeTypeDeBien(annonceDeLogement.property_type.toLowerCase() as TypeDeBien),
 			};
 		}
 
@@ -212,8 +244,12 @@ export namespace Immojeune {
 		private initialiserTypesDeLogement(): Map<Immojeune.TypeDeLogement, UnJeune1solution.Type> {
 			const correspondanceTypesDeBien: Map<Immojeune.TypeDeLogement, UnJeune1solution.Type> = new Map();
 
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.APPARTEMENT, UnJeune1solution.Type.APPARTEMENT);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COLOCATION, UnJeune1solution.Type.COLOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COURTE, UnJeune1solution.Type.COURTE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.INTERGENERATIONAL, UnJeune1solution.Type.INTERGENERATIONNEL);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.LOCATION, UnJeune1solution.Type.LOCATION);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.RESIDENCE, UnJeune1solution.Type.RESIDENCE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.SUBLEASE, UnJeune1solution.Type.SOUS_LOCATION);
 
 			return correspondanceTypesDeBien;
 		}
@@ -221,10 +257,38 @@ export namespace Immojeune {
 		private initialiserTypesDeBien(): Map<Immojeune.TypeDeBien, UnJeune1solution.TypeBien> {
 			const correspondanceTypesDeBien: Map<Immojeune.TypeDeBien, UnJeune1solution.TypeBien> = new Map();
 
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.COLOCATION, UnJeune1solution.TypeBien.COLOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.APPARTEMENT, UnJeune1solution.TypeBien.APPARTEMENT);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.CHAMBRE, UnJeune1solution.TypeBien.CHAMBRE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.IMMEUBLE, UnJeune1solution.TypeBien.IMMEUBLE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.MAISON, UnJeune1solution.TypeBien.MAISON);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.STUDIO, UnJeune1solution.TypeBien.STUDIO);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T1BIS, UnJeune1solution.TypeBien.T1BIS);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T1, UnJeune1solution.TypeBien.T1);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T2, UnJeune1solution.TypeBien.T2);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T3, UnJeune1solution.TypeBien.T3);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T4, UnJeune1solution.TypeBien.T4);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T5, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T6, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T7, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T8, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T9, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T10, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T11, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T12, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T13, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T14, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T15, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T16, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T17, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T18, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T19, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T20, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T21, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T22, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T23, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T24, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T25, UnJeune1solution.TypeBien.PLUS_GRAND);
 
 			return correspondanceTypesDeBien;
 		}

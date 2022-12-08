@@ -9,7 +9,7 @@ export class AnnonceDeLogementImmojeuneFixtureBuilder {
 			title: "Le titre de l'annonce",
 			description: "La description de l'annonce",
 			url: "https://some.url",
-			type: Immojeune.TypeDeLogement.APPARTEMENT,
+			type: Immojeune.TypeDeLogement.RESIDENCE,
 			property_type: Immojeune.TypeDeBien.T1,
 			country: "France",
 			address: "1 Rue du Labrador",
