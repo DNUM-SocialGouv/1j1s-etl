@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.4.0...v2.4.1) (2022-12-09)
+
+
+### Bug Fixes
+
+* **logements/transformation:** ajout types logements biens immojeune ([0dc12b1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/0dc12b14ee3563a5e7d66f1b95d26b6e58f73d79))
+
 ## [2.4.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.3.1...v2.4.0) (2022-12-08)
 
 
