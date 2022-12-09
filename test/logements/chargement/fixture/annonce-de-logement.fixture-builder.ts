@@ -1,5 +1,4 @@
-import { Devise } from "@shared/devise";
-import { UnJeune1solution } from "@logements/chargement/domain/1jeune1solution";
+import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 
 export class AnnonceDeLogementFixtureBuilder {
 	public static build(
@@ -13,16 +12,16 @@ export class AnnonceDeLogementFixtureBuilder {
 			titre: "Le titre de l'annonce",
 			description: "La description de l'annonce",
 			charge: 80,
-			devise: new Devise("EUR").value,
+			devise: "€",
 			garantie: 2500,
-			prixHT: 950,
-			prix: 1030,
+			prix: 950,
+			prixHT: 1030,
 			surface: 28,
 			surfaceMax: 0,
 			meuble: true,
 			etage: 1,
-			type: UnJeune1solution.Type.LOCATION,
-			typeBien: UnJeune1solution.TypeBien.APPARTEMENT,
+			type: UnJeune1solution.Type.RESIDENCE,
+			typeBien: UnJeune1solution.TypeBien.T1,
 			nombreDePieces: 1,
 			url: "https://some.url",
 			dateDeDisponibilite: "2023-01-01T00:00:00.000Z",
@@ -44,7 +43,7 @@ export class AnnonceDeLogementFixtureBuilder {
 			},
 			servicesInclus: servicesInclus
 				? servicesInclus
-				: [{ nom: UnJeune1solution.ServiceInclus.Nom.TV }],
+				: [{ nom: UnJeune1solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE }],
 			servicesOptionnels: servicesOptionnels
 				? servicesOptionnels
 				: [{ nom: UnJeune1solution.ServiceOptionnel.Nom.NON_RENSEIGNE }],
