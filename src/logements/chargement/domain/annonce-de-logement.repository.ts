@@ -1,17 +1,21 @@
-import { UnJeune1solution } from "@logements/chargement/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
 
 export interface AnnonceDeLogementRepository {
-	charger(annoncesDeLogement: Array<UnJeune1solution.AnnonceDeLogement>): void;
-	recuperer(): Array<UnJeune1solution.AnnonceDeLogement>;
-	recupererAnnoncesDeLogementReferencees(): Array<UnJeune1solution.AnnonceDeLogement>;
+	publier(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement>): void;
+	mettreAJour(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement>): void;
+	recupererAnnoncesDeLogementNonReferencees(): Array<UnJeune1Solution.AnnonceDeLogement>;
+	recupererAnnoncesDeLogementReferencees(): Array<UnJeune1Solution.AnnonceDeLogement>;
+	supprimer(annoncesDeLogements: Array<UnJeune1Solution.AnnonceDeLogement>): void;
 }
 
 export class AnnonceDeLogementRepositoryImpl implements AnnonceDeLogementRepository {
-	public charger(annoncesDeLogement: Array<UnJeune1solution.AnnonceDeLogement>): void {
-		return;
+	public publier(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement>): void {
 	}
 
-	public recuperer(): Array<UnJeune1solution.AnnonceDeLogement> {
+	public mettreAJour(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement>): void {
+	}
+
+	public recupererAnnoncesDeLogementNonReferencees(): Array<UnJeune1Solution.AnnonceDeLogement> {
 		return [{
 			identifiantSource: "identifiant-source",
 			titre: "Le titre de l'annonce",
@@ -25,13 +29,13 @@ export class AnnonceDeLogementRepositoryImpl implements AnnonceDeLogementReposit
 			surfaceMax: 0,
 			meuble: true,
 			etage: 1,
-			type: UnJeune1solution.Type.RESIDENCE,
-			typeBien: UnJeune1solution.TypeBien.T1,
+			type: UnJeune1Solution.Type.RESIDENCE,
+			typeBien: UnJeune1Solution.TypeBien.T1,
 			nombreDePieces: 1,
 			url: "https://some.url",
 			dateDeDisponibilite: "2023-01-01T00:00:00.000Z",
 			imagesUrl: [{ value: "https://some.picture.url" }, { value: "https://some.picture2.url" }],
-			source: UnJeune1solution.Source.IMMOJEUNE,
+			source: UnJeune1Solution.Source.IMMOJEUNE,
 			bilanEnergetique: {
 				consommationEnergetique: "2.21GW",
 				emissionDeGaz: "B",
@@ -45,12 +49,15 @@ export class AnnonceDeLogementRepositoryImpl implements AnnonceDeLogementReposit
 				latitude: 2.135,
 				longitude: 0.00,
 			},
-			servicesInclus: [{ nom: UnJeune1solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE }],
-			servicesOptionnels: [{ nom: UnJeune1solution.ServiceOptionnel.Nom.NON_RENSEIGNE }],
+			servicesInclus: [{ nom: UnJeune1Solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE }],
+			servicesOptionnels: [{ nom: UnJeune1Solution.ServiceOptionnel.Nom.NON_RENSEIGNE }],
 		}];
 	}
 
-	recupererAnnoncesDeLogementReferencees(): Array<UnJeune1solution.AnnonceDeLogement> {
+	public recupererAnnoncesDeLogementReferencees(): Array<UnJeune1Solution.AnnonceDeLogement> {
 		return [];
+	}
+
+	public supprimer(annoncesDeLogements: Array<UnJeune1Solution.AnnonceDeLogement>): void {
 	}
 }

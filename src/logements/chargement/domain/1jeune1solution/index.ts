@@ -1,4 +1,4 @@
-export namespace UnJeune1solution {
+export namespace UnJeune1Solution {
 	export enum Source {
 		IMMOJEUNE = "immojeune",
 		STUDAPART = "studapart",
@@ -94,22 +94,22 @@ export namespace UnJeune1solution {
 		titre: string
 		description: string
 		url: string
-		source: UnJeune1solution.Source
-		typeBien?: UnJeune1solution.TypeBien
-		type: UnJeune1solution.Type
+		source: UnJeune1Solution.Source
+		typeBien?: UnJeune1Solution.TypeBien
+		type: UnJeune1Solution.Type
 		surface: number
 		surfaceMax?: number
 		nombreDePieces: number
 		etage: number
 		dateDeDisponibilite: string
-		bilanEnergetique: UnJeune1solution.BilanEnergetique
+		bilanEnergetique: UnJeune1Solution.BilanEnergetique
 		meuble: boolean
-		localisation: UnJeune1solution.Localisation
+		localisation: UnJeune1Solution.Localisation
 		sourceCreatedAt: string
 		sourceUpdatedAt: string
-		imagesUrl: Array<UnJeune1solution.ImagesUrl>
-		servicesInclus: Array<UnJeune1solution.ServiceInclus>
-		servicesOptionnels: Array<UnJeune1solution.ServiceOptionnel>
+		imagesUrl: Array<UnJeune1Solution.ImagesUrl>
+		servicesInclus: Array<UnJeune1Solution.ServiceInclus>
+		servicesOptionnels: Array<UnJeune1Solution.ServiceOptionnel>
 		prixHT: number
 		prix?: number
 		devise: string

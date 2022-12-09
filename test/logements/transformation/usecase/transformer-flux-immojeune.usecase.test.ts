@@ -14,7 +14,7 @@ import { DateService } from "@shared/date.service";
 import { FluxTransformation } from "@logements/transformation/domain/flux";
 import { Immojeune } from "@logements/transformation/domain/immojeune";
 import { TransformerFluxImmojeune } from "@logements/transformation/usecase/transformer-flux-immojeune.usecase";
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let repository: StubbedType<AnnonceDeLogementRepository>;
@@ -97,7 +97,7 @@ describe("TransformerFluxImmojeuneTest", () => {
 
 				expect(repository.sauvegarder).to.have.been.calledWith([
 					AnnonceDeLogementFixtureBuilder.build({
-						typeAnnonce: "non renseigné" as UnJeune1solution.TypeAnnonce,
+						typeAnnonce: "non renseigné" as UnJeune1Solution.TypeAnnonce,
 					}),
 				], new FluxTransformation("flux", "old", ".json", ".json"));
 			});
@@ -117,7 +117,7 @@ describe("TransformerFluxImmojeuneTest", () => {
 
 				expect(repository.sauvegarder).to.have.been.calledWith([
 					AnnonceDeLogementFixtureBuilder.build({
-						typeBien: "non renseigné" as UnJeune1solution.TypeBien,
+						typeBien: "non renseigné" as UnJeune1Solution.TypeBien,
 					}),
 				], new FluxTransformation("flux", "old", ".json", ".json"));
 			});
@@ -141,8 +141,8 @@ describe("TransformerFluxImmojeuneTest", () => {
 				expect(repository.sauvegarder).to.have.been.calledWith([
 					AnnonceDeLogementFixtureBuilder.build({
 						servicesInclus: [
-							{ nom: UnJeune1solution.ServiceInclus.Nom.NECESSAIRE_DE_NETTOYAGE },
-							{ nom: UnJeune1solution.ServiceInclus.Nom.NON_RENSEIGNE },
+							{ nom: UnJeune1Solution.ServiceInclus.Nom.NECESSAIRE_DE_NETTOYAGE },
+							{ nom: UnJeune1Solution.ServiceInclus.Nom.NON_RENSEIGNE },
 						],
 					}),
 				], new FluxTransformation("flux", "old", ".json", ".json"));

@@ -1,13 +1,13 @@
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
 
 export class AnnonceDeLogementFixtureBuilder {
 	public static build(
-		annonceDeLogement?: Partial<UnJeune1solution.AnnonceDeLogement>,
-		bilanEnergetique?: Partial<UnJeune1solution.BilanEnergetique>,
-		servicesInclus?: Array<UnJeune1solution.ServiceInclus>,
-		servicesOptionnels?: Array<UnJeune1solution.ServiceOptionnel>,
-	): UnJeune1solution.AnnonceDeLogement {
-		const defaults: UnJeune1solution.AnnonceDeLogement = {
+		annonceDeLogement?: Partial<UnJeune1Solution.AnnonceDeLogement>,
+		bilanEnergetique?: Partial<UnJeune1Solution.BilanEnergetique>,
+		servicesInclus?: Array<UnJeune1Solution.ServiceInclus>,
+		servicesOptionnels?: Array<UnJeune1Solution.ServiceOptionnel>,
+	): UnJeune1Solution.AnnonceDeLogement {
+		const defaults: UnJeune1Solution.AnnonceDeLogement = {
 			identifiantSource: "identifiant-source",
 			titre: "Le titre de l'annonce",
 			description: "La description de l'annonce",
@@ -20,13 +20,13 @@ export class AnnonceDeLogementFixtureBuilder {
 			surfaceMax: 0,
 			meuble: true,
 			etage: 1,
-			type: UnJeune1solution.Type.RESIDENCE,
-			typeBien: UnJeune1solution.TypeBien.T1,
+			type: UnJeune1Solution.Type.RESIDENCE,
+			typeBien: UnJeune1Solution.TypeBien.T1,
 			nombreDePieces: 1,
 			url: "https://some.url",
 			dateDeDisponibilite: "2023-01-01T00:00:00.000Z",
 			imagesUrl: [{ value: "https://some.picture.url" }, { value: "https://some.picture2.url" }],
-			source: UnJeune1solution.Source.IMMOJEUNE,
+			source: UnJeune1Solution.Source.IMMOJEUNE,
 			bilanEnergetique: {
 				consommationEnergetique: "2.21GW",
 				emissionDeGaz: "B",
@@ -43,10 +43,10 @@ export class AnnonceDeLogementFixtureBuilder {
 			},
 			servicesInclus: servicesInclus
 				? servicesInclus
-				: [{ nom: UnJeune1solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE }],
+				: [{ nom: UnJeune1Solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE }],
 			servicesOptionnels: servicesOptionnels
 				? servicesOptionnels
-				: [{ nom: UnJeune1solution.ServiceOptionnel.Nom.NON_RENSEIGNE }],
+				: [{ nom: UnJeune1Solution.ServiceOptionnel.Nom.NON_RENSEIGNE }],
 		};
 
 		return { ...defaults, ...annonceDeLogement };

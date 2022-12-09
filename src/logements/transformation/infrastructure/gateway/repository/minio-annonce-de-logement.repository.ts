@@ -7,7 +7,7 @@ import { LoggerStrategy } from "@shared/configuration/logger";
 import { DateService } from "@shared/date.service";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
 
@@ -49,7 +49,7 @@ export class MinioAnnonceDeLogementRepository implements AnnonceDeLogementReposi
 		}
 	}
 
-	public async sauvegarder(annoncesDeLogement: Array<UnJeune1solution.AnnonceDeLogement>, flux: FluxTransformation): Promise<void> {
+	public async sauvegarder(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement>, flux: FluxTransformation): Promise<void> {
 		this.loggerStrategy.get(flux.nom).info(`Starting to save transformed housing adverts from ${flux.nom}`);
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(this.generateFileName());
 
@@ -76,7 +76,7 @@ export class MinioAnnonceDeLogementRepository implements AnnonceDeLogementReposi
 		return this.uuidGenerator.generate();
 	}
 
-	private toReadableJson(housingAdverts: Array<UnJeune1solution.AnnonceDeLogement>): string {
+	private toReadableJson(housingAdverts: Array<UnJeune1Solution.AnnonceDeLogement>): string {
 		const { JSON_INDENTATION, JSON_REPLACER } = MinioAnnonceDeLogementRepository;
 		return JSON.stringify(housingAdverts, JSON_REPLACER, JSON_INDENTATION);
 	}

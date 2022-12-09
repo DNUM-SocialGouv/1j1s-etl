@@ -4,7 +4,7 @@ import { DateService } from "@shared/date.service";
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { expect, stubClass } from "@test/configuration";
 import sinon from "sinon";
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
 import {
     AnnonceDeLogementStudapartFixtureBuilder,
 } from "@test/logements/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
@@ -12,14 +12,15 @@ import {
     AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/transformation/fixture/annonce-de-logement.fixture-builder";
 import { StudapartBoolean } from "@logements/transformation/domain/studapart/studapart-boolean";
-import Nom = UnJeune1solution.ServiceInclus.Nom;
+import Nom = UnJeune1Solution.ServiceInclus.Nom;
 
+let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
+let dateService: StubbedType<DateService>;
+
+let convertir: Studapart.Convertir;
 describe("StudapartTest", () => {
 
-    let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
-    let dateService: StubbedType<DateService>;
-
-    let convertir: Studapart.Convertir;
+    
 
     beforeEach(() => {
         assainisseurDeTexte = stubInterface(sinon);
@@ -35,9 +36,9 @@ describe("StudapartTest", () => {
     context("Lorsque je reçois une annonce studapart de type apartment, rental et avec une seule room", () => {
         it("je retourne un logement UnJeuneUneSolution de type Appartement avec la garantie de la première pièce", () => {
             const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build();
-            const expected: UnJeune1solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+            const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
               {
-                  source: UnJeune1solution.Source.STUDAPART,
+                  source: UnJeune1Solution.Source.STUDAPART,
                   servicesOptionnels: [],
                   prixHT: -1,
                   servicesInclus: [{ nom: Nom.TV }],
@@ -61,16 +62,16 @@ describe("StudapartTest", () => {
                     rooms: [{ deposit: "250" }, { deposit: "200" }],
                 }
             );
-            const expected: UnJeune1solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+            const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
                 {
-                    source: UnJeune1solution.Source.STUDAPART,
+                    source: UnJeune1Solution.Source.STUDAPART,
                     servicesOptionnels: [],
                     prixHT: -1,
                     servicesInclus: [{ nom: Nom.TV }],
                     surfaceMax: undefined,
-                    typeBien: UnJeune1solution.TypeBien.MAISON,
+                    typeBien: UnJeune1Solution.TypeBien.MAISON,
                     etage: 2,
-                    typeAnnonce: UnJeune1solution.TypeAnnonce.LOGEMENT_CHEZ_L_HABITANT,
+                    typeAnnonce: UnJeune1Solution.TypeAnnonce.LOGEMENT_CHEZ_L_HABITANT,
                     garantie: 200,
                 }
             );
@@ -106,29 +107,29 @@ describe("StudapartTest", () => {
                     },
                 }
             );
-            const expected: UnJeune1solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+            const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
                 {
-                    source: UnJeune1solution.Source.STUDAPART,
+                    source: UnJeune1Solution.Source.STUDAPART,
                     servicesOptionnels: [],
                     prixHT: -1,
                     surfaceMax: undefined,
-                    typeAnnonce: UnJeune1solution.TypeAnnonce.LOGEMENT_CONTRE_SERVICES,
+                    typeAnnonce: UnJeune1Solution.TypeAnnonce.LOGEMENT_CONTRE_SERVICES,
                     servicesInclus: [
-                        { nom: UnJeune1solution.ServiceInclus.Nom.TV },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.CAVE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.LAVE_VAISSELLE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.FOUR },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.SECHE_LINGE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.ASCENSEUR },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.GARAGE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.TERRACE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.FIBRE_OPTIQUE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.GARDIEN_RESIDENCE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.MICRO_ONDE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.REFRIGERATEUR },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.LAVE_LINGE },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.SALLE_DE_SPORT },
-                        { nom: UnJeune1solution.ServiceInclus.Nom.PISCINE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.TV },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.CAVE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.LAVE_VAISSELLE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.FOUR },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.SECHE_LINGE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.ASCENSEUR },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.GARAGE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.TERRACE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.FIBRE_OPTIQUE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.GARDIEN_RESIDENCE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.MICRO_ONDE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.REFRIGERATEUR },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.LAVE_LINGE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.SALLE_DE_SPORT },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.PISCINE },
                     ],
                 }
             );
@@ -142,9 +143,9 @@ describe("StudapartTest", () => {
     context("Lorsque je reçois une annonce sans pièce", () => {
       it("je retourne un logement UnJeuneUneSolution avec un nombre de pièce à 0", () => {
         const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build({ rooms: undefined });
-        const expected: UnJeune1solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+        const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
           {
-            source: UnJeune1solution.Source.STUDAPART,
+            source: UnJeune1Solution.Source.STUDAPART,
             servicesOptionnels: [],
             prixHT: -1,
             servicesInclus: [{ nom: Nom.TV }],
@@ -162,9 +163,9 @@ describe("StudapartTest", () => {
     context("Lorsque je reçois une annonce sans optionLogement", () => {
       it("je retourne un logement UnJeuneUneSolution avec des services à vide", () => {
         const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build({ options: undefined });
-        const expected: UnJeune1solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+        const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
           {
-            source: UnJeune1solution.Source.STUDAPART,
+            source: UnJeune1Solution.Source.STUDAPART,
             servicesOptionnels: [],
             prixHT: -1,
             servicesInclus: [],
