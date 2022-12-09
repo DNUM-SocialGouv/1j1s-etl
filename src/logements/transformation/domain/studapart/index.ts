@@ -1,6 +1,6 @@
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
 import { StudapartBoolean } from "@logements/transformation/domain/studapart/studapart-boolean";
 import { Devise } from "@shared/devise";
 
@@ -62,22 +62,22 @@ export namespace Studapart {
         swimming_pool?: StudapartBoolean
     }
 
-    const optionsLogementTraduitEnUnJeuneUneSolution: {[key: string]: UnJeune1solution.ServiceInclus.Nom} = {
-        tv: UnJeune1solution.ServiceInclus.Nom.TV,
-        basement: UnJeune1solution.ServiceInclus.Nom.CAVE,
-        dish_washer: UnJeune1solution.ServiceInclus.Nom.LAVE_VAISSELLE,
-        oven: UnJeune1solution.ServiceInclus.Nom.FOUR,
-        dryer: UnJeune1solution.ServiceInclus.Nom.SECHE_LINGE,
-        elevator: UnJeune1solution.ServiceInclus.Nom.ASCENSEUR,
-        garage: UnJeune1solution.ServiceInclus.Nom.GARAGE,
-        terrace: UnJeune1solution.ServiceInclus.Nom.TERRACE,
-        optic_fiber: UnJeune1solution.ServiceInclus.Nom.FIBRE_OPTIQUE,
-        guardian: UnJeune1solution.ServiceInclus.Nom.GARDIEN_RESIDENCE,
-        micro_wave: UnJeune1solution.ServiceInclus.Nom.MICRO_ONDE,
-        refrigerator: UnJeune1solution.ServiceInclus.Nom.REFRIGERATEUR,
-        washing_machine: UnJeune1solution.ServiceInclus.Nom.LAVE_LINGE,
-        fitness_room: UnJeune1solution.ServiceInclus.Nom.SALLE_DE_SPORT,
-        swimming_pool: UnJeune1solution.ServiceInclus.Nom.PISCINE,
+    const optionsLogementTraduitEnUnJeuneUneSolution: {[key: string]: UnJeune1Solution.ServiceInclus.Nom} = {
+        tv: UnJeune1Solution.ServiceInclus.Nom.TV,
+        basement: UnJeune1Solution.ServiceInclus.Nom.CAVE,
+        dish_washer: UnJeune1Solution.ServiceInclus.Nom.LAVE_VAISSELLE,
+        oven: UnJeune1Solution.ServiceInclus.Nom.FOUR,
+        dryer: UnJeune1Solution.ServiceInclus.Nom.SECHE_LINGE,
+        elevator: UnJeune1Solution.ServiceInclus.Nom.ASCENSEUR,
+        garage: UnJeune1Solution.ServiceInclus.Nom.GARAGE,
+        terrace: UnJeune1Solution.ServiceInclus.Nom.TERRACE,
+        optic_fiber: UnJeune1Solution.ServiceInclus.Nom.FIBRE_OPTIQUE,
+        guardian: UnJeune1Solution.ServiceInclus.Nom.GARDIEN_RESIDENCE,
+        micro_wave: UnJeune1Solution.ServiceInclus.Nom.MICRO_ONDE,
+        refrigerator: UnJeune1Solution.ServiceInclus.Nom.REFRIGERATEUR,
+        washing_machine: UnJeune1Solution.ServiceInclus.Nom.LAVE_LINGE,
+        fitness_room: UnJeune1Solution.ServiceInclus.Nom.SALLE_DE_SPORT,
+        swimming_pool: UnJeune1Solution.ServiceInclus.Nom.PISCINE,
     };
 
     export class Convertir {
@@ -86,13 +86,13 @@ export namespace Studapart {
             private readonly dateService: DateService,
         ) {}
 
-        depuisStudapartVersUnJeuneUneSolution(studapartLogement: Studapart.AnnonceDeLogement): UnJeune1solution.AnnonceDeLogement {
+        depuisStudapartVersUnJeuneUneSolution(studapartLogement: Studapart.AnnonceDeLogement): UnJeune1Solution.AnnonceDeLogement {
             return {
                 identifiantSource: studapartLogement.id,
                 titre: studapartLogement.title,
                 description: this.assainisseurDeTexte.nettoyer(studapartLogement.description),
                 url: studapartLogement.url_redirection,
-                source: UnJeune1solution.Source.STUDAPART,
+                source: UnJeune1Solution.Source.STUDAPART,
                 typeBien: this.depuisTypeDeBien(studapartLogement.property_type),
                 typeAnnonce: this.depuisTypeDAnnonce(studapartLogement.announcement_type),
                 surface: Number(studapartLogement.surface),
@@ -134,20 +134,20 @@ export namespace Studapart {
             return studapartLogement.floor_number ? Number(studapartLogement.floor_number) : 0;
         }
 
-        private depuisTypeDeBien(typeDeBien: TypeDeBien): UnJeune1solution.TypeBien {
+        private depuisTypeDeBien(typeDeBien: TypeDeBien): UnJeune1Solution.TypeBien {
             switch (typeDeBien) {
-                case "apartment": return UnJeune1solution.TypeBien.APPARTEMENT;
-                case "house": return UnJeune1solution.TypeBien.MAISON;
-                default: return UnJeune1solution.TypeBien.NON_RENSEIGNE;
+                case "apartment": return UnJeune1Solution.TypeBien.APPARTEMENT;
+                case "house": return UnJeune1Solution.TypeBien.MAISON;
+                default: return UnJeune1Solution.TypeBien.NON_RENSEIGNE;
             }
         }
 
-        private depuisTypeDAnnonce(typeDannonce: TypeDAnnonce): UnJeune1solution.TypeAnnonce {
+        private depuisTypeDAnnonce(typeDannonce: TypeDAnnonce): UnJeune1Solution.TypeAnnonce {
             switch (typeDannonce) {
-                case "service": return UnJeune1solution.TypeAnnonce.LOGEMENT_CONTRE_SERVICES;
-                case "homestay": return UnJeune1solution.TypeAnnonce.LOGEMENT_CHEZ_L_HABITANT;
-                case "rental": return UnJeune1solution.TypeAnnonce.LOCATION;
-                default: return UnJeune1solution.TypeAnnonce.NON_RENSEIGNE;
+                case "service": return UnJeune1Solution.TypeAnnonce.LOGEMENT_CONTRE_SERVICES;
+                case "homestay": return UnJeune1Solution.TypeAnnonce.LOGEMENT_CHEZ_L_HABITANT;
+                case "rental": return UnJeune1Solution.TypeAnnonce.LOCATION;
+                default: return UnJeune1Solution.TypeAnnonce.NON_RENSEIGNE;
             }
         }
 
@@ -166,7 +166,7 @@ export namespace Studapart {
             return Math.min(...rooms.map(room => Number(room.deposit)));
         }
 
-        private depuisOptionLogements(optionsLogement?: OptionsLogement): Array<UnJeune1solution.ServiceInclus> {
+        private depuisOptionLogements(optionsLogement?: OptionsLogement): Array<UnJeune1Solution.ServiceInclus> {
             if(optionsLogement) {
                 return Object
                     .entries(optionsLogement)

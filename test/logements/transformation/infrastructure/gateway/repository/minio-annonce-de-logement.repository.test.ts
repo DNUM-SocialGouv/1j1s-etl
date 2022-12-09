@@ -6,16 +6,14 @@ import {
 } from "@test/logements/transformation/fixture/annonce-de-logement.fixture-builder";
 import { Configuration } from "@logements/transformation/configuration/configuration";
 import { DateService } from "@shared/date.service";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FluxTransformation } from "@logements/transformation/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
-import {
-	MinioAnnonceDeLogementRepository,
-} from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { MinioAnnonceDeLogementRepository } from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
 
@@ -120,7 +118,7 @@ describe("MinioRepositoryTest", () => {
 	context("Lorsque je sauvegarde les annonces de logements transformées", () => {
 		it("j'écris le contenu dans les fichiers", async () => {
 			const flux = new FluxTransformation("immojeune", "history", ".json", ".json");
-			const annoncesDeLogement: Array<UnJeune1solution.AnnonceDeLogement> = [
+			const annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement> = [
 				AnnonceDeLogementFixtureBuilder.build(),
 				AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "external-id-2" }),
 			];
@@ -157,7 +155,7 @@ describe("MinioRepositoryTest", () => {
 	context("Lorsque je rencontre une erreur dans la sauvegarde des annonces de logements transformées", () => {
 		it("je lance une erreur", async () => {
 			const flux = new FluxTransformation("immojeune", "history", ".json", ".json");
-			const annoncesDeLogement: Array<UnJeune1solution.AnnonceDeLogement> = [
+			const annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement> = [
 				AnnonceDeLogementFixtureBuilder.build(),
 				AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "external-id-2" }),
 			];
