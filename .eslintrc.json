@@ -23,7 +23,8 @@
         "max-depth": ["error", 2],
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "double"],
-        "semi": "error"
+        "semi": "error",
+        "eol-last": "error"
     },
     "overrides": [
         {
