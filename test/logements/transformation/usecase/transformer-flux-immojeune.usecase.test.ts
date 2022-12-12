@@ -1,20 +1,20 @@
-import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
-
-import { AnnonceDeLogementRepository } from "@logements/transformation/domain/annonce-de-logement.repository";
-import { FluxTransformation } from "@logements/transformation/domain/flux";
-import { Immojeune } from "@logements/transformation/domain/immojeune";
-import { TransformerFluxImmojeune } from "@logements/transformation/usecase/transformer-flux-immojeune.usecase";
+import sinon from "sinon";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
-import { DateService } from "@shared/date.service";
-import { expect, stubClass } from "@test/configuration";
-import {
-	AnnonceDeLogementImmojeuneFixtureBuilder,
-} from "@test/logements/transformation/fixture/annonce-de-logement-immojeune.fixture-builder";
+
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/transformation/fixture/annonce-de-logement.fixture-builder";
-import sinon from "sinon";
+import {
+	AnnonceDeLogementImmojeuneFixtureBuilder,
+} from "@test/logements/transformation/fixture/annonce-de-logement-immojeune.fixture-builder";
+import { AnnonceDeLogementRepository } from "@logements/transformation/domain/annonce-de-logement.repository";
+import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
+import { expect, stubClass } from "@test/configuration";
+import { DateService } from "@shared/date.service";
+import { FluxTransformation } from "@logements/transformation/domain/flux";
+import { Immojeune } from "@logements/transformation/domain/immojeune";
+import { TransformerFluxImmojeune } from "@logements/transformation/usecase/transformer-flux-immojeune.usecase";
+import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let repository: StubbedType<AnnonceDeLogementRepository>;
@@ -37,7 +37,9 @@ describe("TransformerFluxImmojeuneTest", () => {
 	context("Lorsque je transforme le flux en provenance d'immojeune", () => {
 		it("je récupère le contenu du flux stocké sur le répertoire distant", async () => {
 			repository.recuperer.resolves([AnnonceDeLogementImmojeuneFixtureBuilder.build()]);
+
 			await usecase.executer(flux);
+
 			expect(repository.recuperer).to.have.been.calledOnceWith(new FluxTransformation("flux", "old", ".json", ".json"));
 		});
 
