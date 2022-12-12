@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.4.1...v2.5.0) (2022-12-12)
+
+
+### Features
+
+* ajout cli ([971ab9f](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/971ab9f69a53c0f3fedd3f1fd155f07a34982df9))
+* ajout de la méthode pour charger dans strapi ([971ab9f](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/971ab9f69a53c0f3fedd3f1fd155f07a34982df9))
+* ajout repo (reste implem du charger avec strapi) ([971ab9f](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/971ab9f69a53c0f3fedd3f1fd155f07a34982df9))
+* **evenement/chargement:** ajout de chargement pour le flux tous mobilises ([971ab9f](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/971ab9f69a53c0f3fedd3f1fd155f07a34982df9))
+* **evenements/chargement:** ajout de la sauvegarder sur le minio ([29d33bb](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/29d33bbdca055269937b38056d354e0a6c7a04c1))
+* **evenements/chargement:** retours PR Seb ([7192cd3](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/7192cd309327a0dbfd861c07fc5870fec8887974))
+* gestion ff ([971ab9f](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/971ab9f69a53c0f3fedd3f1fd155f07a34982df9))
+
 ## [2.4.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.4.0...v2.4.1) (2022-12-09)
 
 
