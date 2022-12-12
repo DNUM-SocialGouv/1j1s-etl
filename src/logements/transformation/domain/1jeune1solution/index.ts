@@ -16,7 +16,8 @@ export namespace UnJeune1solution {
 		T2 = "t2",
 		T3 = "t3",
 		T4 = "t4",
-		PLUS_GRAND = "> t4",
+		T5 = "t5",
+		PLUS_GRAND = "> t5",
 		NON_RENSEIGNE = "non renseigné",
 	}
 
