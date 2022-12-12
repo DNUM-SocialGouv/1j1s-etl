@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.5.0...v2.5.1) (2022-12-12)
+
+
+### Bug Fixes
+
+* **logements/transformation:** inversion prix et prit HT ([9ea4ff3](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/9ea4ff38ed6bc9c38e74ab9773926bc047dd573a))
+
 ## [2.5.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.4.1...v2.5.0) (2022-12-12)
 
 
