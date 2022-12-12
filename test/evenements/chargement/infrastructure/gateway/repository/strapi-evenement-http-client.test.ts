@@ -17,11 +17,6 @@ import {
 const source = "tous-mobilises";
 const url = "evenements";
 const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-const evenementASupprimer: UnJeuneUneSolution.EvenementASupprimer = {
-	id: 1,
-	...evenement1Le24Novembre,
-};
-
 const evenementAMettreAJour: UnJeuneUneSolution.EvenementAMettreAJour = {
 	id: 1,
 	...evenement1Le24Novembre,

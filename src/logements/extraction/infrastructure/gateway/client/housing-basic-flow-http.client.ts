@@ -2,7 +2,7 @@ import { BasicFlowHttpClient } from "@shared/infrastructure/gateway/client/basic
 import { Axios } from "axios";
 import { Logger } from "@shared/configuration/logger";
 
-export class HousingBasicflowClient extends BasicFlowHttpClient {
+export class HousingBasicFlowHttpClient extends BasicFlowHttpClient {
 
 	constructor(axios: Axios) {
 		super(axios);

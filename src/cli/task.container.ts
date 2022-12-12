@@ -42,6 +42,7 @@ export class TaskContainerFactory {
 			housing: {
 				extract: {
 					immojeune: tasks.housing.extract.immojeune,
+					studapart: tasks.housing.extract.studapart,
 				},
 				transform: {
 					immojeune: tasks.housing.transform.immojeune,

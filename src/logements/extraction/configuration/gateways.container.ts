@@ -5,11 +5,16 @@ import axios from "axios";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { Client } from "minio";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { HousingsOnFlowNameStrategy } from "@logements/extraction/infrastructure/gateway/client/flow.strategy";
+import { HousingsOnFlowNameStrategy } from "@logements/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
 import {
 	MinioHttpFlowRepository,
 } from "@logements/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
-import { HousingBasicflowClient } from "@logements/extraction/infrastructure/gateway/client/housing-basicflow.client";
+import { HousingBasicFlowHttpClient } from "@logements/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";
+import {
+	StudapartFtpFlowClient,
+} from "@logements/extraction/infrastructure/gateway/client/studapart/studapart-ftp-flow.client";
+import { StreamZipClient } from "@logements/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
+import { FtpClient } from "@logements/extraction/infrastructure/gateway/client/studapart/ftp.client";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {
@@ -27,9 +32,11 @@ export class GatewayContainerFactory {
 		});
 		const uuidGenerator = new NodeUuidGenerator();
 
-		const housingBasicflowClient = new HousingBasicflowClient(httpClient);
+		const housingBasicflowClient = new HousingBasicFlowHttpClient(httpClient);
 
-		const flowStrategy = new HousingsOnFlowNameStrategy(configuration, housingBasicflowClient);
+		const studapartFlowClient = new StudapartFtpFlowClient(configuration, new FtpClient(), new StreamZipClient(), new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH));
+
+		const flowStrategy = new HousingsOnFlowNameStrategy(configuration, housingBasicflowClient, studapartFlowClient);
 
 		return {
 			repositories: {
