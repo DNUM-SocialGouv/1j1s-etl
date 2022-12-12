@@ -267,8 +267,8 @@ export namespace Immojeune {
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T1, UnJeune1solution.TypeBien.T1);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T2, UnJeune1solution.TypeBien.T2);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T3, UnJeune1solution.TypeBien.T3);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T4, UnJeune1solution.TypeBien.T4);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T5, UnJeune1solution.TypeBien.T5);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T4, UnJeune1solution.TypeBien.PLUS_GRAND);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T5, UnJeune1solution.TypeBien.PLUS_GRAND);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T6, UnJeune1solution.TypeBien.PLUS_GRAND);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T7, UnJeune1solution.TypeBien.PLUS_GRAND);
 			correspondanceTypesDeBien.set(Immojeune.TypeDeBien.T8, UnJeune1solution.TypeBien.PLUS_GRAND);
