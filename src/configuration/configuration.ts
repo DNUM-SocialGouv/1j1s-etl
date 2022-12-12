@@ -95,7 +95,10 @@ export class ConfigurationFactory {
 			},
 			HOUSING: {
 				EXTRACT_LOG_LEVEL: getOrDefault("HOUSING_EXTRACT_LOG_LEVEL", "debug") as LogLevel,
-				FLOWS: [getOrError("HOUSING_IMMOJEUNE_NAME")],
+				FLOWS: [
+					getOrError("HOUSING_IMMOJEUNE_NAME"),
+					getOrError("HOUSING_STUDAPART_NAME"),
+				],
 				LOAD_LOG_LEVEL: getOrDefault("HOUSING_LOAD_LOG_LEVEL", "debug") as LogLevel,
 				TRANSFORM_LOG_LEVEL: getOrDefault("HOUSING_LOAD_LOG_LEVEL", "debug") as LogLevel,
 			},

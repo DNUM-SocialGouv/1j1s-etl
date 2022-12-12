@@ -3,6 +3,7 @@ import { ExtraireFluxDomainService } from "@logements/extraction/domain/services
 import { GatewayContainer } from "@logements/extraction/infrastructure/gateway";
 import { UsecaseContainer } from "@logements/extraction/usecase";
 import { ExtraireImmojeune } from "@logements/extraction/usecase/extraire-immojeune.usecase";
+import { ExtraireStudapartUseCase } from "@logements/extraction/usecase/extraire-studapart.usecase";
 
 export class UsecaseContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {
@@ -15,6 +16,7 @@ export class UsecaseContainerFactory {
 
 		return {
 			extraireImmojeune: new ExtraireImmojeune(extraireFluxDomainService),
+			extraireStudapart: new ExtraireStudapartUseCase(extraireFluxDomainService),
 		};
 	}
 }

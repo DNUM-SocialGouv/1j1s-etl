@@ -3,7 +3,7 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { FlowClient, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
 import { Logger } from "@shared/configuration/logger";
 import { Configuration } from "@logements/extraction/configuration/configuration";
-import { HousingsOnFlowNameStrategy } from "@logements/extraction/infrastructure/gateway/client/flow.strategy";
+import { HousingsOnFlowNameStrategy } from "@logements/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
 import { FluxExtraction } from "@logements/extraction/domain/flux";
 import { expect } from "@test/configuration";
 
@@ -12,21 +12,25 @@ const url = "http://some.url";
 let flow: FluxExtraction;
 
 let housingsBasicFlowClient: StubbedType<FlowClient>;
+let studapartFlowClient: StubbedType<FlowClient>;
 let logger: StubbedType<Logger>;
 
-
 let flowStrategy: HousingsOnFlowNameStrategy;
+
 describe("HousingsOnFlowNameStrategyTest", () => {
 	beforeEach(() => {
 		const configuration = stubInterface<Configuration>(sinon);
 		configuration.IMMOJEUNE.NAME = "immojeune";
+		configuration.STUDAPART.NAME = "studapart";
 
 		housingsBasicFlowClient = stubInterface<FlowClient>(sinon);
+		studapartFlowClient = stubInterface<FlowClient>(sinon);
 		logger = stubInterface<Logger>(sinon);
 
 		flowStrategy = new HousingsOnFlowNameStrategy(
 			configuration,
 			housingsBasicFlowClient,
+			studapartFlowClient,
 		);
 	});
 
@@ -40,6 +44,19 @@ describe("HousingsOnFlowNameStrategyTest", () => {
 
 			expect(housingsBasicFlowClient.pull).to.have.been.calledOnce;
 			expect(housingsBasicFlowClient.pull).to.have.been.calledWith(url);
+		});
+	});
+
+	context("Lorsque je récupère le contenu du flux studapart", () => {
+		beforeEach(() => {
+			flow = new FluxExtraction("studapart", ".xml", "history", "ftp://some.url");
+		});
+
+		it("utilise le bon client pour studapart", async () => {
+			await flowStrategy.get(flow, logger);
+
+			expect(studapartFlowClient.pull).to.have.been.calledOnce;
+			expect(studapartFlowClient.pull).to.have.been.calledWith("ftp://some.url");
 		});
 	});
 
