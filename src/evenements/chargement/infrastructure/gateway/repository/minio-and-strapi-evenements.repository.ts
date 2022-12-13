@@ -11,11 +11,10 @@ import { LoggerStrategy } from "@shared/configuration/logger";
 import { DateService } from "@shared/date.service";
 import {
     StrapiEvenementHttpClient,
-} from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
+} from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import axios from "axios";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import Evenement = UnJeuneUneSolution.Evenement;
 
 export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.EvenementsRepository {
     private readonly LATEST_FILE_NAME = "latest";
@@ -30,15 +29,18 @@ export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.Ev
         protected readonly uuidGenerator: UuidGenerator,
         protected readonly dateService: DateService,
     ) {}
+    public async chargerEtEnregistrerLesErreurs(
+        evenementsAAjouter: Array<UnJeuneUneSolution.EvenementAAjouter>,
+        evenementsAMettreAjour: Array<UnJeuneUneSolution.EvenementAMettreAJour>,
+        evenementsASupprimer: Array<UnJeuneUneSolution.EvenementASupprimer>,
+    ): Promise<Array<UnJeuneUneSolution.Evenement>> {
 
-    public async chargerEtEnregistrerLesErreurs(evenenementsAAjouter: Array<UnJeuneUneSolution.EvenementAAjouter>, evenementsAMettreAjour: Array<UnJeuneUneSolution.EvenementAMettreAJour>, evenementsASupprimer: Array<UnJeuneUneSolution.EvenementASupprimer>): Promise<Array<UnJeuneUneSolution.Evenement>> {
-        const evenementsEnErreur: Array<Evenement> = [];
-
-        for (const evenenementAAjouter of evenenementsAAjouter) {
+        const evenementsEnErreur: Array<UnJeuneUneSolution.Evenement> = [];
+        for (const evenementAAjouter of evenementsAAjouter) {
             try {
-                await this.strapiEvenementHttpClient.post(evenenementAAjouter);
+                await this.strapiEvenementHttpClient.post(evenementAAjouter);
             } catch (e) {
-                evenementsEnErreur.push(evenenementAAjouter);
+                evenementsEnErreur.push(evenementAAjouter);
             }
         }
 

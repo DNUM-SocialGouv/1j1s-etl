@@ -4,9 +4,11 @@ import { TaskContainer as LoadTasks } from "@stages/chargement/configuration/tas
 import { TaskContainer as TransformTasks } from "@stages/transformation/configuration/tasks.container";
 import { TaskContainer as EventsExtractTasks } from "@evenements/extraction/configuration/tasks.container";
 import { TaskContainer as EventsTransformTasks } from "@evenements/transformation/configuration/tasks.container";
+import { TaskContainer as EventsLoadTask } from "@evenements/chargement/configuration/tasks.container";
 import { TaskContainer as HousingExtractTask } from "@logements/extraction/configuration/tasks.container";
 import { TaskContainer as HousingTransformTask } from "@logements/transformation/configuration/tasks.container";
-import { TaskContainer as EventsLoadTask } from "@evenements/chargement/configuration/tasks.container";
+import { TaskContainer as HousingLoadTask } from "@logements/chargement/configuration/task.container";
+
 
 export type TaskContainer = Record<string, Record<string, Record<string, Task>>>
 
@@ -20,6 +22,7 @@ export class TaskContainerFactory {
 		housing: {
 			extract: HousingExtractTask
 			transform: HousingTransformTask
+			load: HousingLoadTask
 		},
 		internships: {
 			extract: ExtractTasks;
@@ -47,6 +50,9 @@ export class TaskContainerFactory {
 				transform: {
 					immojeune: tasks.housing.transform.immojeune,
 					studapart: tasks.housing.transform.studapart,
+				},
+				load: {
+					immojeune: tasks.housing.load.immojeune,
 				},
 			},
 			internships: {

@@ -118,7 +118,6 @@ export namespace UnJeune1Solution {
 		}
 	}
 
-
 	export interface OffreDeStageRepository {
 		charger(source: string, offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>>;
 		recupererMisesAJourDesOffres(nomDuFlux: string): Promise<Array<OffreDeStage>>;

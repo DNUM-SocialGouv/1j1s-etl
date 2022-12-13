@@ -20,6 +20,7 @@ const evenementsTasks = {
 const logementsTasks = {
 	extract: Logements.ExtractionModule.export(),
 	transform: Logements.TransformationModule.export(),
+	load: Logements.LoadModule.export(),
 };
 const stagesTasks = {
 	extract: Stages.ExtractionModule.export(),

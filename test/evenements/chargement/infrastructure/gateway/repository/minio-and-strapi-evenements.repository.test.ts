@@ -23,7 +23,7 @@ import {
 import { DateService } from "@shared/date.service";
 import {
     StrapiEvenementHttpClient,
-} from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
+} from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 

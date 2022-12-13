@@ -21,7 +21,7 @@ export namespace UnJeune1Solution {
 		NON_RENSEIGNE = "non renseigné",
 	}
 
-	export enum TypeAnnonce {
+	export enum Type {
 		COLOCATION = "colocation",
 		COURTE = "courte",
 		INTERGENERATIONNEL = "habitation intergénérationnelle",
@@ -111,7 +111,7 @@ export namespace UnJeune1Solution {
 		url: string
 		source: UnJeune1Solution.Source
 		typeBien?: UnJeune1Solution.TypeBien
-		typeAnnonce: UnJeune1Solution.TypeAnnonce
+		type: UnJeune1Solution.Type
 		surface: number
 		surfaceMax?: number
 		nombreDePieces: number

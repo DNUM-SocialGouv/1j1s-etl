@@ -8,7 +8,7 @@ import { EvenementsChargementLoggerStrategy } from "@evenements/chargement/confi
 import { GatewayContainer } from "@evenements/chargement/infrastructure/gateway";
 import {
 	StrapiEvenementHttpClient,
-} from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
+} from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import {
 	MinioAndStrapiEvenementsRepository,
 } from "@evenements/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";

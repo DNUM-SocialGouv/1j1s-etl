@@ -111,7 +111,7 @@ export namespace Immojeune {
 	export class Convertir {
 		private readonly correspondancesServicesInclus: Map<Immojeune.ServiceInclus, UnJeune1Solution.ServiceInclus.Nom>;
 		private readonly correspondancesServicesOptionnels: Map<Immojeune.ServiceOptionnel, UnJeune1Solution.ServiceOptionnel.Nom>;
-		private readonly correspondancesTypeDeLogement: Map<Immojeune.TypeDeLogement, UnJeune1Solution.TypeAnnonce>;
+		private readonly correspondancesTypeDeLogement: Map<Immojeune.TypeDeLogement, UnJeune1Solution.Type>;
 		private readonly correspondancesTypeDeBien: Map<Immojeune.TypeDeBien, UnJeune1Solution.TypeBien>;
 
 		constructor(
@@ -161,7 +161,7 @@ export namespace Immojeune {
 				source: UnJeune1Solution.Source.IMMOJEUNE,
 				servicesInclus: this.traduireLesServicesInclus(annonceDeLogement.includedServices as Array<Immojeune.ServiceInclus>),
 				servicesOptionnels: this.traduireLesServicesOptionnels(annonceDeLogement.optionalServices as Array<Immojeune.ServiceOptionnel>),
-				typeAnnonce: this.traduireLeTypeDeLogement(annonceDeLogement.type.toLowerCase() as TypeDeLogement),
+				type: this.traduireLeTypeDeLogement(annonceDeLogement.type.toLowerCase() as TypeDeLogement),
 				typeBien: this.traduireLeTypeDeBien(annonceDeLogement.property_type.toLowerCase() as TypeDeBien),
 			};
 		}
@@ -192,8 +192,8 @@ export namespace Immojeune {
 			return servicesOptionnels?.map((serviceOptionnel) => this.traduireLeServiceOptionnel(serviceOptionnel)) || [];
 		}
 		
-		private traduireLeTypeDeLogement(typeDeLogement: Immojeune.TypeDeLogement): UnJeune1Solution.TypeAnnonce {
-			return this.correspondancesTypeDeLogement.get(typeDeLogement) || UnJeune1Solution.TypeAnnonce.NON_RENSEIGNE;
+		private traduireLeTypeDeLogement(typeDeLogement: Immojeune.TypeDeLogement): UnJeune1Solution.Type {
+			return this.correspondancesTypeDeLogement.get(typeDeLogement) || UnJeune1Solution.Type.NON_RENSEIGNE;
 		}
 
 		private traduireLeTypeDeBien(typeDeBien: Immojeune.TypeDeBien): UnJeune1Solution.TypeBien {
@@ -243,15 +243,15 @@ export namespace Immojeune {
 		}
 
 
-		private initialiserTypesDeLogement(): Map<Immojeune.TypeDeLogement, UnJeune1Solution.TypeAnnonce> {
-			const correspondanceTypesDeBien: Map<Immojeune.TypeDeLogement, UnJeune1Solution.TypeAnnonce> = new Map();
+		private initialiserTypesDeLogement(): Map<Immojeune.TypeDeLogement, UnJeune1Solution.Type> {
+			const correspondanceTypesDeBien: Map<Immojeune.TypeDeLogement, UnJeune1Solution.Type> = new Map();
 
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COLOCATION, UnJeune1Solution.TypeAnnonce.COLOCATION);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COURTE, UnJeune1Solution.TypeAnnonce.COURTE);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.INTERGENERATIONAL, UnJeune1Solution.TypeAnnonce.INTERGENERATIONNEL);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.LOCATION, UnJeune1Solution.TypeAnnonce.LOCATION);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.RESIDENCE, UnJeune1Solution.TypeAnnonce.RESIDENCE);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.SUBLEASE, UnJeune1Solution.TypeAnnonce.SOUS_LOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COLOCATION, UnJeune1Solution.Type.COLOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COURTE, UnJeune1Solution.Type.COURTE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.INTERGENERATIONAL, UnJeune1Solution.Type.INTERGENERATIONNEL);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.LOCATION, UnJeune1Solution.Type.LOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.RESIDENCE, UnJeune1Solution.Type.RESIDENCE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.SUBLEASE, UnJeune1Solution.Type.SOUS_LOCATION);
 
 			return correspondanceTypesDeBien;
 		}

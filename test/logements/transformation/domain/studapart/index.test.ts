@@ -71,7 +71,7 @@ describe("StudapartTest", () => {
                     surfaceMax: undefined,
                     typeBien: UnJeune1Solution.TypeBien.MAISON,
                     etage: 2,
-                    typeAnnonce: UnJeune1Solution.TypeAnnonce.LOGEMENT_CHEZ_L_HABITANT,
+                    type: UnJeune1Solution.Type.LOGEMENT_CHEZ_L_HABITANT,
                     garantie: 200,
                 }
             );
@@ -113,7 +113,7 @@ describe("StudapartTest", () => {
                     servicesOptionnels: [],
                     prixHT: -1,
                     surfaceMax: undefined,
-                    typeAnnonce: UnJeune1Solution.TypeAnnonce.LOGEMENT_CONTRE_SERVICES,
+                    type: UnJeune1Solution.Type.LOGEMENT_CONTRE_SERVICES,
                     servicesInclus: [
                         { nom: UnJeune1Solution.ServiceInclus.Nom.TV },
                         { nom: UnJeune1Solution.ServiceInclus.Nom.CAVE },

@@ -7,7 +7,7 @@ import { expect } from "@test/configuration";
 import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
 import {
 	StrapiEvenementHttpClient,
-} from "@evenements/chargement/infrastructure/gateway/repository/strapi-evenement-http-client";
+} from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import {
 	evenement1Le24Novembre,
 	evenementDejaCharge1Le24Novembre,
@@ -17,6 +17,7 @@ import {
 const source = "tous-mobilises";
 const url = "evenements";
 const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
 const evenementAMettreAJour: UnJeuneUneSolution.EvenementAMettreAJour = {
 	id: 1,
 	...evenement1Le24Novembre,

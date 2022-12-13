@@ -1,4 +1,5 @@
 import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
+import { FluxLogement } from "@logements/chargement/domain/flux";
 import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
 import { Usecase } from "@shared/usecase";
 
@@ -6,51 +7,69 @@ export class ChargerFluxImmojeune implements Usecase {
 	constructor(private readonly annonceDeLogementRepository: AnnonceDeLogementRepository) {
 	}
 
-	public async executer(): Promise<void> {
-		const annoncesDeLogementNonReferencees = this.annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees();
-		const annoncesDeLogementReferencees = this.annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees();
+	public async executer(flux: FluxLogement): Promise<void> {
+		const annoncesDeLogementACharger = await this.annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees(flux);
+		const annoncesDeLogementDejaChargees = await this.annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees(flux);
 
-		const nouvellesAnnoncesACharger = this.filtrerLesNouvellesAnnoncesACharger(annoncesDeLogementReferencees, annoncesDeLogementNonReferencees);
-		const annoncesASupprimer = this.filtrerLesAnnoncesASupprimer(annoncesDeLogementReferencees, annoncesDeLogementNonReferencees);
-		const annoncesAMettreAJour = this.filtrerLesAnnoncesAMettreAJour(annoncesDeLogementNonReferencees, annoncesDeLogementReferencees);
+		const nouvellesAnnonces = this.filtrerLesNouvellesAnnoncesACharger(annoncesDeLogementDejaChargees, annoncesDeLogementACharger);
+		const annoncesObsoletes = this.filtrerLesAnnoncesASupprimer(annoncesDeLogementDejaChargees, annoncesDeLogementACharger);
+		const annoncesAMettreAJour = this.filtrerLesAnnoncesAMettreAJour(annoncesDeLogementDejaChargees, annoncesDeLogementACharger);
 
-		this.annonceDeLogementRepository.publier(nouvellesAnnoncesACharger);
-		this.annonceDeLogementRepository.supprimer(annoncesASupprimer);
-		this.annonceDeLogementRepository.mettreAJour(annoncesAMettreAJour);
+		const annoncesEnErreur = await this.annonceDeLogementRepository.charger([
+			...nouvellesAnnonces,
+			...annoncesObsoletes,
+			...annoncesAMettreAJour,
+		], flux.nom);
+
+		await this.annonceDeLogementRepository.preparerLeSuivi(nouvellesAnnonces, flux);
+		await this.annonceDeLogementRepository.preparerLeSuivi(annoncesObsoletes, flux);
+		await this.annonceDeLogementRepository.preparerLeSuivi(annoncesAMettreAJour, flux);
+		await this.annonceDeLogementRepository.preparerLeSuivi(annoncesEnErreur, flux);
 	}
 
 	private filtrerLesNouvellesAnnoncesACharger(
-		annoncesDeLogementReferencees: Array<UnJeune1Solution.AnnonceDeLogement>,
-		annoncesDeLogementNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement>,
-	): Array<UnJeune1Solution.AnnonceDeLogement> {
-		return annoncesDeLogementNonReferencees
-			.filter((annonceDeLogement) => {
-				const identifiantsSourcesReferences = annoncesDeLogementReferencees
-					.map((annonceDeLogementReferencee) => annonceDeLogementReferencee.identifiantSource);
-				return !(identifiantsSourcesReferences.includes(annonceDeLogement.identifiantSource));
-			});
+		annoncesDeLogementDejaChargees: Array<UnJeune1Solution.AnnonceDeLogementReferencee>,
+		annoncesDeLogementACharger: Array<UnJeune1Solution.AnnonceDeLogement>,
+	): Array<UnJeune1Solution.NouvelleAnnonceDeLogement> {
+		const identifiantsSourcesReferences = annoncesDeLogementDejaChargees
+			.map((annonceReferencee) => annonceReferencee.identifiantSource);
+		return annoncesDeLogementACharger
+			.filter((annonceDeLogement) => !(identifiantsSourcesReferences.includes(annonceDeLogement.identifiantSource)))
+			.map((annonceDeLogement) => new UnJeune1Solution.NouvelleAnnonceDeLogement(annonceDeLogement.recupererAttributs()));
 	}
 
 	private filtrerLesAnnoncesASupprimer(
-		annoncesDeLogementReferencees: Array<UnJeune1Solution.AnnonceDeLogement>,
-		annoncesDeLogementNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement>,
-	): Array<UnJeune1Solution.AnnonceDeLogement> {
+		annoncesDeLogementReferencees: Array<UnJeune1Solution.AnnonceDeLogementReferencee>,
+		annoncesDeLogementACharger: Array<UnJeune1Solution.AnnonceDeLogement>,
+	): Array<UnJeune1Solution.AnnonceDeLogementObsolete> {
+		const identifiantsSourceACharger = annoncesDeLogementACharger
+			.map((annonceNonReferencee) => annonceNonReferencee.identifiantSource);
 		return annoncesDeLogementReferencees
-			.filter((annonceReferencee) => {
-				const identifiantsSourceNonReferences = annoncesDeLogementNonReferencees
-					.map((annonceNonReferencee) => annonceNonReferencee.identifiantSource);
-				return !(identifiantsSourceNonReferences.includes(annonceReferencee.identifiantSource));
-			});
+			.filter((annonceReferencee) => !(identifiantsSourceACharger.includes(annonceReferencee.identifiantSource)))
+			.map((annonceObsolete) => new UnJeune1Solution.AnnonceDeLogementObsolete(
+				{
+					identifiantSource: annonceObsolete.identifiantSource,
+					sourceUpdatedAt: annonceObsolete.sourceUpdatedAt,
+				},
+				annonceObsolete.id,
+			));
 	}
 
-	private filtrerLesAnnoncesAMettreAJour(annoncesNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement>, annoncesReferencees: Array<UnJeune1Solution.AnnonceDeLogement>) {
-		return annoncesNonReferencees
-			.filter((annonceNonReferencee) => {
-				const identifiantsSourceReferences = annoncesReferencees
-					.map((annonceReferencee) => annonceReferencee.identifiantSource);
-				const annonceReferencee = annoncesReferencees.find((annonceDejaReferencee) => annonceDejaReferencee.identifiantSource === annonceNonReferencee.identifiantSource);
+	private filtrerLesAnnoncesAMettreAJour(
+		annoncesDeLogementDejaChargees: Array<UnJeune1Solution.AnnonceDeLogementReferencee>,
+		annoncesDeLogementACharger: Array<UnJeune1Solution.AttributsAnnonceDeLogement>,
+	): Array<UnJeune1Solution.AnnonceDeLogementAMettreAJour> {
+		const result: Array<UnJeune1Solution.AnnonceDeLogementAMettreAJour> = [];
 
-				return annonceReferencee && new Date(annonceReferencee.sourceUpdatedAt).getTime() < new Date(annonceNonReferencee.sourceUpdatedAt).getTime();
-			});
+		for (const annonce of annoncesDeLogementACharger) {
+			const annonceDejaChargee = annoncesDeLogementDejaChargees.find(current => current.identifiantSource == annonce.identifiantSource);
+
+			if (annonceDejaChargee !== undefined && new Date(annonce.sourceUpdatedAt).getTime() > new Date(annonceDejaChargee.sourceUpdatedAt).getTime()) {
+				result.push(new UnJeune1Solution.AnnonceDeLogementAMettreAJour(
+					{ ...annonce }, annonceDejaChargee.id,
+				));
+			}
+		}
+		return result;
 	}
 }
