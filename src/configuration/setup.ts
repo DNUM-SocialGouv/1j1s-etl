@@ -32,16 +32,16 @@ export class Setup {
 		try {
 			this.logger.info(Setup.BUCKET_CREATION_STARTED_MESSAGE);
 
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_RAW_BUCKET_NAME);
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_TRANSFORMED_BUCKET_NAME);
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_RESULT_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_MINIO_RAW_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_MINIO_TRANSFORMED_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.INTERNSHIPS_MINIO_RESULT_BUCKET_NAME);
 
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_TRANSFORMED_BUCKET_NAME);
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_RESULT_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_MINIO_RAW_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_MINIO_TRANSFORMED_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.EVENTS_MINIO_RESULT_BUCKET_NAME);
 
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
-			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_TRANSFORMED_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_MINIO_RAW_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_MINIO_TRANSFORMED_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_STARTED_MESSAGE);
@@ -52,15 +52,15 @@ export class Setup {
 
 			await this.createRulesOnBucket(rulesToCreateOnExtractionBucket, rulesToCreateOnTransformationBucket, rulesToCreateOnLoadingBucket);
 
-			const internshipsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_RAW_BUCKET_NAME);
-			const internshipsExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_TRANSFORMED_BUCKET_NAME);
-			const internshipsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_RESULT_BUCKET_NAME);
+			const internshipsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_MINIO_RAW_BUCKET_NAME);
+			const internshipsExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_MINIO_TRANSFORMED_BUCKET_NAME);
+			const internshipsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.INTERNSHIPS_MINIO_RESULT_BUCKET_NAME);
 
-			const eventsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME);
-			const eventsExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_TRANSFORMED_BUCKET_NAME);
-			const eventsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_RESULT_BUCKET_NAME);
+			const eventsExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_MINIO_RAW_BUCKET_NAME);
+			const eventsExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_MINIO_TRANSFORMED_BUCKET_NAME);
+			const eventsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_MINIO_RESULT_BUCKET_NAME);
 
-			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME);
+			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_MINIO_RAW_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info({
@@ -96,36 +96,36 @@ export class Setup {
 		rulesToCreateOnLoadingBucket: LifecycleRules
 	): Promise<void> {
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.INTERNSHIPS_RAW_BUCKET_NAME,
+			this.configuration.MINIO.INTERNSHIPS_MINIO_RAW_BUCKET_NAME,
 			rulesToCreateOnExtractionBucket
 		);
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.EVENTS_RAW_BUCKET_NAME,
-			rulesToCreateOnExtractionBucket
-		);
-
-		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.HOUSING_RAW_BUCKET_NAME,
+			this.configuration.MINIO.EVENTS_MINIO_RAW_BUCKET_NAME,
 			rulesToCreateOnExtractionBucket
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.INTERNSHIPS_TRANSFORMED_BUCKET_NAME,
+			this.configuration.MINIO.HOUSING_MINIO_RAW_BUCKET_NAME,
+			rulesToCreateOnExtractionBucket
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO.INTERNSHIPS_MINIO_TRANSFORMED_BUCKET_NAME,
 			rulesToCreateOnTransformationBucket,
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.EVENTS_TRANSFORMED_BUCKET_NAME,
+			this.configuration.MINIO.EVENTS_MINIO_TRANSFORMED_BUCKET_NAME,
 			rulesToCreateOnTransformationBucket,
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.EVENTS_RESULT_BUCKET_NAME,
+			this.configuration.MINIO.EVENTS_MINIO_RESULT_BUCKET_NAME,
 			rulesToCreateOnLoadingBucket,
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
-			this.configuration.MINIO.INTERNSHIPS_RESULT_BUCKET_NAME,
+			this.configuration.MINIO.INTERNSHIPS_MINIO_RESULT_BUCKET_NAME,
 			rulesToCreateOnLoadingBucket,
 		);
 	}
