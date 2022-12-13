@@ -12,6 +12,7 @@
     "coverage": "nyc mocha",
     "dev": "ts-node -r tsconfig-paths/register -r dotenv/config",
     "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix",
     "start": "node build/src/start.js",
     "test": "mocha"
   },

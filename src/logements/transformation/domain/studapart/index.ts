@@ -94,7 +94,7 @@ export namespace Studapart {
                 url: studapartLogement.url_redirection,
                 source: UnJeune1Solution.Source.STUDAPART,
                 typeBien: this.depuisTypeDeBien(studapartLogement.property_type),
-                typeAnnonce: this.depuisTypeDAnnonce(studapartLogement.announcement_type),
+                type: this.depuisTypeDAnnonce(studapartLogement.announcement_type),
                 surface: Number(studapartLogement.surface),
                 surfaceMax: undefined,
                 nombreDePieces: Number(studapartLogement.rooms_count),
@@ -142,12 +142,12 @@ export namespace Studapart {
             }
         }
 
-        private depuisTypeDAnnonce(typeDannonce: TypeDAnnonce): UnJeune1Solution.TypeAnnonce {
+        private depuisTypeDAnnonce(typeDannonce: TypeDAnnonce): UnJeune1Solution.Type {
             switch (typeDannonce) {
-                case "service": return UnJeune1Solution.TypeAnnonce.LOGEMENT_CONTRE_SERVICES;
-                case "homestay": return UnJeune1Solution.TypeAnnonce.LOGEMENT_CHEZ_L_HABITANT;
-                case "rental": return UnJeune1Solution.TypeAnnonce.LOCATION;
-                default: return UnJeune1Solution.TypeAnnonce.NON_RENSEIGNE;
+                case "service": return UnJeune1Solution.Type.LOGEMENT_CONTRE_SERVICES;
+                case "homestay": return UnJeune1Solution.Type.LOGEMENT_CHEZ_L_HABITANT;
+                case "rental": return UnJeune1Solution.Type.LOCATION;
+                default: return UnJeune1Solution.Type.NON_RENSEIGNE;
             }
         }
 

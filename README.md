@@ -34,11 +34,24 @@ npm run start
 Démarrer le contener (dans l'onglet Resources mettre Qty: 1) web puis l'éteindre (dans l'onglet Resources mettre Qty: 0)
 ```
 
-Liste des jobs disponibles : 
+## Liste des jobs disponibles
+
+### Stage
+
+| nom du flux\action | Extract | transform | load |
+| :----------------- | :----:  | :-------: | :--: |
+| jobteaser          |    X    |     X     |  X   |
+| stagefr-compresse  |    X    |     X     |  X   |
+| stagefr-decompresse|    X    |     X     |  X   |
+
+### Evenement
 
 | nom du flux\action | Extract | transform | load |
 | :----------------- | :----:  | :-------: | :--: |
 | tous-mobilises     |    X    |     X     |      |
-| jobteaser          |    X    |     X     |  X   |
-| stagefr-compresse  |    X    |     X     |  X   |
-| stagefr-decompresse|    X    |     X     |  X   |
+
+### Logement
+
+| nom du flux\action | Extract | transform | load |
+| :----------------- | :----:  | :-------: | :--: |
+| immojeune | X | X | X |

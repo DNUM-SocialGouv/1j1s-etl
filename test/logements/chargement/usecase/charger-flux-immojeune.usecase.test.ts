@@ -1,14 +1,17 @@
+import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
+import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
+import { FluxLogement } from "@logements/chargement/domain/flux";
+import { ChargerFluxImmojeune } from "@logements/chargement/usecase/charger-flux-immojeune.usecase";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { expect } from "@test/configuration";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/chargement/fixture/annonce-de-logement.fixture-builder";
-import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
-import { ChargerFluxImmojeune } from "@logements/chargement/usecase/charger-flux-immojeune.usecase";
-import { expect } from "@test/configuration";
 import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 let annonceDeLogementRepository: StubbedType<AnnonceDeLogementRepository>;
 let chargerFluxImmojeune: ChargerFluxImmojeune;
+const flux: FluxLogement = new FluxLogement("Immojeune", ".json");
 
 describe("ChargerFluxImmojeuneTest", () => {
 	context("Lorsque je charge le flux Immojeune sur mon dépôt distant", () => {
@@ -16,13 +19,27 @@ describe("ChargerFluxImmojeuneTest", () => {
 			// Given
 			annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
 			chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
-			annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.returns([]);
-			annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.returns([AnnonceDeLogementFixtureBuilder.build()]);
+			annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves([{
+				id: "0",
+				identifiantSource: "supprimer",
+				sourceUpdatedAt: "2022-12-01T00:00:00.000Z",
+			}, {
+				id: "1",
+				identifiantSource: "existante",
+				sourceUpdatedAt: "2022-12-01T00:00:00.000Z",
+			}]);
+			annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves([
+				AnnonceDeLogementFixtureBuilder.build(),
+				AnnonceDeLogementFixtureBuilder.build({
+					identifiantSource: "existante",
+					sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
+				}),
+			]);
 		});
 
 		it("je récupère mon flux", async () => {
 			// When
-			await chargerFluxImmojeune.executer();
+			await chargerFluxImmojeune.executer(flux);
 
 			// Then
 			expect(annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees).to.have.been.calledOnce;
@@ -30,16 +47,79 @@ describe("ChargerFluxImmojeuneTest", () => {
 
 		it("je charge mon flux", async () => {
 			// When
-			await chargerFluxImmojeune.executer();
+			await chargerFluxImmojeune.executer(flux);
 
 			// Then
-			expect(annonceDeLogementRepository.publier).to.have.been.calledWith([AnnonceDeLogementFixtureBuilder.build()]);
+			expect(annonceDeLogementRepository.charger.getCall(0).args).to.have.deep.members([[
+				AnnonceDeLogementFixtureBuilder.build(),
+				AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer({ identifiantSource: "supprimer" }, "0"),
+				AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour({
+					identifiantSource: "existante",
+					sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
+				}, "1"),
+			], "Immojeune"]);
+		});
+		
+		it("je prépare le suivi", async () => {
+			
 		});
 
-		it("j'enregistre le résultat du chargement", async () => {
+		it("j'enregistre le résultat du chargement de nouvelles annonces", async () => {
 			// When
+			await chargerFluxImmojeune.executer(flux);
 
 			// Then
+			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(0).args).to.have.deep.members([
+				[AnnonceDeLogementFixtureBuilder.build()],
+				new FluxLogement("Immojeune", ".json"),
+			]);
+		});
+
+		it("j'enregistre le résultat du chargement d'annonces à supprimer", async () => {
+			await chargerFluxImmojeune.executer(flux);
+
+			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(1).args).to.have.deep.members([
+				[AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer({ "identifiantSource": "supprimer" })],
+				new FluxLogement("Immojeune", ".json"),
+			]);
+		});
+
+		it("j'enregistre le résultat du chargement d'annonces à mettre à jour", async () => {
+			await chargerFluxImmojeune.executer(flux);
+
+			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(2).args).to.have.deep.members([
+				[AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour({
+					identifiantSource: "existante", sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
+				}, "1")],
+				new FluxLogement("Immojeune", ".json"),
+			]);
+		});
+
+		it("j'enregistre le résultat du chargement d'annonces tombées en erreur", async () => {
+			// Given
+			const annoncesNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement> = [
+				AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "nouvelle-annonce" }),
+			];
+			const annoncesReferencees: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [];
+
+			annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesNonReferencees);
+			annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesReferencees);
+
+			annonceDeLogementRepository.charger
+				.withArgs([AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce({ identifiantSource: "nouvelle-annonce" })])
+				.resolves([AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur(
+					{ annonce: AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce() }
+				)]);
+
+			// When
+			await chargerFluxImmojeune.executer(flux);
+
+			// Then
+			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(3).args).to.have.deep.members([
+				[AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur(
+					{ annonce: AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce() }
+				)], new FluxLogement("Immojeune", ".json"),
+			]);
 		});
 	});
 
@@ -49,22 +129,24 @@ describe("ChargerFluxImmojeuneTest", () => {
 				// Given
 				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
 				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
-				const nouvellesAnnoncesDeLogement = [
+				const nouvellesAnnoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement> = [
 					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "existant" }),
 					AnnonceDeLogementFixtureBuilder.build(),
 				];
-				const annoncesDeLogementExistantes = [
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "existant" }),
+				const annoncesDeLogementReferencees: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [
+					{ identifiantSource: "existant", sourceUpdatedAt: "2022-12-01T00:00:00.000Z", id: "0" },
 				];
-				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.returns(nouvellesAnnoncesDeLogement);
-				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.returns(annoncesDeLogementExistantes);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(nouvellesAnnoncesDeLogement);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementReferencees);
 
 				// When
-				await chargerFluxImmojeune.executer();
+				await chargerFluxImmojeune.executer(flux);
 
 				// Then
-				expect(annonceDeLogementRepository.publier).to.have.been.calledWith([nouvellesAnnoncesDeLogement[1]]);
 				expect(annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees).to.have.been.calledOnce;
+				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([
+					AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce(),
+				], "Immojeune");
 			});
 		});
 
@@ -73,26 +155,25 @@ describe("ChargerFluxImmojeuneTest", () => {
 				// Given
 				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
 				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
-				const annoncesDeLogementsNonReferencees = [
-					AnnonceDeLogementFixtureBuilder.build(),
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "nouvelle annonce" }),
-				];
-				const annoncesDeLogementExistantes = [
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "ancienne" }),
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "a supprimer" }),
+				const annoncesDeLogementsNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement> = [
 					AnnonceDeLogementFixtureBuilder.build(),
 				];
-				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.returns(annoncesDeLogementsNonReferencees);
-				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.returns(annoncesDeLogementExistantes);
+				const annoncesDeLogementExistantes: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [
+					{ identifiantSource: "ancienne", sourceUpdatedAt: "2022-12-01T00:00:00.000Z", id: "0" },
+					{ identifiantSource: "a supprimer", sourceUpdatedAt: "2022-12-01T00:00:00.000Z", id: "1" },
+					{ identifiantSource: "identifiant-source", sourceUpdatedAt: "2022-12-01T00:00:00.000Z", id: "2" },
+				];
+				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementExistantes);
 
 				// When
-				await chargerFluxImmojeune.executer();
+				await chargerFluxImmojeune.executer(flux);
 
 				// Then
-				expect(annonceDeLogementRepository.supprimer).to.have.been.calledOnceWith([
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "ancienne" }),
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "a supprimer" }),
-				]);
+				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([
+					AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer({ identifiantSource: "ancienne" }, "0"),
+					AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer({ identifiantSource: "a supprimer" }, "1"),
+				], "Immojeune");
 			});
 		});
 
@@ -102,35 +183,29 @@ describe("ChargerFluxImmojeuneTest", () => {
 				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
 				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
 				const annoncesDeLogementsNonReferencees = [
-					AnnonceDeLogementFixtureBuilder.build(),
 					AnnonceDeLogementFixtureBuilder.build({
 						identifiantSource: "existante",
 						sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
 					}),
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "nouvelle annonce" }),
 				];
-				const annoncesDeLogementExistantes = [
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "ancienne" }),
-					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "a supprimer" }),
-					AnnonceDeLogementFixtureBuilder.build(),
-					AnnonceDeLogementFixtureBuilder.build({
-						identifiantSource: "existante",
-						sourceUpdatedAt: "2022-12-01T00:00:00.000Z",
-					}),
-				];
-				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.returns(annoncesDeLogementsNonReferencees);
-				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.returns(annoncesDeLogementExistantes);
+				const annoncesDeLogementExistantes: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [{
+					identifiantSource: "existante",
+					sourceUpdatedAt: "2022-12-01T00:00:00.000Z",
+					id: "0",
+				}];
+				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementExistantes);
 
 				// When
-				await chargerFluxImmojeune.executer();
+				await chargerFluxImmojeune.executer(flux);
 
 				// Then
-				expect(annonceDeLogementRepository.mettreAJour).to.have.been.calledOnceWith([
-					AnnonceDeLogementFixtureBuilder.build({
-						identifiantSource: "existante",
-						sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
+				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([
+					AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour({
+						"identifiantSource": "existante",
+						"sourceUpdatedAt": "2023-01-01T00:00:00.000Z",
 					}),
-				]);
+				], "Immojeune");
 			});
 		});
 
@@ -139,18 +214,75 @@ describe("ChargerFluxImmojeuneTest", () => {
 				// Given
 				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
 				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
-				const annoncesDeLogementsNonReferencees = [AnnonceDeLogementFixtureBuilder.build()];
-				const annoncesDeLogementExistantes = [AnnonceDeLogementFixtureBuilder.build()];
-				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.returns(annoncesDeLogementsNonReferencees);
-				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.returns(annoncesDeLogementExistantes);
+				const annoncesDeLogementsNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement> = [
+					AnnonceDeLogementFixtureBuilder.build(),
+				];
+				const annoncesDeLogementExistantes: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [{
+					id: "0",
+					sourceUpdatedAt: "2022-12-01T00:00:00.000Z",
+					identifiantSource: "identifiant-source",
+				}];
+				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementExistantes);
 
 				// When
-				await chargerFluxImmojeune.executer();
+				await chargerFluxImmojeune.executer(flux);
 
 				// Then
-				expect(annonceDeLogementRepository.publier).to.have.been.calledOnceWith([]);
-				expect(annonceDeLogementRepository.supprimer).to.have.been.calledOnceWith([]);
-				expect(annonceDeLogementRepository.mettreAJour).to.have.been.calledOnceWith([]);
+				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([], "Immojeune");
+			});
+		});
+
+		context("et j'ai plusieurs sorte d'annonce à charger", () => {
+			it("je charge les différentes annonces", async () => {
+				const nouvellesAnnoncesDeLogement = [AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annnonce" })];
+				const annonceDeLogementAMettreAjour = [
+					AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour(
+						{
+							"identifiantSource": "annonce-a-mettre-a-jour",
+							"sourceUpdatedAt": "2023-01-01T00:00:00.000Z",
+						})];
+
+				const annoncesDeLogementsASupprimer = [
+					AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer(
+						{ "identifiantSource": "annonce-a-supprimer" },
+					),
+				];
+				const annoncesDeLogementsNonReferencees = [
+					AnnonceDeLogementFixtureBuilder.build(),
+					AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annnonce" }),
+					AnnonceDeLogementFixtureBuilder.build({
+							"identifiantSource": "annonce-a-mettre-a-jour",
+							"sourceUpdatedAt": "2023-01-01T00:00:00.000Z",
+						},
+					),
+				];
+				const annoncesDeLogementsReferences = [
+					AnnonceDeLogementFixtureBuilder.build(),
+					AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour(
+						{
+							"identifiantSource": "annonce-a-mettre-a-jour",
+							"sourceUpdatedAt": "2022-01-01T00:00:00.000Z",
+						}),
+					AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer(
+						{ "identifiantSource": "annonce-a-supprimer" },
+					),
+				];
+				const flux = new FluxLogement("Immojeune", ".json");
+
+				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementsReferences);
+				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+
+
+				await chargerFluxImmojeune.executer(flux);
+
+				expect(annonceDeLogementRepository.charger.getCall(0).args).to.have.deep.members([[
+					...nouvellesAnnoncesDeLogement,
+					...annoncesDeLogementsASupprimer,
+					...annonceDeLogementAMettreAjour,
+				], "Immojeune"]);
 			});
 		});
 	});
