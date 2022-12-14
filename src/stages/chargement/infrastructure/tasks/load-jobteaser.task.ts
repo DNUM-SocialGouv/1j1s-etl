@@ -13,6 +13,7 @@ export class LoadJobteaserTask implements Task {
 
 	@TaskLog("jobteaser")
 	public async run(): Promise<void> {
+		throw new Error("Oops something went wrong!");
 		await this.chargerJobteaser.executer(
 			new FluxChargement(this.configuration.JOBTEASER.NAME, this.configuration.JOBTEASER.TRANSFORMED_FILE_EXTENSION)
 		);
