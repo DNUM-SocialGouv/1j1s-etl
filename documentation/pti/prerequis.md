@@ -12,8 +12,8 @@ Il faut donc que ces deux outils soient installés dans les versions suivantes :
 
 ```json
 "engines": {
-    "node": "16.15.1",
-    "npm": "8.11.0"
+    "node": "18.12.1",
+    "npm": "9.2.0"
 }
 ```
 
