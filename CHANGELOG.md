@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.6.0...v3.0.0) (2022-12-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* migration vers Node 18
+
+### Miscellaneous Chores
+
+* migration vers Node 18 ([d017dfc](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/d017dfc6e4d1216effa8ac37188bd32e305bf802))
+
 ## [2.6.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.5.1...v2.6.0) (2022-12-14)
 
 
