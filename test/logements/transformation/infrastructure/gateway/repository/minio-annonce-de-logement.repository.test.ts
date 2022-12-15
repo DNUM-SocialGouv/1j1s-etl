@@ -10,11 +10,14 @@ import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FluxTransformation } from "@logements/transformation/domain/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
-import { MinioAnnonceDeLogementRepository } from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
+import {
+	MinioAnnonceDeLogementRepository,
+} from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
 
 let localFileNameIncludingPath: string;
 let minioRepository: MinioAnnonceDeLogementRepository;
@@ -25,6 +28,8 @@ let dateService: StubbedClass<DateService>;
 let loggerStrategy: StubbedType<LoggerStrategy>;
 let logger: StubbedType<Logger>;
 let fileSystemClient: StubbedType<FileSystemClient>;
+let contentParserStrategy: StubbedType<ContentParserStrategy>;
+const fileContent = "[{\"externalId\":1091498}, {\"externalId\":1091499}]";
 
 describe("MinioRepositoryTest", () => {
 	beforeEach(() => {
@@ -46,6 +51,9 @@ describe("MinioRepositoryTest", () => {
 		uuidClient.generate.returns("f278702a-ea1f-445b-a58a-37ee58892175");
 		localFileNameIncludingPath = "./tmp/f278702a-ea1f-445b-a58a-37ee58892175";
 
+		contentParserStrategy = stubInterface<ContentParserStrategy>(sinon);
+		contentParserStrategy.get.returns([{ externalId: 1091498 }, { externalId: 1091499 }]);
+
 		minioRepository = new MinioAnnonceDeLogementRepository(
 			configuration,
 			minioStub,
@@ -53,6 +61,7 @@ describe("MinioRepositoryTest", () => {
 			fileSystemClient,
 			dateService,
 			loggerStrategy,
+			contentParserStrategy,
 		);
 	});
 
@@ -60,7 +69,6 @@ describe("MinioRepositoryTest", () => {
 		it("je lis le contenu du fichier", async () => {
 			minioStub.fGetObject.resolves();
 
-			const fileContent = "[{\"externalId\":1091498}, {\"externalId\":1091499}]";
 			fileSystemClient.read.resolves(fileContent);
 
 			const result = await minioRepository.recuperer(new FluxTransformation("source", "history", ".json", ".json"));

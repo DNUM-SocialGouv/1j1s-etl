@@ -6,9 +6,16 @@ import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@logements/transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@shared/infrastructure/gateway/html-to-markdown.sanitizer";
 import { LogementsTransformationLoggerStrategy } from "@logements/transformation/configuration/logger-strategy";
-import { MinioAnnonceDeLogementRepository } from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
+import {
+	MinioAnnonceDeLogementRepository,
+} from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import { JsonContentParser, XmlContentParser } from "@shared/infrastructure/gateway/content.parser";
+import {
+	AnnonceDeLogementContentParserStrategy, StudapartOptionXmlParser,
+} from "@logements/transformation/infrastructure/gateway/repository/annonce-de-logement-content-parser.strategy";
+import { XMLParser } from "fast-xml-parser";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration): GatewayContainer {
@@ -24,6 +31,10 @@ export class GatewayContainerFactory {
 		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
 		const dateService = new DateService();
 		const loggerStrategy = new LogementsTransformationLoggerStrategy(configuration);
+		const contentParserStrategy = new AnnonceDeLogementContentParserStrategy(
+			new XmlContentParser(new XMLParser({ trimValues: true, isArray: StudapartOptionXmlParser.consideTagAsArray })),
+			new JsonContentParser()
+		);
 
 		return {
 			minioClient,
@@ -34,6 +45,7 @@ export class GatewayContainerFactory {
 				fileSystemClient,
 				dateService,
 				loggerStrategy,
+				contentParserStrategy,
 			),
 			textSanitizer: assainisseurDeTexte,
 		};

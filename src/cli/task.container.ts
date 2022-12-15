@@ -46,6 +46,7 @@ export class TaskContainerFactory {
 				},
 				transform: {
 					immojeune: tasks.housing.transform.immojeune,
+					studapart: tasks.housing.transform.studapart,
 				},
 			},
 			internships: {

@@ -22,7 +22,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 		private readonly minioClient: Client,
 		private readonly fileSystemClient: FileSystemClient,
 		private readonly uuidGenerator: UuidGenerator,
-		private readonly contentParserRepository: ContentParser,
+		private readonly contentParser: ContentParser,
 		private readonly dateService: DateService,
 		private readonly loggerStrategy: LoggerStrategy,
 	) {
@@ -40,7 +40,7 @@ export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 				localFileNameIncludingPath
 			);
 			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-			return await this.contentParserRepository.parse<T>(fileContent);
+			return await this.contentParser.parse<T>(fileContent);
 		} catch (e) {
 			throw new RecupererContenuErreur();
 		} finally {

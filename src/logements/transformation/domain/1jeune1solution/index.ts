@@ -1,3 +1,5 @@
+import { Devise } from "@shared/devise";
+
 export namespace UnJeune1solution {
 	export enum Source {
 		IMMOJEUNE = "immojeune",
@@ -19,13 +21,15 @@ export namespace UnJeune1solution {
 		NON_RENSEIGNE = "non renseigné",
 	}
 
-	export enum Type {
+	export enum TypeAnnonce {
 		COLOCATION = "colocation",
 		COURTE = "courte",
 		INTERGENERATIONNEL = "habitation intergénérationnelle",
 		LOCATION = "location",
 		RESIDENCE = "résidence",
 		SOUS_LOCATION = "sous-location",
+		LOGEMENT_CHEZ_L_HABITANT = "logement chez l'habitant",
+		LOGEMENT_CONTRE_SERVICES = "logement contre services",
 		NON_RENSEIGNE = "non renseigné"
 	}
 
@@ -35,6 +39,7 @@ export namespace UnJeune1solution {
 	}
 
 	export type Localisation = {
+		adresse: string
 		ville?: string
 		departement?: string
 		codePostal?: string
@@ -50,16 +55,27 @@ export namespace UnJeune1solution {
 
 	export namespace ServiceInclus {
 		export enum Nom {
+			ASCENSEUR = "ascenseur",
 			ASPIRATEUR = "aspirateur",
+			CAVE = "cave",
 			FER_A_REPASSER = "fer à repasser",
+			FIBRE_OPTIQUE = "fibre optique",
+			FOUR = "four",
+			GARAGE = "garage",
+			GARDIEN_RESIDENCE = "gardien résidentiel",
 			INTERNET = "internet",
+			LAVE_LINGE = "machine à laver le linge",
+			LAVE_VAISSELLE = "lave vaisselle",
 			LOCAL_A_VELO = "local à vélo",
-			MACHINE_A_LAVER = "machine à laver",
 			MICRO_ONDE = "micro-onde",
 			NECESSAIRE_DE_NETTOYAGE = "nécessaire de nettoyage",
 			PARKING = "parking",
+			PISCINE = "piscine",
+			REFRIGERATEUR = "réfrigérateur",
 			SALLE_DE_BAIN_PRIVATIVE = "salle de bain privative",
 			SALLE_DE_SPORT = "salle de sport",
+			SECHE_LINGE = "sèche linge",
+			TERRACE = "terrace",
 			TV = "télévision",
 			NON_RENSEIGNE = "non renseigné",
 		}
@@ -95,7 +111,7 @@ export namespace UnJeune1solution {
 		url: string
 		source: UnJeune1solution.Source
 		typeBien?: UnJeune1solution.TypeBien
-		type: UnJeune1solution.Type
+		typeAnnonce: UnJeune1solution.TypeAnnonce
 		surface: number
 		surfaceMax?: number
 		nombreDePieces: number
@@ -111,7 +127,7 @@ export namespace UnJeune1solution {
 		servicesOptionnels: Array<UnJeune1solution.ServiceOptionnel>
 		prixHT: number
 		prix?: number
-		devise: string
+		devise: Devise
 		charge: number
 		garantie: number
 	}

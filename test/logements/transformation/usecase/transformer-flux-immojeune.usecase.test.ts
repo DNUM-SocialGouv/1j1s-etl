@@ -97,7 +97,7 @@ describe("TransformerFluxImmojeuneTest", () => {
 
 				expect(repository.sauvegarder).to.have.been.calledWith([
 					AnnonceDeLogementFixtureBuilder.build({
-						type: "non renseigné" as UnJeune1solution.Type,
+						typeAnnonce: "non renseigné" as UnJeune1solution.TypeAnnonce,
 					}),
 				], new FluxTransformation("flux", "old", ".json", ".json"));
 			});

@@ -23,6 +23,7 @@ export type Configuration = {
 	CONTEXT: string
 	FLOWS: Array<string>
 	IMMOJEUNE: TaskConfiguration
+	STUDAPART: TaskConfiguration
 	LOGGER_LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration
 	NODE_ENV: Environment
@@ -39,12 +40,19 @@ export class ConfigurationFactory {
 			CONTEXT: "transformation",
 			FLOWS: [
 				getOrError("HOUSING_IMMOJEUNE_NAME"),
+				getOrError("HOUSING_STUDAPART_NAME"),
 			],
 			IMMOJEUNE: {
 				NAME: getOrError("HOUSING_IMMOJEUNE_NAME"),
 				RAW_FILE_EXTENSION: getOrError("HOUSING_IMMOJEUNE_RAW_FILE_EXTENSION"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("HOUSING_IMMOJEUNE_TRANSFORMED_FILE_EXTENSION"),
 				URL: getOrError("HOUSING_IMMOJEUNE_URL"),
+			},
+			STUDAPART: {
+				NAME: getOrError("HOUSING_STUDAPART_NAME"),
+				RAW_FILE_EXTENSION: getOrError("HOUSING_STUDAPART_RAW_FILE_EXTENSION"),
+				TRANSFORMED_FILE_EXTENSION: getOrError("HOUSING_STUDAPART_TRANSFORMED_FILE_EXTENSION"),
+				URL: getOrError("HOUSING_STUDAPART_URL"),
 			},
 			LOGGER_LOG_LEVEL: getOrError("HOUSING_EXTRACT_LOG_LEVEL") as LogLevel,
 			MINIO: {

@@ -5,6 +5,8 @@ import { TransformerFluxImmojeune } from "@logements/transformation/usecase/tran
 import { Immojeune } from "@logements/transformation/domain/immojeune";
 import { HtmlToMarkdownSanitizer } from "@shared/infrastructure/gateway/html-to-markdown.sanitizer";
 import TurndownService from "turndown";
+import { TransformerFluxStudapartUseCase } from "@logements/transformation/usecase/transformer-flux-studapart.usecase";
+import { Studapart } from "@logements/transformation/domain/studapart";
 
 export class UsecasesContainerFactor {
 	public static create(gateways: GatewayContainer): UsecaseContainer {
@@ -15,6 +17,10 @@ export class UsecasesContainerFactor {
 			transformerFluxImmojeune: new TransformerFluxImmojeune(
 				gateways.annonceDeLogementRepository,
 				new Immojeune.Convertir(htmlToMarkdownSanitizer, dateService),
+			),
+			transformerFluxStudapart: new TransformerFluxStudapartUseCase(
+				gateways.annonceDeLogementRepository,
+				new Studapart.Convertir(htmlToMarkdownSanitizer, dateService)
 			),
 		};
 	}

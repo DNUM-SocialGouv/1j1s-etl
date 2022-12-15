@@ -1,4 +1,5 @@
 import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
+import { Devise } from "@shared/devise";
 
 export class AnnonceDeLogementFixtureBuilder {
 	public static build(
@@ -12,7 +13,7 @@ export class AnnonceDeLogementFixtureBuilder {
 			titre: "Le titre de l'annonce",
 			description: "La description de l'annonce",
 			charge: 80,
-			devise: "€",
+			devise: new Devise("EUR"),
 			garantie: 2500,
 			prixHT: 950,
 			prix: 1030,
@@ -20,8 +21,8 @@ export class AnnonceDeLogementFixtureBuilder {
 			surfaceMax: 0,
 			meuble: true,
 			etage: 1,
-			type: UnJeune1solution.Type.RESIDENCE,
-			typeBien: UnJeune1solution.TypeBien.T1,
+			typeAnnonce: UnJeune1solution.TypeAnnonce.LOCATION,
+			typeBien: UnJeune1solution.TypeBien.APPARTEMENT,
 			nombreDePieces: 1,
 			url: "https://some.url",
 			dateDeDisponibilite: "2023-01-01T00:00:00.000Z",
@@ -35,6 +36,7 @@ export class AnnonceDeLogementFixtureBuilder {
 			sourceCreatedAt: "2022-12-01T00:00:00.000Z",
 			sourceUpdatedAt: "2022-12-01T00:00:00.000Z",
 			localisation: {
+				adresse: "1 rue de rivoli",
 				pays: "France",
 				codePostal: "75001",
 				ville: "Paris",
@@ -43,7 +45,7 @@ export class AnnonceDeLogementFixtureBuilder {
 			},
 			servicesInclus: servicesInclus
 				? servicesInclus
-				: [{ nom: UnJeune1solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE }],
+				: [{ nom: UnJeune1solution.ServiceInclus.Nom.TV }],
 			servicesOptionnels: servicesOptionnels
 				? servicesOptionnels
 				: [{ nom: UnJeune1solution.ServiceOptionnel.Nom.NON_RENSEIGNE }],
