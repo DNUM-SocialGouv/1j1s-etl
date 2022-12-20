@@ -23,7 +23,7 @@ export namespace TousMobilises {
             private readonly assainisseurDeTexte: AssainisseurDeTexte,
         ) {}
 
-        depuisTousMobilises(evenements: TousMobilises.Contenu[]): UnJeuneUneSolution.Evenement[] {
+        depuisTousMobilises(evenements: Array<TousMobilises.Contenu>): Array<UnJeuneUneSolution.Evenement> {
             return evenements.filter(evenement => evenement.date && evenement.description).map((evenement: TousMobilises.Contenu) => {
                 return {
                     dateDebut: this.dateService.toIsoDate(evenement.date, evenement.horaireDebutEvenement),

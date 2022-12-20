@@ -31,8 +31,8 @@ export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.Ev
         protected readonly dateService: DateService,
     ) {}
 
-    public async chargerEtEnregistrerLesErreurs(evenenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter[], evenementsAMettreAjour: UnJeuneUneSolution.EvenementAMettreAJour[], evenementsASupprimer: UnJeuneUneSolution.EvenementASupprimer[]): Promise<UnJeuneUneSolution.Evenement[]> {
-        const evenementsEnErreur: Evenement[] = [];
+    public async chargerEtEnregistrerLesErreurs(evenenementsAAjouter: Array<UnJeuneUneSolution.EvenementAAjouter>, evenementsAMettreAjour: Array<UnJeuneUneSolution.EvenementAMettreAJour>, evenementsASupprimer: Array<UnJeuneUneSolution.EvenementASupprimer>): Promise<Array<UnJeuneUneSolution.Evenement>> {
+        const evenementsEnErreur: Array<Evenement> = [];
 
         for (const evenenementAAjouter of evenenementsAAjouter) {
             try {
@@ -61,7 +61,7 @@ export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.Ev
         return Promise.resolve(evenementsEnErreur);
     }
 
-    public async recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnJeuneUneSolution.Evenement[]> {
+    public async recupererNouveauxEvenementsACharger(nomFlux: string): Promise<Array<UnJeuneUneSolution.Evenement>> {
         const temporaryFileName = this.uuidGenerator.generate();
         const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
         const sourceFilePath = `${nomFlux}/${this.LATEST_FILE_NAME}${this.configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
@@ -74,7 +74,7 @@ export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.Ev
                 localFileNameIncludingPath
             );
             const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-            return await this.contentParser.parse<UnJeuneUneSolution.Evenement[]>(fileContent.toString());
+            return await this.contentParser.parse<Array<UnJeuneUneSolution.Evenement>>(fileContent.toString());
         } catch (e) {
             if(axios.isAxiosError(e)) {
                 throw new RecupererContenuErreur(e.stack);
@@ -86,7 +86,7 @@ export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.Ev
         }
     }
 
-    public async recupererEvenementsDejaCharges(nomFlux: string): Promise<UnJeuneUneSolution.EvenementDejaCharge[]> {
+    public async recupererEvenementsDejaCharges(nomFlux: string): Promise<Array<UnJeuneUneSolution.EvenementDejaCharge>> {
         this.loggerStrategy.get(nomFlux).info(`Starting to pull last events loaded from flow ${nomFlux}`);
         try {
            return await this.strapiEvenementHttpClient.getAll(nomFlux);
@@ -100,7 +100,7 @@ export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.Ev
         }
     }
 
-    public async sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnJeuneUneSolution.Evenement[]): Promise<void> {
+    public async sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: Array<UnJeuneUneSolution.Evenement>): Promise<void> {
         this.loggerStrategy.get(nomFlux).info(`Starting to save flow ${nomFlux}`);
         const temporaryFileName = this.uuidGenerator.generate();
         const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);

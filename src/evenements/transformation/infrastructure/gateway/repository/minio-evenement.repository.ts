@@ -49,7 +49,7 @@ export class MinioEvenementRepository implements EvenementsRepository {
 		}
 	}
 
-	public async sauvegarder(evenements: UnJeuneUneSolution.Evenement[], flow: FluxTransformation): Promise<void> {
+	public async sauvegarder(evenements: Array<UnJeuneUneSolution.Evenement>, flow: FluxTransformation): Promise<void> {
 		this.loggerStrategy.get(flow.nom).info(`Starting to save transformed events offers from flow ${flow.nom}`);
 		const contentToSave = this.toReadableJson(evenements);
 		const temporaryFileName = this.generateFileName();

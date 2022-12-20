@@ -12,7 +12,7 @@ export class TransformerFluxTousMobilisesUseCase implements Usecase {
 	}
 
 	public async executer<T>(flux: FluxTransformation): Promise<void | T> {
-		const contenuDuFlux = await this.evenementsRepository.recuperer<TousMobilises.Contenu[]>(flux);
+		const contenuDuFlux = await this.evenementsRepository.recuperer<Array<TousMobilises.Contenu>>(flux);
 
 		await this.evenementsRepository.sauvegarder(this.convertir.depuisTousMobilises(contenuDuFlux), flux);
 	}

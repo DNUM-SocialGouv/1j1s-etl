@@ -51,7 +51,7 @@ export class StrapiEvenementHttpClient {
         return this.axios.delete(`${this.evenementUrl}/${evenement.id}`);
     }
 
-    public async getAll(source: string): Promise<UnJeuneUneSolution.EvenementDejaCharge[]> {
+    public async getAll(source: string): Promise<Array<UnJeuneUneSolution.EvenementDejaCharge>> {
         await this.authClient.handleAuthentication(this.axios);
         const result = await this.axios.get<StrapiEvenementResponse>(
             this.evenementUrl,
