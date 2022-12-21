@@ -26,8 +26,8 @@ export namespace TousMobilises {
         depuisTousMobilises(evenements: Array<TousMobilises.Contenu>): Array<UnJeuneUneSolution.Evenement> {
             return evenements.filter(evenement => evenement.date && evenement.description).map((evenement: TousMobilises.Contenu) => {
                 return {
-                    dateDebut: this.dateService.toIsoDate(evenement.date, evenement.horaireDebutEvenement),
-                    dateFin: this.dateService.toIsoDate(evenement.date, evenement.horaireFinEvenement),
+                    dateDebut: this.dateService.toIsoDateAvecDateEtHoraire(evenement.date, evenement.horaireDebutEvenement),
+                    dateFin: this.dateService.toIsoDateAvecDateEtHoraire(evenement.date, evenement.horaireFinEvenement),
                     description: evenement.description,
                     idSource: evenement.id,
                     lieuEvenement: evenement.lieuEvenement,

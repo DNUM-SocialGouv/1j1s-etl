@@ -1,11 +1,22 @@
 import { XMLParser } from "fast-xml-parser";
+import { Flux } from "@shared/flux";
 
 export interface ContentParser {
-	parse<T>(xmlContent: string | Buffer): Promise<T>;
+	parse<T>(content: string | Buffer): Promise<T>;
+}
+
+export interface ContentParserStrategy {
+	get<T>(flux: Flux, content: string | Buffer): Promise<T>;
+}
+
+export class ContentParserStrategyError extends Error {
+	constructor(flowName: string) {
+		super(`No content parser available for flow ${flowName}`);
+	}
 }
 
 export class XmlContentParser implements ContentParser {
-	constructor(private readonly parser: XMLParser,) {
+	constructor(private readonly parser: XMLParser) {
 	}
 
 	public parse<T>(xmlContent: string | Buffer): T {

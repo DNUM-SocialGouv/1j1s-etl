@@ -1,6 +1,7 @@
 import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
+import { Devise } from "@shared/devise";
 
 export namespace Immojeune {
 	export type AnnonceDeLogement = {
@@ -110,7 +111,7 @@ export namespace Immojeune {
 	export class Convertir {
 		private readonly correspondancesServicesInclus: Map<Immojeune.ServiceInclus, UnJeune1solution.ServiceInclus.Nom>;
 		private readonly correspondancesServicesOptionnels: Map<Immojeune.ServiceOptionnel, UnJeune1solution.ServiceOptionnel.Nom>;
-		private readonly correspondancesTypeDeLogement: Map<Immojeune.TypeDeLogement, UnJeune1solution.Type>;
+		private readonly correspondancesTypeDeLogement: Map<Immojeune.TypeDeLogement, UnJeune1solution.TypeAnnonce>;
 		private readonly correspondancesTypeDeBien: Map<Immojeune.TypeDeBien, UnJeune1solution.TypeBien>;
 
 		constructor(
@@ -131,7 +132,7 @@ export namespace Immojeune {
 				titre: this.assainisseurDeTexte.nettoyer(annonceDeLogement.title),
 				description: this.assainisseurDeTexte.nettoyer(annonceDeLogement.description),
 				charge: annonceDeLogement.charges,
-				devise: annonceDeLogement.currency,
+				devise: new Devise(annonceDeLogement.currency),
 				garantie: annonceDeLogement.deposit,
 				prix: annonceDeLogement.totalPricing,
 				prixHT: annonceDeLogement.rent,
@@ -150,6 +151,7 @@ export namespace Immojeune {
 					emissionDeGaz: this.saisirLeBilanEnergetiqueSiRenseigne(annonceDeLogement.greenhouseGasesEmission),
 				},
 				localisation: {
+					adresse: annonceDeLogement.address,
 					pays: annonceDeLogement.country,
 					ville: annonceDeLogement.city,
 					codePostal: annonceDeLogement.zipCode,
@@ -159,7 +161,7 @@ export namespace Immojeune {
 				source: UnJeune1solution.Source.IMMOJEUNE,
 				servicesInclus: this.traduireLesServicesInclus(annonceDeLogement.includedServices as Array<Immojeune.ServiceInclus>),
 				servicesOptionnels: this.traduireLesServicesOptionnels(annonceDeLogement.optionalServices as Array<Immojeune.ServiceOptionnel>),
-				type: this.traduireLeTypeDeLogement(annonceDeLogement.type.toLowerCase() as TypeDeLogement),
+				typeAnnonce: this.traduireLeTypeDeLogement(annonceDeLogement.type.toLowerCase() as TypeDeLogement),
 				typeBien: this.traduireLeTypeDeBien(annonceDeLogement.property_type.toLowerCase() as TypeDeBien),
 			};
 		}
@@ -190,8 +192,8 @@ export namespace Immojeune {
 			return servicesOptionnels?.map((serviceOptionnel) => this.traduireLeServiceOptionnel(serviceOptionnel)) || [];
 		}
 
-		private traduireLeTypeDeLogement(typeDeLogement: Immojeune.TypeDeLogement): UnJeune1solution.Type {
-			return this.correspondancesTypeDeLogement.get(typeDeLogement) || UnJeune1solution.Type.NON_RENSEIGNE;
+		private traduireLeTypeDeLogement(typeDeLogement: Immojeune.TypeDeLogement): UnJeune1solution.TypeAnnonce {
+			return this.correspondancesTypeDeLogement.get(typeDeLogement) || UnJeune1solution.TypeAnnonce.NON_RENSEIGNE;
 		}
 
 		private traduireLeTypeDeBien(typeDeBien: Immojeune.TypeDeBien): UnJeune1solution.TypeBien {
@@ -220,7 +222,7 @@ export namespace Immojeune {
 			correspondanceServicesInclus.set(Immojeune.ServiceInclus.PRIVATE_BATHROOM, UnJeune1solution.ServiceInclus.Nom.SALLE_DE_BAIN_PRIVATIVE);
 			correspondanceServicesInclus.set(Immojeune.ServiceInclus.TV, UnJeune1solution.ServiceInclus.Nom.TV);
 			correspondanceServicesInclus.set(Immojeune.ServiceInclus.VACUUM, UnJeune1solution.ServiceInclus.Nom.ASPIRATEUR);
-			correspondanceServicesInclus.set(Immojeune.ServiceInclus.WASHING_MACHINE, UnJeune1solution.ServiceInclus.Nom.MACHINE_A_LAVER);
+			correspondanceServicesInclus.set(Immojeune.ServiceInclus.WASHING_MACHINE, UnJeune1solution.ServiceInclus.Nom.LAVE_LINGE);
 
 			return correspondanceServicesInclus;
 		}
@@ -241,15 +243,15 @@ export namespace Immojeune {
 			return correspondanceServicesOptionnels;
 		}
 
-		private initialiserTypesDeLogement(): Map<Immojeune.TypeDeLogement, UnJeune1solution.Type> {
-			const correspondanceTypesDeBien: Map<Immojeune.TypeDeLogement, UnJeune1solution.Type> = new Map();
+		private initialiserTypesDeLogement(): Map<Immojeune.TypeDeLogement, UnJeune1solution.TypeAnnonce> {
+			const correspondanceTypesDeBien: Map<Immojeune.TypeDeLogement, UnJeune1solution.TypeAnnonce> = new Map();
 
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COLOCATION, UnJeune1solution.Type.COLOCATION);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COURTE, UnJeune1solution.Type.COURTE);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.INTERGENERATIONAL, UnJeune1solution.Type.INTERGENERATIONNEL);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.LOCATION, UnJeune1solution.Type.LOCATION);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.RESIDENCE, UnJeune1solution.Type.RESIDENCE);
-			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.SUBLEASE, UnJeune1solution.Type.SOUS_LOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COLOCATION, UnJeune1solution.TypeAnnonce.COLOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.COURTE, UnJeune1solution.TypeAnnonce.COURTE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.INTERGENERATIONAL, UnJeune1solution.TypeAnnonce.INTERGENERATIONNEL);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.LOCATION, UnJeune1solution.TypeAnnonce.LOCATION);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.RESIDENCE, UnJeune1solution.TypeAnnonce.RESIDENCE);
+			correspondanceTypesDeBien.set(Immojeune.TypeDeLogement.SUBLEASE, UnJeune1solution.TypeAnnonce.SOUS_LOCATION);
 
 			return correspondanceTypesDeBien;
 		}

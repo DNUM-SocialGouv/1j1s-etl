@@ -9,11 +9,11 @@ import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-fil
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { UnJeune1solution } from "@logements/transformation/domain/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
 
 export class MinioAnnonceDeLogementRepository implements AnnonceDeLogementRepository {
 	private static readonly PATH_SEPARATOR = "/";
 	private static readonly LATEST_FILE_NAME = "latest";
-	private static readonly ENCODING = "utf8";
 	private static readonly JSON_REPLACER = null;
 	private static readonly JSON_INDENTATION = 2;
 
@@ -24,6 +24,7 @@ export class MinioAnnonceDeLogementRepository implements AnnonceDeLogementReposi
 		private readonly fileSystemClient: FileSystemClient,
 		private readonly dateService: DateService,
 		private readonly loggerStrategy: LoggerStrategy,
+		private readonly contentParserStrategy: ContentParserStrategy,
 	) {
 	}
 
@@ -39,7 +40,7 @@ export class MinioAnnonceDeLogementRepository implements AnnonceDeLogementReposi
 				localFileNameIncludingPath,
 			);
 			const fileContent = await this.fileSystemClient.read(localFileNameIncludingPath);
-			return <T>JSON.parse(fileContent.toString(MinioAnnonceDeLogementRepository.ENCODING));
+			return await this.contentParserStrategy.get<T>(flux, fileContent);
 		} catch (e) {
 			throw new RecupererContenuErreur();
 		} finally {

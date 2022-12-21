@@ -15,7 +15,7 @@ export function TaskLog(flowName: string): (target: unknown, propertyKey: string
 			} catch (e) {
 				loggerStrategy.get(flowName).fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
 			} finally {
-				loggerStrategy.get(flowName).info("End of transforming from [immojeune] flow");
+				loggerStrategy.get(flowName).info(`End of transforming from [${flowName}] flow`);
 			}
 		};
 
