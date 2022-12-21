@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.0.0...v3.1.0) (2022-12-21)
+
+
+### Features
+
+* **logement/transformation:** flux studapart ([1997b4b](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/1997b4ba6a89a742984b464e20dc3eeeec008691))
+
 ## [3.0.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v2.6.0...v3.0.0) (2022-12-15)
 
 
