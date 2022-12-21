@@ -20,13 +20,13 @@ export namespace UnJeuneUneSolution {
     export type EvenementAMettreAJour = Evenement & { id: number }
 
     export interface EvenementsRepository {
-        sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: UnJeuneUneSolution.Evenement[]): Promise<void>
-        recupererEvenementsDejaCharges(nomFlux: string): Promise<UnJeuneUneSolution.EvenementDejaCharge[]>;
-        recupererNouveauxEvenementsACharger(nomFlux: string): Promise<UnJeuneUneSolution.Evenement[]>;
+        sauvegarder(nomFlux: string, suffixHistoryFile: string, evenements: Array<UnJeuneUneSolution.Evenement>): Promise<void>
+        recupererEvenementsDejaCharges(nomFlux: string): Promise<Array<UnJeuneUneSolution.EvenementDejaCharge>>;
+        recupererNouveauxEvenementsACharger(nomFlux: string): Promise<Array<UnJeuneUneSolution.Evenement>>;
         chargerEtEnregistrerLesErreurs(
-            evenenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter[],
-            evenementsAMettreAjour: UnJeuneUneSolution.EvenementAMettreAJour[],
-            evenementsASupprimer: UnJeuneUneSolution.EvenementASupprimer[],
-        ): Promise<UnJeuneUneSolution.EvenementEnErreur[]>;
+            evenenementsAAjouter: Array<UnJeuneUneSolution.EvenementAAjouter>,
+            evenementsAMettreAjour: Array<UnJeuneUneSolution.EvenementAMettreAJour>,
+            evenementsASupprimer: Array<UnJeuneUneSolution.EvenementASupprimer>,
+        ): Promise<Array<UnJeuneUneSolution.EvenementEnErreur>>;
     }
 }

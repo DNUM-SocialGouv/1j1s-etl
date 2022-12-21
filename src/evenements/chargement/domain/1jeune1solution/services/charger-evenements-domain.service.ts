@@ -21,20 +21,20 @@ export class ChargerEvenenementsDomainService {
 		await this.sauvegarderLesEvenements(evenementsEnErreur, nomFlux, evenementsAAjouter, evenementsAMettreAjour, evenementsASupprimer);
 	}
 
-	private async sauvegarderLesEvenements(evenementsEnErreur: UnJeuneUneSolution.EvenementEnErreur[], nomFlux: string, evenementsAAjouter: UnJeuneUneSolution.EvenementAAjouter[], evenementsAMettreAjour: UnJeuneUneSolution.EvenementASupprimer[], evenementsASupprimer: UnJeuneUneSolution.EvenementAMettreAJour[]): Promise<void> {
+	private async sauvegarderLesEvenements(evenementsEnErreur: Array<UnJeuneUneSolution.EvenementEnErreur>, nomFlux: string, evenementsAAjouter: Array<UnJeuneUneSolution.EvenementAAjouter>, evenementsAMettreAjour: Array<UnJeuneUneSolution.EvenementASupprimer>, evenementsASupprimer: Array<UnJeuneUneSolution.EvenementAMettreAJour>): Promise<void> {
 		evenementsEnErreur.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "ERROR", evenementsEnErreur);
 		evenementsAAjouter.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "CREATED", evenementsAAjouter);
 		evenementsAMettreAjour.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "UPDATED", evenementsAMettreAjour);
 		evenementsASupprimer.length > 0 && await this.evenementsRepository.sauvegarder(nomFlux, "DELETED", evenementsASupprimer);
 	}
 
-	private getEvenementsAAjouter(evenementsACharger: UnJeuneUneSolution.Evenement[], evenementsExistants: UnJeuneUneSolution.EvenementDejaCharge[]): UnJeuneUneSolution.EvenementAAjouter[] {
+	private getEvenementsAAjouter(evenementsACharger: Array<UnJeuneUneSolution.Evenement>, evenementsExistants: Array<UnJeuneUneSolution.EvenementDejaCharge>): Array<UnJeuneUneSolution.EvenementAAjouter> {
 		return evenementsACharger.filter(evenementACharger =>
 			!evenementsExistants.find(evenementExistant => evenementExistant.idSource === evenementACharger.idSource)
 		);
 	}
 
-	private getEvenementsASupprimer(evenementsExistants: UnJeuneUneSolution.EvenementDejaCharge[], evenementsACharger: UnJeuneUneSolution.Evenement[]): UnJeuneUneSolution.EvenementAMettreAJour[] {
+	private getEvenementsASupprimer(evenementsExistants: Array<UnJeuneUneSolution.EvenementDejaCharge>, evenementsACharger: Array<UnJeuneUneSolution.Evenement>): Array<UnJeuneUneSolution.EvenementAMettreAJour> {
 		return evenementsExistants.filter(evenementExistant =>
 			!evenementsACharger.find(evenementACharger => evenementACharger.idSource === evenementExistant.idSource)
 		).map(evenementAMettreAJour => ({
@@ -43,7 +43,7 @@ export class ChargerEvenenementsDomainService {
 		}));
 	}
 
-	private getEvenementsAMettreAjour(evenementsACharger: UnJeuneUneSolution.Evenement[], evenementsExistants: UnJeuneUneSolution.EvenementDejaCharge[]): UnJeuneUneSolution.EvenementASupprimer[] {
+	private getEvenementsAMettreAjour(evenementsACharger: Array<UnJeuneUneSolution.Evenement>, evenementsExistants: Array<UnJeuneUneSolution.EvenementDejaCharge>): Array<UnJeuneUneSolution.EvenementASupprimer> {
 		return evenementsACharger.filter(evenementACharger =>
 			evenementsExistants.find(evenementExistant =>
 				evenementExistant.idSource === evenementACharger.idSource && !this.deepEqual(evenementExistant, evenementACharger)
