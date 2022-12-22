@@ -61,7 +61,7 @@ export enum Source {
 	STUDAPART = "studapart",
 }
 
-export enum Type {
+export enum TypeAnnonce {
 	COLOCATION = "colocation",
 	COURTE = "courte",
 	INTERGENERATIONNEL = "habitation intergénérationnelle",

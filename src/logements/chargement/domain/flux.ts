@@ -1,6 +1,6 @@
 import { Flux } from "@shared/flux";
 
-export class FluxLogement extends Flux {
+export class FluxChargement extends Flux {
 
     constructor(
         nom: string,

@@ -15,6 +15,7 @@ export class ConfigurationFixtureBuilder {
 	): Configuration {
 		const defaults: Configuration = {
 			CONTEXT: "chargement",
+			FEATURE_FLIPPING: true,
 			FLOWS: [
 				"immojeune",
 			],
@@ -48,7 +49,7 @@ export class ConfigurationFixtureBuilder {
 				USERNAME: "",
 				...strapiConguration,
 			},
-			TEMPORARY_FILE_PATH: "/tmp/",
+			TEMPORARY_DIRECTORY_PATH: "/tmp/",
 		};
 
 		return { ...defaults, ...configuration };

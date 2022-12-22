@@ -42,6 +42,7 @@ export class Setup {
 
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_MINIO_RAW_BUCKET_NAME);
 			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_MINIO_TRANSFORMED_BUCKET_NAME);
+			await this.adminStorageClient.createBucket(this.configuration.MINIO.HOUSING_MINIO_RESULT_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_STARTED_MESSAGE);
@@ -61,6 +62,8 @@ export class Setup {
 			const eventsExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.EVENTS_MINIO_RESULT_BUCKET_NAME);
 
 			const housingExistingRulesOnExtractionBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_MINIO_RAW_BUCKET_NAME);
+			const housingExistingRulesOnTransformationBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_MINIO_TRANSFORMED_BUCKET_NAME);
+			const housingExistingRulesOnLoadingBucket = await this.adminStorageClient.getRulesOnBucket(this.configuration.MINIO.HOUSING_MINIO_RESULT_BUCKET_NAME);
 
 			this.logger.info(Setup.BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE);
 			this.logger.info({
@@ -74,6 +77,8 @@ export class Setup {
 						eventsExistingRulesOnTransformationBucket,
 						eventsExistingRulesOnLoadingBucket,
 						housingExistingRulesOnExtractionBucket,
+						housingExistingRulesOnTransformationBucket,
+						housingExistingRulesOnLoadingBucket,
 					],
 				},
 			});
@@ -120,6 +125,11 @@ export class Setup {
 		);
 
 		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO.HOUSING_MINIO_TRANSFORMED_BUCKET_NAME,
+			rulesToCreateOnExtractionBucket
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
 			this.configuration.MINIO.EVENTS_MINIO_RESULT_BUCKET_NAME,
 			rulesToCreateOnLoadingBucket,
 		);
@@ -127,6 +137,11 @@ export class Setup {
 		await this.adminStorageClient.setBucketLifecycle(
 			this.configuration.MINIO.INTERNSHIPS_MINIO_RESULT_BUCKET_NAME,
 			rulesToCreateOnLoadingBucket,
+		);
+
+		await this.adminStorageClient.setBucketLifecycle(
+			this.configuration.MINIO.HOUSING_MINIO_RESULT_BUCKET_NAME,
+			rulesToCreateOnExtractionBucket
 		);
 	}
 

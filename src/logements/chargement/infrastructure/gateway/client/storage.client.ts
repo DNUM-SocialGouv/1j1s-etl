@@ -21,7 +21,7 @@ export class MinioStorageClient implements StorageClient {
 
 	public async ecrire(filepath: string, fileContent: string, flowName: string): Promise<void> {
         const nameFile = this.uuidClient.generate();
-        const localfilePath = this.configuration.TEMPORARY_FILE_PATH.concat(nameFile);
+        const localfilePath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile);
 
         try {
             await this.fileSystemClient.write(localfilePath, fileContent);
@@ -40,7 +40,7 @@ export class MinioStorageClient implements StorageClient {
 
 	public async lire(filePath: string, flowName: string): Promise<Array<UnJeune1Solution.AttributsAnnonceDeLogement>> {
         const nameFile = this.uuidClient.generate();
-        const localfilePath = this.configuration.TEMPORARY_FILE_PATH.concat(nameFile);
+        const localfilePath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile);
 
         try {
             await this.minioClient.fGetObject(

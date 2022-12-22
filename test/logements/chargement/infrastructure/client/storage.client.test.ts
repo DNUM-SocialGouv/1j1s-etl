@@ -35,17 +35,17 @@ describe("StorageClientTest", () => {
 
             //then
             expect(fileSystemClient.write).to.have.been.calledOnceWith(
-                configuration.TEMPORARY_FILE_PATH.concat(nameFile),
+                configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile),
                 "C'est beau la vie"
             );
             expect(minioClient.fPutObject).to.have.been.calledOnceWith(
                 configuration.MINIO.RESULT_BUCKET_NAME,
                 filepath,
-                configuration.TEMPORARY_FILE_PATH.concat(nameFile)
+                configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile)
             );
 
             expect(fileSystemClient.delete).to.have.been.calledOnceWith(
-                configuration.TEMPORARY_FILE_PATH.concat(nameFile)
+                configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile)
             );
         });
 
@@ -67,10 +67,10 @@ describe("StorageClientTest", () => {
             expect(minioClient.fGetObject).to.have.been.calledOnceWith(
                 configuration.MINIO.TRANSFORMED_BUCKET_NAME,
                 filepath,
-                configuration.TEMPORARY_FILE_PATH.concat(nameFile)
+                configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile)
             );
             expect(fileSystemClient.read).to.have.been.calledOnceWith(
-                configuration.TEMPORARY_FILE_PATH.concat(nameFile)
+                configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile)
             );
             expect(result).to.have.deep.members([
                 AnnonceDeLogementFixtureBuilder.build(),

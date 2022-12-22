@@ -1,17 +1,23 @@
-import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
 import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
-import { FluxLogement } from "@logements/chargement/domain/flux";
-import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
-import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
 import { DateService } from "@shared/date.service";
+import { FluxChargement } from "@logements/chargement/domain/flux";
+import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
+import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
+import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
 
 export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRepository {
+	private static readonly SPACE = 2;
+	private static readonly CREATED = "_created";
+	private static readonly UPDATED = "_updated";
+	private static readonly DELETED = "_deleted";
+	private static readonly ERROR = "_error";
+
 	constructor(
 		private readonly minioClient: StorageClient,
 		private readonly httpClient: HttpClient,
 		private readonly dateService: DateService,
-		private readonly loggerStrategy: LoggerStrategy,
+		protected readonly loggerStrategy: LoggerStrategy,
 	) {
 	}
 
@@ -43,37 +49,73 @@ export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRe
 
 	public async preparerLeSuivi(
 		annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>,
-		flux: FluxLogement
+		flux: FluxChargement
 	): Promise<void> {
 		this.loggerStrategy.get(flux.nom).info(`Starting to prepare monitoring flow ${flux.nom}`);
 		const now = this.dateService.maintenant().toISOString();
 		const filePathWithoutExtension = `${flux.nom}/${now}`;
 
-		await this.minioClient.ecrire(
-			filePathWithoutExtension.concat("_created", flux.extension),
-			JSON.stringify(annoncesDeLogement.filter(
-				(annonceDeLogement) => annonceDeLogement instanceof UnJeune1Solution.NouvelleAnnonceDeLogement)),
-			flux.nom);
-		await this.minioClient.ecrire(
-			filePathWithoutExtension.concat("_updated", flux.extension),
-			JSON.stringify(annoncesDeLogement.filter(
-				(annonceDeLogement) => annonceDeLogement instanceof UnJeune1Solution.AnnonceDeLogementAMettreAJour)),
-			flux.nom);
-		await this.minioClient.ecrire(
-			filePathWithoutExtension.concat("_deleted", flux.extension),
-			JSON.stringify(annoncesDeLogement.filter(
-				(annonceDeLogement) => annonceDeLogement instanceof UnJeune1Solution.AnnonceDeLogementObsolete)),
-			flux.nom);
-		await this.minioClient.ecrire(
-			filePathWithoutExtension.concat("_error", flux.extension),
-			JSON.stringify(annoncesDeLogement.filter(
-				(annonceDeLogement) => this.isAnnonceDeLogementEnErreur(annonceDeLogement))),
-			flux.nom);
+		await this.prepareNewAdsFollowUp(filePathWithoutExtension, flux, annoncesDeLogement);
+		await this.prepareAdsToBeUpdatedFollowUp(filePathWithoutExtension, flux, annoncesDeLogement);
+		await this.prepareObsoleteAdsFollowUp(filePathWithoutExtension, flux, annoncesDeLogement);
+		await this.prepareInErrorAdsFollowUp(filePathWithoutExtension, flux, annoncesDeLogement);
 
 		this.loggerStrategy.get(flux.nom).info(`Ending to prepare monitoring flow ${flux.nom}`);
 	}
 
-	public async recupererAnnoncesDeLogementNonReferencees(flux: FluxLogement): Promise<Array<UnJeune1Solution.AnnonceDeLogement>> {
+	private async prepareInErrorAdsFollowUp(
+		filePathWithoutExtension: string,
+		flux: FluxChargement,
+		annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>
+	): Promise<void> {
+		await this.minioClient.ecrire(
+			filePathWithoutExtension.concat(MinioHttpAnnonceDeLogementRepository.ERROR, flux.extension),
+			this.toReadableJson(annoncesDeLogement.filter(
+				(annonceDeLogement) => this.isAnnonceDeLogementEnErreur(annonceDeLogement))),
+			flux.nom,
+		);
+	}
+
+	private async prepareObsoleteAdsFollowUp(
+		filePathWithoutExtension: string,
+		flux: FluxChargement,
+		annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>
+	): Promise<void> {
+		await this.minioClient.ecrire(
+			filePathWithoutExtension.concat(MinioHttpAnnonceDeLogementRepository.DELETED, flux.extension),
+			this.toReadableJson(annoncesDeLogement.filter(
+				(annonceDeLogement) => annonceDeLogement instanceof UnJeune1Solution.AnnonceDeLogementObsolete)),
+			flux.nom,
+		);
+	}
+
+	private async prepareAdsToBeUpdatedFollowUp(
+		filePathWithoutExtension: string,
+		flux: FluxChargement,
+		annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>
+	): Promise<void> {
+		await this.minioClient.ecrire(
+			filePathWithoutExtension.concat(MinioHttpAnnonceDeLogementRepository.UPDATED, flux.extension),
+			this.toReadableJson(annoncesDeLogement.filter(
+				(annonceDeLogement) => annonceDeLogement instanceof UnJeune1Solution.AnnonceDeLogementAMettreAJour)),
+			flux.nom,
+		);
+	}
+
+	private async prepareNewAdsFollowUp(
+		filePathWithoutExtension: string,
+		flux: FluxChargement,
+		annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>
+	): Promise<void> {
+		await this.minioClient.ecrire(
+			filePathWithoutExtension.concat(MinioHttpAnnonceDeLogementRepository.CREATED, flux.extension),
+			this.toReadableJson(annoncesDeLogement.filter(
+				(annonceDeLogement) => annonceDeLogement instanceof UnJeune1Solution.NouvelleAnnonceDeLogement)),
+			flux.nom,
+		);
+	}
+
+	public async recupererAnnoncesDeLogementNonReferencees(flux: FluxChargement): Promise<Array<UnJeune1Solution.AnnonceDeLogement>> {
 		this.loggerStrategy.get(flux.nom).info(`Starting to pull existing housing advertisement from flow ${flux.nom}`);
 		const filePath = `${flux.nom}/latest${flux.extension}`;
 		const attributsAnnonceDeLogements = await this.minioClient.lire(filePath, flux.nom);
@@ -81,7 +123,7 @@ export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRe
 		return attributsAnnonceDeLogements.map((attributs) => new UnJeune1Solution.AnnonceDeLogement(attributs));
 	}
 
-	public async recupererAnnoncesDeLogementReferencees(flux: FluxLogement): Promise<Array<UnJeune1Solution.AnnonceDeLogementReferencee>> {
+	public async recupererAnnoncesDeLogementReferencees(flux: FluxChargement): Promise<Array<UnJeune1Solution.AnnonceDeLogementReferencee>> {
 		this.loggerStrategy.get(flux.nom).info(`Starting to pull latest housing advertisement from flow ${flux.nom}`);
 		const annoncesDeLogement = await this.httpClient.get(flux.nom);
 		const annoncesARetourner: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [];
@@ -113,6 +155,10 @@ export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRe
 			throw new Error("Advertisement is not handled by this method");
 		}
 		this.loggerStrategy.get(flowName).debug(`Ending to push ${advertisement.titre? advertisement.titre : advertisement.identifiantSource} advertisement from flow ${flowName}`);
+	}
+
+	private toReadableJson(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>): string {
+		return JSON.stringify(annoncesDeLogement, null, MinioHttpAnnonceDeLogementRepository.SPACE);
 	}
 
 	private isAnnonceDeLogementEnErreur(value: UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur): value is UnJeune1Solution.AnnonceDeLogementEnErreur {
