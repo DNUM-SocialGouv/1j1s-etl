@@ -2,7 +2,7 @@ import { Environment, SentryConfiguration } from "@configuration/configuration";
 import { LogLevel } from "@shared/configuration/logger";
 
 export type MinioConfiguration = {
-    ACCESS_KEY: string
+	ACCESS_KEY: string
 	PORT: number
 	RESULT_BUCKET_NAME: string
 	SECRET_KEY: string
@@ -11,52 +11,52 @@ export type MinioConfiguration = {
 	URL: string
 }
 
-
 export type Flow = {
-    NAME: string,
-    EXTENSION: string
+	NAME: string,
+	EXTENSION: string
 }
 
 export type StrapiConguration = {
-    AUTHENTICATION_URL: string
-    BASE_URL: string
-    EVENEMENT_URL: string
-    PASSWORD: string
-    USERNAME: string
+	AUTHENTICATION_URL: string
+	BASE_URL: string
+	EVENEMENT_URL: string
+	PASSWORD: string
+	USERNAME: string
 }
 
 export type Configuration = {
+	FEATURE_FLIPPING: boolean;
 	LOGGER_LOG_LEVEL: LogLevel;
 	NODE_ENV: Environment;
 	SENTRY: SentryConfiguration;
-    CONTEXT: string
-    FLOWS: Array<string>
-    IMMOJEUNE: Flow
-    MINIO: MinioConfiguration
-    STRAPI: StrapiConguration
-	TEMPORARY_FILE_PATH: string
+	CONTEXT: string
+	FLOWS: Array<string>
+	IMMOJEUNE: Flow
+	MINIO: MinioConfiguration
+	STRAPI: StrapiConguration
+	TEMPORARY_DIRECTORY_PATH: string
 }
 
 export class ConfigurationFactory {
+	public static create(): Configuration {
+		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
 
-    public static create(): Configuration {
-        const { getOrError, getOrDefault } = ConfigurationFactory;
+		const DEFAULT = {
+			MINIO_PORT: "9000",
+			TEMPORARY_DIRECTORY_PATH: "/tmp/",
+		};
 
-        const DEFAULT = {
-            MINIO_PORT: "9000",
-			TEMPORARY_FILE_PATH: "/tmp/",
-        };
-
-        return <Configuration>{
+		return <Configuration>{
 			CONTEXT: "chargement",
+			FEATURE_FLIPPING: toBoolean(getOrError("HOUSING_LOAD_FEATURE_FLIPPING")),
 			FLOWS: [
 				"immojeune",
 			],
 			IMMOJEUNE: {
-				NAME: getOrError("IMMOJEUNE_FLOW_NAME"),
-				EXTENSION: getOrError("IMMOJEUNE_EXTENTION_LOAD"),
+				NAME: getOrError("HOUSING_IMMOJEUNE_NAME"),
+				EXTENSION: getOrError("HOUSING_IMMOJEUNE_RESULT_FILE_EXTENSION"),
 			},
-			LOGGER_LOG_LEVEL: getOrError("HOUSING_LOGGER_LOG_LEVEL"),
+			LOGGER_LOG_LEVEL: getOrError("HOUSING_LOAD_LOG_LEVEL"),
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT.MINIO_PORT)),
@@ -79,11 +79,11 @@ export class ConfigurationFactory {
 				PASSWORD: getOrError("STRAPI_PASSWORD"),
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},
-			TEMPORARY_FILE_PATH: getOrDefault("TEMPORARY_FILE_PATH", DEFAULT.TEMPORARY_FILE_PATH),
+			TEMPORARY_DIRECTORY_PATH: getOrDefault("TEMPORARY_DIRECTORY_PATH", DEFAULT.TEMPORARY_DIRECTORY_PATH),
 		};
-    }
+	}
 
-    private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
+	private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
 		const environmentVariable = process.env[environmentVariableKey];
 		if (!environmentVariable) {
 			return defaultValue;
@@ -91,7 +91,7 @@ export class ConfigurationFactory {
 		return environmentVariable;
 	}
 
-    private static getOrError(environmentVariableKey: string): string {
+	private static getOrError(environmentVariableKey: string): string {
 		const environmentVariable = process.env[environmentVariableKey];
 		if (!environmentVariable) {
 			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
@@ -103,5 +103,3 @@ export class ConfigurationFactory {
 		return value.trim().toLowerCase() === "true";
 	}
 }
-
-

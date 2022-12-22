@@ -3,6 +3,7 @@ import { ConfigurationFactory } from "@logements/chargement/configuration/config
 import { LogementsChargementLoggerStrategy } from "@logements/chargement/configuration/logger-strategy";
 import { GatewayContainerFactory } from "@logements/chargement/configuration/gateways.container";
 import { UseCaseContainerFactory } from "@logements/chargement/configuration/usecase.container";
+
 export class LoadModule {
     public static export(): TaskContainer {
         const configuration = ConfigurationFactory.create();

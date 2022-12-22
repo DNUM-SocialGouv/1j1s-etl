@@ -1,7 +1,9 @@
 import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
+import {
+	ChargerAnnoncesDeLogementDomainService,
+} from "@logements/chargement/domain/1jeune1solution/services/charger-annonces-de-logement.domain-service";
 import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
-import { FluxLogement } from "@logements/chargement/domain/flux";
-import { ChargerFluxImmojeune } from "@logements/chargement/usecase/charger-flux-immojeune.usecase";
+import { FluxChargement } from "@logements/chargement/domain/flux";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { expect } from "@test/configuration";
 import {
@@ -10,15 +12,15 @@ import {
 import sinon from "sinon";
 
 let annonceDeLogementRepository: StubbedType<AnnonceDeLogementRepository>;
-let chargerFluxImmojeune: ChargerFluxImmojeune;
-const flux: FluxLogement = new FluxLogement("Immojeune", ".json");
+let chargerFluxImmojeune: ChargerAnnoncesDeLogementDomainService;
+const flux: FluxChargement = new FluxChargement("Immojeune", ".json");
 
-describe("ChargerFluxImmojeuneTest", () => {
+describe("ChargerAnnoncesDeLogementDomainServiceTest", () => {
 	context("Lorsque je charge le flux Immojeune sur mon dépôt distant", () => {
 		beforeEach(() => {
 			// Given
 			annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
-			chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+			chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 			annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves([{
 				id: "0",
 				identifiantSource: "supprimer",
@@ -38,16 +40,22 @@ describe("ChargerFluxImmojeuneTest", () => {
 		});
 
 		it("je récupère mon flux", async () => {
+			// Given
+			annonceDeLogementRepository.charger.resolves([]);
+
 			// When
-			await chargerFluxImmojeune.executer(flux);
+			await chargerFluxImmojeune.charger(flux);
 
 			// Then
 			expect(annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees).to.have.been.calledOnce;
 		});
 
 		it("je charge mon flux", async () => {
+			// Given
+			annonceDeLogementRepository.charger.resolves([]);
+
 			// When
-			await chargerFluxImmojeune.executer(flux);
+			await chargerFluxImmojeune.charger(flux);
 
 			// Then
 			expect(annonceDeLogementRepository.charger.getCall(0).args).to.have.deep.members([[
@@ -59,76 +67,42 @@ describe("ChargerFluxImmojeuneTest", () => {
 				}, "1"),
 			], "Immojeune"]);
 		});
-		
+
 		it("je prépare le suivi", async () => {
-			
-		});
-
-		it("j'enregistre le résultat du chargement de nouvelles annonces", async () => {
-			// When
-			await chargerFluxImmojeune.executer(flux);
-
-			// Then
-			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(0).args).to.have.deep.members([
-				[AnnonceDeLogementFixtureBuilder.build()],
-				new FluxLogement("Immojeune", ".json"),
-			]);
-		});
-
-		it("j'enregistre le résultat du chargement d'annonces à supprimer", async () => {
-			await chargerFluxImmojeune.executer(flux);
-
-			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(1).args).to.have.deep.members([
-				[AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer({ "identifiantSource": "supprimer" })],
-				new FluxLogement("Immojeune", ".json"),
-			]);
-		});
-
-		it("j'enregistre le résultat du chargement d'annonces à mettre à jour", async () => {
-			await chargerFluxImmojeune.executer(flux);
-
-			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(2).args).to.have.deep.members([
-				[AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour({
-					identifiantSource: "existante", sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
-				}, "1")],
-				new FluxLogement("Immojeune", ".json"),
-			]);
-		});
-
-		it("j'enregistre le résultat du chargement d'annonces tombées en erreur", async () => {
-			// Given
-			const annoncesNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement> = [
-				AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "nouvelle-annonce" }),
-			];
-			const annoncesReferencees: Array<UnJeune1Solution.AnnonceDeLogementReferencee> = [];
-
-			annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesNonReferencees);
-			annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesReferencees);
-
-			annonceDeLogementRepository.charger
-				.withArgs([AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce({ identifiantSource: "nouvelle-annonce" })])
-				.resolves([AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur(
-					{ annonce: AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce() }
-				)]);
-
-			// When
-			await chargerFluxImmojeune.executer(flux);
-
-			// Then
-			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(3).args).to.have.deep.members([
+			annonceDeLogementRepository.charger.resolves(
 				[AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur(
 					{ annonce: AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce() }
-				)], new FluxLogement("Immojeune", ".json"),
+				)],
+			);
+			// When
+			await chargerFluxImmojeune.charger(flux);
+
+			expect(annonceDeLogementRepository.preparerLeSuivi.getCall(0).args).to.have.deep.members([
+				[
+					AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce(),
+					AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer({ "identifiantSource": "supprimer" }),
+					AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour({
+						identifiantSource: "existante", sourceUpdatedAt: "2023-01-01T00:00:00.000Z",
+					}, "1"),
+					AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur(
+						{ annonce: AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce() }
+					),
+				],
+				new FluxChargement("Immojeune", ".json"),
 			]);
 		});
 	});
 
 	context("Lorsque j'ai des différences entre le flux récupéré d'Immojeune et le contenu existant", () => {
+		beforeEach(() => {
+			annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
+			annonceDeLogementRepository.charger.resolves([]);
+		});
+
 		context("et que j'ai de nouvelles annonces", () => {
 			it("je charge ces nouvelles offres", async () => {
 				// Given
-				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
-				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 				const nouvellesAnnoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement> = [
 					AnnonceDeLogementFixtureBuilder.build({ identifiantSource: "existant" }),
 					AnnonceDeLogementFixtureBuilder.build(),
@@ -140,7 +114,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementReferencees);
 
 				// When
-				await chargerFluxImmojeune.executer(flux);
+				await chargerFluxImmojeune.charger(flux);
 
 				// Then
 				expect(annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees).to.have.been.calledOnce;
@@ -153,8 +127,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 		context("et que j'ai des annonces qui ne sont plus présentes", () => {
 			it("je supprime ces annonces", async () => {
 				// Given
-				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
-				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 				const annoncesDeLogementsNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement> = [
 					AnnonceDeLogementFixtureBuilder.build(),
 				];
@@ -167,7 +140,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementExistantes);
 
 				// When
-				await chargerFluxImmojeune.executer(flux);
+				await chargerFluxImmojeune.charger(flux);
 
 				// Then
 				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([
@@ -180,8 +153,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 		context("et que j'ai des annonces qui ont été mises à jour avec une date explicite plus récente", () => {
 			it("je mets à jour ces annonces", async () => {
 				// Given
-				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
-				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 				const annoncesDeLogementsNonReferencees = [
 					AnnonceDeLogementFixtureBuilder.build({
 						identifiantSource: "existante",
@@ -197,7 +169,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementExistantes);
 
 				// When
-				await chargerFluxImmojeune.executer(flux);
+				await chargerFluxImmojeune.charger(flux);
 
 				// Then
 				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([
@@ -212,8 +184,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 		context("et que j'ai des annonces qui sont toujours présentes mais non mises à jour", () => {
 			it("je ne fais rien", async () => {
 				// Given
-				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
-				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 				const annoncesDeLogementsNonReferencees: Array<UnJeune1Solution.AnnonceDeLogement> = [
 					AnnonceDeLogementFixtureBuilder.build(),
 				];
@@ -226,7 +197,7 @@ describe("ChargerFluxImmojeuneTest", () => {
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementExistantes);
 
 				// When
-				await chargerFluxImmojeune.executer(flux);
+				await chargerFluxImmojeune.charger(flux);
 
 				// Then
 				expect(annonceDeLogementRepository.charger).to.have.been.calledOnceWith([], "Immojeune");
@@ -268,15 +239,14 @@ describe("ChargerFluxImmojeuneTest", () => {
 						{ "identifiantSource": "annonce-a-supprimer" },
 					),
 				];
-				const flux = new FluxLogement("Immojeune", ".json");
+				const flux = new FluxChargement("Immojeune", ".json");
 
-				annonceDeLogementRepository = stubInterface<AnnonceDeLogementRepository>(sinon);
 				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementsReferences);
-				chargerFluxImmojeune = new ChargerFluxImmojeune(annonceDeLogementRepository);
+				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 
 
-				await chargerFluxImmojeune.executer(flux);
+				await chargerFluxImmojeune.charger(flux);
 
 				expect(annonceDeLogementRepository.charger.getCall(0).args).to.have.deep.members([[
 					...nouvellesAnnoncesDeLogement,

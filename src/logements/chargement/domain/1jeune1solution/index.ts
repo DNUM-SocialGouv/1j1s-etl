@@ -5,7 +5,7 @@ import {
 	ServiceInclus as _ServiceInclus,
 	ServiceOptionnel as _ServiceOptionnel,
 	Source as _Source,
-	Type as _Type,
+	TypeAnnonce as _Type,
 	TypeBien as _TypeBien,
 } from "@logements/chargement/domain/1jeune1solution/types";
 
@@ -19,8 +19,8 @@ export namespace UnJeune1Solution {
 	export type ServiceOptionnel = _ServiceOptionnel;
 	export type Source = _Source;
 	export const Source = _Source;
-	export type Type = _Type;
-	export const Type = _Type;
+	export type TypeAnnonce = _Type;
+	export const TypeAnnonce = _Type;
 	export type TypeBien = _TypeBien;
 	export const TypeBien = _TypeBien;
 
@@ -32,7 +32,7 @@ export namespace UnJeune1Solution {
 		url?: string
 		source?: UnJeune1Solution.Source
 		typeBien?: UnJeune1Solution.TypeBien
-		type?: UnJeune1Solution.Type
+		type?: UnJeune1Solution.TypeAnnonce
 		surface?: number
 		surfaceMax?: number
 		etage?: number
@@ -60,7 +60,7 @@ export namespace UnJeune1Solution {
 		public readonly url?: string;
 		public readonly source?: UnJeune1Solution.Source;
 		public readonly typeBien?: UnJeune1Solution.TypeBien;
-		public readonly type?: UnJeune1Solution.Type;
+		public readonly type?: UnJeune1Solution.TypeAnnonce;
 		public readonly surface?: number;
 		public readonly surfaceMax?: number;
 		public readonly etage?: number;

@@ -1,5 +1,5 @@
 import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
-import { FluxLogement } from "@logements/chargement/domain/flux";
+import { FluxChargement } from "@logements/chargement/domain/flux";
 import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
 import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
 import {
@@ -26,7 +26,7 @@ let httpClient: StubbedType<HttpClient>;
 let storageClient: StubbedType<StorageClient>;
 let repository: MinioHttpAnnonceDeLogementRepository;
 let loggerStrategy: StubbedType<LogementsChargementLoggerStrategy>;
-let flux: FluxLogement;
+let flux: FluxChargement;
 
 describe("AnnonceDeLogementRepositoryTest", () => {
 	beforeEach(() => {
@@ -37,7 +37,7 @@ describe("AnnonceDeLogementRepositoryTest", () => {
 		loggerStrategy = stubInterface<LoggerStrategy>(sinon);
 		loggerStrategy.get.returns(logger);
 
-		flux = new FluxLogement(configuration.IMMOJEUNE.NAME, configuration.IMMOJEUNE.EXTENSION);
+		flux = new FluxChargement(configuration.IMMOJEUNE.NAME, configuration.IMMOJEUNE.EXTENSION);
 	});
 
 	context("Lorque je souhaite préparer le suivi", () => {
@@ -66,22 +66,22 @@ describe("AnnonceDeLogementRepositoryTest", () => {
 			expect(storageClient.ecrire).to.have.been.callCount(4);
 			expect(storageClient.ecrire.getCall(0).args).to.have.deep.members([
 				`${flux.nom}/2022-12-20T15:00:00.000Z_created${flux.extension}`,
-				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce()]),
+				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildNouvelleAnnonce()], null, 2),
 				flux.nom,
 			]);
 			expect(storageClient.ecrire.getCall(1).args).to.have.deep.members([
 				`${flux.nom}/2022-12-20T15:00:00.000Z_updated${flux.extension}`,
-				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour()]),
+				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour()], null, 2),
 				flux.nom,
 			]);
 			expect(storageClient.ecrire.getCall(2).args).to.have.deep.members([
 				`${flux.nom}/2022-12-20T15:00:00.000Z_deleted${flux.extension}`,
-				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer()]),
+				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildAnnonceASupprimer()], null, 2),
 				flux.nom,
 			]);
 			expect(storageClient.ecrire.getCall(3).args).to.have.deep.members([
 				`${flux.nom}/2022-12-20T15:00:00.000Z_error${flux.extension}`,
-				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur()]),
+				JSON.stringify([AnnonceDeLogementFixtureBuilder.buildAnnonceEnErreur()], null, 2),
 				flux.nom,
 			]);
 		});
