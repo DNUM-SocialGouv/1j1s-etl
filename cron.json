@@ -35,6 +35,42 @@
     {
       "command": "45 6 * * * npm run cli -- -d internships -a load -f stagefr-decompresse",
       "size": "L"
+    },
+    {
+      "command": "0 5 * * * npm run cli -- -d housing -a extract -f immojeune",
+      "size": "S"
+    },
+    {
+      "command": "15 5 * * * npm run cli -- -d housing -a transform -f immojeune",
+      "size": "L"
+    },
+    {
+      "command": "30 5 * * * npm run cli -- -d housing -a load -f immojeune",
+      "size": "L"
+    },
+    {
+      "command": "0 5 * * * npm run cli -- -d housing -a extract -f studapart",
+      "size": "S"
+    },
+    {
+      "command": "15 5 * * * npm run cli -- -d housing -a transform -f studapart",
+      "size": "L"
+    },
+    {
+      "command": "30 5 * * * npm run cli -- -d housing -a load -f studapart",
+      "size": "L"
+    },
+    {
+      "command": "0 4 * * * npm run cli -- -d events -a extract -f tous-mobilises",
+      "size": "S"
+    },
+    {
+      "command": "15 4 * * * npm run cli -- -d events -a transform -f tous-mobilises",
+      "size": "L"
+    },
+    {
+      "command": "30 4 * * * npm run cli -- -d events -a load -f tous-mobilises",
+      "size": "L"
     }
   ]
 }
