@@ -15,6 +15,7 @@ export class ConfigurationFixtureBuilder {
 	): Configuration {
 		const defaults: Configuration = {
 			CONTEXT: "chargement",
+			DOMAINE: "Logements",
 			FEATURE_FLIPPING: true,
 			FLOWS: [
 				"immojeune",

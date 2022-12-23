@@ -13,7 +13,7 @@ export class FeatureFlippingAnnonceDeLogementRepository extends MinioHttpAnnonce
 		super(minioClient, httpClient, dateService, loggerStrategy);
 	}
 
-	public async recupererAnnoncesDeLogementReferencees(flux: FluxChargement): Promise<Array<UnJeune1Solution.AnnonceDeLogementReferencee>> {
+	public async recupererAnnoncesDeLogementReferencees(): Promise<Array<UnJeune1Solution.AnnonceDeLogementReferencee>> {
 		return Promise.resolve([]);
 	}
 
@@ -21,6 +21,7 @@ export class FeatureFlippingAnnonceDeLogementRepository extends MinioHttpAnnonce
 		annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement>,
 		flowName: string,
 	): Promise<Array<UnJeune1Solution.AnnonceDeLogementEnErreur>> {
+		this.loggerStrategy.get(flowName).info("charger");
 		let adsToBePublishedCount = 0;
 		let adsToBeUpdatedCount = 0;
 		let obsoleteAdsCount = 0;

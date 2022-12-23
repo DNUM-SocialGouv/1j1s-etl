@@ -7,6 +7,8 @@ export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
 export type LoggerConfiguration = { name: string }
 
+export type Domaine = "Global" | "Logements" | "Stages" | "Évènements";
+
 export interface Logger {
 	debug(...args: Array<unknown>): void;
 	error(...args: Array<unknown>): void;
@@ -35,6 +37,7 @@ export class LoggerFactory {
 	private readonly context: string;
 	private readonly logLevel: LogLevel;
 	private readonly now: string;
+	private readonly domaine: Domaine;
 
 	constructor(
 		sentryDsn: string,
@@ -42,7 +45,8 @@ export class LoggerFactory {
 		release: string,
 		environment: Environment,
 		context: string,
-		logLevel: LogLevel
+		logLevel: LogLevel,
+		domaine: Domaine,
 	) {
 		this.now = new Date().toISOString().split("T")[0];
 		this.sentryDsn = sentryDsn;
@@ -62,6 +66,7 @@ export class LoggerFactory {
 		this.environment = environment;
 		this.context = context;
 		this.logLevel = logLevel;
+		this.domaine = domaine;
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
@@ -69,7 +74,7 @@ export class LoggerFactory {
 			const pinoSentryStream = createWriteStream({
 				...this.sentryConfiguration,
 				decorateScope: ((data: unknown, scope: { setTags: (tags: Record<string, string>) => void }): void => {
-					scope.setTags({ context: this.context, date: this.now, flow: configuration.name });
+					scope.setTags({ domaine: this.domaine, context: this.context, date: this.now, flow: configuration.name });
 				}),
 			});
 			return pino({ ...configuration, level: this.logLevel }, pino.multistream([pinoSentryStream, { stream: process.stdout }]));

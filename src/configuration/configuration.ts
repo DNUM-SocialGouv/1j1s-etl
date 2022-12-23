@@ -1,4 +1,4 @@
-import { LogLevel } from "@shared/configuration/logger";
+import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 export enum Environment {
 	DEVELOPMENT = "development",
@@ -42,6 +42,7 @@ export type Configuration = {
 	APPLICATION_LOGGER_NAME: string
 	APPLICATION_LOGGER_LOG_LEVEL: LogLevel
 	APPLICATION_CONTEXT: string
+	DOMAIN: Domaine
 	DOMAINS: Array<Domain>
 	EVENTS: {
 		EXTRACT_LOG_LEVEL: LogLevel
@@ -85,6 +86,7 @@ export class ConfigurationFactory {
 			APPLICATION_LOGGER_NAME: getOrDefault("APPLICATION_LOGGER_NAME", "application"),
 			APPLICATION_LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 			APPLICATION_CONTEXT: "application",
+			DOMAIN: "Global",
 			DOMAINS,
 			EVENTS: {
 				EXTRACT_LOG_LEVEL: getOrDefault("EVENTS_EXTRACT_LOG_LEVEL", "debug") as LogLevel,

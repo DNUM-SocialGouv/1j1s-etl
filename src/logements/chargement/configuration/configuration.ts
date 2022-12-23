@@ -1,5 +1,5 @@
 import { Environment, SentryConfiguration } from "@configuration/configuration";
-import { LogLevel } from "@shared/configuration/logger";
+import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 export type MinioConfiguration = {
 	ACCESS_KEY: string
@@ -35,7 +35,8 @@ export type Configuration = {
 	MINIO: MinioConfiguration
 	STUDAPART: Flow
 	STRAPI: StrapiConguration
-	TEMPORARY_DIRECTORY_PATH: string
+	TEMPORARY_DIRECTORY_PATH: string,
+	DOMAINE: Domaine
 }
 
 export class ConfigurationFactory {
@@ -49,6 +50,7 @@ export class ConfigurationFactory {
 
 		return <Configuration>{
 			CONTEXT: "chargement",
+			DOMAINE: "Logements",
 			FEATURE_FLIPPING: toBoolean(getOrError("HOUSING_LOAD_FEATURE_FLIPPING")),
 			FLOWS: [
 				"immojeune",

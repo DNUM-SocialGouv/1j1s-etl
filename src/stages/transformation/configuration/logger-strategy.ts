@@ -12,6 +12,7 @@ export class StagesTransformationLoggerStrategy implements LoggerStrategy {
 			configuration.NODE_ENV,
 			configuration.CONTEXT,
 			configuration.LOGGER_LOG_LEVEL,
+			configuration.DOMAINE,
 		);
 		this.loggers = new Map();
 		configuration.FLOWS.forEach((flow) => {

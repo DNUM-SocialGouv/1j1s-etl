@@ -10,12 +10,12 @@ export function TaskLog(flowName: string): (target: unknown, propertyKey: string
 
 		descriptor.value = async function (...args: []): Promise<void> {
 			try {
-				loggerStrategy.get(flowName).info(`Starting to transform [${flowName}] flow`);
+				loggerStrategy.get(flowName).info(`Starting to extract [${flowName}] flow`);
 				await originalMethod!.apply(this, args);
 			} catch (e) {
 				loggerStrategy.get(flowName).fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
 			} finally {
-				loggerStrategy.get(flowName).info(`End of transforming from [${flowName}] flow`);
+				loggerStrategy.get(flowName).info(`End of extracting from [${flowName}] flow`);
 			}
 		};
 

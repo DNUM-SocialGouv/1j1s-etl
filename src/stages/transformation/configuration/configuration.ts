@@ -1,5 +1,5 @@
 import { Environment, SentryConfiguration } from "@configuration/configuration";
-import { LogLevel } from "@shared/configuration/logger";
+import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 type MinioConfiguration = {
 	ACCESS_KEY: string
@@ -21,6 +21,7 @@ export type TaskConfiguration = {
 
 export type Configuration = {
 	CONTEXT: string
+	DOMAINE: Domaine
 	FLOWS: Array<string>
 	JOBTEASER: TaskConfiguration
 	LOGGER_LOG_LEVEL: LogLevel
@@ -39,6 +40,7 @@ export class ConfigurationFactory {
 
 		return {
 			CONTEXT: "transformation",
+			DOMAINE: "Stages",
 			FLOWS: [
 				getOrError("INTERNSHIPS_JOBTEASER_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),

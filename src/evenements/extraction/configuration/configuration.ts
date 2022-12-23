@@ -1,5 +1,5 @@
 import { Environment, SentryConfiguration } from "@configuration/configuration";
-import { LogLevel } from "@shared/configuration/logger";
+import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
     DIRECTORY_NAME: string
@@ -23,6 +23,7 @@ type MinioConfiguration = {
 
 export type Configuration = {
     CONTEXT: string
+    DOMAINE: Domaine
     FLOWS: Array<string>
     TOUS_MOBILISES: TaskConfiguration
     LOGGER_LOG_LEVEL: LogLevel
@@ -40,7 +41,8 @@ export class ConfigurationFactory {
         const DEFAULT_HISTORY_DIRECTORY_NAME = "history";
 
         return {
-            CONTEXT: "evenements/extraction",
+            CONTEXT: "extraction",
+            DOMAINE: "Évènements",
             FLOWS: [
                 getOrError("EVENTS_TOUS_MOBILISES_NAME"),
             ],
