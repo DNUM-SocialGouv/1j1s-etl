@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.3.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.2.0...v3.3.0) (2022-12-23)
+
+
+### Features
+
+* **logements/chargement:** Chargement du flux Studapart ([53b70cd](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/53b70cde4c0a7d6ca265270b6df8803b1c3f1578))
+
+
+### Bug Fixes
+
+* **Logements/chargement:** retrait end line dans type ([cbf7c23](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/cbf7c23305b2a326d7de4cf0c91bf6fb3d6560d2))
+
 ## [3.2.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.1.0...v3.2.0) (2022-12-22)
 
 
