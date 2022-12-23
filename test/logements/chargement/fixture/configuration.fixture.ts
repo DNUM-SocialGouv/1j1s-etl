@@ -18,6 +18,7 @@ export class ConfigurationFixtureBuilder {
 			FEATURE_FLIPPING: true,
 			FLOWS: [
 				"immojeune",
+				"studapart",
 			],
 			IMMOJEUNE: {
 				NAME: "immojeune",
@@ -40,6 +41,10 @@ export class ConfigurationFixtureBuilder {
 				PROJECT: "logement-etl",
 				RELEASE: "test",
 				...sentryConfiguration,
+			},
+			STUDAPART: {
+				NAME: "immojeune",
+				EXTENSION: ".json",
 			},
 			STRAPI: {
 				AUTHENTICATION_URL: "",
