@@ -25,17 +25,17 @@ export type StrapiConguration = {
 }
 
 export type Configuration = {
-	FEATURE_FLIPPING: boolean;
-	LOGGER_LOG_LEVEL: LogLevel;
-	NODE_ENV: Environment;
-	SENTRY: SentryConfiguration;
+	FEATURE_FLIPPING: boolean
+	LOGGER_LOG_LEVEL: LogLevel
+	NODE_ENV: Environment
+	SENTRY: SentryConfiguration
 	CONTEXT: string
 	FLOWS: Array<string>
 	IMMOJEUNE: Flow
 	MINIO: MinioConfiguration
 	STUDAPART: Flow
 	STRAPI: StrapiConguration
-	TEMPORARY_DIRECTORY_PATH: string,
+	TEMPORARY_DIRECTORY_PATH: string
 	DOMAINE: Domaine
 }
 
