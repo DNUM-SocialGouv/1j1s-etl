@@ -33,6 +33,7 @@ export type Configuration = {
 	FLOWS: Array<string>
 	IMMOJEUNE: Flow
 	MINIO: MinioConfiguration
+	STUDAPART: Flow
 	STRAPI: StrapiConguration
 	TEMPORARY_DIRECTORY_PATH: string
 }
@@ -51,6 +52,7 @@ export class ConfigurationFactory {
 			FEATURE_FLIPPING: toBoolean(getOrError("HOUSING_LOAD_FEATURE_FLIPPING")),
 			FLOWS: [
 				"immojeune",
+				"studapart",
 			],
 			IMMOJEUNE: {
 				NAME: getOrError("HOUSING_IMMOJEUNE_NAME"),
@@ -71,6 +73,10 @@ export class ConfigurationFactory {
 				DSN: getOrError("SENTRY_DSN"),
 				PROJECT: getOrError("npm_package_name"),
 				RELEASE: getOrError("npm_package_version"),
+			},
+			STUDAPART: {
+				NAME: getOrError("HOUSING_STUDAPART_NAME"),
+				EXTENSION: getOrError("HOUSING_STUDAPART_RESULT_FILE_EXTENSION"),
 			},
 			STRAPI: {
 				AUTHENTICATION_URL: getOrError("STRAPI_AUTHENTICATION_URL"),

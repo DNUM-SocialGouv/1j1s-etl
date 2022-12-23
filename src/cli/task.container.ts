@@ -53,6 +53,7 @@ export class TaskContainerFactory {
 				},
 				load: {
 					immojeune: tasks.housing.load.immojeune,
+					studapart: tasks.housing.load.studapart,
 				},
 			},
 			internships: {
