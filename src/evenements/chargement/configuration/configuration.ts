@@ -1,5 +1,5 @@
 import { Environment, SentryConfiguration } from "@configuration/configuration";
-import { LogLevel } from "@shared/configuration/logger";
+import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 type MinioConfiguration = {
 	ACCESS_KEY: string
@@ -19,6 +19,7 @@ export type TaskConfiguration = {
 
 export type Configuration = {
 	CONTEXT: string
+	DOMAINE: Domaine
 	FEATURE_FLIPPING_CHARGEMENT: boolean
 	FLOWS: Array<string>
 	TOUS_MOBILISES: TaskConfiguration
@@ -43,6 +44,7 @@ export class ConfigurationFactory {
 
 		return {
 			CONTEXT: "chargement",
+			DOMAINE: "Évènements",
 			FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("EVENTS_FEATURE_FLIPPING_CHARGEMENT", "false")),
 			FLOWS: [
 				getOrError("EVENTS_TOUS_MOBILISES_NAME"),

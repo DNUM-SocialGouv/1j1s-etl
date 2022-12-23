@@ -1,4 +1,4 @@
-import { LogLevel } from "@shared/configuration/logger";
+import { Domaine, LogLevel } from "@shared/configuration/logger";
 import { Environment, SentryConfiguration } from "@configuration/configuration";
 
 type MinioConfiguration = {
@@ -21,6 +21,7 @@ export type TaskConfiguration = {
 
 export type Configuration = {
     CONTEXT: string
+    DOMAINE: Domaine
     FLOWS: Array<string>
     TOUS_MOBILISES: TaskConfiguration
     LOGGER_LOG_LEVEL: LogLevel
@@ -41,6 +42,7 @@ export class ConfigurationFactory {
 
         return {
             CONTEXT: "evenements/extraction",
+            DOMAINE: "Évènements",
             FLOWS: [
                 getOrError("EVENTS_TOUS_MOBILISES_NAME"),
             ],

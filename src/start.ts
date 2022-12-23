@@ -8,6 +8,7 @@ import { ConfigurationFactory } from "@configuration/configuration";
 import { LoggerFactory } from "@shared/configuration/logger";
 import { MinioAdminStorageRepository } from "@shared/infrastructure/gateway/repository/minio-admin-storage.repository";
 import { Setup } from "@configuration/setup";
+import * as console from "console";
 
 const configuration = ConfigurationFactory.create();
 const loggerFactory = new LoggerFactory(
@@ -17,6 +18,7 @@ const loggerFactory = new LoggerFactory(
 	configuration.NODE_ENV,
 	configuration.APPLICATION_CONTEXT,
 	configuration.APPLICATION_LOGGER_LOG_LEVEL,
+	configuration.DOMAIN,
 );
 const applicationLogger = loggerFactory.create({ name: configuration.APPLICATION_LOGGER_NAME });
 const minioClient = new Client({
