@@ -8,7 +8,6 @@ import { ConfigurationFactory } from "@configuration/configuration";
 import { LoggerFactory } from "@shared/configuration/logger";
 import { MinioAdminStorageRepository } from "@shared/infrastructure/gateway/repository/minio-admin-storage.repository";
 import { Setup } from "@configuration/setup";
-import * as console from "console";
 
 const configuration = ConfigurationFactory.create();
 const loggerFactory = new LoggerFactory(

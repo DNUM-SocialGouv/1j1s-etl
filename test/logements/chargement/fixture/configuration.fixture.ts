@@ -44,7 +44,7 @@ export class ConfigurationFixtureBuilder {
 				...sentryConfiguration,
 			},
 			STUDAPART: {
-				NAME: "immojeune",
+				NAME: "studapart",
 				EXTENSION: ".json",
 			},
 			STRAPI: {
