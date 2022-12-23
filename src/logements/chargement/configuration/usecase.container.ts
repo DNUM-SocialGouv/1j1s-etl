@@ -4,6 +4,7 @@ import {
 import { GatewayContainer } from "@logements/chargement/infrastructure/gateway";
 import { UsecaseContainer } from "@logements/chargement/usecase";
 import { ChargerFluxImmojeune } from "@logements/chargement/usecase/charger-flux-immojeune.usecase";
+import { ChargerFluxStudapart } from "@logements/chargement/usecase/charger-flux-studapart.usecase";
 
 export class UseCaseContainerFactory {
     public static create(gateways: GatewayContainer): UsecaseContainer {
@@ -11,6 +12,7 @@ export class UseCaseContainerFactory {
 
         return {
             immojeune: new ChargerFluxImmojeune(chargerAnnoncesDeLogement),
+            studapart: new ChargerFluxStudapart(chargerAnnoncesDeLogement),
         };
     }
 }
