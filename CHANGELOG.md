@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.3](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.2...v3.3.3) (2022-12-26)
+
+
+### Bug Fixes
+
+* **logements/transformation:** respect du contrat d'interface ([4c142a1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/4c142a17cd4598baf8f67bf09c3af6171541f6d2))
+
 ## [3.3.2](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.1...v3.3.2) (2022-12-26)
 
 
