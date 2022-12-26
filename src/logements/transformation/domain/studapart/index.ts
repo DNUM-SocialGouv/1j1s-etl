@@ -108,7 +108,7 @@ export namespace Studapart {
                 localisation: {
                     adresse: studapartLogement.address,
                     ville: studapartLogement.city,
-                    codePostal: studapartLogement.zipcode,
+                    codePostal: studapartLogement.zipcode.toString(),
                     pays: studapartLogement.country,
                     latitude: Number(studapartLogement.latitude),
                     longitude: Number(studapartLogement.longitude),
@@ -118,9 +118,9 @@ export namespace Studapart {
                 imagesUrl: studapartLogement.pictures.map(picture => ({ value: picture })),
                 servicesInclus: this.depuisOptionLogements(studapartLogement.options),
                 servicesOptionnels: [],
-                prixHT: -1,
+                prixHT: 0,
                 prix: Number(studapartLogement.min_rent_with_charges),
-                devise: new Devise("EUR"),
+                devise: new Devise("EUR").value,
                 charge: Number(studapartLogement.charges),
                 garantie: this.depuisGarantie(studapartLogement.rooms),
             };

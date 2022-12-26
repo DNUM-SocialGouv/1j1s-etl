@@ -1,5 +1,3 @@
-import { Devise } from "@shared/devise";
-
 export namespace UnJeune1Solution {
 	export enum Source {
 		IMMOJEUNE = "immojeune",
@@ -64,7 +62,7 @@ export namespace UnJeune1Solution {
 			GARAGE = "garage",
 			GARDIEN_RESIDENCE = "gardien résidentiel",
 			INTERNET = "internet",
-			LAVE_LINGE = "machine à laver le linge",
+			LAVE_LINGE = "machine à laver",
 			LAVE_VAISSELLE = "lave vaisselle",
 			LOCAL_A_VELO = "local à vélo",
 			MICRO_ONDE = "micro-onde",
@@ -127,7 +125,7 @@ export namespace UnJeune1Solution {
 		servicesOptionnels: Array<UnJeune1Solution.ServiceOptionnel>
 		prixHT: number
 		prix?: number
-		devise: Devise
+		devise: string
 		charge: number
 		garantie: number
 	}

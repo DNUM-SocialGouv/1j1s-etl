@@ -14,7 +14,7 @@ export class AnnonceDeLogementFixtureBuilder {
 			titre: "Le titre de l'annonce",
 			description: "La description de l'annonce",
 			charge: 80,
-			devise: new Devise("EUR"),
+			devise: new Devise("EUR").value,
 			garantie: 2500,
 			prixHT: 950,
 			prix: 1030,

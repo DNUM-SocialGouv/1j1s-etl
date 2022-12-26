@@ -18,7 +18,7 @@ export class Devise {
     }
   }
 
-  get value(): string {
+  public get value(): string {
     return this._value;
   }
 
