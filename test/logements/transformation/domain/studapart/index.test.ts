@@ -40,7 +40,7 @@ describe("StudapartTest", () => {
               {
                   source: UnJeune1Solution.Source.STUDAPART,
                   servicesOptionnels: [],
-                  prixHT: -1,
+                  prixHT: 0,
                   servicesInclus: [{ nom: Nom.TV }],
                   surfaceMax: undefined,
               }
@@ -66,7 +66,7 @@ describe("StudapartTest", () => {
                 {
                     source: UnJeune1Solution.Source.STUDAPART,
                     servicesOptionnels: [],
-                    prixHT: -1,
+                    prixHT: 0,
                     servicesInclus: [{ nom: Nom.TV }],
                     surfaceMax: undefined,
                     typeBien: UnJeune1Solution.TypeBien.MAISON,
@@ -111,7 +111,7 @@ describe("StudapartTest", () => {
                 {
                     source: UnJeune1Solution.Source.STUDAPART,
                     servicesOptionnels: [],
-                    prixHT: -1,
+                    prixHT: 0,
                     surfaceMax: undefined,
                     type: UnJeune1Solution.Type.LOGEMENT_CONTRE_SERVICES,
                     servicesInclus: [
@@ -147,7 +147,7 @@ describe("StudapartTest", () => {
           {
             source: UnJeune1Solution.Source.STUDAPART,
             servicesOptionnels: [],
-            prixHT: -1,
+            prixHT: 0,
             servicesInclus: [{ nom: Nom.TV }],
             surfaceMax: undefined,
             garantie: 0,
@@ -167,7 +167,7 @@ describe("StudapartTest", () => {
           {
             source: UnJeune1Solution.Source.STUDAPART,
             servicesOptionnels: [],
-            prixHT: -1,
+            prixHT: 0,
             servicesInclus: [],
             surfaceMax: undefined,
           }

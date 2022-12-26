@@ -128,11 +128,11 @@ export namespace Immojeune {
 			const maintenant = this.dateService.maintenant().toISOString();
 
 			return {
-				identifiantSource: annonceDeLogement.externalId,
+				identifiantSource: annonceDeLogement.externalId.toString(),
 				titre: this.assainisseurDeTexte.nettoyer(annonceDeLogement.title),
 				description: this.assainisseurDeTexte.nettoyer(annonceDeLogement.description),
 				charge: annonceDeLogement.charges,
-				devise: new Devise(annonceDeLogement.currency),
+				devise: new Devise(annonceDeLogement.currency).value,
 				garantie: annonceDeLogement.deposit,
 				prix: annonceDeLogement.totalPricing,
 				prixHT: annonceDeLogement.rent,
