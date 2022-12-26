@@ -1,5 +1,4 @@
 import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
-import { FluxChargement } from "@logements/chargement/domain/flux";
 import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
 import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
 import {

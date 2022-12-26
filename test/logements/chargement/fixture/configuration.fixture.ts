@@ -50,7 +50,7 @@ export class ConfigurationFixtureBuilder {
 			STRAPI: {
 				AUTHENTICATION_URL: "",
 				BASE_URL: "",
-				EVENEMENT_URL: "",
+				HOUSING_URL: "",
 				PASSWORD: "",
 				USERNAME: "",
 				...strapiConguration,

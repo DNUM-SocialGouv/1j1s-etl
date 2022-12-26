@@ -44,7 +44,7 @@ export class GatewayContainerFactory {
 		const authClient = new AuthenticationClient(configuration.STRAPI.AUTHENTICATION_URL, strapiCredentials);
 
 		const storageClient = new MinioStorageClient(configuration, fileSystemClient, minioClient, uuidClient);
-		const httpClient = new StrapiClient(axiosInstance, configuration.STRAPI.BASE_URL, authClient);
+		const httpClient = new StrapiClient(axiosInstance, configuration.STRAPI.HOUSING_URL, authClient);
 
 		return {
 			annonceDeLogementRepository: GatewayContainerFactory.buildAnnonceDeLogementRepository(
