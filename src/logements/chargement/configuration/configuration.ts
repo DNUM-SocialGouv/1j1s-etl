@@ -19,7 +19,7 @@ export type Flow = {
 export type StrapiConguration = {
 	AUTHENTICATION_URL: string
 	BASE_URL: string
-	EVENEMENT_URL: string
+	HOUSING_URL: string
 	PASSWORD: string
 	USERNAME: string
 }
@@ -83,7 +83,7 @@ export class ConfigurationFactory {
 			STRAPI: {
 				AUTHENTICATION_URL: getOrError("STRAPI_AUTHENTICATION_URL"),
 				BASE_URL: getOrError("STRAPI_BASE_URL"),
-				EVENEMENT_URL: getOrError("HOUSING_STRAPI_URL"),
+				HOUSING_URL: getOrError("HOUSING_STRAPI_URL"),
 				PASSWORD: getOrError("STRAPI_PASSWORD"),
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},
