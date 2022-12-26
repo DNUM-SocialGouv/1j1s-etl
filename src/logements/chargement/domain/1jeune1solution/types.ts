@@ -83,6 +83,6 @@ export enum TypeBien {
 	T2 = "t2",
 	T3 = "t3",
 	T4 = "t4",
-	PLUS_GRAND = "> t4",
+	PLUS_GRAND = "t4 et plus",
 	NON_RENSEIGNE = "non renseigné",
 }
