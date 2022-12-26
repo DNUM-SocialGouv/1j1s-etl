@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.0...v3.3.1) (2022-12-26)
+
+
+### Bug Fixes
+
+* **Logements/chargement:** erreur variable url strapi ([f73eda1](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/f73eda1cb44835900ce0e2ffbba6ed87b863ae20))
+
 ## [3.3.0](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.2.0...v3.3.0) (2022-12-23)
 
 
