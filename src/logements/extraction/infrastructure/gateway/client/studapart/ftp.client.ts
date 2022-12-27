@@ -1,8 +1,7 @@
 import * as ftp from "basic-ftp";
-import { Client } from "basic-ftp";
 
 export class FtpClient {
-    client: Client;
+    client: ftp.Client;
 
     constructor() {
         this.client = new ftp.Client();
