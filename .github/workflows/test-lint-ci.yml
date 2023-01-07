@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
           cache: 'npm'
-      - run: npm ci
+      - run: npm i
       - run: npm test
 
   Lint:
@@ -28,5 +28,5 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
           cache: 'npm'
-      - run: npm ci
+      - run: npm i
       - run: npm run lint

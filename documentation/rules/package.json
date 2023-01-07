@@ -1,0 +1,18 @@
+{
+  "name": "eslint-plugin-1j1s",
+  "version": "1.0.0",
+  "description": "Rules to prevent cross-context imports",
+  "main": "./dist/index.js",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup index.ts --no-splitting --minify"
+  },
+  "keywords": [
+    "architecture",
+    "rules"
+  ],
+  "author": "SEFR",
+  "license": "ISC"
+}

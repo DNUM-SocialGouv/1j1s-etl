@@ -2,7 +2,8 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "1j1s"
     ],
     "parserOptions": {
         "tsconfigRootDir": ".",
@@ -11,7 +12,8 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:1j1s/architecture"
     ],
     "rules": {
         "@typescript-eslint/explicit-function-return-type": "error",
@@ -20,11 +22,11 @@
         "@typescript-eslint/unbound-method": "off",
         "comma-dangle": ["error", "always-multiline"],
         "complexity": ["error", 10],
+        "eol-last": "error",
         "max-depth": ["error", 2],
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "double"],
-        "semi": "error",
-        "eol-last": "error"
+        "semi": "error"
     },
     "overrides": [
         {
