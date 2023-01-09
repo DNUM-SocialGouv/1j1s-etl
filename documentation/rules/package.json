@@ -1,5 +1,5 @@
 {
-  "name": "eslint-plugin-1j1s",
+  "name": "@1j1s/eslint-plugin",
   "version": "1.0.0",
   "description": "Rules to prevent cross-context imports",
   "main": "./dist/index.js",
@@ -14,5 +14,9 @@
     "rules"
   ],
   "author": "SEFR",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {}
 }
