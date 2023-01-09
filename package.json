@@ -51,6 +51,7 @@
     "yargs": "~17.6.1"
   },
   "devDependencies": {
+    "@1j1s/eslint-plugin": "file:./documentation/rules",
     "@salesforce/ts-sinon": "~1.4.0",
     "@types/chai": "~4.3.1",
     "@types/chai-as-promised": "~7.1.5",
@@ -70,7 +71,6 @@
     "chai": "~4.3.6",
     "chai-as-promised": "~7.1.1",
     "eslint": "~8.30.0",
-    "eslint-plugin-1j1s": "file:./documentation/rules",
     "mocha": "~10.2.0",
     "nock": "~13.2.9",
     "nyc": "~15.1.0",

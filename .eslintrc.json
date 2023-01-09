@@ -3,7 +3,7 @@
     "parser": "@typescript-eslint/parser",
     "plugins": [
         "@typescript-eslint",
-        "1j1s"
+        "@1j1s"
     ],
     "parserOptions": {
         "tsconfigRootDir": ".",
@@ -13,7 +13,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:1j1s/architecture"
+        "plugin:@1j1s/architecture"
     ],
     "rules": {
         "@typescript-eslint/explicit-function-return-type": "error",

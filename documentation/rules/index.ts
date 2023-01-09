@@ -15,9 +15,9 @@ module.exports = {
 	},
 	configs: {
 		architecture: {
-			plugins: ["1j1s"],
+			plugins: ["@1j1s"],
 			rules: {
-				"1j1s/no-cross-context-import": "error",
+				"@1j1s/no-cross-context-import": "error",
 			},
 		},
 	},
