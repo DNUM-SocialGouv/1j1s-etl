@@ -55,3 +55,4 @@ Démarrer le contener (dans l'onglet Resources mettre Qty: 1) web puis l'éteind
 | nom du flux\action | Extract | transform | load  |
 |:-------------------|:-------:|:---------:|:-----:|
 | immojeune          |   X     |    X      |   X   |
+| studapart          |   X     |    X      |   X   |
