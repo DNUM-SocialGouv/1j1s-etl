@@ -38,20 +38,20 @@ Démarrer le contener (dans l'onglet Resources mettre Qty: 1) web puis l'éteind
 
 ### Stage
 
-| nom du flux\action | Extract | transform | load |
-| :----------------- | :----:  | :-------: | :--: |
-| jobteaser          |    X    |     X     |  X   |
-| stagefr-compresse  |    X    |     X     |  X   |
-| stagefr-decompresse|    X    |     X     |  X   |
+| nom du flux\action | Extract | transform | load  |
+| :----------------- | :----:  | :-------: |:-----:|
+| jobteaser          |    X    |     X     |   X   |
+| stagefr-compresse  |    X    |     X     |   X   |
+| stagefr-decompresse|    X    |     X     |   X   |
 
 ### Evenement
 
-| nom du flux\action | Extract | transform | load |
-| :----------------- | :----:  | :-------: | :--: |
-| tous-mobilises     |    X    |     X     |      |
+| nom du flux\action | Extract | transform | load  |
+| :----------------- | :----:  | :-------: |:-----:|
+| tous-mobilises     |    X    |     X     |   X   |
 
 ### Logement
 
-| nom du flux\action | Extract | transform | load |
-| :----------------- | :----:  | :-------: | :--: |
-| immojeune | X | X | X |
+| nom du flux\action | Extract | transform | load  |
+|:-------------------|:-------:|:---------:|:-----:|
+| immojeune          |   X     |    X      |   X   |
