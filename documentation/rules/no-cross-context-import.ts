@@ -1,9 +1,5 @@
-import { Rule } from "eslint";
 import { ImportDeclaration } from "estree";
-
-const contextModules = ["@evenements", "@logements", "@stages"];
-const technicalModules = ["@cli", "@configuration", "@test"];
-const modules = [...contextModules, ...technicalModules];
+import { Rule } from "eslint";
 
 type FileAndImportNodeContext = {
 	importModuleName: string
@@ -12,24 +8,28 @@ type FileAndImportNodeContext = {
 	isImportFromTechnicalModules: boolean
 }
 
-export class NoCrossContextImportRule {
+export class NoCrossContextImport {
+	private static contextModules = ["@evenements", "@logements", "@stages"];
+	private static technicalModules = ["@cli", "@configuration", "@test"];
+	private static modules = [...this.contextModules, ...this.technicalModules];
+
 	public static create(context: Rule.RuleContext): Rule.RuleListener {
 		return {
-			ImportDeclaration(node) {
-				NoCrossContextImportRule.checkNoCrossContext(context, node);
+			ImportDeclaration(node): void {
+				NoCrossContextImport.checkNoCrossContext(context, node);
 			},
 		};
 	}
 
-	public static checkNoCrossContext(context: Rule.RuleContext, node: ImportDeclaration & Rule.NodeParentExtension) {
-		const currentImportModuleName = this.getCurrentImportModuleName(<string>node.source.value, modules);
+	public static checkNoCrossContext(context: Rule.RuleContext, node: ImportDeclaration & Rule.NodeParentExtension): void {
+		const currentImportModuleName = this.getCurrentImportModuleName(<string>node.source.value, this.modules);
 
 		if (this.isWithinApplicationImport(currentImportModuleName)) {
 			const currentContext: FileAndImportNodeContext = {
 				importModuleName: currentImportModuleName,
 				fileModuleName: this.extractCurrentFileModuleName(context.getPhysicalFilename()),
-				isImportFromContextModules: contextModules.includes(currentImportModuleName),
-				isImportFromTechnicalModules: technicalModules.includes(currentImportModuleName),
+				isImportFromContextModules: this.contextModules.includes(currentImportModuleName),
+				isImportFromTechnicalModules: this.technicalModules.includes(currentImportModuleName),
 			};
 			let isError = false;
 
@@ -66,7 +66,7 @@ export class NoCrossContextImportRule {
 	}
 
 	private static isWithinApplicationImport(currentImportModuleName: string): boolean {
-		return modules.includes(currentImportModuleName);
+		return this.modules.includes(currentImportModuleName);
 	}
 
 	private static getCurrentImportModuleName(currentString: string, modules: Array<string>): string {

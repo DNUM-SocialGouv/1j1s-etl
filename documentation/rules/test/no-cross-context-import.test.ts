@@ -1,6 +1,6 @@
 import { Rule } from "eslint";
 import { ImportDeclaration } from "estree";
-import { NoCrossContextImportRule } from "../no-cross-context-import";
+import { NoCrossContextImport } from "../no-cross-context-import";
 import { expect, sinon, StubbedType, stubInterface } from "./configuration";
 
 const message = "Forbidden cross-context import";
@@ -20,7 +20,7 @@ describe("NoCrossContextImport", () => {
 			node.source.value = "import { SomeClass } from \"@somepackage/some/file.ts";
 
 			// When
-			NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+			NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 			// Then
 			expect(ruleContext.report).to.not.have.been.called;
@@ -39,7 +39,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@stages/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -52,7 +52,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@cli/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -65,7 +65,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@shared/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.not.have.been.called;
@@ -84,7 +84,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@evenements/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.not.have.been.called;
@@ -97,7 +97,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@logements/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -111,7 +111,7 @@ describe("NoCrossContextImport", () => {
 						node.source.value = "import { SomeClass } from \"@cli/some/other/file\"";
 
 						// When
-						NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+						NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 						// Then
 						expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -124,7 +124,7 @@ describe("NoCrossContextImport", () => {
 						node.source.value = "import { SomeClass } from \"@configuration/some/other/file\"";
 
 						// When
-						NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+						NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 						// Then
 						expect(ruleContext.report).to.not.have.been.called;
@@ -144,7 +144,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@logements/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.not.have.been.called;
@@ -157,7 +157,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@stages/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -171,7 +171,7 @@ describe("NoCrossContextImport", () => {
 						node.source.value = "import { SomeClass } from \"@cli/some/other/file\"";
 
 						// When
-						NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+						NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 						// Then
 						expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -184,7 +184,7 @@ describe("NoCrossContextImport", () => {
 						node.source.value = "import { SomeClass } from \"@configuration/some/other/file\"";
 
 						// When
-						NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+						NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 						// Then
 						expect(ruleContext.report).to.not.have.been.called;
@@ -204,7 +204,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@stages/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.not.have.been.called;
@@ -217,7 +217,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@evenements/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -231,7 +231,7 @@ describe("NoCrossContextImport", () => {
 						node.source.value = "import { SomeClass } from \"@cli/some/other/file\"";
 
 						// When
-						NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+						NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 						// Then
 						expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -244,7 +244,7 @@ describe("NoCrossContextImport", () => {
 						node.source.value = "import { SomeClass } from \"@configuration/some/other/file\"";
 
 						// When
-						NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+						NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 						// Then
 						expect(ruleContext.report).to.not.have.been.called;
@@ -260,7 +260,7 @@ describe("NoCrossContextImport", () => {
 				node.source.value = "import { SomeClass } from \"@stages/some/other/file\"";
 
 				// When
-				NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+				NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 				// Then
 				expect(ruleContext.report).to.not.have.been.called;
@@ -278,7 +278,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@stages/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -291,7 +291,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@cli/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.have.been.calledOnceWithExactly({ node, message });
@@ -304,7 +304,7 @@ describe("NoCrossContextImport", () => {
 					node.source.value = "import { SomeClass } from \"@configuration/some/other/file\"";
 
 					// When
-					NoCrossContextImportRule.checkNoCrossContext(ruleContext, node);
+					NoCrossContextImport.checkNoCrossContext(ruleContext, node);
 
 					// Then
 					expect(ruleContext.report).to.not.have.been.called;
