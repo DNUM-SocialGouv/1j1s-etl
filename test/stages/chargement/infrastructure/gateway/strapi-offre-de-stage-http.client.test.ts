@@ -35,7 +35,7 @@ let axiosInstance: AxiosInstance;
 let authClient: AuthenticationClient;
 let strapiOffreDeStageHttpClient: StrapiOffreDeStageHttpClient;
 
-describe("StrapiHttpClientTest", () => {
+describe("StrapiOffreDeStageHttpClient", () => {
 	beforeEach(() => {
 		axiosInstance = axios.create({
 			baseURL: "http://localhost:1337/api",

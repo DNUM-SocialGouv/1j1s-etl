@@ -1,5 +1,5 @@
-import { Environment, SentryConfiguration } from "@configuration/configuration";
 import { Domaine, LogLevel } from "@shared/configuration/logger";
+import { Environment, SentryConfiguration } from "@configuration/configuration";
 
 export type MinioConfiguration = {
 	ACCESS_KEY: string
@@ -25,18 +25,18 @@ export type StrapiConguration = {
 }
 
 export type Configuration = {
-	FEATURE_FLIPPING: boolean
-	LOGGER_LOG_LEVEL: LogLevel
-	NODE_ENV: Environment
-	SENTRY: SentryConfiguration
 	CONTEXT: string
+	DOMAINE: Domaine
+	FEATURE_FLIPPING: boolean
 	FLOWS: Array<string>
 	IMMOJEUNE: Flow
+	LOGGER_LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration
-	STUDAPART: Flow
+	NODE_ENV: Environment
+	SENTRY: SentryConfiguration
 	STRAPI: StrapiConguration
+	STUDAPART: Flow
 	TEMPORARY_DIRECTORY_PATH: string
-	DOMAINE: Domaine
 }
 
 export class ConfigurationFactory {
