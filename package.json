@@ -36,6 +36,7 @@
     "fast-xml-parser": "~4.1.2",
     "i18n-iso-countries": "~7.5.0",
     "luxon": "~3.2.1",
+    "meilisearch": "~0.30.0",
     "minio": "~7.0.28",
     "node-stream-zip": "~1.15.0",
     "pino": "~8.10.0",
