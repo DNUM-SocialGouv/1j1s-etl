@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
+import axios, { AxiosInstance } from "axios";
 
 type StrapiQueryParam = "pagination[page]"
 	| "filters[source][$eq]"
@@ -22,6 +22,10 @@ export type StrapiResponse<T> = {
 			total: number
 		}
 	}
+}
+
+export interface HttpClient {
+	get<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string): Promise<Array<T>>;
 }
 
 export class StrapiHttpClient {
