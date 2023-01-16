@@ -1,16 +1,33 @@
-import {
-	AnnonceDeLogementBrute,
-	AnnonceDeLogementAIndexer,
-	AnnonceDeLogementRepository, Localisation,
-} from "@logements/indexation/service/types";
+import { Configuration } from "@logements/indexation/configuration/configuration";
+import { AnnonceDeLogementAIndexer, AnnonceDeLogementBrute, Localisation } from "@logements/indexation/service/types";
+import { IndexingClient } from "@shared/infrastructure/gateway/client/meilisearch.client";
+import { HttpClient } from "@shared/infrastructure/gateway/client/strapi-http-client";
 
 export class IndexerAnnoncesDeLogement {
-	constructor(private readonly annonceDeLogementRepository: AnnonceDeLogementRepository) {
+	private static readonly BATCH_SIZE = 5000;
+	private static readonly FIELDS_TO_RETRIEVE = "id,slug,titre,dateDeDisponibilite,devise,prix,prixHT,surface,surfaceMax,type,url,sourceUpdatedAt";
+	private static readonly INDEX = "annonces-de-logement";
+	private static readonly RELATIONS_TO_RETRIEVE = "localisation,imagesUrl";
+
+	constructor(
+		private readonly indexingClient: IndexingClient,
+		private readonly strapiHttpClient: HttpClient,
+		private readonly configuration: Configuration,
+	) {
 	}
 
 	public async executer(source: string): Promise<void> {
-		const annoncesDeLogement = await this.annonceDeLogementRepository.recupererLesAnnonces(source);
-		return this.annonceDeLogementRepository.indexer(this.versAnnoncesDeLogementAIndexer(annoncesDeLogement));
+		const annoncesDeLogement = await this.strapiHttpClient.get<AnnonceDeLogementBrute>(
+			this.configuration.STRAPI.ENDPOINT,
+			source,
+			IndexerAnnoncesDeLogement.FIELDS_TO_RETRIEVE,
+			IndexerAnnoncesDeLogement.RELATIONS_TO_RETRIEVE,
+		);
+		await this.indexingClient.index<AnnonceDeLogementAIndexer>(
+			IndexerAnnoncesDeLogement.INDEX,
+			this.versAnnoncesDeLogementAIndexer(annoncesDeLogement),
+			IndexerAnnoncesDeLogement.BATCH_SIZE,
+		);
 	}
 
 	private versAnnoncesDeLogementAIndexer(annoncesDeLogement: Array<AnnonceDeLogementBrute>): Array<AnnonceDeLogementAIndexer> {

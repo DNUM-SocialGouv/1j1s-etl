@@ -1,7 +1,7 @@
 import { AnnonceDeLogementAIndexer, AnnonceDeLogementBrute } from "@logements/indexation/service/types";
 
 export class AnnonceDeLogementFixtureBuilder {
-	public static buildAnnonceDeLogement(override?: Partial<AnnonceDeLogementBrute>): AnnonceDeLogementBrute {
+	public static buildAnnonceDeLogementBrute(override?: Partial<AnnonceDeLogementBrute>): AnnonceDeLogementBrute {
 		const defaults: AnnonceDeLogementBrute = {
 			id: "1",
 			slug: "appartement-t2-1",

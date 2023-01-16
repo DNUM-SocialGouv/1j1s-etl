@@ -36,11 +36,11 @@ describe("StrapiHttpClientTest", () => {
 		strapiHttpClient = new StrapiHttpClient(axiosInstance, authenticationClient);
 
 		for (let i = 1; i <= 100; i++) {
-			dataPremierePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogement({ id: `${i}` }) } });
+			dataPremierePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogementBrute({ id: `${i}` }) } });
 		}
 
 		for (let i = 101; i <= 200; i++) {
-			dataSecondePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogement({ id: `${i}` }) } });
+			dataSecondePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogementBrute({ id: `${i}` }) } });
 		}
 	});
 
