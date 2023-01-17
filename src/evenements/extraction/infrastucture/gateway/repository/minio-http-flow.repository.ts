@@ -46,6 +46,7 @@ export class MinioHttpFlowRepository implements FluxRepository {
 				localFileNameIncludingPath
 			);
 		} catch (e) {
+			this.loggerStrategy.get(flow.nom).error(e);
 			throw new EcritureFluxErreur(flow.nom);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);

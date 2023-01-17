@@ -1,5 +1,4 @@
-import * as fs from "fs";
-import { createWriteStream } from "fs";
+import { appendFileSync, createWriteStream, existsSync, mkdirSync, readFileSync, unlinkSync } from "fs";
 import { finished, Stream } from "stream";
 import { promisify } from "util";
 
@@ -18,20 +17,20 @@ export class NodeFileSystemClient implements FileSystemClient {
 	}
 
 	public delete(filePathIncludingFileName: string): Promise<void> {
-		fs.unlinkSync(filePathIncludingFileName);
+		unlinkSync(filePathIncludingFileName);
 		return Promise.resolve();
 	}
 
 	public read(filePathIncludingFileName: string): Promise<Buffer> {
-		return Promise.resolve(fs.readFileSync(filePathIncludingFileName));
+		return Promise.resolve(readFileSync(filePathIncludingFileName));
 	}
 
 	public write(filePath: string, fileContent: string | Buffer): Promise<void> {
-		if (!fs.existsSync(this.temporaryDirPath)) {
-			fs.mkdirSync(this.temporaryDirPath);
+		if (!existsSync(this.temporaryDirPath)) {
+			mkdirSync(this.temporaryDirPath);
 		}
 
-		fs.appendFileSync(filePath, fileContent, { encoding: "utf-8" });
+		appendFileSync(filePath, fileContent, { encoding: "utf-8" });
 		return Promise.resolve();
 	}
 
