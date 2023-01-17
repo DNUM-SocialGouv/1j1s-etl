@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.4](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.3...v3.3.4) (2023-01-17)
+
+
+### Miscellaneous Chores
+
+* release 3.3.4 ([b60e301](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/b60e301923177d9bfffb236ab1c8d5288af8e45b))
+
 ## [3.3.3](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.2...v3.3.3) (2022-12-26)
 
 
