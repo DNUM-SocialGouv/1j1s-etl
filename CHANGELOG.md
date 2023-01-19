@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.5](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.4...v3.3.5) (2023-01-19)
+
+
+### Bug Fixes
+
+* **sentry:** renommage de l'app ([f913367](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/commit/f91336761d8faa83b504f594690824a5ff3437d0))
+
 ## [3.3.4](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.3...v3.3.4) (2023-01-17)
 
 
