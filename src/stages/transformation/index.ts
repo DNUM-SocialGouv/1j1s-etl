@@ -1,6 +1,6 @@
 import { Configuration, ConfigurationFactory } from "@stages/transformation/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/transformation/configuration/gateways.container";
-import { Module } from "@shared/configuration/module";
+import { SousModule } from "@shared/configuration/module";
 import { StagesTransformationLoggerStrategy } from "@stages/transformation/configuration/logger-strategy";
 import { TransformFlowJobteaserTask } from "@stages/transformation/infrastructure/tasks/transform-flow-jobteaser.task";
 import {
@@ -12,16 +12,16 @@ import {
 import { UsecaseContainer } from "@stages/transformation/usecase";
 import { UsecaseContainerFactory } from "@stages/transformation/configuration/usecases.container";
 
-export class TransformationModule {
-	public static export(): Module {
+export class Transformation {
+	public static export(): SousModule {
 		const configuration = ConfigurationFactory.create();
 		const loggerStrategy = new StagesTransformationLoggerStrategy(configuration);
 		const gateways = GatewayContainerFactory.create(configuration, loggerStrategy);
 		const usecases = UsecaseContainerFactory.create(gateways);
-		return TransformationModule.create(configuration, usecases);
+		return Transformation.create(configuration, usecases);
 	}
 
-	private static create(configuration: Configuration, usecases: UsecaseContainer): Module {
+	private static create(configuration: Configuration, usecases: UsecaseContainer): SousModule {
 		return {
 			jobteaser: new TransformFlowJobteaserTask(usecases.transformerFluxJobteaser, configuration),
 			"stagefr-compresse": new TransformFlowStagefrCompressedTask(usecases.transformerFluxStagefrCompresse, configuration),

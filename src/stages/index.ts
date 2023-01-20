@@ -1,9 +1,10 @@
-import { ChargementModule } from "@stages/chargement/configuration";
-import { ExtractionModule } from "@stages/extraction/configuration";
-import { TransformationModule } from "@stages/transformation/configuration";
+import { Chargement } from "@stages/chargement";
+import { Extraction } from "@stages/extraction";
+import { Module } from "@shared/configuration/module";
+import { Transformation } from "@stages/transformation";
 
-export const Stages = {
-	ChargementModule,
-	ExtractionModule,
-	TransformationModule,
+export const Stages: Module = {
+	Chargement: Chargement.export(),
+	Extraction: Extraction.export(),
+	Transformation: Transformation.export(),
 };

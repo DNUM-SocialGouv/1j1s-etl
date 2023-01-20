@@ -1,8 +1,10 @@
+import { Configuration } from "@configuration/configuration";
+import { SousModule } from "@shared/configuration/module";
 import yargs from "yargs";
 
-import { Action, Domaine } from "@cli/cli";
-import { Configuration } from "@configuration/configuration";
-
+export type Domaine = "events" | "housing" | "internships";
+export type Action = "extract" | "transform" | "load";
+export type CliCommands = Record<Domaine, Record<Action, SousModule>>
 type YargsCommands = { [p: string]: unknown, domain: Domaine, action: Action, flow: string, _: (string | number)[], $0: string };
 
 class CliError extends Error {

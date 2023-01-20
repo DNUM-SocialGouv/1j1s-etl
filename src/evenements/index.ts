@@ -1,9 +1,10 @@
-import { ExtractionModule } from "@evenements/extraction/configuration";
-import { TransformationModule } from "@evenements/transformation/configuration";
-import { ChargementModule } from "@evenements/chargement/configuration";
+import { Chargement } from "@evenements/chargement";
+import { Extraction } from "@evenements/extraction";
+import { Module } from "@shared/configuration/module";
+import { Transformation } from "@evenements/transformation";
 
-export const Evenements = {
-  ExtractionModule,
-  TransformationModule,
-  ChargementModule,
+export const Evenements: Module = {
+  Chargement: Chargement.export(),
+  Extraction: Extraction.export(),
+  Transformation: Transformation.export(),
 };
