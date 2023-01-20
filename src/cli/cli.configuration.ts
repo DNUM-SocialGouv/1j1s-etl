@@ -1,8 +1,9 @@
 import yargs from "yargs";
 
+import { Action, Domaine } from "@cli/cli";
 import { Configuration } from "@configuration/configuration";
 
-type Commands = { [p: string]: unknown, domain: string, action: string, flow: string, _: (string | number)[], $0: string };
+type YargsCommands = { [p: string]: unknown, domain: Domaine, action: Action, flow: string, _: (string | number)[], $0: string };
 
 class CliError extends Error {
 	constructor(domain: string, flow: string) {
@@ -11,7 +12,7 @@ class CliError extends Error {
 }
 
 export class CliConfiguration {
-	public static create(configuration: Configuration): Commands {
+	public static create(configuration: Configuration): YargsCommands {
 		const domainChoices = configuration.DOMAINS;
 		const actionChoices = ["extract", "transform", "load"];
 
@@ -60,7 +61,7 @@ export class CliConfiguration {
 				}
 				return true;
 			})
-			.argv as Commands;
+			.argv as YargsCommands;
 	}
 
 	private static isFlowNotWithinDomain(domainToCheck: string, flow: string, flowsByDomain: Map<string, Array<string>>): boolean {
