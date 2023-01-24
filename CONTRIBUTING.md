@@ -2,8 +2,8 @@
 
 ## Sommaire
 
-* [Langage de programmation](./documentation/conventions/langage-de-programmation.md)
-* [Git](./documentation/conventions/git.md)
+* [Langage de programmation](docs/conventions/langage-de-programmation.md)
+* [Git](docs/conventions/git.md)
 
 | Done | Questions                                                | Réponse de l'équipe                                                                                                               | Acté         |  
 |------|----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|--------------|

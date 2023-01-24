@@ -5,7 +5,7 @@
 ### Convention
 
 Nous allons nous baser sur la convention "[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)" que
-nous allons légèrement modifié pour nos usages. Voir document [ci-joint](documentation/conventions/convention-commit.mdon-commit.md).
+nous allons légèrement modifié pour nos usages. Voir document [ci-joint](docs/conventions/convention-commit.mdon-commit.md).
 
 ### Langue
 
@@ -70,7 +70,7 @@ $ git commit --amend
 ### Code Review
 
 Nous allons nous baser sur la convention "[Conventional Comments](https://conventionalcomments.org/)" que
-nous allons légèrement modifié pour nos usages. Voir document [ci-joint](documentation/conventions/convention-comment.mdn-comment.md)
+nous allons légèrement modifié pour nos usages. Voir document [ci-joint](docs/conventions/convention-comment.mdn-comment.md)
 
 Chaque Pull Request (PR) devra être approuvée a minima par une personne n'ayant pas travaillé sur le ticket en rapport
 avec la PR.
