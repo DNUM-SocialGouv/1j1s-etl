@@ -1,6 +1,3 @@
-import "dotenv/config";
-import "module-alias/register";
-
 import { Configuration, ConfigurationFactory } from "@stages/chargement/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/chargement/configuration/gateways.container";
 import { LoadJobteaserTask } from "@stages/chargement/infrastructure/tasks/load-jobteaser.task";
