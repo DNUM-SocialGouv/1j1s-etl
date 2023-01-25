@@ -1,5 +1,4 @@
 import "dotenv/config";
-import "module-alias/register";
 
 import * as http from "http";
 import { Client } from "minio";
