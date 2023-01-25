@@ -1,4 +1,3 @@
-import "module-alias/register";
 import "dotenv/config";
 
 import { CliFactory } from "@cli/cli";
