@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.3.5...v3.3.6) (2023-01-26)
+
+
+### Bug Fixes
+
+* **dependencies:** correction desynchro package-lock.json ([6d0392e](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/6d0392ec2cc03eeab2146a1db0b86f1808a67d34))
+
 ## [3.3.5](https://github.com/DNUM-SocialGouv/1j1s-stage-orchestrateur-transform-load/compare/v3.3.4...v3.3.5) (2023-01-19)
 
 
