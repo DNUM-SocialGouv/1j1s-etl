@@ -1,21 +1,19 @@
-import { Client } from "minio";
-import sinon from "sinon";
-
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/transformation/fixture/annonce-de-logement.fixture-builder";
+import { Client } from "minio";
 import { Configuration } from "@logements/transformation/configuration/configuration";
+import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
+import { expect, sinon, StubbedClass, stubClass } from "@test/configuration";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { FluxTransformation } from "@logements/transformation/domain/flux";
+import { FluxTransformation } from "@logements/transformation/domain/model/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import { MinioAnnonceDeLogementRepository } from "@logements/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
 
 let localFileNameIncludingPath: string;
 let minioRepository: MinioAnnonceDeLogementRepository;

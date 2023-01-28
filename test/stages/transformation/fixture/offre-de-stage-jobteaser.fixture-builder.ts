@@ -1,4 +1,4 @@
-import { Jobteaser } from "@stages/transformation/domain/jobteaser";
+import { Jobteaser } from "@stages/transformation/domain/model/jobteaser";
 
 export class OffreDeStageJobteaserFixtureBuilder {
 	public static build(

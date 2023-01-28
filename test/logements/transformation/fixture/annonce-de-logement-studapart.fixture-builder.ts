@@ -1,5 +1,5 @@
-import { Studapart } from "@logements/transformation/domain/studapart";
-import { StudapartBoolean } from "@logements/transformation/domain/studapart/studapart-boolean";
+import { Studapart } from "@logements/transformation/domain/model/studapart";
+import { StudapartBoolean } from "@logements/transformation/domain/model/studapart/studapart.boolean";
 
 export class AnnonceDeLogementStudapartContenuFixtureBuilder {
 	public static build(annonceDeLogements: Array<Studapart.AnnonceDeLogement>): Studapart.Contenu {

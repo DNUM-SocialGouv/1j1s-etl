@@ -5,7 +5,7 @@ import { SousModule } from "@shared/configuration/module";
 import {
 	TransformFlowJobteaserTask,
 } from "@evenements/transformation/infrastructure/tasks/transform-flow-tous-mobilises.task";
-import { UseCaseContainer } from "@evenements/transformation/usecase";
+import { UseCaseContainer } from "@evenements/transformation/application-service";
 import { UseCaseContainerFactory } from "@evenements/transformation/configuration/usecases.container";
 
 export class Transformation {

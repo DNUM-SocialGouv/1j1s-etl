@@ -1,14 +1,7 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { Configuration } from "@evenements/chargement/configuration/configuration";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Client } from "minio";
-import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { Logger, LoggerStrategy } from "@shared/configuration/logger";
-import {
-    MinioAndStrapiEvenementsRepository,
-} from "@evenements/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
-import sinon from "sinon";
-import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
+import { Configuration } from "@evenements/chargement/configuration/configuration";
+import { DateService } from "@shared/date.service";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import {
     evenement1Le24Novembre, evenement2Le24Novembre,
     evenementDejaCharge1Le24Novembre,
@@ -20,11 +13,16 @@ import {
     RecupererContenuErreur,
     RecupererOffresExistantesErreur,
 } from "@shared/infrastructure/gateway/flux.erreur";
-import { DateService } from "@shared/date.service";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser } from "@shared/infrastructure/gateway/content.parser";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
+import {
+    MinioAndStrapiEvenementsRepository,
+} from "@evenements/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
 import {
     StrapiEvenementHttpClient,
 } from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
-import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";

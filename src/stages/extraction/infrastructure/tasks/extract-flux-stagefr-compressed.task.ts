@@ -1,6 +1,6 @@
 import { Configuration } from "@stages/extraction/configuration/configuration";
-import { ExtraireStagefrCompresse } from "@stages/extraction/usecase/extraire-stagefr-compresse.usecase";
-import { FluxExtraction } from "@stages/extraction/domain/flux";
+import { ExtraireStagefrCompresse } from "@stages/extraction/application-service/extraire-stagefr-compresse.usecase";
+import { FluxExtraction } from "@stages/extraction/domain/model/flux";
 import { Task } from "@shared/infrastructure/task/task";
 import { TaskLog } from "@stages/extraction/configuration/log.decorator";
 

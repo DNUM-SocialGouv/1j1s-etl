@@ -1,25 +1,22 @@
-import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
-import { FluxChargement } from "@logements/chargement/domain/flux";
-import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
-import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
-import {
-	MinioHttpAnnonceDeLogementRepository,
-} from "@logements/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { Flux } from "@shared/flux";
-import { StubbedClass, stubClass } from "@test/configuration";
-import {
-	AnnonceDeLogementHttpFixtureBuilder,
-} from "@test/logements/chargement/fixture/annonce-de-logement-http.fixture-builder";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/chargement/fixture/annonce-de-logement.fixture-builder";
-import { expect } from "chai";
-import sinon from "sinon";
-import { DateService } from "@shared/date.service";
-import { Logger, LoggerStrategy } from "@shared/configuration/logger";
-import { LogementsChargementLoggerStrategy } from "@logements/chargement/configuration/logger-strategy";
+import {
+	AnnonceDeLogementHttpFixtureBuilder,
+} from "@test/logements/chargement/fixture/annonce-de-logement-http.fixture-builder";
 import { ConfigurationFixtureBuilder } from "@test/logements/chargement/fixture/configuration.fixture";
+import { DateService } from "@shared/date.service";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+import { Flux } from "@shared/flux";
+import { FluxChargement } from "@logements/chargement/domain/model/flux";
+import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
+import { LogementsChargementLoggerStrategy } from "@logements/chargement/configuration/logger-strategy";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
+import {
+	MinioHttpAnnonceDeLogementRepository,
+} from "@logements/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
+import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
+import { UnJeune1Solution } from "@logements/chargement/domain/model/1jeune1solution";
 
 let dateService: StubbedClass<DateService>;
 let httpClient: StubbedType<HttpClient>;

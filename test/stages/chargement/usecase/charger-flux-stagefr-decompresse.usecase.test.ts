@@ -1,9 +1,9 @@
-import { ChargerFluxStagefrDecompresse } from "@stages/chargement/usecase/charger-flux-stagefr-decompresse.usecase";
+import { ChargerFluxStagefrDecompresse } from "@stages/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import {
 	ChargerOffresDeStageDomainService,
-} from "@stages/chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
+} from "@stages/chargement/domain/service/charger-offres-de-stage.domain-service";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
+import { FluxChargement } from "@stages/chargement/domain/model/flux";
 
 let extension: string;
 let nomDuFlux: string;

@@ -9,7 +9,7 @@ import {
 import { GatewayContainerFactory } from "@stages/extraction/configuration/gateways.container";
 import { SousModule } from "@shared/configuration/module";
 import { StagesExtractionLoggerStrategy } from "@stages/extraction/configuration/logger.strategy";
-import { UsecaseContainer } from "@stages/extraction/usecase";
+import { UsecaseContainer } from "@stages/extraction/application-service";
 import { UsecaseContainerFactory } from "@stages/extraction/configuration/usecases.container";
 
 export class Extraction {

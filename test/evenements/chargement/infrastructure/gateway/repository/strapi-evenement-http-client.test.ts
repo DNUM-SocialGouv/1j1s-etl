@@ -1,18 +1,15 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import nock from "nock";
-import sinon, { spy } from "sinon";
-
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
-import { expect } from "@test/configuration";
-import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
-import {
-	StrapiEvenementHttpClient,
-} from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import {
 	evenement1Le24Novembre,
 	evenementDejaCharge1Le24Novembre,
 	evenementDejaCharge2Le24Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@test/evenements/fixture/evenements-un-jeune-une-solution.fixture";
+import { expect, nock, spy } from "@test/configuration";
+import {
+	StrapiEvenementHttpClient,
+} from "@evenements/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/model/1jeune1solution";
 
 const source = "tous-mobilises";
 const url = "evenements";

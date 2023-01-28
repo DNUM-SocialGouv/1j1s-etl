@@ -1,8 +1,7 @@
+import { AnnonceDeLogementRepository } from "@logements/chargement/domain/service/annonce-de-logement.repository";
+import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
 import axios from "axios";
 import { Client } from "minio";
-
-import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
-import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
 import { Configuration } from "@logements/chargement/configuration/configuration";
 import { DateService } from "@shared/date.service";
 import {

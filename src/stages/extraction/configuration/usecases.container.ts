@@ -1,10 +1,10 @@
 import { DateService } from "@shared/date.service";
-import { ExtraireFluxDomainService } from "@stages/extraction/domain/services/extraire-flux.domain-service";
-import { ExtraireJobteaser } from "@stages/extraction/usecase/extraire-jobteaser.usecase";
-import { ExtraireStagefrCompresse } from "@stages/extraction/usecase/extraire-stagefr-compresse.usecase";
-import { ExtraireStagefrDecompresse } from "@stages/extraction/usecase/extraire-stagefr-decompresse.usecase";
+import { ExtraireFluxDomainService } from "@stages/extraction/domain/service/extraire-flux.domain-service";
+import { ExtraireJobteaser } from "@stages/extraction/application-service/extraire-jobteaser.usecase";
+import { ExtraireStagefrCompresse } from "@stages/extraction/application-service/extraire-stagefr-compresse.usecase";
+import { ExtraireStagefrDecompresse } from "@stages/extraction/application-service/extraire-stagefr-decompresse.usecase";
 import { GatewayContainer } from "@stages/extraction/infrastructure/gateway";
-import { UsecaseContainer } from "@stages/extraction/usecase";
+import { UsecaseContainer } from "@stages/extraction/application-service";
 
 export class UsecaseContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {

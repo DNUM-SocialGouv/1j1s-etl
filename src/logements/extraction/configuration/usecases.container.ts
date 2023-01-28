@@ -1,9 +1,9 @@
 import { DateService } from "@shared/date.service";
-import { ExtraireFluxDomainService } from "@logements/extraction/domain/services/extraire-flux.domain-service";
+import { ExtraireFluxDomainService } from "@logements/extraction/domain/service/extraire-flux.domain-service";
+import { ExtraireImmojeune } from "@logements/extraction/application-service/extraire-immojeune.usecase";
+import { ExtraireStudapart } from "@logements/extraction/application-service/extraire-studapart.usecase";
 import { GatewayContainer } from "@logements/extraction/infrastructure/gateway";
-import { UsecaseContainer } from "@logements/extraction/usecase";
-import { ExtraireImmojeune } from "@logements/extraction/usecase/extraire-immojeune.usecase";
-import { ExtraireStudapartUseCase } from "@logements/extraction/usecase/extraire-studapart.usecase";
+import { UsecaseContainer } from "@logements/extraction/application-service";
 
 export class UsecaseContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {
@@ -16,7 +16,7 @@ export class UsecaseContainerFactory {
 
 		return {
 			extraireImmojeune: new ExtraireImmojeune(extraireFluxDomainService),
-			extraireStudapart: new ExtraireStudapartUseCase(extraireFluxDomainService),
+			extraireStudapart: new ExtraireStudapart(extraireFluxDomainService),
 		};
 	}
 }

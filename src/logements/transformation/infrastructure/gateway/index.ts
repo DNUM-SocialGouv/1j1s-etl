@@ -1,4 +1,4 @@
-import { AnnonceDeLogementRepository } from "@logements/transformation/domain/annonce-de-logement.repository";
+import { AnnonceDeLogementRepository } from "@logements/transformation/domain/service/annonce-de-logement.repository";
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { Client } from "minio";
 

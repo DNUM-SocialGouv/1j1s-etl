@@ -1,9 +1,9 @@
-import { GatewayContainer } from "@evenements/chargement/infrastructure/gateway";
-import { ChargementUseCaseContainer } from "@evenements/chargement/usecase";
+import { ChargementUseCaseContainer } from "@evenements/chargement/application-service";
 import {
 	ChargerEvenenementsDomainService,
-} from "@evenements/chargement/domain/1jeune1solution/services/charger-evenements-domain.service";
-import { ChargerFluxTousMobilisesUseCase } from "@evenements/chargement/usecase/charger-flux-tous-mobilises.usecase";
+} from "@evenements/chargement/domain/service/charger-evenements.domain-service";
+import { ChargerFluxTousMobilises } from "@evenements/chargement/application-service/charger-flux-tous-mobilises.usecase";
+import { GatewayContainer } from "@evenements/chargement/infrastructure/gateway";
 
 export class UseCaseContainerFactory {
 	public static create(gateways: GatewayContainer): ChargementUseCaseContainer {
@@ -12,7 +12,7 @@ export class UseCaseContainerFactory {
 		);
 
 		return {
-			chargerFluxTousMobilisesUseCase: new ChargerFluxTousMobilisesUseCase(chargerEvenenementsDomainService),
+			chargerFluxTousMobilisesUseCase: new ChargerFluxTousMobilises(chargerEvenenementsDomainService),
 		};
 	}
 }

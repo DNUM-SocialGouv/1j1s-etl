@@ -1,13 +1,10 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Client } from "minio";
-import sinon from "sinon";
-
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Configuration } from "@logements/extraction/configuration/configuration";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { EcritureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FlowStrategy } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { FluxExtraction } from "@logements/extraction/domain/flux";
+import { FluxExtraction } from "@logements/extraction/domain/model/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpFlowRepository,

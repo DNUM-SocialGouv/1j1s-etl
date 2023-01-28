@@ -1,5 +1,4 @@
 import { Client } from "minio";
-
 import { Configuration } from "@stages/chargement/configuration/configuration";
 import {
 	EcritureFluxErreur,
@@ -9,7 +8,7 @@ import {
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
-import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
+import { UnJeune1Solution } from "@stages/chargement/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {

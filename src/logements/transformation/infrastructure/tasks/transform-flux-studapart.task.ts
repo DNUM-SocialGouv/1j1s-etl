@@ -1,8 +1,8 @@
 import { Configuration } from "@logements/transformation/configuration/configuration";
-import { FluxTransformation } from "@logements/transformation/domain/flux";
+import { FluxTransformation } from "@logements/transformation/domain/model/flux";
 import { Task } from "@shared/infrastructure/task/task";
 import { TaskLog } from "@logements/transformation/configuration/log.decorator";
-import { TransformerFluxStudapartUseCase } from "@logements/transformation/usecase/transformer-flux-studapart.usecase";
+import { TransformerFluxStudapartUseCase } from "@logements/transformation/application-service/transformer-flux-studapart.usecase";
 
 export class TransformFluxStudapartTask implements Task {
 	constructor(private readonly useCase: TransformerFluxStudapartUseCase, private readonly config: Configuration) {

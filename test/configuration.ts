@@ -1,7 +1,10 @@
 import chai from "chai";
-import sinonChai from "sinon-chai";
 import { createStubInstance, SinonStubbedInstance, SinonStubbedMember, StubbableType } from "sinon";
 import chaiAsPromised from "chai-as-promised";
+import nock from "nock";
+import sinon, { spy } from "sinon";
+import sinonChai from "sinon-chai";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
@@ -18,3 +21,4 @@ export function stubClass<T>(
 
 export const expect = chai.expect;
 export const assert = chai.assert;
+export { nock, sinon, spy, StubbedType, stubInterface };

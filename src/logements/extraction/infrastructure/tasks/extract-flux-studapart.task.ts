@@ -1,16 +1,16 @@
 import { Configuration } from "@logements/extraction/configuration/configuration";
-import { FluxExtraction } from "@logements/extraction/domain/flux";
+import { ExtraireStudapart } from "@logements/extraction/application-service/extraire-studapart.usecase";
+import { FluxExtraction } from "@logements/extraction/domain/model/flux";
 import { Task } from "@shared/infrastructure/task/task";
-import { Usecase } from "@shared/usecase";
 import { TaskLog } from "@logements/extraction/configuration/log.decorator";
 
 export class ExtractFluxStudapartTask implements Task {
-	constructor(private readonly useCase: Usecase, private readonly configuration: Configuration) {
+	constructor(private readonly usecase: ExtraireStudapart, private readonly configuration: Configuration) {
 	}
 
 	@TaskLog("studapart")
 	public async run(): Promise<void> {
-		await this.useCase.executer(
+		await this.usecase.executer(
 			new FluxExtraction(
 				this.configuration.STUDAPART.NAME,
 				this.configuration.STUDAPART.RAW_FILE_EXTENSION,

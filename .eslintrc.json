@@ -3,7 +3,7 @@
     "parser": "@typescript-eslint/parser",
     "plugins": [
         "@typescript-eslint",
-        "@1j1s"
+        "@sefr"
     ],
     "parserOptions": {
         "tsconfigRootDir": ".",
@@ -12,8 +12,7 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:@1j1s/architecture"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
     ],
     "rules": {
         "@typescript-eslint/explicit-function-return-type": "error",
@@ -26,7 +25,23 @@
         "max-depth": ["error", 2],
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "double"],
-        "semi": "error"
+        "semi": "error",
+        "@sefr/no-onion-architecture-violation": "error",
+        "@sefr/no-cross-domain-import": [
+            "error",
+            [
+                {
+                    "domain": "evenements",
+                    "domainsToExclude": ["logements", "stages"]
+                }, {
+                    "domain": "logements",
+                    "domainsToExclude": ["evenements", "stages"]
+                }, {
+                    "domain": "stages",
+                    "domainsToExclude": ["evenements", "logements"]
+                }
+            ]
+        ]
     },
     "overrides": [
         {
@@ -45,6 +60,11 @@
             ],
             "rules": {
                 "@typescript-eslint/no-non-null-assertion": "off"
+            }
+        }, {
+            "files": ["**/*.test.ts"],
+            "rules": {
+                "@sefr/no-onion-architecture-violation": "off"
             }
         }
     ]
