@@ -1,4 +1,4 @@
-import { StudapartBoolean } from "@logements/transformation/domain/model/studapart/studapart.boolean";
+import { StudapartBoolean } from "@logements/transformation/domain/model/studapart/studapart-boolean.value-object";
 
 export namespace Studapart {
     export type Contenu = {

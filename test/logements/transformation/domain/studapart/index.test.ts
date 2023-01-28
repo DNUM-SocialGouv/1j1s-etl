@@ -9,7 +9,7 @@ import { Convertir } from "@logements/transformation/domain/service/studapart/co
 import { DateService } from "@shared/date.service";
 import { expect, sinon, stubClass, StubbedType, stubInterface } from "@test/configuration";
 import { Studapart } from "@logements/transformation/domain/model/studapart";
-import { StudapartBoolean } from "@logements/transformation/domain/model/studapart/studapart.boolean";
+import { StudapartBoolean } from "@logements/transformation/domain/model/studapart/studapart-boolean.value-object";
 import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
 
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
