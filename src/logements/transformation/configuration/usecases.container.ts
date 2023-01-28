@@ -1,13 +1,20 @@
-import TurndownService from "turndown";
-
+import {
+	Convertir as ConvertirImmojeune,
+} from "@logements/transformation/domain/service/immojeune/convertir.domain-service";
+import {
+	Convertir as ConvertirStudapart,
+} from "@logements/transformation/domain/service/studapart/convertir.domain-service";
 import { DateService } from "@shared/date.service";
 import { GatewayContainer } from "@logements/transformation/infrastructure/gateway";
 import { HtmlToMarkdownSanitizer } from "@shared/infrastructure/gateway/html-to-markdown.sanitizer";
-import { Immojeune } from "@logements/transformation/domain/immojeune";
-import { Studapart } from "@logements/transformation/domain/studapart";
-import { TransformerFluxImmojeune } from "@logements/transformation/usecase/transformer-flux-immojeune.usecase";
-import { TransformerFluxStudapartUseCase } from "@logements/transformation/usecase/transformer-flux-studapart.usecase";
-import { UsecaseContainer } from "@logements/transformation/usecase";
+import {
+	TransformerFluxImmojeune,
+} from "@logements/transformation/application-service/transformer-flux-immojeune.usecase";
+import {
+	TransformerFluxStudapartUseCase,
+} from "@logements/transformation/application-service/transformer-flux-studapart.usecase";
+import TurndownService from "turndown";
+import { UsecaseContainer } from "@logements/transformation/application-service";
 
 export class UsecasesContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {
@@ -17,11 +24,11 @@ export class UsecasesContainerFactory {
 		return {
 			transformerFluxImmojeune: new TransformerFluxImmojeune(
 				gateways.annonceDeLogementRepository,
-				new Immojeune.Convertir(htmlToMarkdownSanitizer, dateService),
+				new ConvertirImmojeune(htmlToMarkdownSanitizer, dateService),
 			),
 			transformerFluxStudapart: new TransformerFluxStudapartUseCase(
 				gateways.annonceDeLogementRepository,
-				new Studapart.Convertir(htmlToMarkdownSanitizer, dateService)
+				new ConvertirStudapart(htmlToMarkdownSanitizer, dateService)
 			),
 		};
 	}

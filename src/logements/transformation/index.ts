@@ -7,7 +7,7 @@ import {
 import {
 	TransformFluxStudapartTask,
 } from "@logements/transformation/infrastructure/tasks/transform-flux-studapart.task";
-import { UsecaseContainer } from "@logements/transformation/usecase";
+import { UsecaseContainer } from "@logements/transformation/application-service";
 import { UsecasesContainerFactory } from "@logements/transformation/configuration/usecases.container";
 
 export class Transformation {

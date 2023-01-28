@@ -1,4 +1,4 @@
-import { StagefrCompresse } from "@stages/transformation/domain/stagefr-compresse";
+import { StagefrCompresse } from "@stages/transformation/domain/model/stagefr-compresse";
 
 export class OffreDeStageStagefrCompresseFixtureBuilder {
 	static build(offreDeStage?: Partial<StagefrCompresse.OffreDeStage>): StagefrCompresse.OffreDeStage {

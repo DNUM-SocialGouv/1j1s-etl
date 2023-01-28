@@ -4,7 +4,7 @@ import { ExtractFluxStudapartTask } from "@logements/extraction/infrastructure/t
 import { GatewayContainerFactory } from "@logements/extraction/configuration/gateways.container";
 import { LogementsExtractionLoggerStrategy } from "@logements/extraction/configuration/logger.strategy";
 import { SousModule } from "@shared/configuration/module";
-import { UsecaseContainer } from "@logements/extraction/usecase";
+import { UsecaseContainer } from "@logements/extraction/application-service";
 import { UsecaseContainerFactory } from "@logements/extraction/configuration/usecases.container";
 
 export class Extraction {

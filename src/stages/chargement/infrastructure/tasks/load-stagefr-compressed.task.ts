@@ -1,6 +1,6 @@
-import { ChargerFluxStagefrCompresse } from "@stages/chargement/usecase/charger-flux-stagefr-compresse.usecase";
+import { ChargerFluxStagefrCompresse } from "@stages/chargement/application-service/charger-flux-stagefr-compresse.usecase";
 import { Configuration } from "@stages/chargement/configuration/configuration";
-import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
+import { FluxChargement } from "@stages/chargement/domain/model/flux";
 import { Task } from "@shared/infrastructure/task/task";
 import { TaskLog } from "@stages/chargement/configuration/log.decorator";
 

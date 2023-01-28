@@ -1,9 +1,9 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 import {
 	ChargerOffresDeStageDomainService,
-} from "@stages/chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
-import { ChargerFluxJobteaser } from "@stages/chargement/usecase/charger-flux-jobteaser.usecase";
-import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
+} from "@stages/chargement/domain/service/charger-offres-de-stage.domain-service";
+import { ChargerFluxJobteaser } from "@stages/chargement/application-service/charger-flux-jobteaser.usecase";
+import { FluxChargement } from "@stages/chargement/domain/model/flux";
 
 let extension: string;
 let nomDuFlux: string;

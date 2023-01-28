@@ -1,15 +1,14 @@
+import { AnnonceDeLogementRepository } from "@logements/transformation/domain/service/annonce-de-logement.repository";
 import { Client } from "minio";
-
-import { AnnonceDeLogementRepository } from "@logements/transformation/domain/annonce-de-logement.repository";
 import { Configuration } from "@logements/transformation/configuration/configuration";
-import { FluxTransformation } from "@logements/transformation/domain/flux";
-import { LoggerStrategy } from "@shared/configuration/logger";
-import { DateService } from "@shared/date.service";
-import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
-import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { ContentParserStrategy } from "@shared/infrastructure/gateway/content.parser";
+import { DateService } from "@shared/date.service";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
+import { FluxTransformation } from "@logements/transformation/domain/model/flux";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { LoggerStrategy } from "@shared/configuration/logger";
+import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export class MinioAnnonceDeLogementRepository implements AnnonceDeLogementRepository {
 	private static readonly PATH_SEPARATOR = "/";

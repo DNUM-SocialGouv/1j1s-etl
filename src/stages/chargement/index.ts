@@ -5,7 +5,7 @@ import { LoadStagefrCompressedTask } from "@stages/chargement/infrastructure/tas
 import { LoadStagefrUncompressedTask } from "@stages/chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
 import { SousModule } from "@shared/configuration/module";
 import { StagesChargementLoggerStrategy } from "@stages/chargement/configuration/logger-strategy";
-import { UsecaseContainer } from "@stages/chargement/usecase";
+import { UsecaseContainer } from "@stages/chargement/application-service";
 import { UsecaseContainerFactory } from "@stages/chargement/configuration/usecases.container";
 
 export class Chargement {

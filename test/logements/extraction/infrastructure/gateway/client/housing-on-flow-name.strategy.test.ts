@@ -1,20 +1,16 @@
-import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { Configuration } from "@logements/extraction/configuration/configuration";
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import { FlowClient, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
 import { Logger } from "@shared/configuration/logger";
-import { Configuration } from "@logements/extraction/configuration/configuration";
 import { HousingsOnFlowNameStrategy } from "@logements/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
-import { FluxExtraction } from "@logements/extraction/domain/flux";
-import { expect } from "@test/configuration";
+import { FluxExtraction } from "@logements/extraction/domain/model/flux";
 
 const url = "http://some.url";
 
 let flow: FluxExtraction;
-
 let housingsBasicFlowClient: StubbedType<FlowClient>;
 let studapartFlowClient: StubbedType<FlowClient>;
 let logger: StubbedType<Logger>;
-
 let flowStrategy: HousingsOnFlowNameStrategy;
 
 describe("HousingsOnFlowNameStrategyTest", () => {

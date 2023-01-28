@@ -1,11 +1,10 @@
 import { Client } from "minio";
-
 import { Configuration } from "@evenements/extraction/configuration/configuration";
 import { EcritureFluxErreur } from "@shared/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { FlowClient } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { FluxExtraction } from "@evenements/extraction/domain/flux";
-import { FluxRepository } from "@evenements/extraction/domain/flux.repository";
+import { FluxExtraction } from "@evenements/extraction/domain/model/flux";
+import { FluxRepository } from "@evenements/extraction/domain/service/flux.repository";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 

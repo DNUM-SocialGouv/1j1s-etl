@@ -1,4 +1,4 @@
-import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
+import { AnnonceDeLogementRepository } from "@logements/chargement/domain/service/annonce-de-logement.repository";
 
 export type GatewayContainer = {
     annonceDeLogementRepository: AnnonceDeLogementRepository

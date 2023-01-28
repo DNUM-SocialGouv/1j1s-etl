@@ -9,7 +9,7 @@ import {
 import {
 	TransformFlowStagefrUncompressedTask,
 } from "@stages/transformation/infrastructure/tasks/transform-flow-stagefr-uncompressed.task";
-import { UsecaseContainer } from "@stages/transformation/usecase";
+import { UsecaseContainer } from "@stages/transformation/application-service";
 import { UsecaseContainerFactory } from "@stages/transformation/configuration/usecases.container";
 
 export class Transformation {

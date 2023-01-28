@@ -1,5 +1,5 @@
 import { Configuration, ConfigurationFactory } from "@evenements/chargement/configuration/configuration";
-import { ChargementUseCaseContainer } from "@evenements/chargement/usecase";
+import { ChargementUseCaseContainer } from "@evenements/chargement/application-service";
 import { EvenementsChargementLoggerStrategy } from "@evenements/chargement/configuration/logger-strategy";
 import { GatewayContainerFactory } from "@evenements/chargement/configuration/gateways.container";
 import { LoadTousMobilisesTask } from "@evenements/chargement/infrastructure/tasks/load-tous-mobilises.task";

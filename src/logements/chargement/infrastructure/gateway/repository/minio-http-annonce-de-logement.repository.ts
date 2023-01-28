@@ -1,10 +1,10 @@
-import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
+import { AnnonceDeLogementRepository } from "@logements/chargement/domain/service/annonce-de-logement.repository";
 import { DateService } from "@shared/date.service";
-import { FluxChargement } from "@logements/chargement/domain/flux";
+import { FluxChargement } from "@logements/chargement/domain/model/flux";
 import { HttpClient } from "@logements/chargement/infrastructure/gateway/client/http.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { StorageClient } from "@logements/chargement/infrastructure/gateway/client/storage.client";
-import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/chargement/domain/model/1jeune1solution";
 
 export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRepository {
 	private static readonly SPACE = 2;

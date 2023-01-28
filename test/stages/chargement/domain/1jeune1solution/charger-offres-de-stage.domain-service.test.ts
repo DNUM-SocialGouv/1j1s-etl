@@ -1,14 +1,11 @@
-import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import {
 	ChargerOffresDeStageDomainService,
-} from "@stages/chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service";
+} from "@stages/chargement/domain/service/charger-offres-de-stage.domain-service";
 import { DateService } from "@shared/date.service";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+import { FluxChargement } from "@stages/chargement/domain/model/flux";
 import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
-import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
-import { FluxChargement } from "@stages/chargement/domain/1jeune1solution/flux";
+import { UnJeune1Solution } from "@stages/chargement/domain/model/1jeune1solution";
 
 const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;

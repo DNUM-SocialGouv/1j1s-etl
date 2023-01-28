@@ -1,5 +1,5 @@
 import { Devise } from "@shared/devise";
-import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
 
 
 export class AnnonceDeLogementFixtureBuilder {

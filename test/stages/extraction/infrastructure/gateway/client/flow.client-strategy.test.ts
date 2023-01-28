@@ -1,17 +1,13 @@
-import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { Configuration } from "@stages/extraction/configuration/configuration";
-import { expect } from "@test/configuration";
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import { FlowClient, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { FluxExtraction } from "@stages/extraction/domain/flux";
+import { FluxExtraction } from "@stages/extraction/domain/model/flux";
 import { Logger } from "@shared/configuration/logger";
 import { StagesOnFlowNameStrategy } from "@stages/extraction/infrastructure/gateway/client/flow.strategy";
 
 const url = "http://some.url";
 
 let flow: FluxExtraction;
-
 let basicFlowClient: StubbedType<FlowClient>;
 let compressedFlowClient: StubbedType<FlowClient>;
 let octetStreamFlowClient: StubbedType<FlowClient>;

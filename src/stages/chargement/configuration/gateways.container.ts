@@ -1,7 +1,6 @@
 import axios from "axios";
-import { Client } from "minio";
-
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
+import { Client } from "minio";
 import { Configuration } from "@stages/chargement/configuration/configuration";
 import { GatewayContainer } from "@stages/chargement/infrastructure/gateway";
 import {
@@ -13,8 +12,8 @@ import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { NodeUuidGenerator, UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
 import { StrapiOffreDeStageHttpClient } from "@stages/chargement/infrastructure/gateway/http.client";
+import { UnJeune1Solution } from "@stages/chargement/domain/model/1jeune1solution";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: StagesChargementLoggerStrategy): GatewayContainer {

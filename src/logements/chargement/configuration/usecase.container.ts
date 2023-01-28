@@ -1,10 +1,10 @@
 import {
     ChargerAnnoncesDeLogementDomainService,
-} from "@logements/chargement/domain/1jeune1solution/services/charger-annonces-de-logement.domain-service";
+} from "@logements/chargement/domain/service/charger-annonces-de-logement.domain-service";
+import { ChargerFluxImmojeune } from "@logements/chargement/application-service/charger-flux-immojeune.usecase";
+import { ChargerFluxStudapart } from "@logements/chargement/application-service/charger-flux-studapart.usecase";
 import { GatewayContainer } from "@logements/chargement/infrastructure/gateway";
-import { UsecaseContainer } from "@logements/chargement/usecase";
-import { ChargerFluxImmojeune } from "@logements/chargement/usecase/charger-flux-immojeune.usecase";
-import { ChargerFluxStudapart } from "@logements/chargement/usecase/charger-flux-studapart.usecase";
+import { UsecaseContainer } from "@logements/chargement/application-service";
 
 export class UseCaseContainerFactory {
     public static create(gateways: GatewayContainer): UsecaseContainer {

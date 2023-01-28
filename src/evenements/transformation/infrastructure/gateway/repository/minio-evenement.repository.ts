@@ -1,15 +1,14 @@
 import { Client } from "minio";
-
 import { Configuration } from "@evenements/transformation/configuration/configuration";
 import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { EvenementsRepository } from "@evenements/transformation/domain/evenements.repository";
-import { FluxTransformation } from "@evenements/transformation/domain/flux";
+import { EvenementsRepository } from "@evenements/transformation/domain/service/evenements.repository";
+import { FluxTransformation } from "@evenements/transformation/domain/model/flux";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { UnJeuneUneSolution } from "@evenements/transformation/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/transformation/domain/model/1jeune1solution";
 
 export class MinioEvenementRepository implements EvenementsRepository {
 	private static readonly JSON_INDENTATION = 2;

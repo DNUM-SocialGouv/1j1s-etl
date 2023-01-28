@@ -1,4 +1,4 @@
-import { StagefrDecompresse } from "@stages/transformation/domain/stagefr-decompresse";
+import { StagefrDecompresse } from "@stages/transformation/domain/model/stagefr-decompresse";
 
 export class OffreDeStageStagefrDecompresseFixtureBuilder {
 	static build(offreDeStage?: Partial<StagefrDecompresse.OffreDeStage>): StagefrDecompresse.OffreDeStage {

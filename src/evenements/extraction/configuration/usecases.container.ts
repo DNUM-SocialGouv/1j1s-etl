@@ -1,10 +1,10 @@
 import { DateService } from "@shared/date.service";
+import { ExtraireFluxDomainService } from "@evenements/extraction/domain/service/extraire-flux.domain-service";
 import {
-	ExtraireEvenementTousMobilisesUsecase,
-} from "@evenements/extraction/usecase/extraire-evenement-tous-mobilises.usecase";
-import { ExtraireFluxDomainService } from "@evenements/extraction/domain/services/extraire-flux.domain-service";
+	ExtraireFluxEvenementTousMobilises,
+} from "@evenements/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
 import { GatewayContainer } from "@evenements/extraction/infrastucture/gateway";
-import { UsecaseContainer } from "@evenements/extraction/usecase";
+import { UsecaseContainer } from "@evenements/extraction/application-service";
 
 export class UsecaseContainerFactory {
     public static create(gateways: GatewayContainer): UsecaseContainer {
@@ -16,7 +16,7 @@ export class UsecaseContainerFactory {
         );
 
         return {
-            extraireEvenementsTousMobilises: new ExtraireEvenementTousMobilisesUsecase(extraireFluxDomainService),
+            extraireEvenementsTousMobilises: new ExtraireFluxEvenementTousMobilises(extraireFluxDomainService),
         };
     }
 }

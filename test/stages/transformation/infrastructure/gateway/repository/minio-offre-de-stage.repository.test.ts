@@ -1,20 +1,17 @@
 import { Client } from "minio";
-import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { Configuration } from "@stages/transformation/configuration/configuration";
 import { ContentParser } from "@shared/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/date.service";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/infrastructure/gateway/flux.erreur";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { FluxTransformation } from "@stages/transformation/domain/flux";
+import { FluxTransformation } from "@stages/transformation/domain/model/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@test/stages/transformation/fixture/offre-de-stage.fixture-builder";
-import { UnJeune1Solution } from "@stages/transformation/domain/1jeune1solution";
+import { UnJeune1Solution } from "@stages/transformation/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";

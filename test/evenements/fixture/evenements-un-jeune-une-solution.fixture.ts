@@ -1,4 +1,4 @@
-import { UnJeuneUneSolution } from "@evenements/chargement/domain/1jeune1solution";
+import { UnJeuneUneSolution } from "@evenements/chargement/domain/model/1jeune1solution";
 
 export class EvenementUnJeuneUneSolutionFixtureBuilder {
     static defaultEvent = {

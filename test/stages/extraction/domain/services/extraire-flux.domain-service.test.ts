@@ -1,11 +1,8 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import sinon from "sinon";
-
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { DateService } from "@shared/date.service";
-import { ExtraireFluxDomainService } from "@stages/extraction/domain/services/extraire-flux.domain-service";
-import { FluxExtraction } from "@stages/extraction/domain/flux";
-import { FluxRepository } from "@stages/extraction/domain/flux.repository";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+import { ExtraireFluxDomainService } from "@stages/extraction/domain/service/extraire-flux.domain-service";
+import { FluxExtraction } from "@stages/extraction/domain/model/flux";
+import { FluxRepository } from "@stages/extraction/domain/service/flux.repository";
 
 const date = new Date("2022-01-01T00:00:00Z");
 const fluxContent = "<toto>Le Contenu</toto>";

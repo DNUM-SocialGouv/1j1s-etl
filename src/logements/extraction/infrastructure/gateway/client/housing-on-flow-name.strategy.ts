@@ -1,6 +1,6 @@
 import { Configuration } from "@logements/extraction/configuration/configuration";
 import { FlowClient, FlowStrategy, FluxNonGereErreur } from "@shared/infrastructure/gateway/client/flow.strategy";
-import { FluxExtraction } from "@logements/extraction/domain/flux";
+import { FluxExtraction } from "@logements/extraction/domain/model/flux";
 import { Logger } from "@shared/configuration/logger";
 
 export class HousingsOnFlowNameStrategy implements FlowStrategy {

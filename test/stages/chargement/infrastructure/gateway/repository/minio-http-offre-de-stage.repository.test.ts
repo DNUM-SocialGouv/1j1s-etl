@@ -1,23 +1,20 @@
 import { Client } from "minio";
-import sinon from "sinon";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { Configuration } from "@stages/chargement/configuration/configuration";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
-import { Logger, LoggerStrategy } from "@shared/configuration/logger";
-import {
-	MinioHttpOffreDeStageRepository,
-} from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
-import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
-import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,
 	RecupererOffresExistantesErreur,
 } from "@shared/infrastructure/gateway/flux.erreur";
+import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { HttpClient, OffreDeStageHttp } from "@stages/chargement/infrastructure/gateway/http.client";
+import { Logger, LoggerStrategy } from "@shared/configuration/logger";
+import {
+	MinioHttpOffreDeStageRepository,
+} from "@stages/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
+import { OffreDeStageFixtureBuilder } from "@test/stages/chargement/fixture/offre-de-stage.fixture-builder";
+import { UnJeune1Solution } from "@stages/chargement/domain/model/1jeune1solution";
+import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localFileNameIncludingPath = `./tmp/${uuid}`;

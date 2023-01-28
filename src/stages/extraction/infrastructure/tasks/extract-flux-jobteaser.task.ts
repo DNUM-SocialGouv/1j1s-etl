@@ -1,6 +1,6 @@
 import { Configuration } from "@stages/extraction/configuration/configuration";
-import { ExtraireJobteaser } from "@stages/extraction/usecase/extraire-jobteaser.usecase";
-import { FluxExtraction } from "@stages/extraction/domain/flux";
+import { ExtraireJobteaser } from "@stages/extraction/application-service/extraire-jobteaser.usecase";
+import { FluxExtraction } from "@stages/extraction/domain/model/flux";
 import { Task } from "@shared/infrastructure/task/task";
 import { TaskLog } from "@stages/extraction/configuration/log.decorator";
 

@@ -1,4 +1,4 @@
-import { FluxRepository } from "@evenements/extraction/domain/flux.repository";
+import { FluxRepository } from "@evenements/extraction/domain/service/flux.repository";
 
 export type GatewayContainer = {
 	repositories: {

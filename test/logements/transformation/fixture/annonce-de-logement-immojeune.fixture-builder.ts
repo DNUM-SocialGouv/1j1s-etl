@@ -1,4 +1,4 @@
-import { Immojeune } from "@logements/transformation/domain/immojeune";
+import { Immojeune } from "@logements/transformation/domain/model/immojeune";
 
 export class AnnonceDeLogementImmojeuneFixtureBuilder {
 	public static build(

@@ -2,12 +2,12 @@ import {
     AnnonceDeLogementContentParserStrategy,
     StudapartOptionXmlParser,
 } from "@logements/transformation/infrastructure/gateway/repository/annonce-de-logement-content-parser.strategy";
+import { expect } from "@test/configuration";
+import { FluxTransformation } from "@logements/transformation/domain/model/flux";
+import { Immojeune } from "@logements/transformation/domain/model/immojeune";
 import { JsonContentParser, XmlContentParser } from "@shared/infrastructure/gateway/content.parser";
+import { Studapart } from "@logements/transformation/domain/model/studapart";
 import { XMLParser } from "fast-xml-parser";
-import { FluxTransformation } from "@logements/transformation/domain/flux";
-import { expect } from "chai";
-import { Studapart } from "@logements/transformation/domain/studapart";
-import { Immojeune } from "@logements/transformation/domain/immojeune";
 
 describe("AnnonceDeLogementContentParserStrategyTest", () => {
     let contentParserStrategy: AnnonceDeLogementContentParserStrategy;

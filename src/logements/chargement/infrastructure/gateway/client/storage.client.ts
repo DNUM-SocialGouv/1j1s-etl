@@ -1,7 +1,7 @@
-import { Configuration } from "@logements/chargement/configuration/configuration";
-import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
 import { Client } from "minio";
+import { Configuration } from "@logements/chargement/configuration/configuration";
 import { FileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
+import { UnJeune1Solution } from "@logements/chargement/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 export interface StorageClient {

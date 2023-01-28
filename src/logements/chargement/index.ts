@@ -4,7 +4,7 @@ import { LoadImmojeuneTask } from "@logements/chargement/infrastructure/tasks/lo
 import { LoadStudapartTask } from "@logements/chargement/infrastructure/tasks/load-studapart.task";
 import { LogementsChargementLoggerStrategy } from "@logements/chargement/configuration/logger-strategy";
 import { SousModule } from "@shared/configuration/module";
-import { UsecaseContainer } from "@logements/chargement/usecase";
+import { UsecaseContainer } from "@logements/chargement/application-service";
 import { UseCaseContainerFactory } from "@logements/chargement/configuration/usecase.container";
 
 export class Chargement {

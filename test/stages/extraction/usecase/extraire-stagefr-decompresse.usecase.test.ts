@@ -1,7 +1,7 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { ExtraireFluxDomainService } from "@stages/extraction/domain/services/extraire-flux.domain-service";
-import { ExtraireStagefrDecompresse } from "@stages/extraction/usecase/extraire-stagefr-decompresse.usecase";
-import { FluxExtraction } from "@stages/extraction/domain/flux";
+import { ExtraireFluxDomainService } from "@stages/extraction/domain/service/extraire-flux.domain-service";
+import { ExtraireStagefrDecompresse } from "@stages/extraction/application-service/extraire-stagefr-decompresse.usecase";
+import { FluxExtraction } from "@stages/extraction/domain/model/flux";
 
 const flux = new FluxExtraction(
 	"stagefr",

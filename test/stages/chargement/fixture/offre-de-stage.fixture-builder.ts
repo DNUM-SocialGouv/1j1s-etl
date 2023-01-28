@@ -1,4 +1,4 @@
-import { UnJeune1Solution } from "@stages/chargement/domain/1jeune1solution";
+import { UnJeune1Solution } from "@stages/chargement/domain/model/1jeune1solution";
 
 export class OffreDeStageFixtureBuilder {
 	static DEFAULTS_ATTRIBUTS = {

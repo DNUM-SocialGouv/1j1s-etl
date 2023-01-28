@@ -1,27 +1,22 @@
-import { Studapart } from "@logements/transformation/domain/studapart";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { DateService } from "@shared/date.service";
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
-import { expect, stubClass } from "@test/configuration";
-import sinon from "sinon";
-import { UnJeune1Solution } from "@logements/transformation/domain/1jeune1solution";
-import {
-    AnnonceDeLogementStudapartFixtureBuilder,
-} from "@test/logements/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
 import {
     AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/transformation/fixture/annonce-de-logement.fixture-builder";
-import { StudapartBoolean } from "@logements/transformation/domain/studapart/studapart-boolean";
-import Nom = UnJeune1Solution.ServiceInclus.Nom;
+import {
+    AnnonceDeLogementStudapartFixtureBuilder,
+} from "@test/logements/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
+import { Convertir } from "@logements/transformation/domain/service/studapart/convertir.domain-service";
+import { DateService } from "@shared/date.service";
+import { expect, sinon, stubClass, StubbedType, stubInterface } from "@test/configuration";
+import { Studapart } from "@logements/transformation/domain/model/studapart";
+import { StudapartBoolean } from "@logements/transformation/domain/model/studapart/studapart.boolean";
+import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
 
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
+let convertir: Convertir;
 let dateService: StubbedType<DateService>;
 
-let convertir: Studapart.Convertir;
 describe("StudapartTest", () => {
-
-    
-
     beforeEach(() => {
         assainisseurDeTexte = stubInterface(sinon);
         assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
@@ -30,7 +25,7 @@ describe("StudapartTest", () => {
         dateService.stringifyMaintenant.returns("2022-12-01T00:00:00.000Z");
         dateService.toIsoDateAvecDate.restore();
 
-        convertir = new Studapart.Convertir(assainisseurDeTexte, dateService);
+        convertir = new Convertir(assainisseurDeTexte, dateService);
     });
 
     context("Lorsque je reçois une annonce studapart de type apartment, rental et avec une seule room", () => {
@@ -41,7 +36,7 @@ describe("StudapartTest", () => {
                   source: UnJeune1Solution.Source.STUDAPART,
                   servicesOptionnels: [],
                   prixHT: 0,
-                  servicesInclus: [{ nom: Nom.TV }],
+                  servicesInclus: [{ nom: UnJeune1Solution.ServiceInclus.Nom.TV }],
                   surfaceMax: undefined,
               }
             );
@@ -67,7 +62,7 @@ describe("StudapartTest", () => {
                     source: UnJeune1Solution.Source.STUDAPART,
                     servicesOptionnels: [],
                     prixHT: 0,
-                    servicesInclus: [{ nom: Nom.TV }],
+                    servicesInclus: [{ nom: UnJeune1Solution.ServiceInclus.Nom.TV }],
                     surfaceMax: undefined,
                     typeBien: UnJeune1Solution.TypeBien.MAISON,
                     etage: 2,
@@ -148,7 +143,7 @@ describe("StudapartTest", () => {
             source: UnJeune1Solution.Source.STUDAPART,
             servicesOptionnels: [],
             prixHT: 0,
-            servicesInclus: [{ nom: Nom.TV }],
+            servicesInclus: [{ nom: UnJeune1Solution.ServiceInclus.Nom.TV }],
             surfaceMax: undefined,
             garantie: 0,
           }

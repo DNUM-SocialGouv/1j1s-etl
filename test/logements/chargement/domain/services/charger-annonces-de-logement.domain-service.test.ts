@@ -1,15 +1,13 @@
-import { UnJeune1Solution } from "@logements/chargement/domain/1jeune1solution";
-import {
-	ChargerAnnoncesDeLogementDomainService,
-} from "@logements/chargement/domain/1jeune1solution/services/charger-annonces-de-logement.domain-service";
-import { AnnonceDeLogementRepository } from "@logements/chargement/domain/annonce-de-logement.repository";
-import { FluxChargement } from "@logements/chargement/domain/flux";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { expect } from "@test/configuration";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/chargement/fixture/annonce-de-logement.fixture-builder";
-import sinon from "sinon";
+import { AnnonceDeLogementRepository } from "@logements/chargement/domain/service/annonce-de-logement.repository";
+import {
+	ChargerAnnoncesDeLogementDomainService,
+} from "@logements/chargement/domain/service/charger-annonces-de-logement.domain-service";
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+import { FluxChargement } from "@logements/chargement/domain/model/flux";
+import { UnJeune1Solution } from "@logements/chargement/domain/model/1jeune1solution";
 
 let annonceDeLogementRepository: StubbedType<AnnonceDeLogementRepository>;
 let chargerFluxImmojeune: ChargerAnnoncesDeLogementDomainService;
