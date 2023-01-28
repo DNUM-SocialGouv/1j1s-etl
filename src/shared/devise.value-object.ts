@@ -6,7 +6,7 @@ export class Devise {
       case "EUR":
         this._value = "€";
         break;
-      case "GPB":
+      case "GBP":
         this._value = "£";
         break;
       case "USD":
@@ -21,5 +21,4 @@ export class Devise {
   public get value(): string {
     return this._value;
   }
-
 }

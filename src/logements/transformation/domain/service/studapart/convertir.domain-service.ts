@@ -1,6 +1,6 @@
 import { AssainisseurDeTexte } from "@shared/assainisseur-de-texte";
 import { DateService } from "@shared/date.service";
-import { Devise } from "@shared/devise";
+import { Devise } from "@shared/devise.value-object";
 import { Studapart } from "@logements/transformation/domain/model/studapart";
 import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
 
