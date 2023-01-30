@@ -12,13 +12,26 @@ nous allons légèrement modifié pour nos usages. Voir document [ci-joint](docs
 Il a été convenu de rédiger les commits en français car le projet n'est pas à destination internationale.
 Celui-ci est destiné en premier lieu au gouvernement français.
 
+### Contextes d'un commit
+
+La liste des contextes suivants ont été identifiés pour ce dépôt :
+
++ `architecture` - pour toute modification de l'architecture du projet
++ `cli` - pour toute modification de la CLI
++ `configuration` - pour toute modification de configuration, incluant la configuration des modules
++ `dependencies` - pour toute modification ayant trait aux dépendances du projet
++ `evenements` - pour toute modification ayant trait aux événements
++ `logements` - pour toute modification ayant trait aux annonces de logements
++ `multiple` - pour toute modification ayant trait à 2 ou plusieurs contextes
++ `stages` - pour toute modification ayant trait aux offres de stages
+
 ### Contenu du message
 
 Un message de commit doit contenir a minima un titre court formaté contenant un préfixe cité dans la convention
 ci-dessus. Si une description supplémentaire est nécessaire, celle-ci sera ajoutée dans un sous-message de commit.
 
 ```shell
-$ git commit -m "feat[transformation]: mise en place du client minio" -m "Une description un peu plus détailée..."
+$ git commit -m "feat(transformation): mise en place du client minio" -m "Une description un peu plus détailée..."
 ```
 
 ## Stratégie pour les branches
