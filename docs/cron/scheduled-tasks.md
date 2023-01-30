@@ -85,6 +85,6 @@ verrez apparaître vos Scheduled Tasks dans l'onglet `Ressources` sur le panneau
 }
 ```
 
+---
 
-
-
+⚓️ [Retour au sommaire](../index.md)

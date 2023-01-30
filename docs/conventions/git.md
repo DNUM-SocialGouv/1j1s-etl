@@ -76,14 +76,14 @@ Si votre dernier commit est un "wip" que vous avez remis au propre, vous pouvez 
 $ git commit --amend
 ```
 
-/!\ Nous ne squasherons pas nos commits lors du merge d'une branche dans la branche `main`.
+⚠️ Nous ne squasherons pas nos commits lors du merge d'une branche dans la branche `main`.
 
 ## Stratégie de merge
 
 ### Code Review
 
 Nous allons nous baser sur la convention "[Conventional Comments](https://conventionalcomments.org/)" que
-nous allons légèrement modifié pour nos usages. Voir document [ci-joint](docs/conventions/convention-comment.mdn-comment.md)
+nous allons légèrement modifié pour nos usages. Voir document [ci-joint](docs/conventions/convention-comment.mdn-comment.md).
 
 Chaque Pull Request (PR) devra être approuvée a minima par une personne n'ayant pas travaillé sur le ticket en rapport
 avec la PR.
@@ -94,4 +94,4 @@ S'organiser par dépôt/binôme.
 
 ---
 
-⚓  ︎[Retour au sommaire](CONTRIBUTING.md)
+⚓️ [Retour au sommaire](../index.md)

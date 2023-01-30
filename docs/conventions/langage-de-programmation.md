@@ -199,4 +199,4 @@ forcer à extraire la complexité dans des sous-fonctions.
 
 ---
 
-⚓  ︎[Retour au sommaire](CONTRIBUTING.md)
+⚓️ [Retour au sommaire](../index.md)
