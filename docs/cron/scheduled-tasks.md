@@ -7,23 +7,26 @@ projet à déployer.
 
 Exemple :
 
-- my-app
-  - build
-    - some-fichier.js
-    - ...
-  - node_modules
-    - some-library
-    - ...
-  - src
-    - some-fichier.ts
-    - ...
-  - test
-    - some-fichier.test.ts
-    - ...
-  - **cron.json**
-  - package.json
-  - package-lock.json
-  - ...
+```
+my-app
+├─── build
+│    ├── some-fichier.js
+│    └── ...
+├─── node_modules
+│    ├── some-library
+│    │   └── some-other-domain-service.ts
+│    └── ...
+├─── src
+│    ├── some-fichier.js
+│    └── ...
+├─── test
+│    ├── some-fichier.test.js
+│    └── ...
+├─── **cron.json**
+├─── package.json
+├─── package-lock.json
+└─── ...
+```
 
 ## Déclarer une Scheduled Task
 
