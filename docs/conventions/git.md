@@ -31,7 +31,7 @@ Un message de commit doit contenir a minima un titre court formaté contenant un
 ci-dessus. Si une description supplémentaire est nécessaire, celle-ci sera ajoutée dans un sous-message de commit.
 
 ```shell
-$ git commit -m "feat(transformation): mise en place du client minio" -m "Une description un peu plus détailée..."
+$ git commit -m "feat(transformation): mise en place du client minio" -m "Une description un peu plus détaillée..."
 ```
 
 ## Stratégie pour les branches
