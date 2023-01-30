@@ -72,3 +72,7 @@ sous-module
 ├─── infrastructure
 └─── index.ts
 ```
+
+---
+
+⚓️ [Retour au sommaire](../index.md)

@@ -96,8 +96,6 @@ dans la CLI AWS.
 * `--human-readable` permet d'afficher la sortie pour que ce soit compréhensible par l'humain.
 * `--summarize` affiche des informations élémentaires (nombre d'objets, taille totale...).
 
-## Exemple de commande sur le projet
+---
 
-```shell
-aws --endpoint-url https://storage-eb4.cegedim.cloud/ s3 ls s3://stages-raw/jobteaser --recursive --human-readable --summarize
-```
+⚓️ [Retour au sommaire](../index.md)
