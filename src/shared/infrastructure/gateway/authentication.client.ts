@@ -20,7 +20,7 @@ export class AuthenticationClient {
 		if (!this.isAuthenticated()) {
 			this.token = await this.authenticate(axiosInstance);
 			axiosInstance.interceptors.request.use((config) => {
-				config.headers!.Authorization = `Bearer ${this.token}`;
+				config.headers.Authorization = `Bearer ${this.token}`;
 				return config;
 			});
 		}
