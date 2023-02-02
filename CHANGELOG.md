@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.3.6...v3.4.0) (2023-02-02)
+
+
+### Features
+
+* **logements:** Ajoute les services manquants au load ([fae4636](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/fae46362bd919137986efafe79b49e0a1e1d2ed5))
+
 ## [3.3.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.3.5...v3.3.6) (2023-01-26)
 
 
