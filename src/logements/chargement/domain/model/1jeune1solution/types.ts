@@ -19,16 +19,27 @@ export type Localisation = {
 
 export namespace ServiceInclus {
 	export enum Nom {
+		ASCENSEUR = "ascenseur",
 		ASPIRATEUR = "aspirateur",
+		CAVE = "cave",
 		FER_A_REPASSER = "fer à repasser",
+		FIBRE_OPTIQUE = "fibre optique",
+		FOUR = "four",
+		GARAGE = "garage",
+		GARDIEN_RESIDENCE = "gardien résidentiel",
 		INTERNET = "internet",
+		LAVE_LINGE = "machine à laver",
+		LAVE_VAISSELLE = "lave vaisselle",
 		LOCAL_A_VELO = "local à vélo",
-		MACHINE_A_LAVER = "machine à laver",
 		MICRO_ONDE = "micro-onde",
 		NECESSAIRE_DE_NETTOYAGE = "nécessaire de nettoyage",
 		PARKING = "parking",
+		PISCINE = "piscine",
+		REFRIGERATEUR = "réfrigérateur",
 		SALLE_DE_BAIN_PRIVATIVE = "salle de bain privative",
 		SALLE_DE_SPORT = "salle de sport",
+		SECHE_LINGE = "sèche linge",
+		TERRACE = "terrace",
 		TV = "télévision",
 		NON_RENSEIGNE = "non renseigné",
 	}
