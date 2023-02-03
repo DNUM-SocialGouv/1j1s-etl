@@ -117,7 +117,7 @@ describe("StudapartTest", () => {
                         { nom: UnJeune1Solution.ServiceInclus.Nom.SECHE_LINGE },
                         { nom: UnJeune1Solution.ServiceInclus.Nom.ASCENSEUR },
                         { nom: UnJeune1Solution.ServiceInclus.Nom.GARAGE },
-                        { nom: UnJeune1Solution.ServiceInclus.Nom.TERRACE },
+                        { nom: UnJeune1Solution.ServiceInclus.Nom.TERRASSE },
                         { nom: UnJeune1Solution.ServiceInclus.Nom.FIBRE_OPTIQUE },
                         { nom: UnJeune1Solution.ServiceInclus.Nom.GARDIEN_RESIDENCE },
                         { nom: UnJeune1Solution.ServiceInclus.Nom.MICRO_ONDE },

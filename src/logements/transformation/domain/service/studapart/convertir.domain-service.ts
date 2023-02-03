@@ -12,7 +12,7 @@ const optionsLogementTraduitEnUnJeuneUneSolution: Record<string, UnJeune1Solutio
 	dryer: UnJeune1Solution.ServiceInclus.Nom.SECHE_LINGE,
 	elevator: UnJeune1Solution.ServiceInclus.Nom.ASCENSEUR,
 	garage: UnJeune1Solution.ServiceInclus.Nom.GARAGE,
-	terrace: UnJeune1Solution.ServiceInclus.Nom.TERRACE,
+	terrace: UnJeune1Solution.ServiceInclus.Nom.TERRASSE,
 	optic_fiber: UnJeune1Solution.ServiceInclus.Nom.FIBRE_OPTIQUE,
 	guardian: UnJeune1Solution.ServiceInclus.Nom.GARDIEN_RESIDENCE,
 	micro_wave: UnJeune1Solution.ServiceInclus.Nom.MICRO_ONDE,
