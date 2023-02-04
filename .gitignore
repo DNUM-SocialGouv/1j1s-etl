@@ -114,3 +114,6 @@ tmp/
 
 # Tools
 tool/
+
+# stryker temp files
+.stryker-tmp

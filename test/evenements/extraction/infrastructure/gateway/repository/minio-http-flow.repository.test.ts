@@ -8,7 +8,7 @@ import { FluxExtraction } from "@evenements/extraction/domain/model/flux";
 import { Logger, LoggerStrategy } from "@shared/configuration/logger";
 import {
 	MinioHttpFlowRepository,
-} from "@evenements/extraction/infrastucture/gateway/repository/minio-http-flow.repository";
+} from "@evenements/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
 const localFileNameIncludingPath = "/tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
