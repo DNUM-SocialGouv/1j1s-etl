@@ -7,7 +7,7 @@ import { Logger } from "@shared/configuration/logger";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import {
 	TousMobilisesBasicFlowHttpClient,
-} from "@evenements/extraction/infrastucture/gateway/client/tous-mobilises-basic-flow-http.client";
+} from "@evenements/extraction/infrastructure/gateway/client/tous-mobilises-basic-flow-http.client";
 
 let errorCode: number;
 let url: string;

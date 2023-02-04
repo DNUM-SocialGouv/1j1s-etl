@@ -4,13 +4,13 @@ import { Configuration } from "@evenements/extraction/configuration/configuratio
 import { LoggerStrategy } from "@shared/configuration/logger";
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
-import { GatewayContainer } from "@evenements/extraction/infrastucture/gateway";
+import { GatewayContainer } from "@evenements/extraction/infrastructure/gateway";
 import {
 	MinioHttpFlowRepository,
-} from "@evenements/extraction/infrastucture/gateway/repository/minio-http-flow.repository";
+} from "@evenements/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import {
 	TousMobilisesBasicFlowHttpClient,
-} from "@evenements/extraction/infrastucture/gateway/client/tous-mobilises-basic-flow-http.client";
+} from "@evenements/extraction/infrastructure/gateway/client/tous-mobilises-basic-flow-http.client";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {

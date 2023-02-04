@@ -21,7 +21,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		super(configuration, minioClient, fileSystemClient, uuidGenerator, httpClient, loggerStrategy);
 	}
 
-	public charger(source: string, offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
+	public override charger(source: string, offresDeStages: Array<UnJeune1Solution.OffreDeStage>): Promise<Array<UnJeune1Solution.OffreDeStageEnErreur>> {
 		let offresDeStageAPublierCount = 0;
 		let offresDeStageAMettreAJourCount = 0;
 		let offresDeStageASupprimerCount = 0;
@@ -44,7 +44,7 @@ export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStage
 		return Promise.resolve([]);
 	}
 
-	public enregistrer(): Promise<void> {
+	public override enregistrer(): Promise<void> {
 		return Promise.resolve();
 	}
 }

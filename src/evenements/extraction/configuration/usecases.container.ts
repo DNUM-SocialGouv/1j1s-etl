@@ -3,7 +3,7 @@ import { ExtraireFluxDomainService } from "@evenements/extraction/domain/service
 import {
 	ExtraireFluxEvenementTousMobilises,
 } from "@evenements/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
-import { GatewayContainer } from "@evenements/extraction/infrastucture/gateway";
+import { GatewayContainer } from "@evenements/extraction/infrastructure/gateway";
 import { UsecaseContainer } from "@evenements/extraction/application-service";
 
 export class UsecaseContainerFactory {

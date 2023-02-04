@@ -2,7 +2,7 @@ import { Configuration, ConfigurationFactory } from "@evenements/extraction/conf
 import { EvenementsExtractionLoggerStrategy } from "@evenements/extraction/configuration/logger.strategy";
 import {
     ExtractFluxEvenementTousMobilisesTask,
-} from "@evenements/extraction/infrastucture/tasks/extract-flux-evenement-tous-mobilises.task";
+} from "@evenements/extraction/infrastructure/tasks/extract-flux-evenement-tous-mobilises.task";
 import { GatewayContainerFactory } from "@evenements/extraction/configuration/gateways.container";
 import { SousModule } from "@shared/configuration/module";
 import { UsecaseContainer } from "@evenements/extraction/application-service";
