@@ -1,6 +1,6 @@
 import { Configuration } from "@logements/indexation/configuration/configuration";
-import { AnnonceDeLogementAIndexer, AnnonceDeLogementBrute, Localisation } from "@logements/indexation/service/types";
-import { IndexingClient } from "@shared/infrastructure/gateway/client/meilisearch.client";
+import { AnnonceDeLogement } from "@logements/indexation/service/types";
+import { IndexingClient } from "@shared/infrastructure/gateway/client/meilisearch-indexing.client";
 import { HttpClient } from "@shared/infrastructure/gateway/client/strapi-http-client";
 
 export class IndexerAnnoncesDeLogement {
@@ -17,26 +17,26 @@ export class IndexerAnnoncesDeLogement {
 	}
 
 	public async executer(source: string): Promise<void> {
-		const annoncesDeLogement = await this.strapiHttpClient.get<AnnonceDeLogementBrute>(
+		const annoncesDeLogement = await this.strapiHttpClient.get<AnnonceDeLogement.Brute>(
 			this.configuration.STRAPI.ENDPOINT,
 			source,
 			IndexerAnnoncesDeLogement.FIELDS_TO_RETRIEVE,
 			IndexerAnnoncesDeLogement.RELATIONS_TO_RETRIEVE,
 		);
-		await this.indexingClient.index<AnnonceDeLogementAIndexer>(
+		await this.indexingClient.index<AnnonceDeLogement.AIndexer>(
 			IndexerAnnoncesDeLogement.INDEX,
 			this.versAnnoncesDeLogementAIndexer(annoncesDeLogement),
 			IndexerAnnoncesDeLogement.BATCH_SIZE,
 		);
 	}
 
-	private versAnnoncesDeLogementAIndexer(annoncesDeLogement: Array<AnnonceDeLogementBrute>): Array<AnnonceDeLogementAIndexer> {
+	private versAnnoncesDeLogementAIndexer(annoncesDeLogement: Array<AnnonceDeLogement.Brute>): Array<AnnonceDeLogement.AIndexer> {
 		return annoncesDeLogement.map(
 			(annonceDeLogement) => this.versAnnonceDeLogementAIndexer(annonceDeLogement),
 		);
 	}
 
-	private versAnnonceDeLogementAIndexer(annonceDeLogement: AnnonceDeLogementBrute): AnnonceDeLogementAIndexer {
+	private versAnnonceDeLogementAIndexer(annonceDeLogement: AnnonceDeLogement.Brute): AnnonceDeLogement.AIndexer {
 		return {
 			id: annonceDeLogement.id,
 			slug: annonceDeLogement.slug,
@@ -78,7 +78,7 @@ export class IndexerAnnoncesDeLogement {
 		return `${surface}m²`;
 	}
 
-	private getLocalisationToDisplay(localisation: Localisation): string {
+	private getLocalisationToDisplay(localisation: AnnonceDeLogement.Localisation): string {
 		const { ville, codePostal } = localisation;
 		if (ville && codePostal) return codePostal + " - " + ville;
 		if (codePostal) return String(codePostal);

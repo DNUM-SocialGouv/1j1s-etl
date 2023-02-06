@@ -1,4 +1,4 @@
-import { AnnonceDeLogementBrute } from "@logements/indexation/service/types";
+import { AnnonceDeLogement } from "@logements/indexation/service/types";
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
 import {
 	StrapiBodyResponse,
@@ -19,8 +19,8 @@ const username = "someUs3r";
 const endpoint = "/annonce-de-logement";
 const source = "immojeune";
 
-let dataPremierePage: Array<StrapiBodyResponse<AnnonceDeLogementBrute>>;
-let dataSecondePage: Array<StrapiBodyResponse<AnnonceDeLogementBrute>>;
+let dataPremierePage: Array<StrapiBodyResponse<AnnonceDeLogement.Brute>>;
+let dataSecondePage: Array<StrapiBodyResponse<AnnonceDeLogement.Brute>>;
 let axiosInstance: AxiosInstance;
 let authenticationClient: AuthenticationClient;
 let strapiHttpClient: StrapiHttpClient;
@@ -46,7 +46,7 @@ describe("StrapiHttpClientTest", () => {
 
 	it("récupère et aggrège les données paginées", async () => {
 		// Given
-		const premiereReponseStrapi: StrapiResponse<AnnonceDeLogementBrute> = {
+		const premiereReponseStrapi: StrapiResponse<AnnonceDeLogement.Brute> = {
 			data: dataPremierePage,
 			meta: {
 				pagination: {
@@ -58,7 +58,7 @@ describe("StrapiHttpClientTest", () => {
 			},
 		};
 
-		const secondeReponseStrapi: StrapiResponse<AnnonceDeLogementBrute> = {
+		const secondeReponseStrapi: StrapiResponse<AnnonceDeLogement.Brute> = {
 			data: dataSecondePage,
 			meta: {
 				pagination: {
@@ -80,7 +80,7 @@ describe("StrapiHttpClientTest", () => {
 			.reply(200, secondeReponseStrapi);
 
 		// When
-		const resultat = await strapiHttpClient.get<AnnonceDeLogementBrute>(endpoint, source, fieldsToRetrieve, relationsToRetrieve);
+		const resultat = await strapiHttpClient.get<AnnonceDeLogement.Brute>(endpoint, source, fieldsToRetrieve, relationsToRetrieve);
 
 		// Then
 		expect(resultat).to.have.deep.members([

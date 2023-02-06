@@ -1,13 +1,11 @@
-import { Configuration } from "@logements/indexation/configuration/configuration";
-import { IndexerAnnoncesDeLogement } from "@logements/indexation/service/indexer-annonces-de-logement.service";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-import { IndexingClient } from "@shared/infrastructure/gateway/client/meilisearch.client";
-import { HttpClient } from "@shared/infrastructure/gateway/client/strapi-http-client";
-import { expect } from "@test/configuration";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@test/logements/indexation/fixture/annonce-de-logement.fixture-builder";
-import sinon from "sinon";
+import { Configuration } from "@logements/indexation/configuration/configuration";
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+import { IndexerAnnoncesDeLogement } from "@logements/indexation/service/indexer-annonces-de-logement.service";
+import { IndexingClient } from "@shared/infrastructure/gateway/client/meilisearch-indexing.client";
+import { HttpClient } from "@shared/infrastructure/gateway/client/strapi-http-client";
 
 const fieldsToRetrieve = "id,slug,titre,dateDeDisponibilite,devise,prix,prixHT,surface,surfaceMax,type,url,sourceUpdatedAt";
 const relationsToRetrieve = "localisation,imagesUrl";
