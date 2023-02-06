@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.0...v3.4.1) (2023-02-06)
+
+
+### Bug Fixes
+
+* **logements:** Fix typo service Terrasse ([1884d7a](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/1884d7a7b941e53aad1307cc0d7ec936608cf37b))
+
 ## [3.4.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.3.6...v3.4.0) (2023-02-02)
 
 
