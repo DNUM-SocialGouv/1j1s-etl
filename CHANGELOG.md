@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.1...v3.4.2) (2023-02-07)
+
+
+### Code Refactoring
+
+* **dependencies:** dotenv comme dev dependency ([d853a49](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/d853a49e259dd9ef752d12f56def099fac78a2cc))
+
 ## [3.4.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.0...v3.4.1) (2023-02-06)
 
 
