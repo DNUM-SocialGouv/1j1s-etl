@@ -24,7 +24,6 @@
     "**/stages/chargement/configuration",
     "**/stages/transformation/configuration",
     "**/stages/extraction/configuration",
-    "**/infrastructure/**/*.ts",
     "**/*.task.ts",
     "**/start.ts",
     "**/feature-flipping*.ts"
