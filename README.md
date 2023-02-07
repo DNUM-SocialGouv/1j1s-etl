@@ -1,7 +1,11 @@
-# 1j1s-orchestrateur-transform-load
-[![Test & Lint](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test-lint-ci.yml/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test-lint-ci.yml)
+# 1j1s-etl
+[![Build](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/build.yml/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/build.yml)
+[![Lint](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/lint.yml/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/lint.yml)
+[![Test](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test.yml/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test.yml)
 [![Pages Build Deployment](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/pages/pages-build-deployment)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/DNUM-socialGouv/1j1s-etl)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/DNUM-socialGouv/1j1s-etl?color=orange)
+![Node engine](https://img.shields.io/badge/dynamic/json?label=node&query=%24%5B%27engines%27%5D%5B%27node%27%5D&url=https%3A%2F%2Fraw.githubusercontent.com%2FDNUM-SocialGouv%2F1j1s-etl%2Fmain%2Fpackage.json)
+![NPM engine](https://img.shields.io/badge/dynamic/json?label=npm&query=%24%5B%27engines%27%5D%5B%27npm%27%5D&url=https%3A%2F%2Fraw.githubusercontent.com%2FDNUM-SocialGouv%2F1j1s-etl%2Fmain%2Fpackage.json)
 
 Dépôt qui regroupe les opérations de transformation et de chargement des données issues de flux pour les stages du site 1j1s
 
