@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.2...v3.4.3) (2023-02-07)
+
+
+### Documentation
+
+* **readme:** badge de release dynamique ([f6c78ad](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/f6c78ad2b4cd864febd1fcd1de4502256ebe2dce))
+
 ## [3.4.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.1...v3.4.2) (2023-02-07)
 
 
