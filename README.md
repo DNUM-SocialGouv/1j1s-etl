@@ -1,5 +1,6 @@
 [![Test & Lint](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test-lint-ci.yml/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test-lint-ci.yml)
 [![Pages Build Deployment](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/pages/pages-build-deployment)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/DNUM-socialGouv/1j1s-etl)
 
 # 1j1s-orchestrateur-transform-load
 
