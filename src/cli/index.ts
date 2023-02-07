@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import { CliFactory } from "@cli/cli";
 import { CliConfiguration } from "@cli/cli.configuration";
 import { ConfigurationFactory } from "@configuration/configuration";
