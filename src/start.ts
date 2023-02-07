@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import * as http from "http";
 import { Client } from "minio";
 
