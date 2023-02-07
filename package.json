@@ -17,7 +17,8 @@
     "lint:fix": "eslint src test --fix",
     "prepare": "./setup.sh",
     "start": "node build/src/start.js",
-    "test": "mocha"
+    "test": "mocha",
+    "test:mutation": "npx stryker run"
   },
   "repository": {
     "type": "git",
