@@ -14,29 +14,41 @@ Dépôt qui regroupe les opérations de transformation et de chargement des donn
 Pour construire l'application il faut lancer les commandes pour synchroniser votre poste
 
 ```bash
-npm ci
+$ npm ci
 ```
 
 Puis il faut contruire le programme cible
 
 ```bash
-npm run build
+$ npm run build
 ```
 
 ## Lancer un job
 
-Pour lancer un job il faut mettre les bons arguments dans la commande de lancement
+Pour lancer un job il faut mettre les bons arguments dans la commande de lancement de la CLI.
+
+### En local
 
 ```bash
-npm run cli -- -d {domain} -a {action} -f {nom du flux}
+$ npm run dev:cli -- -d {domain} -a {action} -f {nom du flux}
+```
+
+### En production
+
+```bash
+$ npm run cli -- -d {domain} -a {action} -f {nom du flux}
 ```
 
 ## Quand on a besoin de créer un bucket
+
 #### En dev
+
+```bash
+$ npm run dev:start
 ```
-npm run start
-```
+
 #### Sur scalingo
+
 ```
 Démarrer le contener (dans l'onglet Resources mettre Qty: 1) web puis l'éteindre (dans l'onglet Resources mettre Qty: 0)
 ```
