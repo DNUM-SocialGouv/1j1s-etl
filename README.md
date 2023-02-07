@@ -1,3 +1,6 @@
+[![Test & Lint](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test-lint-ci.yml/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/test-lint-ci.yml)
+[![Pages Build Deployment](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/DNUM-SocialGouv/1j1s-etl/actions/workflows/pages/pages-build-deployment)
+
 # 1j1s-orchestrateur-transform-load
 
 Dépôt qui regroupe les opérations de transformation et de chargement des données issues de flux pour les stages du site 1j1s
