@@ -1,4 +1,4 @@
-import { AnnonceDeLogementBrute } from "@logements/indexation/service/types";
+import { AnnonceDeLogement } from "@logements/indexation/domain/model";
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
 import {
 	StrapiBodyResponse,
@@ -19,8 +19,8 @@ const username = "someUs3r";
 const endpoint = "/annonce-de-logement";
 const source = "immojeune";
 
-let dataPremierePage: Array<StrapiBodyResponse<AnnonceDeLogementBrute>>;
-let dataSecondePage: Array<StrapiBodyResponse<AnnonceDeLogementBrute>>;
+let dataPremierePage: Array<StrapiBodyResponse<AnnonceDeLogement.Attributs>>;
+let dataSecondePage: Array<StrapiBodyResponse<AnnonceDeLogement.Attributs>>;
 let axiosInstance: AxiosInstance;
 let authenticationClient: AuthenticationClient;
 let strapiHttpClient: StrapiHttpClient;
@@ -36,17 +36,17 @@ describe("StrapiHttpClientTest", () => {
 		strapiHttpClient = new StrapiHttpClient(axiosInstance, authenticationClient);
 
 		for (let i = 1; i <= 100; i++) {
-			dataPremierePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogement({ id: `${i}` }) } });
+			dataPremierePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogementBrute({ id: `${i}` }).getSnapshot() } });
 		}
 
 		for (let i = 101; i <= 200; i++) {
-			dataSecondePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogement({ id: `${i}` }) } });
+			dataSecondePage.push({ id: i, attributes: { ...AnnonceDeLogementFixtureBuilder.buildAnnonceDeLogementBrute({ id: `${i}` }).getSnapshot() } });
 		}
 	});
 
 	it("récupère et aggrège les données paginées", async () => {
 		// Given
-		const premiereReponseStrapi: StrapiResponse<AnnonceDeLogementBrute> = {
+		const premiereReponseStrapi: StrapiResponse<AnnonceDeLogement.Attributs> = {
 			data: dataPremierePage,
 			meta: {
 				pagination: {
@@ -58,7 +58,7 @@ describe("StrapiHttpClientTest", () => {
 			},
 		};
 
-		const secondeReponseStrapi: StrapiResponse<AnnonceDeLogementBrute> = {
+		const secondeReponseStrapi: StrapiResponse<AnnonceDeLogement.Attributs> = {
 			data: dataSecondePage,
 			meta: {
 				pagination: {
@@ -70,7 +70,6 @@ describe("StrapiHttpClientTest", () => {
 			},
 		};
 
-
 		nock("http://127.0.0.1/api")
 			.post("/auth")
 			.reply(200, "some token")
@@ -80,7 +79,7 @@ describe("StrapiHttpClientTest", () => {
 			.reply(200, secondeReponseStrapi);
 
 		// When
-		const resultat = await strapiHttpClient.get<AnnonceDeLogementBrute>(endpoint, source, fieldsToRetrieve, relationsToRetrieve);
+		const resultat = await strapiHttpClient.get<AnnonceDeLogement.Brute>(endpoint, source, fieldsToRetrieve, relationsToRetrieve);
 
 		// Then
 		expect(resultat).to.have.deep.members([
