@@ -46,8 +46,7 @@
     "overrides": [
         {
             "files": [
-                "src/transformation/infrastructure/cron/**/*.cron.ts",
-                "src/chargement/infrastructure/cron/**/*.cron.ts"
+                "src/stages/transformation/domain/model/jobteaser/index.ts"
             ],
             "rules": {
                 "@typescript-eslint/no-unused-vars": "off"
@@ -55,8 +54,9 @@
         }, {
             "files": [
                 "**/log.decorator.ts",
-                "**/authentication.client.ts",
-                "src/chargement/domain/1jeune1solution/services/charger-offres-de-stage.domain-service.ts"
+                "src/evenements/chargement/domain/service/charger-evenements.domain-service.ts",
+                "src/stages/chargement/domain/service/charger-offres-de-stage.domain-service.ts",
+                "src/chargement/domain/service/charger-offres-de-stage.domain-service.ts"
             ],
             "rules": {
                 "@typescript-eslint/no-non-null-assertion": "off"
