@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
+import { AxiosInstance } from "axios";
 
 type StrapiQueryParam = "pagination[page]"
 	| "filters[source][$eq]"
@@ -31,7 +31,7 @@ export class StrapiHttpClient {
 	}
 
 	public async get<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string): Promise<Array<T>> {
-		await this.authenticationClient.handleAuthentication(axios);
+		await this.authenticationClient.handleAuthentication(this.axios);
 
 		const firstPage = 1;
 		const response = await this.axios.get<StrapiResponse<T>>(url, this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, firstPage));
