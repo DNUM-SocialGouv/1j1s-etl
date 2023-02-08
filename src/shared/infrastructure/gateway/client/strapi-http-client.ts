@@ -1,5 +1,5 @@
 import { AuthenticationClient } from "@shared/infrastructure/gateway/authentication.client";
-import axios, { AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 
 type StrapiQueryParam = "pagination[page]"
 	| "filters[source][$eq]"
@@ -29,13 +29,13 @@ export interface HttpClient {
 }
 
 export class StrapiHttpClient {
-	private static readonly OCCURENCIES_PER_PAGE = 100;
+	private static readonly OCCURENCES_PER_PAGE = 100;
 
 	constructor(private readonly axios: AxiosInstance, private readonly authenticationClient: AuthenticationClient) {
 	}
 
 	public async get<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string): Promise<Array<T>> {
-		await this.authenticationClient.handleAuthentication(axios);
+		await this.authenticationClient.handleAuthentication(this.axios);
 
 		const firstPage = 1;
 		const response = await this.axios.get<StrapiResponse<T>>(url, this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, firstPage));
@@ -54,7 +54,7 @@ export class StrapiHttpClient {
 				"filters[source][$eq]": encodeURI(source),
 				"fields": fieldsToRetrieve,
 				"populate": relationsToRetrieve,
-				"pagination[pageSize]": StrapiHttpClient.OCCURENCIES_PER_PAGE,
+				"pagination[pageSize]": StrapiHttpClient.OCCURENCES_PER_PAGE,
 				"sort": "identifiantSource",
 			},
 		};
