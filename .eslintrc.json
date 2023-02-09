@@ -66,6 +66,11 @@
             "rules": {
                 "@sefr/no-onion-architecture-violation": "off"
             }
+        }, {
+            "files": ["**/web-application.ts"],
+            "rules": {
+                "@typescript-eslint/no-misused-promises": "off"
+            }
         }
     ]
 }
