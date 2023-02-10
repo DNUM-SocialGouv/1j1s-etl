@@ -8,12 +8,13 @@ export class ChargerAnnoncesDeLogementDomainService {
 
 	public async charger(flux: FluxChargement): Promise<void> {
 		const annoncesDeLogementACharger = await this.annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees(flux);
+		const annoncesDeLogementAChargerFiltrées= annoncesDeLogementACharger.filter((annonce) => this.isValidLocalisation(annonce));
 		const annoncesDeLogementDejaChargees = await this.annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees(flux);
 
 		const annoncesAcharger = [
-			...this.filtrerLesNouvellesAnnoncesACharger(annoncesDeLogementDejaChargees, annoncesDeLogementACharger),
-			...this.filtrerLesAnnoncesASupprimer(annoncesDeLogementDejaChargees, annoncesDeLogementACharger),
-			...this.filtrerLesAnnoncesAMettreAJour(annoncesDeLogementDejaChargees, annoncesDeLogementACharger),
+			...this.filtrerLesNouvellesAnnoncesACharger(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrées),
+			...this.filtrerLesAnnoncesASupprimer(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrées),
+			...this.filtrerLesAnnoncesAMettreAJour(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrées),
 		];
 		const annoncesEnErreur = await this.annonceDeLogementRepository.charger(annoncesAcharger, flux.nom);
 
@@ -70,5 +71,10 @@ export class ChargerAnnoncesDeLogementDomainService {
 			}
 		}
 		return result;
+	}
+
+	private isValidLocalisation(annonce: UnJeune1Solution.AnnonceDeLogement ): boolean {
+		const localisation = annonce.localisation;
+		return !!localisation && Object.values(localisation).some((value: string | number) => (typeof value === "string" && value !== "") || (typeof value === "number" && value !== 0));
 	}
 }
