@@ -73,8 +73,13 @@ export class ChargerAnnoncesDeLogementDomainService {
 		return result;
 	}
 
-	private isValidLocalisation(annonce: UnJeune1Solution.AnnonceDeLogement ): boolean {
+	private isValidLocalisation(annonce: UnJeune1Solution.AnnonceDeLogement ): boolean  {
 		const localisation = annonce.localisation;
-		return !!localisation && Object.values(localisation).some((value: string | number) => (typeof value === "string" && value !== "") || (typeof value === "number" && value !== 0));
+		return !!localisation && Object.values(localisation)
+			.some((value: string | number) => {
+				const hasStringValue = (typeof value === "string" && value !== "");
+				const hasNumberValue = (typeof value === "number" && value !== 0);
+				return  hasStringValue || hasNumberValue;
+			});
 	}
 }
