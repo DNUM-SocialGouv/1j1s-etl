@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.3...v3.4.4) (2023-02-10)
+
+
+### Bug Fixes
+
+* **logements:** suppression annonce avant chargement si pas de localisation ([67d37eb](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/67d37eb701c0d09642430acead65c793f485fa90))
+
 ## [3.4.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.2...v3.4.3) (2023-02-07)
 
 
