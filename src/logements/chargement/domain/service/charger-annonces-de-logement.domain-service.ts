@@ -8,13 +8,13 @@ export class ChargerAnnoncesDeLogementDomainService {
 
 	public async charger(flux: FluxChargement): Promise<void> {
 		const annoncesDeLogementACharger = await this.annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees(flux);
-		const annoncesDeLogementAChargerFiltrées= annoncesDeLogementACharger.filter((annonce) => this.isValidLocalisation(annonce));
+		const annoncesDeLogementAChargerFiltrees = annoncesDeLogementACharger.filter((annonce) => this.isValidLocalisation(annonce));
 		const annoncesDeLogementDejaChargees = await this.annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees(flux);
 
 		const annoncesAcharger = [
-			...this.filtrerLesNouvellesAnnoncesACharger(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrées),
-			...this.filtrerLesAnnoncesASupprimer(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrées),
-			...this.filtrerLesAnnoncesAMettreAJour(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrées),
+			...this.filtrerLesNouvellesAnnoncesACharger(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrees),
+			...this.filtrerLesAnnoncesASupprimer(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrees),
+			...this.filtrerLesAnnoncesAMettreAJour(annoncesDeLogementDejaChargees, annoncesDeLogementAChargerFiltrees),
 		];
 		const annoncesEnErreur = await this.annonceDeLogementRepository.charger(annoncesAcharger, flux.nom);
 
@@ -79,7 +79,7 @@ export class ChargerAnnoncesDeLogementDomainService {
 			.some((value: string | number) => {
 				const hasStringValue = (typeof value === "string" && value !== "");
 				const hasNumberValue = (typeof value === "number" && value !== 0);
-				return  hasStringValue || hasNumberValue;
+				return hasStringValue || hasNumberValue;
 			});
 	}
 }
