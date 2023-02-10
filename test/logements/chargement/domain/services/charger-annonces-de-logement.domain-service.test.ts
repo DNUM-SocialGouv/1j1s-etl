@@ -202,9 +202,9 @@ describe("ChargerAnnoncesDeLogementDomainServiceTest", () => {
 			});
 		});
 
-		context("et j'ai plusieurs sorte d'annonce à charger", () => {
+		context("et j'ai plusieurs sorte d'annonces à charger", () => {
 			it("je charge les différentes annonces", async () => {
-				const nouvellesAnnoncesDeLogement = [AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annnonce" })];
+				const nouvellesAnnoncesDeLogement = [AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annonce" })];
 				const annonceDeLogementAMettreAjour = [
 					AnnonceDeLogementFixtureBuilder.buildAnnonceAMettreAJour(
 						{
@@ -219,7 +219,7 @@ describe("ChargerAnnoncesDeLogementDomainServiceTest", () => {
 				];
 				const annoncesDeLogementsNonReferencees = [
 					AnnonceDeLogementFixtureBuilder.build(),
-					AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annnonce" }),
+					AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annonce" }),
 					AnnonceDeLogementFixtureBuilder.build({
 							"identifiantSource": "annonce-a-mettre-a-jour",
 							"sourceUpdatedAt": "2023-01-01T00:00:00.000Z",
@@ -251,6 +251,45 @@ describe("ChargerAnnoncesDeLogementDomainServiceTest", () => {
 					...annoncesDeLogementsASupprimer,
 					...annonceDeLogementAMettreAjour,
 				], "Immojeune"]);
+			});
+		});
+		
+		context("et que j'ai des annonces avec une localisation vide", () => {
+			it("je retire ses annonces du chargement ", async () => {
+				const annoncesDeLogementsReferences = [
+					AnnonceDeLogementFixtureBuilder.build(),
+				];
+				const annoncesDeLogementsNonReferencees = [
+					AnnonceDeLogementFixtureBuilder.build(),
+					AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annonce" }),
+					AnnonceDeLogementFixtureBuilder.build({
+							"identifiantSource": "annonce-a-supprimer",
+							"sourceUpdatedAt": "2023-01-01T00:00:00.000Z",
+							"localisation": {
+								pays: "",
+								codePostal: "",
+								ville: "",
+								latitude: 0,
+								longitude: 0,
+							},
+						},
+					),
+				];
+
+				const annoncesDeLogementsNonReferenceesTriées = [
+					AnnonceDeLogementFixtureBuilder.build({ "identifiantSource": "nouvelle-annonce" }),
+				];
+				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementsReferences);
+				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
+
+
+				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
+
+				await chargerFluxImmojeune.charger(flux);
+				expect(annonceDeLogementRepository.charger.getCall(0).args).to.have.deep.members([[
+					...annoncesDeLogementsNonReferenceesTriées,
+				], "Immojeune"]);
+
 			});
 		});
 	});
