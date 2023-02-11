@@ -1,4 +1,4 @@
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from "@maintenance/configuration";
 import { SousModule } from "@shared/configuration/module";
 import yargs from "yargs";
 

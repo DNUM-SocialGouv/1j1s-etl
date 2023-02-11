@@ -1,4 +1,4 @@
-import { Environment, SentryConfiguration } from "@configuration/configuration";
+import { Environment, SentryConfiguration } from "@shared/configuration";
 import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {

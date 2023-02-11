@@ -40,6 +40,7 @@
        "@configuration/*": ["src/configuration/*"],
        "@evenements/*": ["src/evenements/*"],
        "@logements/*": ["src/logements/*"],
+       "@maintenance/*": ["src/maintenance/*"],
        "@shared/*": ["src/shared/*"],
        "@stages/*": ["src/stages/*"],
        "@test/*": ["test/*"]

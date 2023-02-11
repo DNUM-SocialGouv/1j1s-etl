@@ -1,6 +1,6 @@
 import { CliFactory } from "@cli/cli";
 import { CliConfiguration } from "@cli/cli.configuration";
-import { ConfigurationFactory } from "@configuration/configuration";
+import { ConfigurationFactory } from "@maintenance/configuration";
 
 process.setMaxListeners(25);
 

@@ -1,13 +1,9 @@
 import { createWriteStream, PinoSentryOptions, Severity } from "pino-sentry";
 import pino from "pino";
 
-export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
+import { Environment } from "@shared/configuration/index";
 
-enum Environment {
-	DEVELOPMENT = "development",
-	PRODUCTION = "production",
-	QUALIFICATION = "qualification"
-}
+export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
 export type LoggerConfiguration = { name: string }
 

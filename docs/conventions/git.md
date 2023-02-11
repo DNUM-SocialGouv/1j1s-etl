@@ -22,6 +22,7 @@ La liste des contextes suivants ont été identifiés pour ce dépôt :
 + `dependencies` - pour toute modification ayant trait aux dépendances du projet
 + `evenements` - pour toute modification ayant trait aux événements
 + `logements` - pour toute modification ayant trait aux annonces de logements
++ `maintenance` - pour toute modification ayant trait aux actions de maintenance
 + `multiple` - pour toute modification ayant trait à 2 ou plusieurs contextes
 + `stages` - pour toute modification ayant trait aux offres de stages
 

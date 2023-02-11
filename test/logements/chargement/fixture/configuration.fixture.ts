@@ -3,7 +3,7 @@ import {
 	MinioConfiguration,
 	StrapiConguration,
 } from "@logements/chargement/configuration/configuration";
-import { Environment, SentryConfiguration } from "@configuration/configuration";
+import { Environment, SentryConfiguration } from "@shared/configuration";
 
 export class ConfigurationFixtureBuilder {
 	public static build(

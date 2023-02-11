@@ -1,4 +1,4 @@
-import { Configuration } from "@configuration/configuration";
+import { Configuration } from ".//configuration";
 import {
 	LifecycleRule,
 	LifecycleRules,
@@ -14,7 +14,7 @@ export class Setup {
 	private static BUCKET_LIFECYCLE_RULES_CREATION_SUCCEEDED_MESSAGE = "Les règles de cycle de vie sur les buckets ont été correctement créées";
 	private static IS_ALIVE_MESSAGE = "Main process is alive ...";
 
-	private flows: Array<string>;
+	private readonly flows: Array<string>;
 
 	constructor(
 		private readonly configuration: Configuration,

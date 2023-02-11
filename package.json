@@ -12,11 +12,11 @@
     "coverage": "nyc mocha",
     "dev": "ts-node -r tsconfig-paths/register -r dotenv/config",
     "dev:cli": "npm run dev -- src/cli",
-    "dev:start": "npm run dev -- src/start.ts",
+    "dev:start": "npm run dev -- src/maintenance/start.ts",
     "lint": "eslint src test",
     "lint:fix": "eslint src test --fix",
     "prepare": "./setup.sh",
-    "start": "node build/src/start.js",
+    "start": "node build/src/maintenance/start.js",
     "test": "mocha",
     "test:mutation": "npx stryker run"
   },
