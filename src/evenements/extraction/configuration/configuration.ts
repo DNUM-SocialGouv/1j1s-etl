@@ -1,4 +1,4 @@
-import { Environment, SentryConfiguration } from "@shared/configuration";
+import { Environment, SentryConfiguration, Validator } from "@shared/configuration";
 import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 export type TaskConfiguration = {
@@ -33,12 +33,9 @@ export type Configuration = {
     TEMPORARY_DIRECTORY_PATH: string
 }
 
-export class ConfigurationFactory {
+export class ConfigurationFactory extends Validator {
     public static create(): Configuration {
-        const { getOrError, getOrDefault } = ConfigurationFactory;
-        const DEFAULT_MINIO_PORT = "9000";
-        const DEFAULT_LOG_LEVEL = "debug";
-        const DEFAULT_HISTORY_DIRECTORY_NAME = "history";
+        const { getOrError } = ConfigurationFactory;
 
         return {
             CONTEXT: "extraction",
@@ -56,11 +53,11 @@ export class ConfigurationFactory {
                 CLIENT_SECRET: getOrError("EVENTS_TOUS_MOBILISES_CLIENT_SECRET"),
                 SCOPE: getOrError("EVENTS_TOUS_MOBILISES_SCOPE").replaceAll(",", " "),
             },
-            LOGGER_LOG_LEVEL: getOrDefault("EVENTS_EXTRACT_LOG_LEVEL", DEFAULT_LOG_LEVEL) as LogLevel,
+            LOGGER_LOG_LEVEL: getOrError("EVENTS_EXTRACT_LOG_LEVEL") as LogLevel,
             MINIO: {
                 ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
-                HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", DEFAULT_HISTORY_DIRECTORY_NAME),
-                PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
+                HISTORY_DIRECTORY_NAME: getOrError("MINIO_HISTORY_DIRECTORY_NAME"),
+                PORT: Number(getOrError("MINIO_PORT")),
                 RAW_BUCKET_NAME: getOrError("EVENTS_MINIO_RAW_BUCKET_NAME"),
                 SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
                 URL: getOrError("MINIO_URL"),
@@ -73,21 +70,5 @@ export class ConfigurationFactory {
             },
             TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
         };
-    }
-
-    private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
-        const environmentVariable = process.env[environmentVariableKey];
-        if (!environmentVariable) {
-            return defaultValue;
-        }
-        return environmentVariable;
-    }
-
-    private static getOrError(environmentVariableKey: string): string {
-        const environmentVariable = process.env[environmentVariableKey];
-        if (!environmentVariable) {
-            throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
-        }
-        return environmentVariable;
     }
 }

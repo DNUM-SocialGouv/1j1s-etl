@@ -1,4 +1,4 @@
-import { Environment, SentryConfiguration } from "@shared/configuration";
+import { Environment, SentryConfiguration, Validator } from "@shared/configuration";
 import { Domaine, LogLevel } from "@shared/configuration/logger";
 
 export type MinioConfiguration = {
@@ -39,14 +39,9 @@ export type Configuration = {
 	DOMAINE: Domaine
 }
 
-export class ConfigurationFactory {
+export class ConfigurationFactory extends Validator {
 	public static create(): Configuration {
-		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
-
-		const DEFAULT = {
-			MINIO_PORT: "9000",
-			TEMPORARY_DIRECTORY_PATH: "/tmp/",
-		};
+		const { getOrError, toBoolean } = ConfigurationFactory;
 
 		return <Configuration>{
 			CONTEXT: "chargement",
@@ -63,7 +58,7 @@ export class ConfigurationFactory {
 			LOGGER_LOG_LEVEL: getOrError("HOUSING_LOAD_LOG_LEVEL"),
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
-				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT.MINIO_PORT)),
+				PORT: Number(getOrError("MINIO_PORT")),
 				RESULT_BUCKET_NAME: getOrError("HOUSING_MINIO_RESULT_BUCKET_NAME"),
 				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 				TRANSFORMED_BUCKET_NAME: getOrError("HOUSING_MINIO_TRANSFORMED_BUCKET_NAME"),
@@ -87,27 +82,7 @@ export class ConfigurationFactory {
 				PASSWORD: getOrError("STRAPI_PASSWORD"),
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},
-			TEMPORARY_DIRECTORY_PATH: getOrDefault("TEMPORARY_DIRECTORY_PATH", DEFAULT.TEMPORARY_DIRECTORY_PATH),
+			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
 		};
-	}
-
-	private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			return defaultValue;
-		}
-		return environmentVariable;
-	}
-
-	private static getOrError(environmentVariableKey: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
-		}
-		return environmentVariable;
-	}
-
-	private static toBoolean(value: string): boolean {
-		return value.trim().toLowerCase() === "true";
 	}
 }
