@@ -37,7 +37,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 		domainService = new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
 	});
 
-
 	context("Lorsque je charge le flux dont on me donne le nom", () => {
 		context("Lorsque l'on connait le(s) employeur(s) d'une ou plusieurs offre(s) de stage(s)", () => {
 			beforeEach(() => {

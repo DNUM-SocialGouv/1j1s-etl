@@ -5,7 +5,6 @@ import { StagefrDecompresse } from "@stages/transformation/domain/model/stagefr-
 import { Usecase } from "@shared/usecase";
 import { UnJeune1Solution } from "@stages/transformation/domain/model/1jeune1solution";
 
-
 export class TransformerFluxStagefrDecompresse implements Usecase {
 	constructor(
 		private readonly offreDeStageRepository: OffreDeStageRepository,

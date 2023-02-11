@@ -37,7 +37,6 @@ export class MinioStorageClient implements StorageClient {
         }
 	}
 
-
 	public async lire(filePath: string, flowName: string): Promise<Array<UnJeune1Solution.AttributsAnnonceDeLogement>> {
         const nameFile = this.uuidClient.generate();
         const localfilePath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(nameFile);
@@ -55,7 +54,6 @@ export class MinioStorageClient implements StorageClient {
         } finally {
             await this.fileSystemClient.delete(localfilePath);
         }
-
 
 	}
 }

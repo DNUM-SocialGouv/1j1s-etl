@@ -193,7 +193,6 @@ describe("AnnonceDeLogementRepositoryTest", () => {
 				loggerStrategy,
 			);
 
-
 			httpClient.get.resolves([AnnonceDeLogementHttpFixtureBuilder.build()]);
 
 			//when

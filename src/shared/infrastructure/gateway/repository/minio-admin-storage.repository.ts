@@ -12,7 +12,6 @@ export class MinioAdminStorageRepository {
 		}
 	}
 
-
 	public async setBucketLifecycle(bucketName: string, rules: LifecycleRules): Promise<void> {
 		await this.minioClient.setBucketLifecycle(bucketName, rules);
 	}

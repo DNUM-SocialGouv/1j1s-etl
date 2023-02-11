@@ -17,7 +17,6 @@ import { MinioStorageClient, StorageClient } from "@logements/chargement/infrast
 import { NodeFileSystemClient } from "@shared/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 
-
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {
 		const dateService = new DateService();

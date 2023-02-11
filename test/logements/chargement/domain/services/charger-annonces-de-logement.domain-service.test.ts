@@ -243,7 +243,6 @@ describe("ChargerAnnoncesDeLogementDomainServiceTest", () => {
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementsReferences);
 				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 
-
 				await chargerFluxImmojeune.charger(flux);
 
 				expect(annonceDeLogementRepository.charger.getCall(0).args).to.have.deep.members([[
@@ -281,7 +280,6 @@ describe("ChargerAnnoncesDeLogementDomainServiceTest", () => {
 				];
 				annonceDeLogementRepository.recupererAnnoncesDeLogementReferencees.resolves(annoncesDeLogementsReferences);
 				annonceDeLogementRepository.recupererAnnoncesDeLogementNonReferencees.resolves(annoncesDeLogementsNonReferencees);
-
 
 				chargerFluxImmojeune = new ChargerAnnoncesDeLogementDomainService(annonceDeLogementRepository);
 

@@ -5,7 +5,6 @@ import {
 } from "@logements/chargement/configuration/configuration";
 import { Environment, SentryConfiguration } from "@configuration/configuration";
 
-
 export class ConfigurationFixtureBuilder {
 	public static build(
 		configuration?: Partial<Configuration>,
