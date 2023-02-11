@@ -20,7 +20,6 @@ export class FeatureFlippingEvenementsRepository implements UnJeuneUneSolution.E
         protected readonly dateService: DateService,
     ) {}
 
-
     public async chargerEtEnregistrerLesErreurs(evenenementsAAjouter: Array<UnJeuneUneSolution.EvenementAAjouter>, evenementsAMettreAjour: Array<UnJeuneUneSolution.EvenementAMettreAJour>, evenementsASupprimer: Array<UnJeuneUneSolution.EvenementASupprimer>): Promise<Array<UnJeuneUneSolution.Evenement>> {
         this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements à publier : ${evenenementsAAjouter.length}`);
         this.loggerStrategy.get("tous-mobilises").info(`Nombre d'évenements à mettre à jour : ${evenementsAMettreAjour.length}`);

@@ -34,7 +34,6 @@ export class StudapartFtpFlowClient implements FlowClient {
             await this.ftpClient.downloadFileAndCopy(this.TMP_FILE_ZIP_PATH, this.FILE_PATH_FROM_REMOTE);
             logger.info("Successful retrieve of zip file");
 
-
             await this.streamZipClient.extract(this.TMP_FILE_ZIP_PATH, this.FILE_NAME_IN_ZIP, this.TMP_EXTRACT_XML);
             logger.info("Successful extracting zip file content");
 

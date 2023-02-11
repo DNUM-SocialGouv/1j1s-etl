@@ -10,12 +10,9 @@ import sinon from "sinon";
 import { UuidGenerator } from "@shared/infrastructure/gateway/uuid.generator";
 import { AnnonceDeLogementFixtureBuilder } from "../../fixture/annonce-de-logement.fixture-builder";
 
-
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;
 let storageClient: StorageClient;
-
-
 
 describe("StorageClientTest", () => {
     context("Lorsque je souhaite communiquer avec mon dépot de stockage distant", () => {

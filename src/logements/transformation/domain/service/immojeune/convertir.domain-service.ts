@@ -138,7 +138,6 @@ export class Convertir {
 		return correspondanceServicesOptionnels;
 	}
 
-
 	private initialiserTypesDeLogement(): Map<Immojeune.TypeDeLogement, UnJeune1Solution.Type> {
 		const correspondanceTypesDeBien: Map<Immojeune.TypeDeLogement, UnJeune1Solution.Type> = new Map();
 

@@ -87,7 +87,6 @@ describe("MinioHttpOffreDeStageRepositoryTest", () => {
 			).to.not.throw();
 		});
 
-
 		it("je retourne un tableau vide", async () => {
 			const result = await minioHttpOffreDeStageRepository.charger(nomDuFlux, offresMisesAJourAttendues);
 

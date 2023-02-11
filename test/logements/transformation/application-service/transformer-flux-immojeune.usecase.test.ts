@@ -152,7 +152,6 @@ describe("TransformerFluxImmojeuneTest", () => {
 				assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
 				assainisseurDeTexte.nettoyer.withArgs("Le titre de l'annonce").returns("Le titre de l'annonce");
 
-
 				const resultatTransformation = [AnnonceDeLogementImmojeuneFixtureBuilder.build()];
 				delete resultatTransformation[0].availableAt;
 
@@ -173,7 +172,6 @@ describe("TransformerFluxImmojeuneTest", () => {
 				assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
 				assainisseurDeTexte.nettoyer.withArgs("Le titre de l'annonce").returns("Le titre de l'annonce");
 
-
 				const resultatTransformation = [AnnonceDeLogementImmojeuneFixtureBuilder.build()];
 				delete resultatTransformation[0].date_creation;
 
@@ -193,7 +191,6 @@ describe("TransformerFluxImmojeuneTest", () => {
 			it("retourne la date du jour au format attendu", async () => {
 				assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
 				assainisseurDeTexte.nettoyer.withArgs("Le titre de l'annonce").returns("Le titre de l'annonce");
-
 
 				const resultatTransformation = [AnnonceDeLogementImmojeuneFixtureBuilder.build()];
 				delete resultatTransformation[0].date_update;

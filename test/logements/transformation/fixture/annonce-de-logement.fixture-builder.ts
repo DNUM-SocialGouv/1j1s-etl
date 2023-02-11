@@ -1,7 +1,6 @@
 import { Devise } from "@shared/devise.value-object";
 import { UnJeune1Solution } from "@logements/transformation/domain/model/1jeune1solution";
 
-
 export class AnnonceDeLogementFixtureBuilder {
 	public static build(
 		annonceDeLogement?: Partial<UnJeune1Solution.AnnonceDeLogement>,

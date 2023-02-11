@@ -1,7 +1,6 @@
 import { ConfigurationFactory } from "@logements/chargement/configuration/configuration";
 import { LogementsChargementLoggerStrategy } from "@logements/chargement/configuration/logger-strategy";
 
-
 const configuration = ConfigurationFactory.create();
 const loggerStrategy = new LogementsChargementLoggerStrategy(configuration);
 
