@@ -73,7 +73,7 @@ export class ChargerAnnoncesDeLogementDomainService {
 		return result;
 	}
 
-	private isValidLocalisation(annonce: UnJeune1Solution.AnnonceDeLogement ): boolean  {
+	private isValidLocalisation(annonce: UnJeune1Solution.AnnonceDeLogement ): boolean {
 		const localisation = annonce.localisation;
 		return !!localisation && Object.values(localisation)
 			.some((value: string | number) => {

@@ -10,7 +10,7 @@ export class DateService {
 	}
 
 	public toIsoDateAvecDateEtHoraire(date: string, horaire: string): string {
-		return DateTime.fromFormat(date+" "+horaire, "dd/MM/yyyy HH:mm").toFormat("yyyy-MM-dd'T'HH:mm:ss");
+		return DateTime.fromFormat(date + " " + horaire, "dd/MM/yyyy HH:mm").toFormat("yyyy-MM-dd'T'HH:mm:ss");
 	}
 
 	public toIsoDateAvecDate(date: string): string {

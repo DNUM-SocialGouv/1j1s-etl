@@ -144,7 +144,7 @@ export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRe
 	}
 
 	private async loadAdvertisement(flowName: string, advertisement: UnJeune1Solution.AnnonceDeLogement): Promise<void> {
-		this.loggerStrategy.get(flowName).debug(`Starting to push ${advertisement.titre? advertisement.titre : advertisement.identifiantSource} advertisement from flow ${flowName}`);
+		this.loggerStrategy.get(flowName).debug(`Starting to push ${advertisement.titre ? advertisement.titre : advertisement.identifiantSource} advertisement from flow ${flowName}`);
 		if (advertisement instanceof UnJeune1Solution.NouvelleAnnonceDeLogement) {
 			await this.httpClient.post(advertisement);
 		} else if (advertisement instanceof UnJeune1Solution.AnnonceDeLogementObsolete) {
@@ -154,7 +154,7 @@ export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRe
 		} else {
 			throw new Error("Advertisement is not handled by this method");
 		}
-		this.loggerStrategy.get(flowName).debug(`Ending to push ${advertisement.titre? advertisement.titre : advertisement.identifiantSource} advertisement from flow ${flowName}`);
+		this.loggerStrategy.get(flowName).debug(`Ending to push ${advertisement.titre ? advertisement.titre : advertisement.identifiantSource} advertisement from flow ${flowName}`);
 	}
 
 	private toReadableJson(annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement | UnJeune1Solution.AnnonceDeLogementEnErreur>): string {
