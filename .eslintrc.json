@@ -23,9 +23,11 @@
         "complexity": ["error", 10],
         "eol-last": "error",
         "max-depth": ["error", 2],
+        "no-multi-spaces": "error",
         "object-curly-spacing": ["error", "always"],
         "quotes": ["error", "double"],
         "semi": "error",
+        "space-infix-ops": "error",
         "@sefr/no-onion-architecture-violation": "error",
         "@sefr/no-cross-domain-import": [
             "error",

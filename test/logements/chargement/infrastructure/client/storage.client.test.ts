@@ -74,8 +74,8 @@ describe("StorageClientTest", () => {
             );
             expect(result).to.have.deep.members([
                 AnnonceDeLogementFixtureBuilder.build(),
-            ])
-;        });
+            ]);
+        });
     });
 
     context("Lorsque je souhaite communiquer avec mon dépôt distant et qu'une erreur survient", () => {
