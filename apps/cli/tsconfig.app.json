@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "outDir": "../../build/apps/cli",
+    "paths": {
+      "@cli/*": ["apps/cli/*"],
+      "@configuration/*": ["apps/configuration/*"],
+      "@evenements/*": ["apps/evenements/*"],
+      "@logements/*": ["apps/logements/*"],
+      "@shared/*": ["apps/shared/*"],
+      "@stages/*": ["apps/stages/*"],
+      "@test/*": ["apps/configuration/test/*"]
+    },
+    "baseUrl": "../.."
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build", "./test", "**/*spec.ts"]
+}

@@ -49,7 +49,7 @@
     "overrides": [
         {
             "files": [
-                "src/stages/transformation/domain/model/jobteaser/index.ts"
+                "**/stages/src/transformation/domain/model/jobteaser/index.ts"
             ],
             "rules": {
                 "@typescript-eslint/no-unused-vars": "off"
@@ -57,9 +57,9 @@
         }, {
             "files": [
                 "**/log.decorator.ts",
-                "src/evenements/chargement/domain/service/charger-evenements.domain-service.ts",
-                "src/stages/chargement/domain/service/charger-offres-de-stage.domain-service.ts",
-                "src/chargement/domain/service/charger-offres-de-stage.domain-service.ts"
+                "**/evenements/src/chargement/domain/service/charger-evenements.domain-service.ts",
+                "**/stages/src/chargement/domain/service/charger-offres-de-stage.domain-service.ts",
+                "**/chargement/src/domain/service/charger-offres-de-stage.domain-service.ts"
             ],
             "rules": {
                 "@typescript-eslint/no-non-null-assertion": "off"

@@ -1,75 +1,75 @@
 {
   "jobs": [
     {
-      "command": "0 7 * * * npm run cli -- -d internships -a extract -f jobteaser",
+      "command": "0 7 * * * npm run cli -- extract jobteaser",
       "size": "S"
     },
     {
-      "command": "30 7 * * * npm run cli -- -d internships -a transform -f jobteaser",
+      "command": "30 7 * * * npm run cli -- transform jobteaser",
       "size": "L"
     },
     {
-      "command": "45 7 * * * npm run cli -- -d internships -a load -f jobteaser",
+      "command": "45 7 * * * npm run cli -- load jobteaser",
       "size": "L"
     },
     {
-      "command": "0 6 * * * npm run cli -- -d internships -a extract -f stagefr-compresse",
+      "command": "0 6 * * * npm run cli -- extract stagefr-compresse",
       "size": "S"
     },
     {
-      "command": "30 6 * * * npm run cli -- -d internships -a transform -f stagefr-compresse",
+      "command": "30 6 * * * npm run cli -- transform stagefr-compresse",
       "size": "L"
     },
     {
-      "command": "45 6 * * * npm run cli -- -d internships -a load -f stagefr-compresse",
+      "command": "45 6 * * * npm run cli -- load stagefr-compresse",
       "size": "L"
     },
     {
-      "command": "0 6 * * * npm run cli -- -d internships -a extract -f stagefr-decompresse",
+      "command": "0 6 * * * npm run cli -- extract stagefr-decompresse",
       "size": "S"
     },
     {
-      "command": "30 6 * * * npm run cli -- -d internships -a transform -f stagefr-decompresse",
+      "command": "30 6 * * * npm run cli -- transform stagefr-decompresse",
       "size": "L"
     },
     {
-      "command": "45 6 * * * npm run cli -- -d internships -a load -f stagefr-decompresse",
+      "command": "45 6 * * * npm run cli -- load stagefr-decompresse",
       "size": "L"
     },
     {
-      "command": "0 5 * * * npm run cli -- -d housing -a extract -f immojeune",
+      "command": "0 5 * * * npm run cli -- extract immojeune",
       "size": "S"
     },
     {
-      "command": "15 5 * * * npm run cli -- -d housing -a transform -f immojeune",
+      "command": "15 5 * * * npm run cli -- transform immojeune",
       "size": "L"
     },
     {
-      "command": "30 5 * * * npm run cli -- -d housing -a load -f immojeune",
+      "command": "30 5 * * * npm run cli -- load immojeune",
       "size": "L"
     },
     {
-      "command": "0 5 * * * npm run cli -- -d housing -a extract -f studapart",
+      "command": "0 5 * * * npm run cli -- extract studapart",
       "size": "S"
     },
     {
-      "command": "15 5 * * * npm run cli -- -d housing -a transform -f studapart",
+      "command": "15 5 * * * npm run cli -- transform studapart",
       "size": "L"
     },
     {
-      "command": "30 5 * * * npm run cli -- -d housing -a load -f studapart",
+      "command": "30 5 * * * npm run cli -- load studapart",
       "size": "L"
     },
     {
-      "command": "0 4 * * * npm run cli -- -d events -a extract -f tous-mobilises",
+      "command": "0 4 * * * npm run cli -- extract tous-mobilises",
       "size": "S"
     },
     {
-      "command": "15 4 * * * npm run cli -- -d events -a transform -f tous-mobilises",
+      "command": "15 4 * * * npm run cli -- transform tous-mobilises",
       "size": "L"
     },
     {
-      "command": "30 4 * * * npm run cli -- -d events -a load -f tous-mobilises",
+      "command": "30 4 * * * npm run cli -- load tous-mobilises",
       "size": "L"
     }
   ]
