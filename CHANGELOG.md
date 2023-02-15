@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.5.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.4...v3.5.0) (2023-02-15)
+
+
+### Features
+
+* **indexation:** ajout configuration d'un index ([96bf09f](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/96bf09fd38b0d8cfc4a306c9ce5d258fffaf3bbd))
+* **indexation:** ajout création indexation ([f6524f5](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/f6524f523fe50d272f6a3a98a95ee31356f58279))
+
 ## [3.4.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.4.3...v3.4.4) (2023-02-10)
 
 
