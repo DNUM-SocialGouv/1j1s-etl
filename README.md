@@ -17,7 +17,7 @@ Pour construire l'application il faut lancer les commandes pour synchroniser vot
 $ npm ci
 ```
 
-Puis il faut contruire le programme cible
+Puis il faut construire l'application cible
 
 ```bash
 $ npm run build
@@ -30,13 +30,13 @@ Pour lancer un job il faut mettre les bons arguments dans la commande de lanceme
 ### En local
 
 ```bash
-$ npm run dev:cli -- -d {domain} -a {action} -f {nom du flux}
+$ npm run dev:cli -- [action] [nomDuFlux]
 ```
 
 ### En production
 
 ```bash
-$ npm run cli -- -d {domain} -a {action} -f {nom du flux}
+$ npm run cli -- [action] [nomDuFlux]
 ```
 
 ## Quand on a besoin de créer un bucket
@@ -50,7 +50,7 @@ $ npm run dev:start
 #### Sur scalingo
 
 ```
-Démarrer le contener (dans l'onglet Resources mettre Qty: 1) web puis l'éteindre (dans l'onglet Resources mettre Qty: 0)
+Démarrer le conteneur (dans l'onglet Resources mettre Qty: 1) web puis l'éteindre (dans l'onglet Resources mettre Qty: 0)
 ```
 
 ## Liste des jobs disponibles
