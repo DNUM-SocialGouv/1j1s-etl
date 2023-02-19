@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "ES2017",
+      "ES2018",
+      "ES2019",
+      "ES2020",
+      "ES2021"
+    ],
+    "paths": {
+      "@configuration/*": ["apps/configuration/*"],
+      "@evenements/*": ["apps/evenements/*"],
+      "@logements/*": ["apps/logements/*"],
+      "@shared/*": ["apps/shared/*"],
+      "@stages/*": ["apps/stages/*"],
+      "@test/*": ["apps/configuration/test/*"]
+    },
+    "rootDir": "./",
+    "baseUrl": "./",
+    "outDir": "./mutation-test-build",
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  },
+  "include": [
+    "apps/evenements",
+    "apps/logements",
+    "apps/shared",
+    "apps/stages"
+  ]
+}
