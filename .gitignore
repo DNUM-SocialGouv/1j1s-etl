@@ -118,3 +118,5 @@ tool/
 # stryker temp files
 .stryker-tmp
 reports/
+mutation-test/
+mutation-test-build/
