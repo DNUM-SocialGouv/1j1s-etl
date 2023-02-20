@@ -25,16 +25,14 @@ Le point d'entrée de l'application est ici la Command Line Interface (CLI). En 
 Lancer une opération depuis la CLI demande quelques options nécessaires pour savoir quoi lancer :
 
 ```shell
-$ npm run cli -- --domain internships --action extract --flow <insert flow-name>
+$ npm run cli -- [extract|transform|load]  [flowName]
 ```
 
 Pour aller plus loin sur la commande `shell` ci-dessus :
 - `npm run cli` nous donne accès à la CLI ;
 - `--` nous permet d'ajouter des options supplémentaires à l'action précédente ;
-- `--domain` nous permet de choisir quel est le contexte d'appel. Ci-dessus par exemple, ce sera le contexte des stages ;
-- `--action` nous permet de choisir quelle action exécuter dans le contexte choisi. Ces actions sont aussi aujourd'hui 
-nos sous-modules ;
-- `--flow` nous permet de choisir sur quel flux nous souhaitons réaliser notre `--action`.
+- `[extract|transform|load]` nous permet de choisir quelle action est à réaliser ;
+- `[flowName]` nous permet de choisir sur quel flux nous souhaitons réaliser notre action.
 
 ## Modules
 
