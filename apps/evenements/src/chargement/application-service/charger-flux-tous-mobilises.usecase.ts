@@ -9,5 +9,4 @@ export class ChargerFluxTousMobilises implements Usecase {
   async executer(nomFlux: string): Promise<void> {
     return this.domain.charger(nomFlux);
   }
-
 }
