@@ -7,6 +7,10 @@
   ],
   "testRunner": "mocha",
   "buildCommand": "npm run test:mutation:prepare",
+  "mochaOptions": {
+    "config": "./.mocharc.json",
+    "spec": ["**/*.test.js"]
+  },
   "coverageAnalysis": "perTest",
   "checkers": ["typescript"],
   "tsconfigFile": "tsconfig.mutation.json",

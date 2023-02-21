@@ -21,7 +21,6 @@
     },
     "rootDir": "./",
     "baseUrl": "./",
-    "outDir": "./mutation-test-build",
     "esModuleInterop": true,
     "strict": true,
     "declaration": true,
