@@ -28,13 +28,13 @@ export class ChargerEvenenementsDomainService {
 
 	private getEvenementsAAjouter(evenementsACharger: Array<UnJeuneUneSolution.Evenement>, evenementsExistants: Array<UnJeuneUneSolution.EvenementDejaCharge>): Array<UnJeuneUneSolution.EvenementAAjouter> {
 		return evenementsACharger.filter(evenementACharger =>
-			!evenementsExistants.find(evenementExistant => evenementExistant.idSource === evenementACharger.idSource)
+			!evenementsExistants.find(evenementExistant => evenementExistant.idSource === evenementACharger.idSource),
 		);
 	}
 
 	private getEvenementsASupprimer(evenementsExistants: Array<UnJeuneUneSolution.EvenementDejaCharge>, evenementsACharger: Array<UnJeuneUneSolution.Evenement>): Array<UnJeuneUneSolution.EvenementAMettreAJour> {
 		return evenementsExistants.filter(evenementExistant =>
-			!evenementsACharger.find(evenementACharger => evenementACharger.idSource === evenementExistant.idSource)
+			!evenementsACharger.find(evenementACharger => evenementACharger.idSource === evenementExistant.idSource),
 		).map(evenementAMettreAJour => ({
 			...evenementAMettreAJour,
 			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
@@ -44,8 +44,8 @@ export class ChargerEvenenementsDomainService {
 	private getEvenementsAMettreAjour(evenementsACharger: Array<UnJeuneUneSolution.Evenement>, evenementsExistants: Array<UnJeuneUneSolution.EvenementDejaCharge>): Array<UnJeuneUneSolution.EvenementASupprimer> {
 		return evenementsACharger.filter(evenementACharger =>
 			evenementsExistants.find(evenementExistant =>
-				evenementExistant.idSource === evenementACharger.idSource && !this.deepEqual(evenementExistant, evenementACharger)
-			)
+				evenementExistant.idSource === evenementACharger.idSource && !this.deepEqual(evenementExistant, evenementACharger),
+			),
 		).map(evenementAMettreAJour => ({
 			...evenementAMettreAJour,
 			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
@@ -54,14 +54,14 @@ export class ChargerEvenenementsDomainService {
 
 	private deepEqual(evenementExistant: UnJeuneUneSolution.EvenementDejaCharge, nouvelEvenement: UnJeuneUneSolution.Evenement): boolean {
 		return evenementExistant.dateDebut === nouvelEvenement.dateDebut &&
-		evenementExistant.dateFin === nouvelEvenement.dateFin &&
-		evenementExistant.description === nouvelEvenement.description &&
-		evenementExistant.lieuEvenement === nouvelEvenement.lieuEvenement &&
-		evenementExistant.modaliteInscription === nouvelEvenement.modaliteInscription &&
-		evenementExistant.online === nouvelEvenement.online &&
-		evenementExistant.organismeOrganisateur === nouvelEvenement.organismeOrganisateur &&
-		evenementExistant.titreEvenement === nouvelEvenement.titreEvenement &&
-		evenementExistant.typeEvenement === nouvelEvenement.typeEvenement &&
-		evenementExistant.source === nouvelEvenement.source;
+			evenementExistant.dateFin === nouvelEvenement.dateFin &&
+			evenementExistant.description === nouvelEvenement.description &&
+			evenementExistant.lieuEvenement === nouvelEvenement.lieuEvenement &&
+			evenementExistant.modaliteInscription === nouvelEvenement.modaliteInscription &&
+			evenementExistant.online === nouvelEvenement.online &&
+			evenementExistant.organismeOrganisateur === nouvelEvenement.organismeOrganisateur &&
+			evenementExistant.titreEvenement === nouvelEvenement.titreEvenement &&
+			evenementExistant.typeEvenement === nouvelEvenement.typeEvenement &&
+			evenementExistant.source === nouvelEvenement.source;
 	}
 }

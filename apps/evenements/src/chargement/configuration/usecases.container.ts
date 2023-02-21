@@ -1,18 +1,29 @@
-import { ChargementUseCaseContainer } from "@evenements/src/chargement/application-service";
+import {
+	ChargerFluxTousMobilises,
+} from "@evenements/src/chargement/application-service/charger-flux-tous-mobilises.usecase";
+import { Gateways } from "@evenements/src/chargement/configuration/gateways.container";
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
 	ChargerEvenenementsDomainService,
 } from "@evenements/src/chargement/domain/service/charger-evenements.domain-service";
-import { ChargerFluxTousMobilises } from "@evenements/src/chargement/application-service/charger-flux-tous-mobilises.usecase";
-import { GatewayContainer } from "@evenements/src/chargement/infrastructure/gateway";
+import { Module } from "@nestjs/common";
 
-export class UseCaseContainerFactory {
-	public static create(gateways: GatewayContainer): ChargementUseCaseContainer {
-		const chargerEvenenementsDomainService = new ChargerEvenenementsDomainService(
-			gateways.evenementsRepository,
-		);
-
-		return {
-			chargerFluxTousMobilisesUseCase: new ChargerFluxTousMobilises(chargerEvenenementsDomainService),
-		};
-	}
+@Module({
+	imports: [Gateways],
+	providers: [{
+		provide: ChargerEvenenementsDomainService,
+		inject: ["UnJeuneUneSolution.EvenementsRepository"],
+		useFactory: (evenementsRepository: UnJeuneUneSolution.EvenementsRepository): ChargerEvenenementsDomainService => {
+			return new ChargerEvenenementsDomainService(evenementsRepository);
+		},
+	}, {
+		provide: ChargerFluxTousMobilises,
+		inject: [ChargerEvenenementsDomainService],
+		useFactory: (chargerEvenementsDomainService: ChargerEvenenementsDomainService): ChargerFluxTousMobilises => {
+			return new ChargerFluxTousMobilises(chargerEvenementsDomainService);
+		},
+	}],
+	exports: [ChargerFluxTousMobilises],
+})
+export class Usecases {
 }
