@@ -1,34 +1,50 @@
 import { Module } from "@nestjs/common";
 
-import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/configuration/configuration";
-import { EvenementsExtractionLoggerStrategy } from "@evenements/src/extraction/configuration/logger.strategy";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import {
+    Configuration,
+    ConfigurationFactory,
+    MinioConfiguration,
+    TaskConfiguration,
+} from "@evenements/src/extraction/configuration/configuration";
+import { Domaine, LogLevel } from "@shared/src/configuration/logger";
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 import {
     ExtractFlowTousMobilisesTask,
 } from "@evenements/src/extraction/infrastructure/tasks/extract-flow-tous-mobilises.task";
-import { GatewayContainerFactory } from "@evenements/src/extraction/configuration/gateways.container";
-import { SousModule } from "@shared/src/configuration/module";
-import { UsecaseContainer } from "@evenements/src/extraction/application-service";
-import { UsecaseContainerFactory } from "@evenements/src/extraction/configuration/usecases.container";
+import {
+    ExtraireFluxEvenementTousMobilises,
+} from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
+import { Usecases } from "@evenements/src/extraction/configuration/usecases.container";
 
 @Module({
+    imports: [
+        ConfigModule.forRoot({ load: [ConfigurationFactory.create] }),
+        Usecases,
+    ],
     providers: [{
         provide: ExtractFlowTousMobilisesTask,
-        useValue: Extraction.export()["tous-mobilises"],
+        inject: [ConfigService, ExtraireFluxEvenementTousMobilises],
+        useFactory: (
+            configurationService: ConfigService,
+            extraireFluxEvenementTousMobilises: ExtraireFluxEvenementTousMobilises
+        ): ExtractFlowTousMobilisesTask => {
+            const moduleConfiguration: Configuration = {
+                CONTEXT: configurationService.get<string>("CONTEXT"),
+                DOMAINE: configurationService.get<Domaine>("DOMAINE"),
+                FLOWS: configurationService.get<Array<string>>("FLOWS"),
+                LOGGER_LOG_LEVEL: configurationService.get<LogLevel>("LOGGER_LOG_LEVEL"),
+                MINIO: configurationService.get<MinioConfiguration>("MINIO"),
+                NODE_ENV: configurationService.get<Environment>("NODE_ENV"),
+                SENTRY: configurationService.get<SentryConfiguration>("SENTRY"),
+                TEMPORARY_DIRECTORY_PATH: configurationService.get<string>("TEMPORARY_DIRECTORY_PATH"),
+                TOUS_MOBILISES: configurationService.get<TaskConfiguration>("TOUS_MOBILISES"),
+            };
+
+            return new ExtractFlowTousMobilisesTask(extraireFluxEvenementTousMobilises, moduleConfiguration);
+        },
     }],
     exports: [ExtractFlowTousMobilisesTask],
 })
 export class Extraction {
-    public static export(): SousModule {
-        const configuration = ConfigurationFactory.create();
-        const loggerStrategy = new EvenementsExtractionLoggerStrategy(configuration);
-        const gateways = GatewayContainerFactory.create(configuration, loggerStrategy);
-        const usecases = UsecaseContainerFactory.create(gateways);
-        return Extraction.create(configuration, usecases);
-    }
-
-    private static create(configuration: Configuration, usecases: UsecaseContainer): SousModule {
-        return {
-            "tous-mobilises": new ExtractFlowTousMobilisesTask(usecases.extraireEvenementsTousMobilises, configuration),
-        };
-    }
 }
