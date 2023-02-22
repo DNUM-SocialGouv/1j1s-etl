@@ -1,22 +1,32 @@
+import { Module } from "@nestjs/common";
+
 import { DateService } from "@shared/src/date.service";
 import { ExtraireFluxDomainService } from "@evenements/src/extraction/domain/service/extraire-flux.domain-service";
 import {
 	ExtraireFluxEvenementTousMobilises,
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
-import { GatewayContainer } from "@evenements/src/extraction/infrastructure/gateway";
-import { UsecaseContainer } from "@evenements/src/extraction/application-service";
+import { FluxRepository } from "@evenements/src/extraction/domain/service/flux.repository";
+import { Gateways } from "@evenements/src/extraction/configuration/gateways.container";
+import { Shared } from "@shared/src";
 
-export class UsecaseContainerFactory {
-    public static create(gateways: GatewayContainer): UsecaseContainer {
-        const dateService = new DateService();
-
-        const extraireFluxDomainService = new ExtraireFluxDomainService(
-            gateways.repositories.flowRepository,
-            dateService
-        );
-
-        return {
-            extraireEvenementsTousMobilises: new ExtraireFluxEvenementTousMobilises(extraireFluxDomainService),
-        };
-    }
+@Module({
+	imports: [Gateways, Shared],
+	providers: [{
+		provide: ExtraireFluxDomainService,
+		inject: ["FluxRepository", DateService],
+		useFactory: (fluxRepository: FluxRepository, dateService: DateService): ExtraireFluxDomainService => {
+			return new ExtraireFluxDomainService(fluxRepository, dateService);
+		},
+	},
+		{
+			provide: ExtraireFluxEvenementTousMobilises,
+			inject: [ExtraireFluxDomainService],
+			useFactory: (extraireFluxDomainService: ExtraireFluxDomainService): ExtraireFluxEvenementTousMobilises => {
+				return new ExtraireFluxEvenementTousMobilises(extraireFluxDomainService);
+			},
+		},
+	],
+	exports: [ExtraireFluxEvenementTousMobilises],
+})
+export class Usecases {
 }

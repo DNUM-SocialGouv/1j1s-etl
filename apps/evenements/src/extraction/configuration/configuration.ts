@@ -12,7 +12,7 @@ export type TaskConfiguration = {
     SCOPE: string
 }
 
-type MinioConfiguration = {
+export type MinioConfiguration = {
     ACCESS_KEY: string
     HISTORY_DIRECTORY_NAME: string
     PORT: number

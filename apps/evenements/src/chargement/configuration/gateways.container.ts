@@ -1,35 +1,39 @@
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+import axios from "axios";
+import { Client } from "minio";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Module } from "@nestjs/common";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import {
+	ConfigurationFactory,
 	MinioConfiguration,
 	StrapiConfiguration,
 	TaskConfiguration,
 } from "@evenements/src/chargement/configuration/configuration";
+import { DateService } from "@shared/src/date.service";
+import { Domaine, LogLevel } from "@shared/src/configuration/logger";
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 import { EvenementsChargementLoggerStrategy } from "@evenements/src/chargement/configuration/logger-strategy";
-import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
-import {
-	StrapiEvenementHttpClient,
-} from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import {
 	FeatureFlippingEvenementsRepository,
 } from "@evenements/src/chargement/infrastructure/gateway/repository/feature-flipping-evenements.repository";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {
 	MinioAndStrapiEvenementsRepository,
 } from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
-import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { SharedModule } from "@shared/src";
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
-
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
-import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import axios from "axios";
-import { Client } from "minio";
+import { Shared } from "@shared/src";
+import {
+	StrapiEvenementHttpClient,
+} from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
-	imports: [SharedModule, ConfigModule],
+	imports: [
+		ConfigModule.forRoot({ load: [ConfigurationFactory.create] }),
+		Shared,
+	],
 	providers: [{
 		provide: EvenementsChargementLoggerStrategy,
 		inject: [ConfigService],
@@ -50,8 +54,23 @@ import { Client } from "minio";
 		},
 	}, {
 		provide: "UnJeuneUneSolution.EvenementsRepository",
-		inject: [ConfigService, EvenementsChargementLoggerStrategy],
-		useFactory: (configurationService: ConfigService, loggerStrategy: EvenementsChargementLoggerStrategy): UnJeuneUneSolution.EvenementsRepository => {
+		inject: [
+			ConfigService,
+			EvenementsChargementLoggerStrategy,
+			DateService,
+			"FileSystemClient",
+			JsonContentParser,
+			"UuidGenerator",
+		],
+		useFactory: (
+			configurationService: ConfigService,
+			loggerStrategy: EvenementsChargementLoggerStrategy,
+			dateService: DateService,
+			fileSystemClient: FileSystemClient,
+			contentParser: JsonContentParser,
+			uuidGenerator: UuidGenerator,
+		): UnJeuneUneSolution.EvenementsRepository => {
+			console.log(fileSystemClient);
 			const minioConfiguration = configurationService.get<MinioConfiguration>("MINIO");
 			const strapiConfiguration = configurationService.get<StrapiConfiguration>("STRAPI");
 			const minioClient = new Client({
@@ -60,7 +79,6 @@ import { Client } from "minio";
 				port: minioConfiguration.PORT,
 				endPoint: minioConfiguration.URL,
 			});
-			const uuidGenerator = new NodeUuidGenerator();
 			const axiosInstance = axios.create({
 				baseURL: strapiConfiguration.BASE_URL,
 				maxBodyLength: Infinity,
@@ -98,7 +116,7 @@ import { Client } from "minio";
 					},
 					loggerStrategy,
 					uuidGenerator,
-					new DateService(),
+					dateService,
 				);
 			} else {
 				return new MinioAndStrapiEvenementsRepository(
@@ -117,11 +135,11 @@ import { Client } from "minio";
 						TEMPORARY_DIRECTORY_PATH: configurationService.get<string>("TEMPORARY_DIRECTORY_PATH"),
 						LOGGER_LOG_LEVEL: configurationService.get<LogLevel>("LOGGER_LOG_LEVEL"),
 					},
-					new NodeFileSystemClient(configurationService.get("TEMPORARY_DIRECTORY_PATH")),
-					new JsonContentParser(),
+					fileSystemClient,
+					contentParser,
 					loggerStrategy,
 					uuidGenerator,
-					new DateService(),
+					dateService,
 				);
 			}
 		},
