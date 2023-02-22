@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	TransformFlowStudapartTask,
 } from "@logements/src/transformation/infrastructure/tasks/transform-flow-studapart.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "studapart",

@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	TransformFlowTousMobilisesTask,
 } from "@evenements/src/transformation/infrastructure/tasks/transform-flow-tous-mobilises.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "tous-mobilises",

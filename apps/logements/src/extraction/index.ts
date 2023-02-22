@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+
 import { Configuration, ConfigurationFactory } from "@logements/src/extraction/configuration/configuration";
 import { ExtractFlowImmojeuneTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-immojeune.task";
 import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-studapart.task";

@@ -1,4 +1,5 @@
 import { Client } from "minio";
+
 import { Configuration } from "@evenements/src/transformation/configuration/configuration";
 import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/src/date.service";

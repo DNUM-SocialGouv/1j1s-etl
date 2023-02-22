@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+
 import { SousModule } from "@shared/src/configuration/module";
 import { UsecaseContainer } from "@stages/src/extraction/application-service";
 import { Configuration, ConfigurationFactory } from "@stages/src/extraction/configuration/configuration";

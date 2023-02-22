@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
@@ -6,7 +8,6 @@ import {
 } from "@logements/test/chargement/fixture/annonce-de-logement-http.fixture-builder";
 import { ConfigurationFixtureBuilder } from "@logements/test/chargement/fixture/configuration.fixture";
 import { DateService } from "@shared/src/date.service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { Flux } from "@shared/src/flux";
 import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import { HttpClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";

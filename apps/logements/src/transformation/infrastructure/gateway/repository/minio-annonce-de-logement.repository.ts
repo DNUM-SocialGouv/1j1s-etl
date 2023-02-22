@@ -1,5 +1,6 @@
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import { Client } from "minio";
+
+import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import { Configuration } from "@logements/src/transformation/configuration/configuration";
 import { ContentParserStrategy } from "@shared/src/infrastructure/gateway/content.parser";
 import { DateService } from "@shared/src/date.service";

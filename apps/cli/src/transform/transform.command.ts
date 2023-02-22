@@ -1,3 +1,5 @@
+import { Command, CommandRunner } from "nest-commander";
+
 import { TransformTousMobilisesSubCommand } from "@cli/src/transform/events/transform-tous-mobilises.sub-command";
 import { TransformImmojeuneSubCommand } from "@cli/src/transform/housing/transform-immojeune.sub-command";
 import { TransformStudapartSubCommand } from "@cli/src/transform/housing/transform-studapart.sub-command";
@@ -8,7 +10,6 @@ import {
 import {
 	TransformStagefrUncompressedSubCommand,
 } from "@cli/src/transform/internships/transform-stagefr-uncompressed.sub-command";
-import { Command, CommandRunner } from "nest-commander";
 
 @Command({
 	name: "transform",

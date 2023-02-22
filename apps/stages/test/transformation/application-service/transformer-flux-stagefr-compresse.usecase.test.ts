@@ -1,7 +1,8 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
 import { Convertir } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/offre-de-stage.fixture-builder";
 import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";

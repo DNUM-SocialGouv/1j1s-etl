@@ -1,4 +1,5 @@
 import { Client } from "minio";
+
 import { Configuration } from "@evenements/src/extraction/configuration/configuration";
 import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";

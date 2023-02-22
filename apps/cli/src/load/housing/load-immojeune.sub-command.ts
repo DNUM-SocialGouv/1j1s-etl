@@ -1,5 +1,6 @@
-import { LoadImmojeuneTask } from "@logements/src/chargement/infrastructure/tasks/load-immojeune.task";
 import { CommandRunner, SubCommand } from "nest-commander";
+
+import { LoadImmojeuneTask } from "@logements/src/chargement/infrastructure/tasks/load-immojeune.task";
 
 @SubCommand({
 	name: "immojeune",

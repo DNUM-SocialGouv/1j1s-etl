@@ -1,11 +1,11 @@
 import sinon from "sinon";
-
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { expect, StubbedClass, stubClass } from "@test/configuration";
+
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { Logger } from "@shared/src/configuration/logger";
 import { OctetStreamFlowHttpClient } from "@shared/src/infrastructure/gateway/client/octet-stream-flow-http.client";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 let url: string;
 let contenu: Buffer;

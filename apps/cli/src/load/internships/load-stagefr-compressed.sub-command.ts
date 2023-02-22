@@ -1,5 +1,6 @@
-import { LoadStagefrCompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-compressed.task";
 import { CommandRunner, SubCommand } from "nest-commander";
+
+import { LoadStagefrCompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-compressed.task";
 
 @SubCommand({
 	name: "stagefr-compresse",

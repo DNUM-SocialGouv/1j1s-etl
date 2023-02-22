@@ -1,6 +1,7 @@
 import axios from "axios";
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { Client } from "minio";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import { GatewayContainer } from "@stages/src/chargement/infrastructure/gateway";
 import {

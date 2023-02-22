@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 

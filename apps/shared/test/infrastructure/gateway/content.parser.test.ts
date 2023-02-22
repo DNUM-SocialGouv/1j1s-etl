@@ -1,6 +1,7 @@
-import { expect } from "@test/configuration";
-import { XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { XMLParser } from "fast-xml-parser";
+import { expect } from "@test/configuration";
+
+import { XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 
 describe("ContentParserTest", () => {
 	context("Lorsque je parse le contenu XML en objet Javascript", () => {

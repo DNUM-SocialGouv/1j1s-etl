@@ -1,5 +1,6 @@
-import { LoadTousMobilisesTask } from "@evenements/src/chargement/infrastructure/tasks/load-tous-mobilises.task";
 import { CommandRunner, SubCommand } from "nest-commander";
+
+import { LoadTousMobilisesTask } from "@evenements/src/chargement/infrastructure/tasks/load-tous-mobilises.task";
 
 @SubCommand({
 	name: "tous-mobilises",

@@ -1,9 +1,10 @@
+import axios from "axios";
+import { Client } from "minio";
+
 import { Configuration } from "@logements/src/extraction/configuration/configuration";
 import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { GatewayContainer } from "@logements/src/extraction/infrastructure/gateway";
-import axios from "axios";
 import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { Client } from "minio";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
 import {

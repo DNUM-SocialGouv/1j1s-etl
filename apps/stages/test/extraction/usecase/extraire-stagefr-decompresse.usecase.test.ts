@@ -1,4 +1,5 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
+
 import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service/extraire-flux.domain-service";
 import { ExtraireStagefrDecompresse } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";

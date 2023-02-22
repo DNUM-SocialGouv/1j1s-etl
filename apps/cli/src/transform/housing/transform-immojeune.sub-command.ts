@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	TransformFlowImmojeuneTask,
 } from "@logements/src/transformation/infrastructure/tasks/transform-flow-immojeune.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "immojeune",

@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
@@ -7,7 +9,6 @@ import {
 	AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import {
 	TransformerFluxStudapartUseCase,

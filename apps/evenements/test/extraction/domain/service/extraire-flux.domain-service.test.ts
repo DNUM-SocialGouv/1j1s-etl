@@ -1,5 +1,6 @@
-import { DateService } from "@shared/src/date.service";
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
+import { DateService } from "@shared/src/date.service";
 import { ExtraireFluxDomainService } from "@evenements/src/extraction/domain/service/extraire-flux.domain-service";
 import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
 import { FluxRepository } from "@evenements/src/extraction/domain/service/flux.repository";

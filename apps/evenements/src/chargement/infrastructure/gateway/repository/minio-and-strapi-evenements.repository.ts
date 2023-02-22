@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Client } from "minio";
+
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
 import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {

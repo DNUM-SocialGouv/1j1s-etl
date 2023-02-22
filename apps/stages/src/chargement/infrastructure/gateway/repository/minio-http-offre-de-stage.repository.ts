@@ -1,4 +1,5 @@
 import { Client } from "minio";
+
 import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import {
 	EcritureFluxErreur,

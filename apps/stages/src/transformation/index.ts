@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+
 import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/src/transformation/configuration/gateways.container";
 import { SousModule } from "@shared/src/configuration/module";

@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	TransformFlowStagefrCompressedTask,
 } from "@stages/src/transformation/infrastructure/tasks/transform-flow-stagefr-compressed.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "stagefr-compresse",

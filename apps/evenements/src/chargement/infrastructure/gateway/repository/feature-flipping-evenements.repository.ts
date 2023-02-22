@@ -1,4 +1,5 @@
 import { Client } from "minio";
+
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
 import { DateService } from "@shared/src/date.service";
 import { LoggerStrategy } from "@shared/src/configuration/logger";

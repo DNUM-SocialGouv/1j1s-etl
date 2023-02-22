@@ -1,5 +1,6 @@
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { AxiosInstance } from "axios";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
 type StrapiQueryParam = "pagination[page]"
 	| "filters[source][$eq]"

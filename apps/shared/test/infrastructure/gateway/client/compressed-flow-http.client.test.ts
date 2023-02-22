@@ -1,11 +1,11 @@
 import sinon from "sinon";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
 
 import { CompressedFlowHttpClient } from "@shared/src/infrastructure/gateway/client/compressed-flow-http.client";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { Logger } from "@shared/src/configuration/logger";
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
 
 const contenuDecompresse = "<toto>Contenu du fichier</toto>";

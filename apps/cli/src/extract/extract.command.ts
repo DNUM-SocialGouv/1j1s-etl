@@ -1,3 +1,5 @@
+import { Command, CommandRunner } from "nest-commander";
+
 import { ExtractTousMobilisesSubCommand } from "@cli/src/extract/events/extract-tous-mobilises.sub-command";
 import { ExtractImmojeuneSubCommand } from "@cli/src/extract/housing/extract-immojeune.sub-command";
 import { ExtractStudapartSubCommand } from "@cli/src/extract/housing/extract-studapart.sub-command";
@@ -6,7 +8,6 @@ import { ExtractStagefrCompresseSubCommand } from "@cli/src/extract/internships/
 import {
 	ExtractStagefrUncompressedSubCommand,
 } from "@cli/src/extract/internships/extract-stagefr-uncompressed.sub-command";
-import { Command, CommandRunner } from "nest-commander";
 
 @Command({
 	name: "extract",

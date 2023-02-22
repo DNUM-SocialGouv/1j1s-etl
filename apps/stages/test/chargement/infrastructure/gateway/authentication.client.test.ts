@@ -1,9 +1,9 @@
 import { AxiosInstance } from "axios";
 import sinon from "sinon";
 import { StubbedCallableType, stubCallable } from "@salesforce/ts-sinon";
+import { expect } from "@test/configuration";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
-import { expect } from "@test/configuration";
 
 const credentials = { username: "Toto", password: "leFameuxMotDePasse123" };
 const authUrl = "/auth/url";

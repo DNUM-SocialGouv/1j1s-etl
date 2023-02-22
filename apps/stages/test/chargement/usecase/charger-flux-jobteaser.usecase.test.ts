@@ -1,4 +1,5 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
+
 import {
 	ChargerOffresDeStageDomainService,
 } from "@stages/src/chargement/domain/service/charger-offres-de-stage.domain-service";

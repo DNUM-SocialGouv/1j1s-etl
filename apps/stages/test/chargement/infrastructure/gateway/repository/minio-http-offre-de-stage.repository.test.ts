@@ -1,6 +1,7 @@
 import { Client } from "minio";
-import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
+import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import {
 	EcritureFluxErreur,
 	RecupererContenuErreur,
