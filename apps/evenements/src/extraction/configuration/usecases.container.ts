@@ -17,15 +17,13 @@ import { Shared } from "@shared/src";
 		useFactory: (fluxRepository: FluxRepository, dateService: DateService): ExtraireFluxDomainService => {
 			return new ExtraireFluxDomainService(fluxRepository, dateService);
 		},
-	},
-		{
-			provide: ExtraireFluxEvenementTousMobilises,
-			inject: [ExtraireFluxDomainService],
-			useFactory: (extraireFluxDomainService: ExtraireFluxDomainService): ExtraireFluxEvenementTousMobilises => {
-				return new ExtraireFluxEvenementTousMobilises(extraireFluxDomainService);
-			},
+	}, {
+		provide: ExtraireFluxEvenementTousMobilises,
+		inject: [ExtraireFluxDomainService],
+		useFactory: (extraireFluxDomainService: ExtraireFluxDomainService): ExtraireFluxEvenementTousMobilises => {
+			return new ExtraireFluxEvenementTousMobilises(extraireFluxDomainService);
 		},
-	],
+	}],
 	exports: [ExtraireFluxEvenementTousMobilises],
 })
 export class Usecases {

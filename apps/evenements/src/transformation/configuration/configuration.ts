@@ -1,7 +1,7 @@
 import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 
-type MinioConfiguration = {
+export type MinioConfiguration = {
     ACCESS_KEY: string
     HISTORY_DIRECTORY_NAME: string
     PORT: number

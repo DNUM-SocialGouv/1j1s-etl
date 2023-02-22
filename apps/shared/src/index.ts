@@ -1,18 +1,24 @@
 import { Client } from "minio";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { Module } from "@nestjs/common";
+import TurndownService from "turndown";
 
 import { DateService } from "@shared/src/date.service";
-import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {
 	FileSystemClient,
 	NodeFileSystemClient,
 } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
 	imports: [ConfigModule.forRoot()],
 	providers: [
+		{
+			provide: "AssainisseurDeTexte",
+			useValue: new HtmlToMarkdownSanitizer(new TurndownService()),
+		},
 		{
 			provide: Client,
 			inject: [ConfigService],
@@ -27,7 +33,6 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 			},
 		},
 		DateService,
-		JsonContentParser,
 		{
 			provide: "FileSystemClient",
 			inject: [ConfigService],
@@ -35,12 +40,20 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 				return new NodeFileSystemClient(configService.get<string>("TEMPORARY_DIRECTORY_PATH"));
 			},
 		},
+		JsonContentParser,
 		{
 			provide: "UuidGenerator",
 			useValue: new NodeUuidGenerator(),
 		},
 	],
-	exports: [DateService, JsonContentParser, "FileSystemClient", Client, "UuidGenerator"],
+	exports: [
+		"AssainisseurDeTexte",
+		Client,
+		DateService,
+		JsonContentParser,
+		"FileSystemClient",
+		"UuidGenerator",
+	],
 })
 export class Shared {
 	private static toBoolean(value: string): boolean {
