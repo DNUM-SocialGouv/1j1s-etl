@@ -1,24 +1,34 @@
-import TurndownService from "turndown";
+import { Module } from "@nestjs/common";
 
+import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { Convertir } from "@evenements/src/transformation/domain/service/tous-mobilises/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
-import { GatewayContainer } from "@evenements/src/transformation/infrastructure/gateway";
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
+import { EvenementsRepository } from "@evenements/src/transformation/domain/service/evenements.repository";
+import { Gateways } from "@evenements/src/transformation/configuration/gateways.container";
+import { Shared } from "@shared/src";
 import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
-import { UseCaseContainer } from "@evenements/src/transformation/application-service";
 
-export class UseCaseContainerFactory {
-	public static create(gateways: GatewayContainer): UseCaseContainer {
-		const htmlToMarkdown = new TurndownService();
-		const assainisseurDeTexte = new HtmlToMarkdownSanitizer(htmlToMarkdown);
-		const convertirTousMobilises = new Convertir(new DateService(), assainisseurDeTexte);
-		return {
-			transformerFluxTousMobilisesUsecase: new TransformerFluxTousMobilises(
-				gateways.evenementsRepository,
-				convertirTousMobilises
-			),
-		};
-	}
+@Module({
+	imports: [Gateways, Shared],
+	providers: [{
+		provide: Convertir,
+		inject: [DateService, "AssainisseurDeTexte"],
+		useFactory: (dateService: DateService, assainisseurDeTexte: AssainisseurDeTexte): Convertir => {
+			return new Convertir(dateService, assainisseurDeTexte);
+		},
+	}, {
+		provide: TransformerFluxTousMobilises,
+		inject: [
+			"EvenementsRepository",
+			Convertir,
+		],
+		useFactory: (evenementsRepository: EvenementsRepository, convertirDomainService: Convertir): TransformerFluxTousMobilises => {
+			return new TransformerFluxTousMobilises(evenementsRepository, convertirDomainService);
+		},
+	}],
+	exports: [TransformerFluxTousMobilises],
+})
+export class Usecases {
 }
