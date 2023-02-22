@@ -13,7 +13,7 @@ import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/src/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
 import { NodeUuidGenerator, UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { StrapiOffreDeStageHttpClient } from "@stages/src/chargement/infrastructure/gateway/http.client";
+import { StrapiOffreDeStageHttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 
 export class GatewayContainerFactory {

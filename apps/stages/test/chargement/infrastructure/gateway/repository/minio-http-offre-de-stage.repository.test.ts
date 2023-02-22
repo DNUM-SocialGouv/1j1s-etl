@@ -8,7 +8,7 @@ import {
 	RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { HttpClient, OffreDeStageHttp } from "@stages/src/chargement/infrastructure/gateway/http.client";
+import { HttpClient, OffreDeStageHttp } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
 import {
 	MinioHttpOffreDeStageRepository,

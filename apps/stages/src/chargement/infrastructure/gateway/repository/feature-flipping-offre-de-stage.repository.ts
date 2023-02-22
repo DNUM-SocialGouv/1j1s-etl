@@ -2,7 +2,7 @@ import { Client } from "minio";
 
 import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { HttpClient } from "@stages/src/chargement/infrastructure/gateway/http.client";
+import { HttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/src/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
