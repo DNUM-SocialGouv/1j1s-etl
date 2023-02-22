@@ -1,6 +1,7 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+
 import { AnnonceDeLogementRepository } from "@logements/src/indexation/domain/service/annonce-de-logement.repository";
 import { IndexerAnnoncesDeLogement } from "@logements/src/indexation/usecase/indexer-annonces-de-logement.usecase";
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";

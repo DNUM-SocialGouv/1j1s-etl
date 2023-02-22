@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Client } from "minio";
+
 import { Configuration } from "@evenements/src/extraction/configuration/configuration";
 import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";

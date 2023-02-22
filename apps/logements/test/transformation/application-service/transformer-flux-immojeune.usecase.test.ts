@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
@@ -8,7 +10,6 @@ import { AnnonceDeLogementRepository } from "@logements/src/transformation/domai
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { Convertir } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
-import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
 import { TransformerFluxImmojeune } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";

@@ -1,7 +1,8 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { Convertir } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Jobteaser } from "@stages/src/transformation/domain/model/jobteaser";
 import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/offre-de-stage.fixture-builder";

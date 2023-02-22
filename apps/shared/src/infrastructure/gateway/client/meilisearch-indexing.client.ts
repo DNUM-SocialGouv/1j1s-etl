@@ -1,5 +1,6 @@
-import { CreateIndexError, IndexNotFoundError } from "@shared/src/infrastructure/gateway/indexation.erreur";
 import { Index, MeiliSearch, MeiliSearchApiError, Settings } from "meilisearch";
+
+import { CreateIndexError, IndexNotFoundError } from "@shared/src/infrastructure/gateway/indexation.erreur";
 
 export interface IndexingClient {
 	configureIndex(indexName: string, settings: Settings): Promise<void>;

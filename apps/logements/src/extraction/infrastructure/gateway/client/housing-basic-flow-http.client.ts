@@ -1,5 +1,6 @@
-import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
 import { Axios } from "axios";
+
+import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
 import { Logger } from "@shared/src/configuration/logger";
 
 export class HousingBasicFlowHttpClient extends BasicFlowHttpClient {

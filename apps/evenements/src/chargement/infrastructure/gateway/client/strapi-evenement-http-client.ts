@@ -1,6 +1,7 @@
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { AxiosInstance } from "axios";
 import { DateTime } from "luxon";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 
 type StrapiEvenementResponse = {

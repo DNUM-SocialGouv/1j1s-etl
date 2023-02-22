@@ -1,3 +1,5 @@
+import TurndownService from "turndown";
+
 import {
 	Convertir as ConvertirImmojeune,
 } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
@@ -13,7 +15,6 @@ import {
 import {
 	TransformerFluxStudapartUseCase,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
-import TurndownService from "turndown";
 import { UsecaseContainer } from "@logements/src/transformation/application-service";
 
 export class UsecasesContainerFactory {

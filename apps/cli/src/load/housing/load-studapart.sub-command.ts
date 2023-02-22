@@ -1,5 +1,6 @@
-import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/tasks/load-studapart.task";
 import { CommandRunner, SubCommand } from "nest-commander";
+
+import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/tasks/load-studapart.task";
 
 @SubCommand({
 	name: "studapart",

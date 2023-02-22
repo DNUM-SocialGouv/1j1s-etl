@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	TransformFlowJobteaserTask,
 } from "@stages/src/transformation/infrastructure/tasks/transform-flow-jobteaser.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "jobteaser",

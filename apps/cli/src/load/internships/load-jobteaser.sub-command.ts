@@ -1,5 +1,6 @@
-import { LoadJobteaserTask } from "@stages/src/chargement/infrastructure/tasks/load-jobteaser.task";
 import { CommandRunner, SubCommand } from "nest-commander";
+
+import { LoadJobteaserTask } from "@stages/src/chargement/infrastructure/tasks/load-jobteaser.task";
 
 @SubCommand({
 	name: "jobteaser",

@@ -1,7 +1,8 @@
+import { Module } from "@nestjs/common";
+
 import { Configuration, ConfigurationFactory } from "@evenements/src/transformation/configuration/configuration";
 import { EvenementsTransformationLoggerStrategy } from "@evenements/src/transformation/configuration/logger-strategy";
 import { GatewayContainerFactory } from "@evenements/src/transformation/configuration/gateways.container";
-import { Module } from "@nestjs/common";
 import { SousModule } from "@shared/src/configuration/module";
 import {
 	TransformFlowTousMobilisesTask,

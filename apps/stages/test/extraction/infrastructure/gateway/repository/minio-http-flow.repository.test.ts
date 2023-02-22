@@ -1,6 +1,7 @@
 import { Client } from "minio";
-import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
+import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";

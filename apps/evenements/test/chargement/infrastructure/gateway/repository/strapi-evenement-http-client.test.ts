@@ -1,11 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { expect, nock, spy } from "@test/configuration";
+
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import {
 	evenement1Le24Novembre,
 	evenementDejaCharge1Le24Novembre,
 	evenementDejaCharge2Le24Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
-import { expect, nock, spy } from "@test/configuration";
 import {
 	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";

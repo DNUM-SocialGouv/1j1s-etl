@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+
 import { ApiModule } from "@api/src/api.module";
 
 async function bootstrap(): Promise<void> {

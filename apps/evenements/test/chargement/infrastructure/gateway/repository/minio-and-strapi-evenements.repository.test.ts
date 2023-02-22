@@ -1,7 +1,8 @@
 import { Client } from "minio";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
 import { DateService } from "@shared/src/date.service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import {
     evenement1Le24Novembre, evenement2Le24Novembre,
     evenementDejaCharge1Le24Novembre,

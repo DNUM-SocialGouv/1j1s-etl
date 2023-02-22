@@ -1,8 +1,9 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import {
 	ChargerOffresDeStageDomainService,
 } from "@stages/src/chargement/domain/service/charger-offres-de-stage.domain-service";
 import { DateService } from "@shared/src/date.service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import { OffreDeStageFixtureBuilder } from "@stages/test/chargement/fixture/offre-de-stage.fixture-builder";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";

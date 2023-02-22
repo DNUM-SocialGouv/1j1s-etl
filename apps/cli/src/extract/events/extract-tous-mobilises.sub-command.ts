@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	ExtractFlowTousMobilisesTask,
 } from "@evenements/src/extraction/infrastructure/tasks/extract-flow-tous-mobilises.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "tous-mobilises",

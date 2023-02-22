@@ -1,12 +1,12 @@
 import { Axios, AxiosError } from "axios";
 import sinon from "sinon";
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
 
 import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
 import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { Logger } from "@shared/src/configuration/logger";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 let errorCode: number;
 let url: string;

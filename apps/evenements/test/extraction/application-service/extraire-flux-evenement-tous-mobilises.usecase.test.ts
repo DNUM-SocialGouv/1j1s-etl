@@ -1,4 +1,5 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
+
 import { ExtraireFluxDomainService } from "@evenements/src/extraction/domain/service/extraire-flux.domain-service";
 import {
 	ExtraireFluxEvenementTousMobilises,

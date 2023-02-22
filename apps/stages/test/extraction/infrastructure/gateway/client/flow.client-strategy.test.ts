@@ -1,5 +1,6 @@
-import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+
+import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { FlowClient, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 import { Logger } from "@shared/src/configuration/logger";

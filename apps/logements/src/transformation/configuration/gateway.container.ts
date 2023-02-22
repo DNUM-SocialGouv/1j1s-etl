@@ -1,5 +1,6 @@
 import { Client } from "minio";
 import TurndownService from "turndown";
+import { XMLParser } from "fast-xml-parser";
 
 import {
 	AnnonceDeLogementContentParserStrategy, StudapartOptionXmlParser,
@@ -15,7 +16,6 @@ import {
 } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { XMLParser } from "fast-xml-parser";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration): GatewayContainer {

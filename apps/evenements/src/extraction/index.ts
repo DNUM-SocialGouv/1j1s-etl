@@ -1,10 +1,11 @@
+import { Module } from "@nestjs/common";
+
 import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/configuration/configuration";
 import { EvenementsExtractionLoggerStrategy } from "@evenements/src/extraction/configuration/logger.strategy";
 import {
     ExtractFlowTousMobilisesTask,
 } from "@evenements/src/extraction/infrastructure/tasks/extract-flow-tous-mobilises.task";
 import { GatewayContainerFactory } from "@evenements/src/extraction/configuration/gateways.container";
-import { Module } from "@nestjs/common";
 import { SousModule } from "@shared/src/configuration/module";
 import { UsecaseContainer } from "@evenements/src/extraction/application-service";
 import { UsecaseContainerFactory } from "@evenements/src/extraction/configuration/usecases.container";

@@ -1,7 +1,8 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	ExtractFlowStagefrUncompressedTask,
 } from "@stages/src/extraction/infrastructure/tasks/extract-flow-stagefr-uncompressed.task";
-import { CommandRunner, SubCommand } from "nest-commander";
 
 @SubCommand({
 	name: "stagefr-decompresse",

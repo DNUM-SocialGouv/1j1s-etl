@@ -1,7 +1,8 @@
+import { Index, MeiliSearch, MeiliSearchApiError } from "meilisearch";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
+
 import { MeilisearchIndexingClient } from "@shared/src/infrastructure/gateway/client/meilisearch-indexing.client";
 import { CreateIndexError, IndexNotFoundError } from "@shared/src/infrastructure/gateway/indexation.erreur";
-import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { Index, MeiliSearch, MeiliSearchApiError } from "meilisearch";
 
 const indexName = "index-name";
 let index: StubbedClass<Index>;

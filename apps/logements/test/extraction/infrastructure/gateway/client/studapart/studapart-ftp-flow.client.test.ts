@@ -1,7 +1,8 @@
-import { expect, StubbedClass, stubClass } from "@test/configuration";
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import sinon from "sinon";
+import { expect, StubbedClass, stubClass } from "@test/configuration";
+
+import { Configuration } from "@logements/src/extraction/configuration/configuration";
 import {
     StudapartFtpFlowClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/studapart/studapart-ftp-flow.client";

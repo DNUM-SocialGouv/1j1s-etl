@@ -1,6 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
 import request from "supertest";
+
 import { CliModule } from "@cli/src/cli.module";
 
 describe("AppController (e2e)", () => {

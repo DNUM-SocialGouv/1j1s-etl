@@ -1,3 +1,5 @@
+import TurndownService from "turndown";
+
 import { Convertir } from "@evenements/src/transformation/domain/service/tous-mobilises/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
 import { GatewayContainer } from "@evenements/src/transformation/infrastructure/gateway";
@@ -5,7 +7,6 @@ import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html
 import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
-import TurndownService from "turndown";
 import { UseCaseContainer } from "@evenements/src/transformation/application-service";
 
 export class UseCaseContainerFactory {

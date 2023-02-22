@@ -1,7 +1,8 @@
 import { Client } from "minio";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import { Configuration } from "@evenements/src/transformation/configuration/configuration";
 import { DateService } from "@shared/src/date.service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";

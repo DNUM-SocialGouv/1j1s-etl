@@ -1,7 +1,8 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+
 import {
 	ChargerEvenenementsDomainService,
 } from "@evenements/src/chargement/domain/service/charger-evenements.domain-service";
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import {
 	evenement1Le24Novembre, evenement3Le25Novembre,
 	evenement2Le24Novembre, evenement4Le25Novembre,

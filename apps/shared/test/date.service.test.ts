@@ -1,7 +1,7 @@
 import sinon from "sinon";
+import { expect } from "@test/configuration";
 
 import { DateService } from "@shared/src/date.service";
-import { expect } from "@test/configuration";
 
 const maintenant = new Date("2022-01-01T00:00:00Z");
 let clock: sinon.SinonFakeTimers;

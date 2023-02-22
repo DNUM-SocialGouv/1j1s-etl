@@ -1,5 +1,6 @@
-import { AxiosInstance } from "axios";
 import { Stream } from "stream";
+
+import { AxiosInstance } from "axios";
 
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";

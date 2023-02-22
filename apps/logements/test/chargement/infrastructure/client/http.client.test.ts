@@ -1,3 +1,8 @@
+import axios, { AxiosInstance } from "axios";
+import { expect } from "chai";
+import nock from "nock";
+import sinon from "sinon";
+
 import { HttpClient, StrapiClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import {
@@ -6,10 +11,6 @@ import {
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
-import axios, { AxiosInstance } from "axios";
-import { expect } from "chai";
-import nock from "nock";
-import sinon from "sinon";
 
 let axiosInstance: AxiosInstance;
 

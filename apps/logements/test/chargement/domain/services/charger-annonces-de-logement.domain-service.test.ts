@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
@@ -5,7 +7,6 @@ import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/se
 import {
 	ChargerAnnoncesDeLogementDomainService,
 } from "@logements/src/chargement/domain/service/charger-annonces-de-logement.domain-service";
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 

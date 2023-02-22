@@ -1,9 +1,10 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
+
 import { Configuration } from "@logements/src/indexation/configuration/configuration";
 import {
 	AnnonceDeLogementStrapiMeilisearchRepository,
 } from "@logements/src/indexation/infrastructure/gateway/repository/annonce-de-logement-strapi-meilisearch.repository";
 import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";

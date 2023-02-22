@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
+
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { Convertir } from "@evenements/src/transformation/domain/service/tous-mobilises/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
@@ -6,7 +8,6 @@ import {
     evenement2Le24Novembre,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 import { EvenementsRepository } from "@evenements/src/transformation/domain/service/evenements.repository";
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
 import { TousMobilises } from "@evenements/src/transformation/domain/model/tous-mobilises";
 import {
