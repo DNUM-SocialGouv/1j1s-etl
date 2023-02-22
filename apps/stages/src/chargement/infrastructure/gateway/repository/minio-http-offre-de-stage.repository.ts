@@ -7,7 +7,7 @@ import {
 	RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { HttpClient } from "@stages/src/chargement/infrastructure/gateway/http.client";
+import { HttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
