@@ -1,10 +1,18 @@
-import axios from "axios";
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
+import { Axios, AxiosInstance } from "axios";
 import { Client } from "minio";
 
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
-import { GatewayContainer } from "@logements/src/extraction/infrastructure/gateway";
-import { HousingBasicFlowHttpClient } from "@logements/src/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";
-import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
+import { Configuration, ConfigurationFactory } from "@logements/src/extraction/configuration/configuration";
+import { LogementsExtractionLoggerStrategy } from "@logements/src/extraction/configuration/logger.strategy";
+import { FluxRepository } from "@logements/src/extraction/domain/service/flux.repository";
+import {
+	HousingBasicFlowHttpClient,
+} from "@logements/src/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";
+import {
+	HousingsOnFlowNameStrategy,
+} from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
 import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
 import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 import {
@@ -14,43 +22,70 @@ import {
 	MinioHttpFlowRepository,
 } from "@logements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 
+import { Shared } from "@shared/src";
 import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-export class GatewayContainerFactory {
-	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {
-		const httpClient = axios.create({
-			maxBodyLength: Infinity,
-			maxContentLength: Infinity,
-		});
-
-		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
-		const minioClient = new Client({
-			accessKey: configuration.MINIO.ACCESS_KEY,
-			secretKey: configuration.MINIO.SECRET_KEY,
-			port: configuration.MINIO.PORT,
-			endPoint: configuration.MINIO.URL,
-		});
-		const uuidGenerator = new NodeUuidGenerator();
-
-		const housingBasicflowClient = new HousingBasicFlowHttpClient(httpClient);
-
-		const studapartFlowClient = new StudapartFtpFlowClient(configuration, new FtpClient(), new StreamZipClient(), new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH));
-
-		const flowStrategy = new HousingsOnFlowNameStrategy(configuration, housingBasicflowClient, studapartFlowClient);
-
-		return {
-			repositories: {
-				flowRepository: new MinioHttpFlowRepository(
-					configuration,
-					minioClient,
-					fileSystemClient,
-					uuidGenerator,
-					flowStrategy,
-					loggerStrategy,
-				),
-			},
-		};
-	}
+@Module({
+	imports: [ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }), Shared],
+	providers: [{
+		provide: HousingBasicFlowHttpClient,
+		inject: [Axios],
+		useFactory: (axiosInstance: AxiosInstance): HousingBasicFlowHttpClient => new HousingBasicFlowHttpClient(axiosInstance),
+	}, {
+		provide: StudapartFtpFlowClient,
+		inject: [ConfigService, FtpClient, StreamZipClient, "FileSystemClient"],
+		useFactory: (
+			configurationService: ConfigService,
+			ftpClient: FtpClient,
+			streamZipClient: StreamZipClient,
+			fileSystemClient: FileSystemClient,
+		): StudapartFtpFlowClient => {
+			const configuration = configurationService.get<Configuration>("root");
+			return new StudapartFtpFlowClient(configuration, ftpClient, streamZipClient, fileSystemClient);
+		},
+	}, {
+		provide: "FlowStrategy",
+		inject: [],
+		useFactory: (
+			configurationService: ConfigService,
+			housingBasicFlowClient: HousingBasicFlowHttpClient,
+			studapartFlowClient: StudapartFtpFlowClient,
+		): FlowStrategy => {
+			const configuration = configurationService.get<Configuration>("root");
+			return new HousingsOnFlowNameStrategy(configuration, housingBasicFlowClient, studapartFlowClient);
+		},
+	}, {
+		provide: LogementsExtractionLoggerStrategy,
+		inject: [ConfigService],
+		useFactory: (configurationService: ConfigService): LogementsExtractionLoggerStrategy => {
+			return new LogementsExtractionLoggerStrategy(configurationService.get<Configuration>("root"));
+		},
+	}, {
+		provide: "FluxRepository",
+		inject: [ConfigService, Client, "FileSystemClient", "UuidGenerator", "FlowStrategy", LogementsExtractionLoggerStrategy],
+		useFactory: (
+			configurationService: ConfigService,
+			minioClient: Client,
+			fileSystemClient: FileSystemClient,
+			uuidGenerator: UuidGenerator,
+			flowStrategy: FlowStrategy,
+			loggerStrategy: LoggerStrategy,
+		): FluxRepository => {
+			const configuration = configurationService.get<Configuration>("root");
+			return new MinioHttpFlowRepository(
+				configuration,
+				minioClient,
+				fileSystemClient,
+				uuidGenerator,
+				flowStrategy,
+				loggerStrategy,
+			);
+		},
+	}],
+	exports: ["FluxRepository"],
+})
+export class Gateways {
 }

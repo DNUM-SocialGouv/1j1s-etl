@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import axios, { Axios } from "axios";
 import { Client } from "minio";
 import TurndownService from "turndown";
 
@@ -19,6 +20,10 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		{
 			provide: "AssainisseurDeTexte",
 			useValue: new HtmlToMarkdownSanitizer(new TurndownService()),
+		},
+		{
+			provide: Axios,
+			useValue: axios.create({ maxBodyLength: Infinity, maxContentLength: Infinity }),
 		},
 		{
 			provide: Client,
@@ -49,6 +54,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 	],
 	exports: [
 		"AssainisseurDeTexte",
+		Axios,
 		Client,
 		DateService,
 		JsonContentParser,
