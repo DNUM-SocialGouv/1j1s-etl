@@ -1,23 +1,36 @@
-import { UsecaseContainer } from "@logements/src/extraction/application-service";
+import { Module } from "@nestjs/common";
+
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
 import { ExtraireStudapart } from "@logements/src/extraction/application-service/extraire-studapart.usecase";
+import { Gateways } from "@logements/src/extraction/configuration/gateways.container";
 import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
-import { GatewayContainer } from "@logements/src/extraction/infrastructure/gateway";
+import { FluxRepository } from "@logements/src/extraction/domain/service/flux.repository";
 
+import { Shared } from "@shared/src";
 import { DateService } from "@shared/src/date.service";
 
-export class UsecaseContainerFactory {
-	public static create(gateways: GatewayContainer): UsecaseContainer {
-		const dateService = new DateService();
-
-		const extraireFluxDomainService = new ExtraireFluxDomainService(
-			gateways.repositories.flowRepository,
-			dateService,
-		);
-
-		return {
-			extraireImmojeune: new ExtraireImmojeune(extraireFluxDomainService),
-			extraireStudapart: new ExtraireStudapart(extraireFluxDomainService),
-		};
-	}
+@Module({
+	imports: [Gateways, Shared],
+	providers: [{
+		provide: ExtraireFluxDomainService,
+		inject: ["FluxRepository", DateService],
+		useFactory: (fluxRepository: FluxRepository, dateService: DateService): ExtraireFluxDomainService => {
+			return new ExtraireFluxDomainService(fluxRepository, dateService);
+		},
+	}, {
+		provide: ExtraireImmojeune,
+		inject: [ExtraireFluxDomainService],
+		useFactory: (extraireFluxDomainService: ExtraireFluxDomainService): ExtraireImmojeune => {
+			return new ExtraireImmojeune(extraireFluxDomainService);
+		},
+	}, {
+		provide: ExtraireStudapart,
+		inject: [ExtraireFluxDomainService],
+		useFactory: (extraireFluxDomainService: ExtraireFluxDomainService): ExtraireStudapart => {
+			return new ExtraireStudapart(extraireFluxDomainService);
+		},
+	}],
+	exports: [ExtraireImmojeune, ExtraireStudapart],
+})
+export class Usecases {
 }
