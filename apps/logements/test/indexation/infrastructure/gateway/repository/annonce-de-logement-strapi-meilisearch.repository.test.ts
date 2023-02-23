@@ -4,10 +4,11 @@ import { Configuration } from "@logements/src/indexation/configuration/configura
 import {
 	AnnonceDeLogementStrapiMeilisearchRepository,
 } from "@logements/src/indexation/infrastructure/gateway/repository/annonce-de-logement-strapi-meilisearch.repository";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";
+
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
 
 const fieldsToRetrieve = "id,slug,titre,dateDeDisponibilite,devise,prix,prixHT,surface,surfaceMax,type,url,sourceUpdatedAt";
 const relationsToRetrieve = "localisation,imagesUrl";

@@ -1,15 +1,16 @@
-import { Client } from "minio";
-import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
+import { Client } from "minio";
 import TurndownService from "turndown";
 
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { DateService } from "@shared/src/date.service";
 import {
 	FileSystemClient,
 	NodeFileSystemClient,
 } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({

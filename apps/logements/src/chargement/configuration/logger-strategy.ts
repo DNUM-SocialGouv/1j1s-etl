@@ -1,4 +1,5 @@
 import { Configuration } from "@logements/src/chargement/configuration/configuration";
+
 import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/configuration/logger";
 
 export class LogementsChargementLoggerStrategy implements LoggerStrategy {

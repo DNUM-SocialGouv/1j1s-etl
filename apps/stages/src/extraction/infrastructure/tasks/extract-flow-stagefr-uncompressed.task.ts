@@ -1,8 +1,9 @@
-import { Configuration } from "@stages/src/extraction/configuration/configuration";
-import { ExtraireStagefrDecompresse } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
-import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 import { Task } from "@shared/src/infrastructure/task/task";
+
+import { ExtraireStagefrDecompresse } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
+import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { TaskLog } from "@stages/src/extraction/configuration/log.decorator";
+import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 
 export class ExtractFlowStagefrUncompressedTask implements Task {
 	constructor(

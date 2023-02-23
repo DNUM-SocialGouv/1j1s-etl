@@ -1,19 +1,22 @@
-import { Client } from "minio";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+
+import { Client } from "minio";
+
 import { expect, sinon, StubbedClass, stubClass } from "@test/configuration";
 
+import { Configuration } from "@logements/src/transformation/configuration/configuration";
+import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
+import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
+import { MinioAnnonceDeLogementRepository } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
-import { Configuration } from "@logements/src/transformation/configuration/configuration";
-import { ContentParserStrategy } from "@shared/src/infrastructure/gateway/content.parser";
-import { DateService } from "@shared/src/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
+
 import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
-import { MinioAnnonceDeLogementRepository } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
-import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { ContentParserStrategy } from "@shared/src/infrastructure/gateway/content.parser";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 let localFileNameIncludingPath: string;

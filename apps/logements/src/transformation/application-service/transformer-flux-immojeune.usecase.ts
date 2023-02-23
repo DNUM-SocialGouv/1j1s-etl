@@ -1,7 +1,8 @@
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
-import { Convertir } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import { FluxTransformation as FluxImmojeune } from "@logements/src/transformation/domain/model/flux";
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
+import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import { Convertir } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
+
 import { Usecase } from "@shared/src/usecase";
 
 export class TransformerFluxImmojeune implements Usecase {

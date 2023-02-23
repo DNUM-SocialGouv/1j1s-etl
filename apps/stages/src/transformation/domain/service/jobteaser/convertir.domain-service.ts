@@ -1,8 +1,9 @@
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
 import { Pays } from "@shared/src/pays";
-import { Jobteaser } from "@stages/src/transformation/domain/model/jobteaser";
+
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
+import { Jobteaser } from "@stages/src/transformation/domain/model/jobteaser";
 
 export class Convertir {
 	private static NOMBRE_DE_JOURS_DANS_UN_MOIS_POUR_CALCUL = 30;

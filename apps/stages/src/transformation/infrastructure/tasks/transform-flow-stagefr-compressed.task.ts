@@ -1,8 +1,9 @@
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Task } from "@shared/src/infrastructure/task/task";
-import { TaskLog } from "@stages/src/transformation/configuration/log.decorator";
+
 import { TransformerFluxStagefrCompresse } from "@stages/src/transformation/application-service/transformer-flux-stagefr-compresse.usecase";
+import { Configuration } from "@stages/src/transformation/configuration/configuration";
+import { TaskLog } from "@stages/src/transformation/configuration/log.decorator";
+import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 
 export class TransformFlowStagefrCompressedTask implements Task {
 	constructor(

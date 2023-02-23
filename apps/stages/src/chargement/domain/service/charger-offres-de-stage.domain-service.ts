@@ -1,6 +1,7 @@
 import { DateService } from "@shared/src/date.service";
-import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
+
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
+import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 
 export class ChargerOffresDeStageDomainService {
 	static readonly INDENTATION_JSON: number = 2;

@@ -1,9 +1,10 @@
 import { Axios } from "axios";
 
-import { AuthentificationErreur, LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { Configuration } from "@evenements/src/extraction/configuration/configuration";
+
 import { Logger } from "@shared/src/configuration/logger";
 import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
+import { AuthentificationErreur, LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 
 type TokenResponse = {
     access_token: string;

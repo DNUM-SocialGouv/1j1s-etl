@@ -1,9 +1,10 @@
-import { Convertir } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
+import { Usecase } from "@shared/src/usecase";
+
+import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Jobteaser } from "@stages/src/transformation/domain/model/jobteaser";
+import { Convertir } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
 import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
-import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
-import { Usecase } from "@shared/src/usecase";
 
 export class TransformerFluxJobteaser implements Usecase {
 	constructor(

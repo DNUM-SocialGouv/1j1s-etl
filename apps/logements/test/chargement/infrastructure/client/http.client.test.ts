@@ -4,13 +4,14 @@ import nock from "nock";
 import sinon from "sinon";
 
 import { HttpClient, StrapiClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
-import {
-	AnnonceDeLogementHttpFixtureBuilder,
-} from "@logements/test/chargement/fixture/annonce-de-logement-http.fixture-builder";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
+import {
+	AnnonceDeLogementHttpFixtureBuilder,
+} from "@logements/test/chargement/fixture/annonce-de-logement-http.fixture-builder";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
 let axiosInstance: AxiosInstance;
 

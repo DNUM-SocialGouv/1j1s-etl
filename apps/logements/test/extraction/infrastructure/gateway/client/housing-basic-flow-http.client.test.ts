@@ -1,12 +1,15 @@
-import { Axios } from "axios";
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+
+import { Axios } from "axios";
 import sinon from "sinon";
+
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 
-import { Logger } from "@shared/src/configuration/logger";
 import {
 	HousingBasicFlowHttpClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";
+
+import { Logger } from "@shared/src/configuration/logger";
 
 let url: string;
 let axios: StubbedClass<Axios>;

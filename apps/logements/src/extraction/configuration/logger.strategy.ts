@@ -1,5 +1,6 @@
-import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/configuration/logger";
 import { Configuration } from "@logements/src/extraction/configuration/configuration";
+
+import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/configuration/logger";
 
 export class LogementsExtractionLoggerStrategy implements LoggerStrategy {
 	private readonly loggers: Map<string, Logger>;

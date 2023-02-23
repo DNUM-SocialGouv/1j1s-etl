@@ -1,8 +1,9 @@
+import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
+import { Studapart } from "@logements/src/transformation/domain/model/studapart";
+
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
 import { Devise } from "@shared/src/devise.value-object";
-import { Studapart } from "@logements/src/transformation/domain/model/studapart";
-import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 
 const optionsLogementTraduitEnUnJeuneUneSolution: Record<string, UnJeune1Solution.ServiceInclus.Nom> = {
 	tv: UnJeune1Solution.ServiceInclus.Nom.TV,

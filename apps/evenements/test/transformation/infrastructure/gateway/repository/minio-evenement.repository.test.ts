@@ -1,18 +1,20 @@
 import { Client } from "minio";
+
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
 import { Configuration } from "@evenements/src/transformation/configuration/configuration";
-import { DateService } from "@shared/src/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { UnJeuneUneSolution } from "@evenements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
-import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
 import {
 	MinioEvenementRepository,
 } from "@evenements/src/transformation/infrastructure/gateway/repository/minio-evenement.repository";
+
+import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { UnJeuneUneSolution } from "@evenements/src/transformation/domain/model/1jeune1solution";
 
 let localFileNameIncludingPath: string;
 let evenements: Array<UnJeuneUneSolution.Evenement>;

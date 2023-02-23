@@ -1,4 +1,5 @@
 import { Configuration } from "@evenements/src/extraction/configuration/configuration";
+
 import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/configuration/logger";
 
 export class EvenementsExtractionLoggerStrategy implements LoggerStrategy {

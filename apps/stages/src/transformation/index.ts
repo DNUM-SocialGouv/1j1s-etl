@@ -1,9 +1,12 @@
 import { Module } from "@nestjs/common";
 
+import { SousModule } from "@shared/src/configuration/module";
+
+import { UsecaseContainer } from "@stages/src/transformation/application-service";
 import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/src/transformation/configuration/gateways.container";
-import { SousModule } from "@shared/src/configuration/module";
 import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/configuration/logger-strategy";
+import { UsecaseContainerFactory } from "@stages/src/transformation/configuration/usecases.container";
 import { TransformFlowJobteaserTask } from "@stages/src/transformation/infrastructure/tasks/transform-flow-jobteaser.task";
 import {
 	TransformFlowStagefrCompressedTask,
@@ -11,8 +14,6 @@ import {
 import {
 	TransformFlowStagefrUncompressedTask,
 } from "@stages/src/transformation/infrastructure/tasks/transform-flow-stagefr-uncompressed.task";
-import { UsecaseContainer } from "@stages/src/transformation/application-service";
-import { UsecaseContainerFactory } from "@stages/src/transformation/configuration/usecases.container";
 
 @Module({
 	providers: [

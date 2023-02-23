@@ -1,9 +1,11 @@
 import axios, { AxiosInstance } from "axios";
 import nock from "nock";
+
 import { expect } from "@test/configuration";
 
 import { AnnonceDeLogement } from "@logements/src/indexation/domain/model";
 import { AnnonceDeLogementFixtureBuilder } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";
+
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import {
 	StrapiBodyResponse,

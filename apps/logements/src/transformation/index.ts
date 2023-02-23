@@ -1,16 +1,17 @@
 import { Module } from "@nestjs/common";
 
+import { UsecaseContainer } from "@logements/src/transformation/application-service";
 import { Configuration, ConfigurationFactory } from "@logements/src/transformation/configuration/configuration";
 import { GatewayContainerFactory } from "@logements/src/transformation/configuration/gateway.container";
-import { SousModule } from "@shared/src/configuration/module";
+import { UsecasesContainerFactory } from "@logements/src/transformation/configuration/usecases.container";
 import {
 	TransformFlowImmojeuneTask,
 } from "@logements/src/transformation/infrastructure/tasks/transform-flow-immojeune.task";
 import {
 	TransformFlowStudapartTask,
 } from "@logements/src/transformation/infrastructure/tasks/transform-flow-studapart.task";
-import { UsecaseContainer } from "@logements/src/transformation/application-service";
-import { UsecasesContainerFactory } from "@logements/src/transformation/configuration/usecases.container";
+
+import { SousModule } from "@shared/src/configuration/module";
 
 @Module({
 	providers: [{

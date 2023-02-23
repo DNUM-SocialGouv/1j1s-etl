@@ -1,6 +1,6 @@
-import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/service/annonce-de-logement.repository";
-import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
+import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
+import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/service/annonce-de-logement.repository";
 
 export class ChargerAnnoncesDeLogementDomainService {
 	constructor(private readonly annonceDeLogementRepository: AnnonceDeLogementRepository) {

@@ -1,7 +1,8 @@
-import { Configuration } from "@stages/src/extraction/configuration/configuration";
-import { FlowClient, FlowStrategy, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";
-import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 import { Logger } from "@shared/src/configuration/logger";
+import { FlowClient, FlowStrategy, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";
+
+import { Configuration } from "@stages/src/extraction/configuration/configuration";
+import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 
 export class StagesOnFlowNameStrategy implements FlowStrategy {
 	constructor(

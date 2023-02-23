@@ -1,7 +1,10 @@
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
 import axios from "axios";
 import { Client } from "minio";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { Module } from "@nestjs/common";
+
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 
 import {
 	Configuration,
@@ -9,18 +12,18 @@ import {
 	MinioConfiguration,
 	TaskConfiguration,
 } from "@evenements/src/extraction/configuration/configuration";
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 import { EvenementsExtractionLoggerStrategy } from "@evenements/src/extraction/configuration/logger.strategy";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { FluxRepository } from "@evenements/src/extraction/domain/service/flux.repository";
-import {
-	MinioHttpFlowRepository,
-} from "@evenements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
-import { Shared } from "@shared/src";
 import {
 	TousMobilisesBasicFlowHttpClient,
 } from "@evenements/src/extraction/infrastructure/gateway/client/tous-mobilises-basic-flow-http.client";
+import {
+	MinioHttpFlowRepository,
+} from "@evenements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
+
+import { Shared } from "@shared/src";
+import { Domaine, LogLevel } from "@shared/src/configuration/logger";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({

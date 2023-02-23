@@ -1,32 +1,35 @@
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
 import axios from "axios";
 import { Client } from "minio";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { Module } from "@nestjs/common";
 
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+
 import {
 	ConfigurationFactory,
 	MinioConfiguration,
 	StrapiConfiguration,
 	TaskConfiguration,
 } from "@evenements/src/chargement/configuration/configuration";
-import { DateService } from "@shared/src/date.service";
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 import { EvenementsChargementLoggerStrategy } from "@evenements/src/chargement/configuration/logger-strategy";
-import {
-	FeatureFlippingEvenementsRepository,
-} from "@evenements/src/chargement/infrastructure/gateway/repository/feature-flipping-evenements.repository";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import {
-	MinioAndStrapiEvenementsRepository,
-} from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
-import { Shared } from "@shared/src";
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
 	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
-import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+import {
+	FeatureFlippingEvenementsRepository,
+} from "@evenements/src/chargement/infrastructure/gateway/repository/feature-flipping-evenements.repository";
+import {
+	MinioAndStrapiEvenementsRepository,
+} from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
+
+import { Shared } from "@shared/src";
+import { Domaine, LogLevel } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({

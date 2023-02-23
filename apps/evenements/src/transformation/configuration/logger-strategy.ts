@@ -1,4 +1,5 @@
 import { Configuration } from "@evenements/src/transformation/configuration/configuration";
+
 import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/configuration/logger";
 
 export class EvenementsTransformationLoggerStrategy implements LoggerStrategy {

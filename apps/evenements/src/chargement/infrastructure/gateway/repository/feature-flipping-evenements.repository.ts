@@ -1,12 +1,13 @@
 import { Client } from "minio";
 
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
-import { DateService } from "@shared/src/date.service";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
     StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
-import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+
+import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 export class FeatureFlippingEvenementsRepository implements UnJeuneUneSolution.EvenementsRepository {

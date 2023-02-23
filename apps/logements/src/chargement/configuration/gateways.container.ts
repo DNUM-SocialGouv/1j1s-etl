@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+
 import axios from "axios";
 import { Client } from "minio";
 
@@ -21,6 +22,7 @@ import {
 import {
 	MinioHttpAnnonceDeLogementRepository,
 } from "@logements/src/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
+
 import { Shared } from "@shared/src";
 import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { DateService } from "@shared/src/date.service";

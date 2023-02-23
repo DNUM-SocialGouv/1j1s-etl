@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
 
+import { UsecaseContainer } from "@logements/src/extraction/application-service";
 import { Configuration, ConfigurationFactory } from "@logements/src/extraction/configuration/configuration";
-import { ExtractFlowImmojeuneTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-immojeune.task";
-import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-studapart.task";
 import { GatewayContainerFactory } from "@logements/src/extraction/configuration/gateways.container";
 import { LogementsExtractionLoggerStrategy } from "@logements/src/extraction/configuration/logger.strategy";
-import { SousModule } from "@shared/src/configuration/module";
-import { UsecaseContainer } from "@logements/src/extraction/application-service";
 import { UsecaseContainerFactory } from "@logements/src/extraction/configuration/usecases.container";
+import { ExtractFlowImmojeuneTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-immojeune.task";
+import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-studapart.task";
+
+import { SousModule } from "@shared/src/configuration/module";
 
 @Module({
 	providers: [{

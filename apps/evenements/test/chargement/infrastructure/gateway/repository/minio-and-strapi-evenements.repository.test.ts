@@ -1,29 +1,31 @@
 import { Client } from "minio";
+
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
-import { DateService } from "@shared/src/date.service";
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+import {
+    StrapiEvenementHttpClient,
+} from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
+import {
+    MinioAndStrapiEvenementsRepository,
+} from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
 import {
     evenement1Le24Novembre, evenement2Le24Novembre,
     evenementDejaCharge1Le24Novembre,
     evenementDejaCharge1Le25Novembre,
     evenementDejaCharge2Le24Novembre, evenementDejaCharge2Le25Novembre,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
+
+import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {
     EcritureFluxErreur,
     RecupererContenuErreur,
     RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
-import {
-    MinioAndStrapiEvenementsRepository,
-} from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
-import {
-    StrapiEvenementHttpClient,
-} from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
-import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";

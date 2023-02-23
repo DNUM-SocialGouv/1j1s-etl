@@ -1,19 +1,21 @@
 import { Client } from "minio";
+
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
-import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { DateService } from "@shared/src/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
+import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+
+import { Configuration } from "@stages/src/transformation/configuration/configuration";
+import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
+import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/offre-de-stage.fixture-builder";
-import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
-import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 let localFileNameIncludingPath = "./tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let offresDeStage: Array<UnJeune1Solution.OffreDeStage>;

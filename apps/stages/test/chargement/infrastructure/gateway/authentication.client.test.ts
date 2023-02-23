@@ -1,6 +1,8 @@
+import { StubbedCallableType, stubCallable } from "@salesforce/ts-sinon";
+
 import { AxiosInstance } from "axios";
 import sinon from "sinon";
-import { StubbedCallableType, stubCallable } from "@salesforce/ts-sinon";
+
 import { expect } from "@test/configuration";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";

@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 
 import { SousModule } from "@shared/src/configuration/module";
+
 import { UsecaseContainer } from "@stages/src/extraction/application-service";
 import { Configuration, ConfigurationFactory } from "@stages/src/extraction/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/src/extraction/configuration/gateways.container";
@@ -8,11 +9,11 @@ import { StagesExtractionLoggerStrategy } from "@stages/src/extraction/configura
 import { UsecaseContainerFactory } from "@stages/src/extraction/configuration/usecases.container";
 import { ExtractFlowJobteaserTask } from "@stages/src/extraction/infrastructure/tasks/extract-flow-jobteaser.task";
 import {
-	ExtractFluxStagefrCompressedTask,
-} from "@stages/src/extraction/infrastructure/tasks/extract-flux-stagefr-compressed.task";
-import {
 	ExtractFlowStagefrUncompressedTask,
 } from "@stages/src/extraction/infrastructure/tasks/extract-flow-stagefr-uncompressed.task";
+import {
+	ExtractFluxStagefrCompressedTask,
+} from "@stages/src/extraction/infrastructure/tasks/extract-flux-stagefr-compressed.task";
 
 @Module({
 	providers: [{

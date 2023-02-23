@@ -2,19 +2,20 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+import {
+    StrapiEvenementHttpClient,
+} from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
+
+import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {
     EcritureFluxErreur,
     RecupererContenuErreur,
     RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
-import {
-    StrapiEvenementHttpClient,
-} from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 export class MinioAndStrapiEvenementsRepository implements UnJeuneUneSolution.EvenementsRepository {

@@ -1,12 +1,13 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
+import { DateService } from "@shared/src/date.service";
+
+import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
+import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import {
 	ChargerOffresDeStageDomainService,
 } from "@stages/src/chargement/domain/service/charger-offres-de-stage.domain-service";
-import { DateService } from "@shared/src/date.service";
-import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import { OffreDeStageFixtureBuilder } from "@stages/test/chargement/fixture/offre-de-stage.fixture-builder";
-import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 
 const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;

@@ -1,9 +1,10 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
-import { DateService } from "@shared/src/date.service";
-import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
+import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
 import { FluxRepository } from "@logements/src/extraction/domain/service/flux.repository";
+
+import { DateService } from "@shared/src/date.service";
 
 const date = new Date("2022-01-01T00:00:00Z");
 const fluxContent = "<toto>Le Contenu</toto>";

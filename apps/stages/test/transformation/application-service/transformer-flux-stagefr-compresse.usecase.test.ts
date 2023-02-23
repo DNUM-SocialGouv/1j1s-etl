@@ -2,18 +2,19 @@ import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
-import { Convertir } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
-import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/offre-de-stage.fixture-builder";
-import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
-import {
-	OffreDeStageStagefrCompresseFixtureBuilder,
-} from "@stages/test/transformation/fixture/offre-de-stage-stagefr-compresse.fixture-builder";
-import { StagefrCompresse } from "@stages/src/transformation/domain/model/stagefr-compresse";
+
 import {
 	TransformerFluxStagefrCompresse,
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-compresse.usecase";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
+import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
+import { StagefrCompresse } from "@stages/src/transformation/domain/model/stagefr-compresse";
+import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
+import { Convertir } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
+import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/offre-de-stage.fixture-builder";
+import {
+	OffreDeStageStagefrCompresseFixtureBuilder,
+} from "@stages/test/transformation/fixture/offre-de-stage-stagefr-compresse.fixture-builder";
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 

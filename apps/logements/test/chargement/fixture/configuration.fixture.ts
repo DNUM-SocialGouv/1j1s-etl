@@ -1,9 +1,10 @@
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+
 import {
 	Configuration,
 	MinioConfiguration,
 	StrapiConguration,
 } from "@logements/src/chargement/configuration/configuration";
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
 
 export class ConfigurationFixtureBuilder {
 	public static build(

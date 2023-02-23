@@ -1,14 +1,15 @@
 import { Client } from "minio";
 
-import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+
+import { Configuration } from "@stages/src/chargement/configuration/configuration";
+import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
+import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { HttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/src/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
-import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
-import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 export class FeatureFlippingOffreDeStageRepository extends MinioHttpOffreDeStageRepository {
 	constructor(

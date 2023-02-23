@@ -1,7 +1,8 @@
 import { AxiosInstance } from "axios";
 
-import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+
+import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 
 export interface HttpClient {
 	delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void>;

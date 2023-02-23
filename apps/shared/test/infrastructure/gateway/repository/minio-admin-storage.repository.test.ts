@@ -1,4 +1,5 @@
 import { Client } from "minio";
+
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 
 import { MinioAdminStorageRepository } from "@shared/src/infrastructure/gateway/repository/minio-admin-storage.repository";

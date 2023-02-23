@@ -1,7 +1,8 @@
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
-import { StagefrDecompresse } from "@stages/src/transformation/domain/model/stagefr-decompresse";
+
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
+import { StagefrDecompresse } from "@stages/src/transformation/domain/model/stagefr-decompresse";
 
 export class Convertir {
 	constructor(private readonly dateService: DateService, private readonly assainisseurDeTexte: AssainisseurDeTexte) {

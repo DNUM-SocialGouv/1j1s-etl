@@ -1,4 +1,5 @@
 import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+
 import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 
 export type MinioConfiguration = {
