@@ -5,7 +5,7 @@ import { Convertir } from "@logements/src/transformation/domain/service/studapar
 
 import { Usecase } from "@shared/src/usecase";
 
-export class TransformerFluxStudapartUseCase implements Usecase {
+export class TransformerFluxStudapart implements Usecase {
 	constructor(
 		private readonly repository: AnnonceDeLogementRepository,
 		private readonly convertir: Convertir,

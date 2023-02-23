@@ -48,7 +48,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 		},
 	}, {
 		provide: "FlowStrategy",
-		inject: [],
+		inject: [ConfigService, HousingBasicFlowHttpClient, StudapartFtpFlowClient],
 		useFactory: (
 			configurationService: ConfigService,
 			housingBasicFlowClient: HousingBasicFlowHttpClient,
