@@ -2,20 +2,21 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { Configuration } from "@logements/src/extraction/configuration/configuration";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { GatewayContainer } from "@logements/src/extraction/infrastructure/gateway";
-import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
-import {
-	MinioHttpFlowRepository,
-} from "@logements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 import { HousingBasicFlowHttpClient } from "@logements/src/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";
+import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
+import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
+import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 import {
 	StudapartFtpFlowClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/studapart/studapart-ftp-flow.client";
-import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
-import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
+import {
+	MinioHttpFlowRepository,
+} from "@logements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
+
+import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {

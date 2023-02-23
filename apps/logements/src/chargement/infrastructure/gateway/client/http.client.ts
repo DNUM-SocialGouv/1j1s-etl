@@ -1,7 +1,8 @@
 import { AxiosInstance } from "axios";
 
-import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
 export interface HttpClient {
 	delete(obsoleteHousingAdvertisement: UnJeune1Solution.AnnonceDeLogementObsolete): Promise<void>;

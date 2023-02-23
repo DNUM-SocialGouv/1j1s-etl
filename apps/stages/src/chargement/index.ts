@@ -1,14 +1,15 @@
 import { Module } from "@nestjs/common";
 
+import { SousModule } from "@shared/src/configuration/module";
+
+import { UsecaseContainer } from "@stages/src/chargement/application-service";
 import { Configuration, ConfigurationFactory } from "@stages/src/chargement/configuration/configuration";
 import { GatewayContainerFactory } from "@stages/src/chargement/configuration/gateways.container";
+import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
+import { UsecaseContainerFactory } from "@stages/src/chargement/configuration/usecases.container";
 import { LoadJobteaserTask } from "@stages/src/chargement/infrastructure/tasks/load-jobteaser.task";
 import { LoadStagefrCompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-compressed.task";
 import { LoadStagefrUncompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
-import { SousModule } from "@shared/src/configuration/module";
-import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
-import { UsecaseContainer } from "@stages/src/chargement/application-service";
-import { UsecaseContainerFactory } from "@stages/src/chargement/configuration/usecases.container";
 
 @Module({
 	providers: [{

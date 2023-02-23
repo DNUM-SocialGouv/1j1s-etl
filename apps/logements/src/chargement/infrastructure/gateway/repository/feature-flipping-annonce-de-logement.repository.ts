@@ -1,11 +1,12 @@
-import { DateService } from "@shared/src/date.service";
+import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 import { HttpClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
 import {
 	MinioHttpAnnonceDeLogementRepository,
 } from "@logements/src/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
-import { StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
-import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
+
+import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
 
 export class FeatureFlippingAnnonceDeLogementRepository extends MinioHttpAnnonceDeLogementRepository {
 	constructor(minioClient: StorageClient, httpClient: HttpClient, dateService: DateService, loggerStrategy: LoggerStrategy) {

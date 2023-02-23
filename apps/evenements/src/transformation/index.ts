@@ -1,20 +1,22 @@
-import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+
+import {
+	TransformerFluxTousMobilises,
+} from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 import {
 	ConfigurationFactory,
 	MinioConfiguration,
 	TaskConfiguration,
 } from "@evenements/src/transformation/configuration/configuration";
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+import { Usecases } from "@evenements/src/transformation/configuration/usecases.container";
 import {
 	TransformFlowTousMobilisesTask,
 } from "@evenements/src/transformation/infrastructure/tasks/transform-flow-tous-mobilises.task";
-import {
-	TransformerFluxTousMobilises,
-} from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
-import { Usecases } from "@evenements/src/transformation/configuration/usecases.container";
+
+import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 
 @Module({
 	imports: [

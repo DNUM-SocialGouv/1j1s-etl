@@ -1,21 +1,23 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+
+import {
+    ExtraireFluxEvenementTousMobilises,
+} from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
 import {
     Configuration,
     ConfigurationFactory,
     MinioConfiguration,
     TaskConfiguration,
 } from "@evenements/src/extraction/configuration/configuration";
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+import { Usecases } from "@evenements/src/extraction/configuration/usecases.container";
 import {
     ExtractFlowTousMobilisesTask,
 } from "@evenements/src/extraction/infrastructure/tasks/extract-flow-tous-mobilises.task";
-import {
-    ExtraireFluxEvenementTousMobilises,
-} from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
-import { Usecases } from "@evenements/src/extraction/configuration/usecases.container";
+
+import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 
 @Module({
     imports: [

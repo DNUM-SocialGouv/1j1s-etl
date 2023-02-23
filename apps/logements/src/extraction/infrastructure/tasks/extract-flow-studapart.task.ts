@@ -1,8 +1,9 @@
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
 import { ExtraireStudapart } from "@logements/src/extraction/application-service/extraire-studapart.usecase";
-import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
-import { Task } from "@shared/src/infrastructure/task/task";
+import { Configuration } from "@logements/src/extraction/configuration/configuration";
 import { TaskLog } from "@logements/src/extraction/configuration/log.decorator";
+import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
+
+import { Task } from "@shared/src/infrastructure/task/task";
 
 export class ExtractFlowStudapartTask implements Task {
 	constructor(private readonly usecase: ExtraireStudapart, private readonly configuration: Configuration) {

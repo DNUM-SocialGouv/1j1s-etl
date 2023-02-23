@@ -1,15 +1,18 @@
+import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+
 import { expect } from "chai";
 import { Client } from "minio";
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import sinon from "sinon";
+
 import { StubbedClass, stubClass } from "@test/configuration";
 
-import { MinioStorageClient, StorageClient, EcritureFluxErreur, LectureFluxErreur } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
 import { Configuration } from "@logements/src/chargement/configuration/configuration";
+import { EcritureFluxErreur, LectureFluxErreur, MinioStorageClient, StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
+import { AnnonceDeLogementFixtureBuilder } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
 import { ConfigurationFixtureBuilder } from "@logements/test/chargement/fixture/configuration.fixture";
+
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { AnnonceDeLogementFixtureBuilder } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
 
 let fileSystemClient: StubbedType<FileSystemClient>;
 let uuidClient: StubbedType<UuidGenerator>;

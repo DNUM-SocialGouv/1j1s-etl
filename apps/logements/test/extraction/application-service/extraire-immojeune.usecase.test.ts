@@ -1,8 +1,8 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
-import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
+import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
 
 let flux: FluxExtraction;
 let usecase: ExtraireImmojeune;

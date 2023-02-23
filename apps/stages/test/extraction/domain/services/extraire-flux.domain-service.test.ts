@@ -1,8 +1,9 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
 import { DateService } from "@shared/src/date.service";
-import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service/extraire-flux.domain-service";
+
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
+import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service/extraire-flux.domain-service";
 import { FluxRepository } from "@stages/src/extraction/domain/service/flux.repository";
 
 const date = new Date("2022-01-01T00:00:00Z");

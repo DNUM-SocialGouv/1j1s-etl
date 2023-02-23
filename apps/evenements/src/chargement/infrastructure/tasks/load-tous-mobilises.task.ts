@@ -1,7 +1,8 @@
 import { ChargerFluxTousMobilises } from "@evenements/src/chargement/application-service/charger-flux-tous-mobilises.usecase";
 import { Configuration } from "@evenements/src/chargement/configuration/configuration";
-import { Task } from "@shared/src/infrastructure/task/task";
 import { TaskLog } from "@evenements/src/chargement/configuration/log.decorator";
+
+import { Task } from "@shared/src/infrastructure/task/task";
 
 export class LoadTousMobilisesTask implements Task {
 	constructor(

@@ -1,10 +1,11 @@
-import { Configuration } from "@evenements/src/extraction/configuration/configuration";
 import {
 	ExtraireFluxEvenementTousMobilises,
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
-import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
-import { Task } from "@shared/src/infrastructure/task/task";
+import { Configuration } from "@evenements/src/extraction/configuration/configuration";
 import { TaskLog } from "@evenements/src/extraction/configuration/log.decorator";
+import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
+
+import { Task } from "@shared/src/infrastructure/task/task";
 
 export class ExtractFlowTousMobilisesTask implements Task {
 

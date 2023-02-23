@@ -1,4 +1,5 @@
 import { AnnonceDeLogementRepository } from "@logements/src/indexation/domain/service/annonce-de-logement.repository";
+
 import { Usecase } from "@shared/src/usecase";
 
 export class IndexerAnnoncesDeLogement implements Usecase {

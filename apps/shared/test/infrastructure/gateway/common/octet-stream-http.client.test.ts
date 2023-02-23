@@ -1,13 +1,14 @@
-import { PassThrough, Writable } from "stream";
+import { StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@salesforce/ts-sinon";
 
 import { AxiosInstance } from "axios";
 import sinon from "sinon";
-import { StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@salesforce/ts-sinon";
+import { PassThrough, Writable } from "stream";
+
 import { expect } from "@test/configuration";
 
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
+import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 const url = "http://some.url";

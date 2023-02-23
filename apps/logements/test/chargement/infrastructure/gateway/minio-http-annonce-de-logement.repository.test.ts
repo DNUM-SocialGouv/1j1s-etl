@@ -1,5 +1,13 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
+import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/configuration/logger-strategy";
+import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
+import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
+import { HttpClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
+import { StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
+import {
+	MinioHttpAnnonceDeLogementRepository,
+} from "@logements/src/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
@@ -7,17 +15,10 @@ import {
 	AnnonceDeLogementHttpFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement-http.fixture-builder";
 import { ConfigurationFixtureBuilder } from "@logements/test/chargement/fixture/configuration.fixture";
+
+import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
 import { DateService } from "@shared/src/date.service";
 import { Flux } from "@shared/src/flux";
-import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
-import { HttpClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
-import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/configuration/logger-strategy";
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
-import {
-	MinioHttpAnnonceDeLogementRepository,
-} from "@logements/src/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
-import { StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
-import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 
 let dateService: StubbedClass<DateService>;
 let httpClient: StubbedType<HttpClient>;

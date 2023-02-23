@@ -1,9 +1,10 @@
-import { Convertir } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
-import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
-import { StagefrCompresse } from "@stages/src/transformation/domain/model/stagefr-compresse";
 import { Usecase } from "@shared/src/usecase";
+
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
+import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
+import { StagefrCompresse } from "@stages/src/transformation/domain/model/stagefr-compresse";
+import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
+import { Convertir } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
 
 export class TransformerFluxStagefrCompresse implements Usecase {
 	constructor(

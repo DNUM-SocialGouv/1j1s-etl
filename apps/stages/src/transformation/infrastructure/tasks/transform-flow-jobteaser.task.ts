@@ -1,8 +1,9 @@
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Task } from "@shared/src/infrastructure/task/task";
-import { TaskLog } from "@stages/src/transformation/configuration/log.decorator";
+
 import { TransformerFluxJobteaser } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
+import { Configuration } from "@stages/src/transformation/configuration/configuration";
+import { TaskLog } from "@stages/src/transformation/configuration/log.decorator";
+import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 
 export class TransformFlowJobteaserTask implements Task {
 	constructor(

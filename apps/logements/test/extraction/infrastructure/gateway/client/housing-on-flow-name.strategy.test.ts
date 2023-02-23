@@ -1,10 +1,11 @@
 import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 
 import { Configuration } from "@logements/src/extraction/configuration/configuration";
-import { FlowClient, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";
-import { Logger } from "@shared/src/configuration/logger";
-import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
+import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
+
+import { Logger } from "@shared/src/configuration/logger";
+import { FlowClient, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 
 const url = "http://some.url";
 

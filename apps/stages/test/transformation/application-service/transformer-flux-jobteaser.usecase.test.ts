@@ -1,18 +1,19 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { Convertir } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
+import { Pays } from "@shared/src/pays";
+
+import { TransformerFluxJobteaser } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
+import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Jobteaser } from "@stages/src/transformation/domain/model/jobteaser";
+import { Convertir } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
+import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
 import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/offre-de-stage.fixture-builder";
 import {
 	OffreDeStageJobteaserFixtureBuilder,
 } from "@stages/test/transformation/fixture/offre-de-stage-jobteaser.fixture-builder";
-import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
-import { Pays } from "@shared/src/pays";
-import { TransformerFluxJobteaser } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
-import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;

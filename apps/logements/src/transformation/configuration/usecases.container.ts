@@ -1,21 +1,22 @@
 import TurndownService from "turndown";
 
-import {
-	Convertir as ConvertirImmojeune,
-} from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
-import {
-	Convertir as ConvertirStudapart,
-} from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
-import { DateService } from "@shared/src/date.service";
-import { GatewayContainer } from "@logements/src/transformation/infrastructure/gateway";
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
+import { UsecaseContainer } from "@logements/src/transformation/application-service";
 import {
 	TransformerFluxImmojeune,
 } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
 import {
 	TransformerFluxStudapartUseCase,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
-import { UsecaseContainer } from "@logements/src/transformation/application-service";
+import {
+	Convertir as ConvertirImmojeune,
+} from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
+import {
+	Convertir as ConvertirStudapart,
+} from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
+import { GatewayContainer } from "@logements/src/transformation/infrastructure/gateway";
+
+import { DateService } from "@shared/src/date.service";
+import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 
 export class UsecasesContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {

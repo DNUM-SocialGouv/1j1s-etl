@@ -1,10 +1,11 @@
-import { Configuration } from "@evenements/src/transformation/configuration/configuration";
-import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
-import { Task } from "@shared/src/infrastructure/task/task";
-import { TaskLog } from "@evenements/src/transformation/configuration/log.decorator";
 import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
+import { Configuration } from "@evenements/src/transformation/configuration/configuration";
+import { TaskLog } from "@evenements/src/transformation/configuration/log.decorator";
+import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
+
+import { Task } from "@shared/src/infrastructure/task/task";
 
 export class TransformFlowTousMobilisesTask implements Task {
 	constructor(

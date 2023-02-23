@@ -1,5 +1,6 @@
-import { Devise } from "@shared/src/devise.value-object";
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
+
+import { Devise } from "@shared/src/devise.value-object";
 
 export class AnnonceDeLogementFixtureBuilder {
 	public static build(

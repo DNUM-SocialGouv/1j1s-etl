@@ -1,9 +1,10 @@
-import { DateService } from "@shared/src/date.service";
-import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
+import { UsecaseContainer } from "@logements/src/extraction/application-service";
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
 import { ExtraireStudapart } from "@logements/src/extraction/application-service/extraire-studapart.usecase";
+import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
 import { GatewayContainer } from "@logements/src/extraction/infrastructure/gateway";
-import { UsecaseContainer } from "@logements/src/extraction/application-service";
+
+import { DateService } from "@shared/src/date.service";
 
 export class UsecaseContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {

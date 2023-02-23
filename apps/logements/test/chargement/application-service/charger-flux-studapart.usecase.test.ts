@@ -1,11 +1,11 @@
 import { expect, stubClass } from "@test/configuration";
 
+import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
+import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import {
 	ChargerAnnoncesDeLogementDomainService,
 } from "@logements/src/chargement/domain/service/charger-annonces-de-logement.domain-service";
-import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
 import { ConfigurationFixtureBuilder } from "@logements/test/chargement/fixture/configuration.fixture";
-import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 
 describe("ChargementStudapartTest", () => {
     context("Lorsque je souhaite charger les données du flux studapart", () => {

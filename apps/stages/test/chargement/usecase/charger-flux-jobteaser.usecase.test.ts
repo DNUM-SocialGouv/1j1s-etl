@@ -1,10 +1,10 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 
+import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
+import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import {
 	ChargerOffresDeStageDomainService,
 } from "@stages/src/chargement/domain/service/charger-offres-de-stage.domain-service";
-import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
-import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 
 let extension: string;
 let nomDuFlux: string;

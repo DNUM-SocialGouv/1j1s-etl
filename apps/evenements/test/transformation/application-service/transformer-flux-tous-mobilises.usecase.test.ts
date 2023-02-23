@@ -1,18 +1,19 @@
 import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
+import {
+    TransformerFluxTousMobilises,
+} from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
+import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
+import { TousMobilises } from "@evenements/src/transformation/domain/model/tous-mobilises";
+import { EvenementsRepository } from "@evenements/src/transformation/domain/service/evenements.repository";
 import { Convertir } from "@evenements/src/transformation/domain/service/tous-mobilises/convertir.domain-service";
-import { DateService } from "@shared/src/date.service";
 import {
     evenement1Le24Novembre,
     evenement2Le24Novembre,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
-import { EvenementsRepository } from "@evenements/src/transformation/domain/service/evenements.repository";
-import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
-import { TousMobilises } from "@evenements/src/transformation/domain/model/tous-mobilises";
-import {
-    TransformerFluxTousMobilises,
-} from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
+
+import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
+import { DateService } from "@shared/src/date.service";
 
 describe("TransformerFluxTousMobilisesUseCase", () => {
     let usecase: TransformerFluxTousMobilises;

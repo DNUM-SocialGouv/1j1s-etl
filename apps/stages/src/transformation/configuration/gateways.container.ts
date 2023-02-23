@@ -1,19 +1,20 @@
-import { Client } from "minio";
 import { XMLParser } from "fast-xml-parser";
+import { Client } from "minio";
 import TurndownService from "turndown";
 
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
-import { CountryToIso } from "@stages/src/transformation/infrastructure/gateway/country-to-iso";
 import { DateService } from "@shared/src/date.service";
-import { GatewayContainer } from "@stages/src/transformation/infrastructure/gateway";
+import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
+import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+
+import { Configuration } from "@stages/src/transformation/configuration/configuration";
 import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/configuration/logger-strategy";
+import { GatewayContainer } from "@stages/src/transformation/infrastructure/gateway";
+import { CountryToIso } from "@stages/src/transformation/infrastructure/gateway/country-to-iso";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
-import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: StagesTransformationLoggerStrategy): GatewayContainer {

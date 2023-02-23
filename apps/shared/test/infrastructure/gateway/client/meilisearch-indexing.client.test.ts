@@ -1,4 +1,5 @@
 import { Index, MeiliSearch, MeiliSearchApiError } from "meilisearch";
+
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 
 import { MeilisearchIndexingClient } from "@shared/src/infrastructure/gateway/client/meilisearch-indexing.client";

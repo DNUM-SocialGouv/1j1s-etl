@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 
+import { Chargement } from "@stages/src/chargement";
 import { Extraction } from "@stages/src/extraction";
 import { Transformation } from "@stages/src/transformation";
-import { Chargement } from "@stages/src/chargement";
 
 @Module({
 	exports: [

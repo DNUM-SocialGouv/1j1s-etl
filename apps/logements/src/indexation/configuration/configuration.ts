@@ -1,5 +1,6 @@
-import { Domaine } from "@shared/src/configuration/logger";
 import { Environment } from "@configuration/src/configuration";
+
+import { Domaine } from "@shared/src/configuration/logger";
 
 type SentryConfiguration = {
 	DSN: string

@@ -1,10 +1,10 @@
 import { expect, stubClass } from "@test/configuration";
 
+import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
+import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import {
 	ChargerAnnoncesDeLogementDomainService,
 } from "@logements/src/chargement/domain/service/charger-annonces-de-logement.domain-service";
-import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
-import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 
 describe("ChargerFluxImmojeuneTest", () => {
 	context("Lorsque je charge le flux Immojeune", () => {

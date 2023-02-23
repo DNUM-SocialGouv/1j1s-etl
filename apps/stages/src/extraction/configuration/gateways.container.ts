@@ -1,18 +1,19 @@
 import axios from "axios";
 import { Client } from "minio";
 
+import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
 import { CompressedFlowHttpClient } from "@shared/src/infrastructure/gateway/client/compressed-flow-http.client";
+import { OctetStreamFlowHttpClient } from "@shared/src/infrastructure/gateway/client/octet-stream-flow-http.client";
+import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
+import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
+import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+
 import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { GatewayContainer } from "@stages/src/extraction/infrastructure/gateway";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { MinioHttpFlowRepository } from "@stages/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
-import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { OctetStreamFlowHttpClient } from "@shared/src/infrastructure/gateway/client/octet-stream-flow-http.client";
-import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
 import { StagesOnFlowNameStrategy } from "@stages/src/extraction/infrastructure/gateway/client/flow.strategy";
-import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
+import { MinioHttpFlowRepository } from "@stages/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: LoggerStrategy): GatewayContainer {

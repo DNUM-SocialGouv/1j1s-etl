@@ -1,10 +1,6 @@
-import { Convertir as ConvertirJobteaser } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
-import { Convertir as ConvertirStagefrCompresse } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
-import {
-	Convertir as ConvertirStagefrDecompresse,
-} from "@stages/src/transformation/domain/service/stagefr-decompresse/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
-import { GatewayContainer } from "@stages/src/transformation/infrastructure/gateway";
+
+import { UsecaseContainer } from "@stages/src/transformation/application-service";
 import {
 	TransformerFluxJobteaser,
 } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
@@ -14,7 +10,12 @@ import {
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
-import { UsecaseContainer } from "@stages/src/transformation/application-service";
+import { Convertir as ConvertirJobteaser } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
+import { Convertir as ConvertirStagefrCompresse } from "@stages/src/transformation/domain/service/stagefr-compresse/convertir.domain-service";
+import {
+	Convertir as ConvertirStagefrDecompresse,
+} from "@stages/src/transformation/domain/service/stagefr-decompresse/convertir.domain-service";
+import { GatewayContainer } from "@stages/src/transformation/infrastructure/gateway";
 
 export class UsecaseContainerFactory {
 	public static create(gateways: GatewayContainer): UsecaseContainer {

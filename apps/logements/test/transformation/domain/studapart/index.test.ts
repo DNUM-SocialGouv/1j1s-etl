@@ -1,17 +1,18 @@
-import { expect, sinon, stubClass, StubbedType, stubInterface } from "@test/configuration";
+import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
+import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
+import { Studapart } from "@logements/src/transformation/domain/model/studapart";
+import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
+import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 import {
     AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
 import {
     AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
-import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
+
+import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
-import { Studapart } from "@logements/src/transformation/domain/model/studapart";
-import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
-import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
 let convertir: Convertir;

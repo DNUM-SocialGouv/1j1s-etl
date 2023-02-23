@@ -1,18 +1,18 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
 import {
+	TransformerFluxStudapartUseCase,
+} from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
+import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
+import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
+import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import {
 	AnnonceDeLogementStudapartContenuFixtureBuilder,
 	AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
-import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
-import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
-import {
-	TransformerFluxStudapartUseCase,
-} from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 
 describe("TransformerFluxStudapartUseCaseTest", () => {
 	const fluxTransformation = new FluxTransformation("flux", "history", ".xml", ".xml");

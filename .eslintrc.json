@@ -4,7 +4,7 @@
   "plugins": [
     "@typescript-eslint",
     "@sefr",
-    "import"
+    "simple-import-sort"
   ],
   "parserOptions": {
     "tsconfigRootDir": ".",
@@ -25,18 +25,6 @@
     "comma-dangle": ["error", "always-multiline"],
     "complexity": ["error", 10],
     "eol-last": "error",
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "pathGroups": [
-          {
-            "pattern": "@test/**",
-            "group": "external"
-          }
-        ]
-      }
-    ],
     "max-depth": ["error", 2],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "no-multi-spaces": "error",
@@ -44,6 +32,27 @@
     "quotes": ["error", "double"],
     "semi": "error",
     "space-infix-ops": "error",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^\\u0000"],
+          ["^node:"],
+          ["^(@(?!(api|cli|configuration|evenements|logements|shared|stages)))"],
+          ["^[a-zA-Z0-9]?"],
+          ["^@test"],
+          ["^@api"],
+          ["^@cli"],
+          ["^@configuration"],
+          ["^@evenements"],
+          ["^@logements"],
+          ["^@shared"],
+          ["^@stages"],
+          ["^@?"],
+          ["^\\."]
+        ]
+      }
+    ],
     "@sefr/no-onion-architecture-violation": "error",
     "@sefr/no-cross-domain-import": [
       "error",

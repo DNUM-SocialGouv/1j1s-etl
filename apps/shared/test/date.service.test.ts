@@ -1,4 +1,5 @@
 import sinon from "sinon";
+
 import { expect } from "@test/configuration";
 
 import { DateService } from "@shared/src/date.service";

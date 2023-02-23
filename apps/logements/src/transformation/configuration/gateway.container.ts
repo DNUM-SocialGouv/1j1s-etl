@@ -1,20 +1,21 @@
+import { XMLParser } from "fast-xml-parser";
 import { Client } from "minio";
 import TurndownService from "turndown";
-import { XMLParser } from "fast-xml-parser";
 
+import { Configuration } from "@logements/src/transformation/configuration/configuration";
+import { LogementsTransformationLoggerStrategy } from "@logements/src/transformation/configuration/logger-strategy";
+import { GatewayContainer } from "@logements/src/transformation/infrastructure/gateway";
 import {
 	AnnonceDeLogementContentParserStrategy, StudapartOptionXmlParser,
 } from "@logements/src/transformation/infrastructure/gateway/repository/annonce-de-logement-content-parser.strategy";
-import { Configuration } from "@logements/src/transformation/configuration/configuration";
-import { DateService } from "@shared/src/date.service";
-import { GatewayContainer } from "@logements/src/transformation/infrastructure/gateway";
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
-import { JsonContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { LogementsTransformationLoggerStrategy } from "@logements/src/transformation/configuration/logger-strategy";
 import {
 	MinioAnnonceDeLogementRepository,
 } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
+
+import { DateService } from "@shared/src/date.service";
 import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { JsonContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 export class GatewayContainerFactory {

@@ -1,12 +1,13 @@
 import { Client } from "minio";
 
 import { Configuration } from "@evenements/src/extraction/configuration/configuration";
-import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
 import { FluxRepository } from "@evenements/src/extraction/domain/service/flux.repository";
+
 import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 export class MinioHttpFlowRepository implements FluxRepository {

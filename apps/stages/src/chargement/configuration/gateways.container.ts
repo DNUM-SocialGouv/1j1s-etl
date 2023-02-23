@@ -2,19 +2,20 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { FileSystemClient, NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { NodeUuidGenerator, UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+
 import { Configuration } from "@stages/src/chargement/configuration/configuration";
+import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
+import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { GatewayContainer } from "@stages/src/chargement/infrastructure/gateway";
+import { StrapiOffreDeStageHttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import {
 	FeatureFlippingOffreDeStageRepository,
 } from "@stages/src/chargement/infrastructure/gateway/repository/feature-flipping-offre-de-stage.repository";
-import { FileSystemClient, NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
 import {
 	MinioHttpOffreDeStageRepository,
 } from "@stages/src/chargement/infrastructure/gateway/repository/minio-http-offre-de-stage.repository";
-import { NodeUuidGenerator, UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { StrapiOffreDeStageHttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
-import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 
 export class GatewayContainerFactory {
 	public static create(configuration: Configuration, loggerStrategy: StagesChargementLoggerStrategy): GatewayContainer {

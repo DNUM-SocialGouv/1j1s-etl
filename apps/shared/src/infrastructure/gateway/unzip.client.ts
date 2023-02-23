@@ -1,5 +1,6 @@
-import { promisify } from "util";
 import { unzip } from "node:zlib";
+
+import { promisify } from "util";
 
 export class UnzipClient {
 	public unzipGzip(contenu: string | Buffer): Promise<Buffer> {

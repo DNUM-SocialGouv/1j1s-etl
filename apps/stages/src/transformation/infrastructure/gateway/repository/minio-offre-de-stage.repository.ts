@@ -1,15 +1,16 @@
 import { Client } from "minio";
 
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
-import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { DateService } from "@shared/src/date.service";
-import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
-import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+
+import { Configuration } from "@stages/src/transformation/configuration/configuration";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
+import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
+import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
 
 export class MinioOffreDeStageRepository implements OffreDeStageRepository {
 	private static readonly JSON_INDENTATION: number = 2;

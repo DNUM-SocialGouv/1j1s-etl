@@ -1,19 +1,20 @@
 import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
+import { TransformerFluxImmojeune } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
+import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
+import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
+import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
+import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import { Convertir } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
 import {
 	AnnonceDeLogementImmojeuneFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-immojeune.fixture-builder";
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+
 import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { Convertir } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import { DateService } from "@shared/src/date.service";
-import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
-import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
-import { TransformerFluxImmojeune } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
-import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let repository: StubbedType<AnnonceDeLogementRepository>;

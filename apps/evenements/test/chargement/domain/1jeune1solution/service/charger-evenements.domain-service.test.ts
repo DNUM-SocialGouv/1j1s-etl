@@ -1,17 +1,17 @@
 import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
 
+import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
 	ChargerEvenenementsDomainService,
 } from "@evenements/src/chargement/domain/service/charger-evenements.domain-service";
 import {
-	evenement1Le24Novembre, evenement3Le25Novembre,
-	evenement2Le24Novembre, evenement4Le25Novembre,
+	evenement1Le24Novembre, evenement2Le24Novembre,
+	evenement3Le25Novembre, evenement4Le25Novembre,
 	evenementDejaCharge1Le24Novembre,
 	evenementDejaCharge1Le25Novembre,
 	evenementDejaCharge2Le24Novembre, evenementDejaCharge2Le25Novembre,
 	evenementLe26Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
-import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 
 describe("ChargerEvenenementsDomainServiceTest", () => {
 

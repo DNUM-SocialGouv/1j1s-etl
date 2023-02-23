@@ -1,8 +1,8 @@
 import { expect, StubbedClass, stubClass } from "@test/configuration";
 
-import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service/extraire-flux.domain-service";
 import { ExtraireJobteaser } from "@stages/src/extraction/application-service/extraire-jobteaser.usecase";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
+import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service/extraire-flux.domain-service";
 
 const flux: FluxExtraction = new FluxExtraction(
 	"jobteaser",

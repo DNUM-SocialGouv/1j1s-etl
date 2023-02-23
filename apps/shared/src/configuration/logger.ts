@@ -1,5 +1,5 @@
-import { createWriteStream, PinoSentryOptions, Severity } from "pino-sentry";
 import pino from "pino";
+import { createWriteStream, PinoSentryOptions, Severity } from "pino-sentry";
 
 export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
