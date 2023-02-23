@@ -12,7 +12,6 @@ export interface StorageClient {
 }
 
 export class MinioStorageClient implements StorageClient {
-
 	constructor(
 		private readonly configuration: Configuration,
 		private readonly fileSystemClient: FileSystemClient,
@@ -61,14 +60,12 @@ export class MinioStorageClient implements StorageClient {
 }
 
 export class EcritureFluxErreur extends Error {
-
     constructor(flowName: string){
         super("An error occurred while writing the flow : ".concat(flowName));
     }
 }
 
 export class LectureFluxErreur extends Error {
-
     constructor(flowName: string){
         super("An error occurred while reading the flow : ".concat(flowName));
     }

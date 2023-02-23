@@ -1,7 +1,7 @@
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
 
 import {
-	TransformerFluxStudapartUseCase,
+	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
@@ -19,7 +19,7 @@ describe("TransformerFluxStudapartUseCaseTest", () => {
 	let repository: StubbedType<AnnonceDeLogementRepository>;
 	let convertir: StubbedClass<Convertir>;
 
-	let useCase: TransformerFluxStudapartUseCase;
+	let usecase: TransformerFluxStudapart;
 
 	context("Lorsque je récupérer le flux venant de studapart, je le convertis et le sauvegarde", () => {
 		beforeEach(() => {
@@ -30,11 +30,11 @@ describe("TransformerFluxStudapartUseCaseTest", () => {
 			convertir = stubClass(Convertir);
 			convertir.depuisStudapartVersUnJeuneUneSolution.withArgs(AnnonceDeLogementStudapartFixtureBuilder.build()).returns(AnnonceDeLogementFixtureBuilder.build());
 
-			useCase = new TransformerFluxStudapartUseCase(repository, convertir);
+			usecase = new TransformerFluxStudapart(repository, convertir);
 		});
 
 		it("je sauvegarde une liste de logement UnJeuneUneSolution", async () => {
-			await useCase.executer(fluxTransformation);
+			await usecase.executer(fluxTransformation);
 
 			expect(repository.sauvegarder).to.have.been.calledWith([AnnonceDeLogementFixtureBuilder.build()], fluxTransformation);
 		});

@@ -5,6 +5,9 @@ import axios, { Axios } from "axios";
 import { Client } from "minio";
 import TurndownService from "turndown";
 
+import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
+import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
+
 import { DateService } from "@shared/src/date.service";
 import {
 	FileSystemClient,
@@ -38,6 +41,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 				});
 			},
 		},
+		FtpClient,
 		DateService,
 		{
 			provide: "FileSystemClient",
@@ -47,6 +51,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 			},
 		},
 		JsonContentParser,
+		StreamZipClient,
 		{
 			provide: "UuidGenerator",
 			useValue: new NodeUuidGenerator(),
@@ -57,8 +62,10 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		Axios,
 		Client,
 		DateService,
-		JsonContentParser,
+		FtpClient,
 		"FileSystemClient",
+		JsonContentParser,
+		StreamZipClient,
 		"UuidGenerator",
 	],
 })

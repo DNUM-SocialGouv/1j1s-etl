@@ -1,37 +1,45 @@
-import TurndownService from "turndown";
+import { Module } from "@nestjs/common";
 
-import { UsecaseContainer } from "@logements/src/transformation/application-service";
 import {
 	TransformerFluxImmojeune,
 } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
 import {
-	TransformerFluxStudapartUseCase,
+	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
+import { Gateways } from "@logements/src/transformation/configuration/gateway.container";
 import {
 	Convertir as ConvertirImmojeune,
 } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import {
 	Convertir as ConvertirStudapart,
 } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
-import { GatewayContainer } from "@logements/src/transformation/infrastructure/gateway";
 
+import { Shared } from "@shared/src";
+import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
 import { DateService } from "@shared/src/date.service";
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 
-export class UsecasesContainerFactory {
-	public static create(gateways: GatewayContainer): UsecaseContainer {
-		const htmlToMarkdownSanitizer = new HtmlToMarkdownSanitizer(new TurndownService());
-		const dateService = new DateService();
-
-		return {
-			transformerFluxImmojeune: new TransformerFluxImmojeune(
-				gateways.annonceDeLogementRepository,
-				new ConvertirImmojeune(htmlToMarkdownSanitizer, dateService),
-			),
-			transformerFluxStudapart: new TransformerFluxStudapartUseCase(
-				gateways.annonceDeLogementRepository,
-				new ConvertirStudapart(htmlToMarkdownSanitizer, dateService)
-			),
-		};
-	}
+@Module({
+	imports: [Gateways, Shared],
+	providers: [
+		{
+			provide: ConvertirImmojeune,
+			inject: ["AssainisseurDeTexte", DateService],
+			useFactory: (
+				assainisseurDeTexte: AssainisseurDeTexte,
+				dateService: DateService,
+			): ConvertirImmojeune => new ConvertirImmojeune(assainisseurDeTexte, dateService),
+		}, {
+			provide: ConvertirStudapart,
+			inject: ["AssainisseurDeTexte", DateService],
+			useFactory: (
+				assainisseurDeTexte: AssainisseurDeTexte,
+				dateService: DateService,
+			): ConvertirStudapart => new ConvertirStudapart(assainisseurDeTexte, dateService),
+		},
+		TransformerFluxImmojeune,
+		TransformerFluxStudapart,
+	],
+	exports: [TransformerFluxImmojeune, TransformerFluxStudapart],
+})
+export class Usecases {
 }
