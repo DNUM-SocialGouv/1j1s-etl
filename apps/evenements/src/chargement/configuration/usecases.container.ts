@@ -1,3 +1,5 @@
+import { Module } from "@nestjs/common";
+
 import {
 	ChargerFluxTousMobilises,
 } from "@evenements/src/chargement/application-service/charger-flux-tous-mobilises.usecase";
@@ -6,7 +8,6 @@ import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeu
 import {
 	ChargerEvenenementsDomainService,
 } from "@evenements/src/chargement/domain/service/charger-evenements.domain-service";
-import { Module } from "@nestjs/common";
 
 @Module({
 	imports: [Gateways],

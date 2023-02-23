@@ -70,7 +70,6 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			contentParser: JsonContentParser,
 			uuidGenerator: UuidGenerator,
 		): UnJeuneUneSolution.EvenementsRepository => {
-			console.log(fileSystemClient);
 			const minioConfiguration = configurationService.get<MinioConfiguration>("MINIO");
 			const strapiConfiguration = configurationService.get<StrapiConfiguration>("STRAPI");
 			const minioClient = new Client({
