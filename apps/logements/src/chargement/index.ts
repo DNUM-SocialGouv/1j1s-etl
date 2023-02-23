@@ -1,37 +1,38 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
+import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
 import { Configuration, ConfigurationFactory } from "@logements/src/chargement/configuration/configuration";
-import { GatewayContainerFactory } from "@logements/src/chargement/configuration/gateways.container";
+import { Usecases } from "@logements/src/chargement/configuration/usecase.container";
 import { LoadImmojeuneTask } from "@logements/src/chargement/infrastructure/tasks/load-immojeune.task";
 import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/tasks/load-studapart.task";
-import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/configuration/logger-strategy";
-import { SousModule } from "@shared/src/configuration/module";
-import { UsecaseContainer } from "@logements/src/chargement/application-service";
-import { UseCaseContainerFactory } from "@logements/src/chargement/configuration/usecase.container";
 
 @Module({
+	imports: [
+		ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }),
+		Usecases,
+	],
 	providers: [{
 		provide: LoadImmojeuneTask,
-		useValue: Chargement.export()["immojeune"],
+		inject: [ConfigService, ChargerFluxImmojeune],
+		useFactory: (
+			configurationService: ConfigService,
+			chargerFluxImmojeune: ChargerFluxImmojeune,
+		): LoadImmojeuneTask => {
+			return new LoadImmojeuneTask(chargerFluxImmojeune, configurationService.get<Configuration>("root"));
+		},
 	}, {
 		provide: LoadStudapartTask,
-		useValue: Chargement.export()["studapart"],
+		inject: [ConfigService, ChargerFluxStudapart],
+		useFactory: (
+			configurationService: ConfigService,
+			chargerFluxStudapart: ChargerFluxStudapart,
+		): LoadStudapartTask => {
+			return new LoadStudapartTask(chargerFluxStudapart, configurationService.get<Configuration>("root"));
+		},
 	}],
 	exports: [LoadImmojeuneTask, LoadStudapartTask],
 })
 export class Chargement {
-	public static export(): SousModule {
-		const configuration = ConfigurationFactory.create();
-		const loggerStrategy = new LogementsChargementLoggerStrategy(configuration);
-		const gateways = GatewayContainerFactory.create(configuration, loggerStrategy);
-		const usecases = UseCaseContainerFactory.create(gateways);
-		return Chargement.create(configuration, usecases);
-	}
-
-	private static create(configuration: Configuration, usecases: UsecaseContainer): SousModule {
-		return {
-			immojeune: new LoadImmojeuneTask(usecases.immojeune, configuration),
-			studapart: new LoadStudapartTask(usecases.studapart, configuration),
-		};
-	}
 }

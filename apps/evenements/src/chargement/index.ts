@@ -1,10 +1,11 @@
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
 import {
 	ChargerFluxTousMobilises,
 } from "@evenements/src/chargement/application-service/charger-flux-tous-mobilises.usecase";
 import { Usecases } from "@evenements/src/chargement/configuration/usecases.container";
 import { LoadTousMobilisesTask } from "@evenements/src/chargement/infrastructure/tasks/load-tous-mobilises.task";
-import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
 	imports: [ConfigModule, Usecases],

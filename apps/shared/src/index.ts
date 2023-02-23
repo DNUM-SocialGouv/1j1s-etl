@@ -1,9 +1,9 @@
 import { Client } from "minio";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { Module } from "@nestjs/common";
 import TurndownService from "turndown";
 
+import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { DateService } from "@shared/src/date.service";
 import {
 	FileSystemClient,
