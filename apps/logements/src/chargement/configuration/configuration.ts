@@ -41,6 +41,10 @@ export type Configuration = {
 }
 
 export class ConfigurationFactory {
+	public static createRoot(): { chargementLogements: Configuration } {
+		return { chargementLogements: ConfigurationFactory.create() };
+	}
+
 	public static create(): Configuration {
 		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
 

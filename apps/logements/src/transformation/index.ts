@@ -18,7 +18,7 @@ import {
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }),
+		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
 		Usecases,
 	],
 	providers: [{
@@ -28,7 +28,7 @@ import {
 			configurationService: ConfigService,
 			transformerFluxImmojeune: TransformerFluxImmojeune
 		): TransformFlowImmojeuneTask => {
-			return new TransformFlowImmojeuneTask(transformerFluxImmojeune, configurationService.get<Configuration>("root"));
+			return new TransformFlowImmojeuneTask(transformerFluxImmojeune, configurationService.get<Configuration>("transformationLogements"));
 		},
 	}, {
 		provide: TransformFlowStudapartTask,
@@ -37,7 +37,7 @@ import {
 			configurationService: ConfigService,
 			transformerFluxStudapart: TransformerFluxStudapart
 		): TransformFlowStudapartTask => {
-			return new TransformFlowStudapartTask(transformerFluxStudapart, configurationService.get<Configuration>("root"));
+			return new TransformFlowStudapartTask(transformerFluxStudapart, configurationService.get<Configuration>("transformationLogements"));
 		},
 	}],
 	exports: [TransformFlowImmojeuneTask, TransformFlowStudapartTask],

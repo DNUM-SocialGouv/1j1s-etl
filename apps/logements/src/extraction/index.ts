@@ -10,7 +10,7 @@ import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructu
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }),
+		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
 		Usecases,
 	],
 	providers: [{
@@ -20,7 +20,7 @@ import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructu
 			configurationService: ConfigService,
 			extraireImmojeune: ExtraireImmojeune,
 		): ExtractFlowImmojeuneTask => {
-			return new ExtractFlowImmojeuneTask(extraireImmojeune, configurationService.get<Configuration>("root"));
+			return new ExtractFlowImmojeuneTask(extraireImmojeune, configurationService.get<Configuration>("extractionLogements"));
 		},
 	}, {
 		provide: ExtractFlowStudapartTask,
@@ -29,7 +29,7 @@ import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructu
 			configurationService: ConfigService,
 			extraireStudapart: ExtraireStudapart,
 		): ExtractFlowStudapartTask => {
-			return new ExtractFlowStudapartTask(extraireStudapart, configurationService.get<Configuration>("root"));
+			return new ExtractFlowStudapartTask(extraireStudapart, configurationService.get<Configuration>("extractionLogements"));
 		},
 	}],
 	exports: [ExtractFlowImmojeuneTask, ExtractFlowStudapartTask],

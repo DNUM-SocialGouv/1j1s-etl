@@ -29,7 +29,7 @@ import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
-	imports: [ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }), Shared],
+	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
 	providers: [{
 		provide: HousingBasicFlowHttpClient,
 		inject: [Axios],
@@ -43,7 +43,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			streamZipClient: StreamZipClient,
 			fileSystemClient: FileSystemClient,
 		): StudapartFtpFlowClient => {
-			const configuration = configurationService.get<Configuration>("root");
+			const configuration = configurationService.get<Configuration>("extractionLogements");
 			return new StudapartFtpFlowClient(configuration, ftpClient, streamZipClient, fileSystemClient);
 		},
 	}, {
@@ -54,14 +54,14 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			housingBasicFlowClient: HousingBasicFlowHttpClient,
 			studapartFlowClient: StudapartFtpFlowClient,
 		): FlowStrategy => {
-			const configuration = configurationService.get<Configuration>("root");
+			const configuration = configurationService.get<Configuration>("extractionLogements");
 			return new HousingsOnFlowNameStrategy(configuration, housingBasicFlowClient, studapartFlowClient);
 		},
 	}, {
 		provide: LogementsExtractionLoggerStrategy,
 		inject: [ConfigService],
 		useFactory: (configurationService: ConfigService): LogementsExtractionLoggerStrategy => {
-			return new LogementsExtractionLoggerStrategy(configurationService.get<Configuration>("root"));
+			return new LogementsExtractionLoggerStrategy(configurationService.get<Configuration>("extractionLogements"));
 		},
 	}, {
 		provide: "FluxRepository",
@@ -74,7 +74,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			flowStrategy: FlowStrategy,
 			loggerStrategy: LoggerStrategy,
 		): FluxRepository => {
-			const configuration = configurationService.get<Configuration>("root");
+			const configuration = configurationService.get<Configuration>("extractionLogements");
 			return new MinioHttpFlowRepository(
 				configuration,
 				minioClient,

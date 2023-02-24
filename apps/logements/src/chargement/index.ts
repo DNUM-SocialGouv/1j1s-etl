@@ -10,7 +10,7 @@ import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/task
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }),
+		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
 		Usecases,
 	],
 	providers: [{
@@ -20,7 +20,7 @@ import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/task
 			configurationService: ConfigService,
 			chargerFluxImmojeune: ChargerFluxImmojeune,
 		): LoadImmojeuneTask => {
-			return new LoadImmojeuneTask(chargerFluxImmojeune, configurationService.get<Configuration>("root"));
+			return new LoadImmojeuneTask(chargerFluxImmojeune, configurationService.get<Configuration>("chargementLogements"));
 		},
 	}, {
 		provide: LoadStudapartTask,
@@ -29,7 +29,7 @@ import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/task
 			configurationService: ConfigService,
 			chargerFluxStudapart: ChargerFluxStudapart,
 		): LoadStudapartTask => {
-			return new LoadStudapartTask(chargerFluxStudapart, configurationService.get<Configuration>("root"));
+			return new LoadStudapartTask(chargerFluxStudapart, configurationService.get<Configuration>("chargementLogements"));
 		},
 	}],
 	exports: [LoadImmojeuneTask, LoadStudapartTask],
