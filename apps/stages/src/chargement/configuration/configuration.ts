@@ -51,6 +51,10 @@ export type Configuration = {
 }
 
 export class ConfigurationFactory {
+	public static createRoot(): { stagesChargement: Configuration } {
+		return { stagesChargement: ConfigurationFactory.create() };
+	}
+
 	public static create(): Configuration {
 		const { getOrError, getOrDefault, toBoolean } = ConfigurationFactory;
 		const DEFAULT_MINIO_PORT = "9000";
