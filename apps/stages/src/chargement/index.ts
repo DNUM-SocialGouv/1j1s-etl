@@ -1,26 +1,44 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { SousModule } from "@shared/src/configuration/module";
-
-import { UsecaseContainer } from "@stages/src/chargement/application-service";
+import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
+import {
+	ChargerFluxStagefrCompresse,
+} from "@stages/src/chargement/application-service/charger-flux-stagefr-compresse.usecase";
+import {
+	ChargerFluxStagefrDecompresse,
+} from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/chargement/configuration/configuration";
-import { GatewayContainerFactory } from "@stages/src/chargement/configuration/gateways.container";
-import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
-import { UsecaseContainerFactory } from "@stages/src/chargement/configuration/usecases.container";
+import { Usecases } from "@stages/src/chargement/configuration/usecases.container";
 import { LoadJobteaserTask } from "@stages/src/chargement/infrastructure/tasks/load-jobteaser.task";
 import { LoadStagefrCompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-compressed.task";
-import { LoadStagefrUncompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
+import {
+	LoadStagefrUncompressedTask,
+} from "@stages/src/chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
 
 @Module({
+	imports: [
+		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
+		Usecases,
+	],
 	providers: [{
 		provide: LoadJobteaserTask,
-		useValue: Chargement.export()["jobteaser"],
+		inject: [ConfigService, ChargerFluxJobteaser],
+		useFactory: (configurationService: ConfigService, chargerFluxJobteaser: ChargerFluxJobteaser): LoadJobteaserTask => {
+			return new LoadJobteaserTask(chargerFluxJobteaser, configurationService.get<Configuration>("stagesChargement"));
+		},
 	}, {
 		provide: LoadStagefrCompressedTask,
-		useValue: Chargement.export()["stagefr-compresse"],
+		inject: [ConfigService, ChargerFluxStagefrCompresse],
+		useFactory: (configurationService: ConfigService, chargerFluxStagefrCompresse: ChargerFluxStagefrCompresse): LoadStagefrCompressedTask => {
+			return new LoadStagefrCompressedTask(chargerFluxStagefrCompresse, configurationService.get<Configuration>("stagesChargement"));
+		},
 	}, {
 		provide: LoadStagefrUncompressedTask,
-		useValue: Chargement.export()["stagefr-decompresse"],
+		inject: [ConfigService, ChargerFluxStagefrDecompresse],
+		useFactory: (configurationService: ConfigService, chargerFluxStagefrCompresse: ChargerFluxStagefrDecompresse): LoadStagefrUncompressedTask => {
+			return new LoadStagefrUncompressedTask(chargerFluxStagefrCompresse, configurationService.get<Configuration>("stagesChargement"));
+		},
 	}],
 	exports: [
 		LoadJobteaserTask,
@@ -29,20 +47,4 @@ import { LoadStagefrUncompressedTask } from "@stages/src/chargement/infrastructu
 	],
 })
 export class Chargement {
-	public static export(): SousModule {
-		const configuration = ConfigurationFactory.create();
-		const loggerStrategy = new StagesChargementLoggerStrategy(configuration);
-		const gateways = GatewayContainerFactory.create(configuration, loggerStrategy);
-		const usecases = UsecaseContainerFactory.create(gateways);
-		return Chargement.create(configuration, usecases);
-	}
-
-	private static create(configuration: Configuration, usecases: UsecaseContainer): SousModule {
-		return {
-			jobteaser: new LoadJobteaserTask(usecases.chargerFluxJobteaser, configuration),
-			"stagefr-compresse": new LoadStagefrCompressedTask(usecases.chargerFluxStagefrCompresse, configuration),
-			"stagefr-decompresse": new LoadStagefrUncompressedTask(usecases.chargerFluxStagefrDecompresse, configuration),
-		};
-	}
 }
-
