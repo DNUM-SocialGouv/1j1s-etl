@@ -30,14 +30,14 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }),
+		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
 		Shared,
 	],
 	providers: [{
 		provide: "LoggerStrategy",
 		inject: [ConfigService],
 		useFactory: (configurationService: ConfigService): LoggerStrategy => {
-			return new LogementsTransformationLoggerStrategy(configurationService.get<Configuration>("root"));
+			return new LogementsTransformationLoggerStrategy(configurationService.get<Configuration>("transformationLogements"));
 		},
 	}, {
 		provide: "ContentParserStrategy",
@@ -69,7 +69,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			contentParserStrategy: ContentParserStrategy,
 		): AnnonceDeLogementRepository => {
 			return new MinioAnnonceDeLogementRepository(
-				configurationService.get<Configuration>("root"),
+				configurationService.get<Configuration>("transformationLogements"),
 				minioClient,
 				uuidGenerator,
 				fileSystemClient,

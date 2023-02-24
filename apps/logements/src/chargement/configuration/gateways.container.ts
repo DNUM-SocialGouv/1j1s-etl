@@ -32,14 +32,14 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [(): { root: Configuration } => ({ root: ConfigurationFactory.create() })] }),
+		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
 		Shared,
 	],
 	providers: [{
 		provide: "LoggerStrategy",
 		inject: [ConfigService],
 		useFactory: (configurationService: ConfigService): LoggerStrategy => {
-			return new LogementsChargementLoggerStrategy(configurationService.get<Configuration>("root"));
+			return new LogementsChargementLoggerStrategy(configurationService.get<Configuration>("chargementLogements"));
 		},
 	}, {
 		provide: "StorageClient",
@@ -50,7 +50,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			minioClient: Client,
 			uuidGenerator: UuidGenerator,
 		): StorageClient => {
-			const configuration = configurationService.get<Configuration>("root");
+			const configuration = configurationService.get<Configuration>("chargementLogements");
 			return new MinioStorageClient(configuration, fileSystemClient, minioClient, uuidGenerator);
 		},
 	}, {
@@ -86,7 +86,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 			dateService: DateService,
 			loggerStrategy: LoggerStrategy,
 		): AnnonceDeLogementRepository => {
-			const configuration = configurationService.get<Configuration>("root");
+			const configuration = configurationService.get<Configuration>("chargementLogements");
 
 			if (configuration.FEATURE_FLIPPING) {
 				return new FeatureFlippingAnnonceDeLogementRepository(
