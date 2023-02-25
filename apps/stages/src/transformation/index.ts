@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Usecases } from "@stages/src/transformation/application-service";
 import {
 	TransformerFluxJobteaser,
 } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
@@ -11,7 +12,6 @@ import {
 	TransformerFluxStagefrDecompresse,
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
-import { Usecases } from "@stages/src/transformation/configuration/usecases.container";
 import {
 	TransformFlowJobteaserTask,
 } from "@stages/src/transformation/infrastructure/tasks/transform-flow-jobteaser.task";

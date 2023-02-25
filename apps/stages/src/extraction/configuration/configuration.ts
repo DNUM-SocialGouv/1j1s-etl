@@ -11,7 +11,7 @@ type MinioConfiguration = {
 	URL: string
 }
 
-export type TaskConfiguration = {
+type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	FLUX_URL: string
 	NAME: string

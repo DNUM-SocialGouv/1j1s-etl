@@ -1,15 +1,61 @@
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
+import { XMLParser } from "fast-xml-parser";
 import { Client } from "minio";
 
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { Pays } from "@shared/src/pays";
+import { Shared } from "@shared/src";
+import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { DateService } from "@shared/src/date.service";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { ContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { OffreDeStageRepository } from "@stages/src/transformation/domain/service/offre-de-stage.repository";
+import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
+import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/configuration/logger-strategy";
+import {
+	MinioOffreDeStageRepository,
+} from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 
-export type GatewayContainer = {
-	country: Pays
-	contentParser: ContentParser
-	minioClient: Client
-	offreDeStageRepository: OffreDeStageRepository
-	textSanitizer: AssainisseurDeTexte
+@Module({
+	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
+	providers: [
+		{
+			provide: "LoggerStrategy",
+			inject: [ConfigService],
+			useFactory: (configurationService: ConfigService): StagesTransformationLoggerStrategy => {
+				return new StagesTransformationLoggerStrategy(configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
+		{
+			provide: "ContentParser",
+			useValue: new XmlContentParser(new XMLParser({ trimValues: true })),
+		},
+		{
+			provide: "OffreDeStageRepository",
+			inject: [ConfigService, Client, "FileSystemClient", "UuidGenerator", "ContentParser", DateService, "LoggerStrategy"],
+			useFactory: (
+				configurationService: ConfigService,
+				minioClient: Client,
+				fileSystemClient: FileSystemClient,
+				uuidGenerator: UuidGenerator,
+				contentParser: ContentParser,
+				dateService: DateService,
+				loggerStrategy: LoggerStrategy,
+			): MinioOffreDeStageRepository => {
+				return new MinioOffreDeStageRepository(
+					configurationService.get<Configuration>("stagesTransformation"),
+					minioClient,
+					fileSystemClient,
+					uuidGenerator,
+					contentParser,
+					dateService,
+					loggerStrategy,
+				);
+			},
+		},
+	],
+	exports: ["OffreDeStageRepository"],
+})
+export class Gateways {
 }

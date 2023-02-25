@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Usecases } from "@stages/src/chargement/application-service";
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {
 	ChargerFluxStagefrCompresse,
@@ -9,7 +10,6 @@ import {
 	ChargerFluxStagefrDecompresse,
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/chargement/configuration/configuration";
-import { Usecases } from "@stages/src/chargement/configuration/usecases.container";
 import { LoadJobteaserTask } from "@stages/src/chargement/infrastructure/tasks/load-jobteaser.task";
 import { LoadStagefrCompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-compressed.task";
 import {

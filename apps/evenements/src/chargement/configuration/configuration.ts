@@ -2,7 +2,7 @@ import { Environment, SentryConfiguration } from "@configuration/src/configurati
 
 import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 
-export type MinioConfiguration = {
+type MinioConfiguration = {
 	ACCESS_KEY: string
 	PORT: number
 	RESULT_BUCKET_NAME: string
@@ -12,7 +12,7 @@ export type MinioConfiguration = {
 	URL: string
 }
 
-export type StrapiConfiguration = {
+type StrapiConfiguration = {
 	AUTHENTICATION_URL: string
 	BASE_URL: string
 	EVENEMENT_URL: string
@@ -20,7 +20,7 @@ export type StrapiConfiguration = {
 	USERNAME: string
 }
 
-export type TaskConfiguration = {
+type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	NAME: string
 	TRANSFORMED_FILE_EXTENSION: string
@@ -36,13 +36,7 @@ export type Configuration = {
 	MINIO: MinioConfiguration
 	NODE_ENV: Environment
 	SENTRY: SentryConfiguration
-	STRAPI: {
-		AUTHENTICATION_URL: string
-		BASE_URL: string
-		EVENEMENT_URL: string
-		PASSWORD: string
-		USERNAME: string
-	}
+	STRAPI: StrapiConfiguration
 	TEMPORARY_DIRECTORY_PATH: string
 }
 

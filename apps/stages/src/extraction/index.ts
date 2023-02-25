@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Usecases } from "@stages/src/extraction/application-service";
 import { ExtraireJobteaser } from "@stages/src/extraction/application-service/extraire-jobteaser.usecase";
 import {
 	ExtraireStagefrCompresse,
@@ -9,7 +10,6 @@ import {
 	ExtraireStagefrDecompresse,
 } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/extraction/configuration/configuration";
-import { Usecases } from "@stages/src/extraction/configuration/usecases.container";
 import { ExtractFlowJobteaserTask } from "@stages/src/extraction/infrastructure/tasks/extract-flow-jobteaser.task";
 import {
 	ExtractFlowStagefrCompressedTask,

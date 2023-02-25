@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Usecases } from "@logements/src/transformation/application-service";
 import {
 	TransformerFluxImmojeune,
 } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
@@ -8,7 +9,6 @@ import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 import { Configuration, ConfigurationFactory } from "@logements/src/transformation/configuration/configuration";
-import { Usecases } from "@logements/src/transformation/configuration/usecases.container";
 import {
 	TransformFlowImmojeuneTask,
 } from "@logements/src/transformation/infrastructure/tasks/transform-flow-immojeune.task";
