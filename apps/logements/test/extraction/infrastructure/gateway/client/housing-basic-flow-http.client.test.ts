@@ -1,9 +1,9 @@
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
-import { Axios } from "axios";
+import { AxiosInstance } from "axios";
 import sinon from "sinon";
 
-import { expect, StubbedClass, stubClass } from "@test/configuration";
+import { expect } from "@test/configuration";
 
 import {
 	HousingBasicFlowHttpClient,
@@ -12,16 +12,16 @@ import {
 import { Logger } from "@shared/src/configuration/logger";
 
 let url: string;
-let axios: StubbedClass<Axios>;
+let axios: StubbedType<AxiosInstance>;
 let logger: StubbedType<Logger>;
 let housingBasicFlowHttpClient: HousingBasicFlowHttpClient;
 
 describe("HousingBasicFlowHttpClientTest", () => {
 	beforeEach(() => {
 		logger = stubInterface<Logger>(sinon);
-		axios = stubClass(Axios);
+		axios = stubInterface<AxiosInstance>(sinon);
 		url = "http://some.url";
-		housingBasicFlowHttpClient = new HousingBasicFlowHttpClient(axios);
+		housingBasicFlowHttpClient = new HousingBasicFlowHttpClient(axios as unknown as AxiosInstance);
 	});
 
 	context("Lorsque je récupère un flux existant", () => {

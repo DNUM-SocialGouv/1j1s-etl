@@ -1,9 +1,9 @@
 import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
-import { Axios, AxiosError } from "axios";
+import { AxiosError, AxiosInstance } from "axios";
 import sinon from "sinon";
 
-import { expect, StubbedClass, stubClass } from "@test/configuration";
+import { expect } from "@test/configuration";
 
 import { Logger } from "@shared/src/configuration/logger";
 import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
@@ -12,21 +12,21 @@ import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreu
 
 let errorCode: number;
 let url: string;
-let axios: StubbedClass<Axios>;
+let axiosInstance: StubbedType<AxiosInstance>;
 let logger: StubbedType<Logger>;
 let fluxHttpClient: FlowClient;
 
 describe("FluxHttpClientTest", () => {
 	beforeEach(() => {
 		logger = stubInterface<Logger>(sinon);
-		axios = stubClass(Axios);
+		axiosInstance = stubInterface<AxiosInstance>(sinon);
 		url = "http://some.url";
-		fluxHttpClient = new BasicFlowHttpClient(axios);
+		fluxHttpClient = new BasicFlowHttpClient(axiosInstance as unknown as AxiosInstance);
 	});
 
 	context("Lorsque je récupère un flux existant", () => {
 		beforeEach(() => {
-			axios.get.resolves({ data: "<p>Hello World</p>" });
+			axiosInstance.get.resolves({ data: "<p>Hello World</p>" });
 		});
 
 		it("je le retourne au format textuel", async () => {
@@ -39,7 +39,7 @@ describe("FluxHttpClientTest", () => {
 	context("Lorsque je récupère un flux qui n'existe pas", () => {
 		beforeEach(() => {
 			errorCode = 500;
-			axios.get.rejects(new AxiosError("Some error", errorCode.toString()));
+			axiosInstance.get.rejects(new AxiosError("Some error", errorCode.toString()));
 		});
 
 		it("je lance une erreur", async () => {
