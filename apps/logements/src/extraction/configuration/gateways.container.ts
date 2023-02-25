@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { Axios, AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 import { Client } from "minio";
 
 import { Configuration, ConfigurationFactory } from "@logements/src/extraction/configuration/configuration";
@@ -32,7 +32,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
 	providers: [{
 		provide: HousingBasicFlowHttpClient,
-		inject: [Axios],
+		inject: ["AxiosInstance"],
 		useFactory: (axiosInstance: AxiosInstance): HousingBasicFlowHttpClient => new HousingBasicFlowHttpClient(axiosInstance),
 	}, {
 		provide: StudapartFtpFlowClient,

@@ -15,6 +15,7 @@ import {
 } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
+import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
@@ -25,7 +26,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 			useValue: new HtmlToMarkdownSanitizer(new TurndownService()),
 		},
 		{
-			provide: Axios,
+			provide: "AxiosInstance",
 			useValue: axios.create({ maxBodyLength: Infinity, maxContentLength: Infinity }),
 		},
 		{
@@ -52,6 +53,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		},
 		JsonContentParser,
 		StreamZipClient,
+		UnzipClient,
 		{
 			provide: "UuidGenerator",
 			useValue: new NodeUuidGenerator(),
@@ -66,6 +68,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		"FileSystemClient",
 		JsonContentParser,
 		StreamZipClient,
+		UnzipClient,
 		"UuidGenerator",
 	],
 })

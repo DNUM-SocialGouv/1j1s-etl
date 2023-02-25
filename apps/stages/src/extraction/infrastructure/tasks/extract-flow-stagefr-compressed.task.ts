@@ -5,7 +5,7 @@ import { Configuration } from "@stages/src/extraction/configuration/configuratio
 import { TaskLog } from "@stages/src/extraction/configuration/log.decorator";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 
-export class ExtractFluxStagefrCompressedTask implements Task {
+export class ExtractFlowStagefrCompressedTask implements Task {
 	constructor(
 		private readonly usecase: ExtraireStagefrCompresse,
 		private readonly configuration: Configuration,
