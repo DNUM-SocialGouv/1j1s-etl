@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Usecases } from "@logements/src/chargement/application-service";
 import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
 import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
 import { Configuration, ConfigurationFactory } from "@logements/src/chargement/configuration/configuration";
-import { Usecases } from "@logements/src/chargement/configuration/usecase.container";
 import { LoadImmojeuneTask } from "@logements/src/chargement/infrastructure/tasks/load-immojeune.task";
 import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/tasks/load-studapart.task";
 

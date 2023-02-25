@@ -43,7 +43,6 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 				});
 			},
 		},
-		CountryToIso,
 		FtpClient,
 		DateService,
 		{
@@ -54,6 +53,10 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 			},
 		},
 		JsonContentParser,
+		{
+			provide: "Pays",
+			useValue: new CountryToIso(),
+		},
 		StreamZipClient,
 		UnzipClient,
 		{
@@ -65,11 +68,11 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		"AssainisseurDeTexte",
 		"AxiosInstance",
 		Client,
-		CountryToIso,
 		DateService,
 		FtpClient,
 		"FileSystemClient",
 		JsonContentParser,
+		"Pays",
 		StreamZipClient,
 		UnzipClient,
 		"UuidGenerator",

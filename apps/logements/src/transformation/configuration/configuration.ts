@@ -13,7 +13,7 @@ type MinioConfiguration = {
 	URL: string
 }
 
-export type TaskConfiguration = {
+type TaskConfiguration = {
 	NAME: string
 	RAW_FILE_EXTENSION: string
 	URL: string

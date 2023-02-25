@@ -1,16 +1,6 @@
+import { Environment, SentryConfiguration } from "@configuration/src/configuration";
+
 import { Domaine, LogLevel } from "@shared/src/configuration/logger";
-
-export enum Environment {
-	DEVELOPMENT = "development",
-	PRODUCTION = "production",
-	QUALIFICATION = "qualification"
-}
-
-export type SentryConfiguration = {
-	DSN: string
-	PROJECT: string
-	RELEASE: string
-}
 
 type MinioConfiguration = {
 	ACCESS_KEY: string
@@ -22,7 +12,7 @@ type MinioConfiguration = {
 	URL: string
 }
 
-export type TaskConfiguration = {
+type TaskConfiguration = {
 	DIRECTORY_NAME: string
 	NAME: string
 	TRANSFORMED_FILE_EXTENSION: string

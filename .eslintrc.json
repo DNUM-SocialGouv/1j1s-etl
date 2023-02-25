@@ -21,6 +21,7 @@
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "@typescript-eslint/unbound-method": "off",
     "comma-dangle": ["error", "always-multiline"],
     "complexity": ["error", 10],
@@ -82,6 +83,12 @@
     ]
   },
   "overrides": [
+    {
+      "files": ["**/src/**/application-service/index.ts"],
+      "rules": {
+        "@sefr/no-onion-architecture-violation": "off"
+      }
+    },
     {
       "files": [
         "**/stages/src/transformation/domain/model/jobteaser/index.ts"

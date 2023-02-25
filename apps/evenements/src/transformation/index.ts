@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Usecases } from "@evenements/src/transformation/application-service";
 import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 import { Configuration, ConfigurationFactory } from "@evenements/src/transformation/configuration/configuration";
-import { Usecases } from "@evenements/src/transformation/configuration/usecases.container";
 import {
 	TransformFlowTousMobilisesTask,
 } from "@evenements/src/transformation/infrastructure/tasks/transform-flow-tous-mobilises.task";

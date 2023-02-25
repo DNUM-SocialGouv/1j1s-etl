@@ -2,7 +2,7 @@ import { Environment, SentryConfiguration } from "@configuration/src/configurati
 
 import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 
-export type MinioConfiguration = {
+type MinioConfiguration = {
     ACCESS_KEY: string
     HISTORY_DIRECTORY_NAME: string
     PORT: number
@@ -12,7 +12,7 @@ export type MinioConfiguration = {
     TRANSFORMED_BUCKET_NAME: string
 }
 
-export type TaskConfiguration = {
+type TaskConfiguration = {
     DIRECTORY_NAME: string
     FLUX_URL: string
     NAME: string
