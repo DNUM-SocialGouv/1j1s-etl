@@ -33,6 +33,10 @@ export type Configuration = {
 }
 
 export class ConfigurationFactory {
+    public static createRoot(): { evenementsTransformation: Configuration } {
+        return { evenementsTransformation: ConfigurationFactory.create() };
+    }
+
     public static create(): Configuration {
         const { getOrError, getOrDefault } = ConfigurationFactory;
         const DEFAULT_RAW_BUCKET_NAME = "raw";
