@@ -12,6 +12,7 @@ import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.str
 import { OctetStreamFlowHttpClient } from "@shared/src/infrastructure/gateway/client/octet-stream-flow-http.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
+import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 import { Configuration, ConfigurationFactory } from "@stages/src/extraction/configuration/configuration";
@@ -41,8 +42,20 @@ import {
 			inject: ["AxiosInstance"],
 			useFactory: (axios: AxiosInstance): BasicFlowHttpClient => new BasicFlowHttpClient(axios),
 		},
-		CompressedFlowHttpClient,
-		OctetStreamFlowHttpClient,
+		{
+			provide: CompressedFlowHttpClient,
+			inject: [OctetStreamHttpClient, UnzipClient],
+			useFactory: (octetStreamHttpClient: OctetStreamHttpClient, unzipClient: UnzipClient): CompressedFlowHttpClient => {
+				return new CompressedFlowHttpClient(octetStreamHttpClient, unzipClient);
+			},
+		},
+		{
+			provide: OctetStreamFlowHttpClient,
+			inject: [OctetStreamHttpClient],
+			useFactory: (octetStreamHttpClient: OctetStreamHttpClient): OctetStreamFlowHttpClient => {
+				return new OctetStreamFlowHttpClient(octetStreamHttpClient);
+			},
+		},
 		{
 			provide: StagesOnFlowNameStrategy,
 			inject: [ConfigService, BasicFlowHttpClient, CompressedFlowHttpClient, OctetStreamFlowHttpClient],
@@ -87,7 +100,7 @@ import {
 					fileSystemClient,
 					uuidGenerator,
 					flowStrategy,
-					loggerStrategy
+					loggerStrategy,
 				);
 			},
 		},

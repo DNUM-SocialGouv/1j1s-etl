@@ -8,6 +8,9 @@ import {
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 import { Gateways } from "@logements/src/transformation/configuration/gateway.container";
 import {
+	AnnonceDeLogementRepository,
+} from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import {
 	Convertir as ConvertirImmojeune,
 } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import {
@@ -36,8 +39,20 @@ import { DateService } from "@shared/src/date.service";
 				dateService: DateService,
 			): ConvertirStudapart => new ConvertirStudapart(assainisseurDeTexte, dateService),
 		},
-		TransformerFluxImmojeune,
-		TransformerFluxStudapart,
+		{
+			provide: TransformerFluxImmojeune,
+			inject: [ConvertirImmojeune, "AnnonceDeLogementRepository"],
+			useFactory: (convertir: ConvertirImmojeune, annonceDeLogementRepository: AnnonceDeLogementRepository): TransformerFluxImmojeune => {
+				return new TransformerFluxImmojeune(annonceDeLogementRepository, convertir);
+			},
+		},
+		{
+			provide: TransformerFluxStudapart,
+			inject: [ConvertirStudapart, "AnnonceDeLogementRepository"],
+			useFactory: (convertir: ConvertirStudapart, annonceDeLogementRepository: AnnonceDeLogementRepository): TransformerFluxStudapart => {
+				return new TransformerFluxStudapart(annonceDeLogementRepository, convertir);
+			},
+		},
 	],
 	exports: [TransformerFluxImmojeune, TransformerFluxStudapart],
 })

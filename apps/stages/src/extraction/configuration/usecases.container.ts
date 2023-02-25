@@ -24,9 +24,27 @@ import { FluxRepository } from "@stages/src/extraction/domain/service/flux.repos
 				return new ExtraireFluxDomainService(fluxRepository, dateService);
 			},
 		},
-		ExtraireJobteaser,
-		ExtraireStagefrCompresse,
-		ExtraireStagefrDecompresse,
+		{
+			provide: ExtraireJobteaser,
+			inject: [ExtraireFluxDomainService],
+			useFactory: (extaireFluxDomainService: ExtraireFluxDomainService): ExtraireJobteaser => {
+				return new ExtraireJobteaser(extaireFluxDomainService);
+			},
+		},
+		{
+			provide: ExtraireStagefrCompresse,
+			inject: [ExtraireFluxDomainService],
+			useFactory: (extaireFluxDomainService: ExtraireFluxDomainService): ExtraireStagefrCompresse => {
+				return new ExtraireStagefrCompresse(extaireFluxDomainService);
+			},
+		},
+		{
+			provide: ExtraireStagefrDecompresse,
+			inject: [ExtraireFluxDomainService],
+			useFactory: (extaireFluxDomainService: ExtraireFluxDomainService): ExtraireStagefrDecompresse => {
+				return new ExtraireStagefrDecompresse(extaireFluxDomainService);
+			},
+		},
 	],
 	exports: [ExtraireJobteaser, ExtraireStagefrCompresse, ExtraireStagefrDecompresse],
 })
