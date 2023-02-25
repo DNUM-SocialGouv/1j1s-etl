@@ -14,6 +14,7 @@ import {
 	NodeFileSystemClient,
 } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { CountryToIso } from "@shared/src/infrastructure/gateway/country-to-iso";
 import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
 import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
@@ -42,6 +43,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 				});
 			},
 		},
+		CountryToIso,
 		FtpClient,
 		DateService,
 		{

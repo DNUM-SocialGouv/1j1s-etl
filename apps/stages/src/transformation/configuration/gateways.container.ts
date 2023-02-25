@@ -1,51 +1,61 @@
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
 import { XMLParser } from "fast-xml-parser";
 import { Client } from "minio";
-import TurndownService from "turndown";
 
+import { Shared } from "@shared/src";
+import { LoggerStrategy } from "@shared/src/configuration/logger";
 import { DateService } from "@shared/src/date.service";
-import { NodeFileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
-import { XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { HtmlToMarkdownSanitizer } from "@shared/src/infrastructure/gateway/html-to-markdown.sanitizer";
-import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { ContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
+import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
 import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/configuration/logger-strategy";
-import { GatewayContainer } from "@stages/src/transformation/infrastructure/gateway";
-import { CountryToIso } from "@stages/src/transformation/infrastructure/gateway/country-to-iso";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 
-export class GatewayContainerFactory {
-	public static create(configuration: Configuration, loggerStrategy: StagesTransformationLoggerStrategy): GatewayContainer {
-		const fileSystemClient = new NodeFileSystemClient(configuration.TEMPORARY_DIRECTORY_PATH);
-		const minioClient = new Client({
-			accessKey: configuration.MINIO.ACCESS_KEY,
-			secretKey: configuration.MINIO.SECRET_KEY,
-			port: configuration.MINIO.PORT,
-			endPoint: configuration.MINIO.URL,
-		});
-		const uuidClient = new NodeUuidGenerator();
-		const xmlParser = new XMLParser({ trimValues: true });
-		const contentParserRepository = new XmlContentParser(xmlParser);
-		const htmlToMarkdown = new TurndownService();
-		const assainisseurDeTexte = new HtmlToMarkdownSanitizer(htmlToMarkdown);
-		const dateService = new DateService();
-
-		return {
-			country: new CountryToIso(),
-			contentParser: contentParserRepository,
-			minioClient,
-			offreDeStageRepository: new MinioOffreDeStageRepository(
-				configuration,
-				minioClient,
-				fileSystemClient,
-				uuidClient,
-				contentParserRepository,
-				dateService,
-				loggerStrategy,
-			),
-			textSanitizer: assainisseurDeTexte,
-		};
-	}
+@Module({
+	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
+	providers: [
+		{
+			provide: "LoggerStrategy",
+			inject: [ConfigService],
+			useFactory: (configurationService: ConfigService): StagesTransformationLoggerStrategy => {
+				return new StagesTransformationLoggerStrategy(configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
+		{
+			provide: "ContentParser",
+			useValue: new XmlContentParser(new XMLParser({ trimValues: true })),
+		},
+		{
+			provide: "OffreDeStageRepository",
+			inject: [ConfigService, Client, "FileSystemClient", "UuidGenerator", "ContentParser", DateService, "LoggerStrategy"],
+			useFactory: (
+				configurationService: ConfigService,
+				minioClient: Client,
+				fileSystemClient: FileSystemClient,
+				uuidGenerator: UuidGenerator,
+				contentParser: ContentParser,
+				dateService: DateService,
+				loggerStrategy: LoggerStrategy
+			): MinioOffreDeStageRepository => {
+				return new MinioOffreDeStageRepository(
+					configurationService.get<Configuration>("stagesTransformation"),
+					minioClient,
+					fileSystemClient,
+					uuidGenerator,
+					contentParser,
+					dateService,
+					loggerStrategy,
+				);
+			},
+		},
+	],
+	exports: ["OffreDeStageRepository"],
+})
+export class Gateways {
 }

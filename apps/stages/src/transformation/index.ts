@@ -1,13 +1,20 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { SousModule } from "@shared/src/configuration/module";
-
-import { UsecaseContainer } from "@stages/src/transformation/application-service";
+import {
+	TransformerFluxJobteaser,
+} from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
+import {
+	TransformerFluxStagefrCompresse,
+} from "@stages/src/transformation/application-service/transformer-flux-stagefr-compresse.usecase";
+import {
+	TransformerFluxStagefrDecompresse,
+} from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
-import { GatewayContainerFactory } from "@stages/src/transformation/configuration/gateways.container";
-import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/configuration/logger-strategy";
-import { UsecaseContainerFactory } from "@stages/src/transformation/configuration/usecases.container";
-import { TransformFlowJobteaserTask } from "@stages/src/transformation/infrastructure/tasks/transform-flow-jobteaser.task";
+import { Usecases } from "@stages/src/transformation/configuration/usecases.container";
+import {
+	TransformFlowJobteaserTask,
+} from "@stages/src/transformation/infrastructure/tasks/transform-flow-jobteaser.task";
 import {
 	TransformFlowStagefrCompressedTask,
 } from "@stages/src/transformation/infrastructure/tasks/transform-flow-stagefr-compressed.task";
@@ -16,10 +23,38 @@ import {
 } from "@stages/src/transformation/infrastructure/tasks/transform-flow-stagefr-uncompressed.task";
 
 @Module({
+	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Usecases],
 	providers: [
-		{ provide: TransformFlowJobteaserTask, useValue: Transformation.export()["jobteaser"] },
-		{ provide: TransformFlowStagefrCompressedTask, useValue: Transformation.export()["stagefr-compresse"] },
-		{ provide: TransformFlowStagefrUncompressedTask, useValue: Transformation.export()["stagefr-decompresse"] },
+		{
+			provide: TransformFlowJobteaserTask,
+			inject: [ConfigService, TransformerFluxJobteaser],
+			useFactory: (
+				configurationService: ConfigService,
+				usecase: TransformerFluxJobteaser
+			): TransformFlowJobteaserTask => {
+				return new TransformFlowJobteaserTask(usecase, configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
+		{
+			provide: TransformFlowStagefrCompressedTask,
+			inject: [ConfigService, TransformerFluxStagefrCompresse],
+			useFactory: (
+				configurationService: ConfigService,
+				usecase: TransformerFluxStagefrCompresse
+			): TransformFlowStagefrCompressedTask => {
+				return new TransformFlowStagefrCompressedTask(usecase, configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
+		{
+			provide: TransformFlowStagefrUncompressedTask,
+			inject: [ConfigService, TransformerFluxStagefrDecompresse],
+			useFactory: (
+				configurationService: ConfigService,
+				usecase: TransformerFluxStagefrDecompresse
+			): TransformFlowStagefrUncompressedTask => {
+				return new TransformFlowStagefrUncompressedTask(usecase, configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
 	],
 	exports: [
 		TransformFlowJobteaserTask,
@@ -28,19 +63,4 @@ import {
 	],
 })
 export class Transformation {
-	public static export(): SousModule {
-		const configuration = ConfigurationFactory.create();
-		const loggerStrategy = new StagesTransformationLoggerStrategy(configuration);
-		const gateways = GatewayContainerFactory.create(configuration, loggerStrategy);
-		const usecases = UsecaseContainerFactory.create(gateways);
-		return Transformation.create(configuration, usecases);
-	}
-
-	private static create(configuration: Configuration, usecases: UsecaseContainer): SousModule {
-		return {
-			jobteaser: new TransformFlowJobteaserTask(usecases.transformerFluxJobteaser, configuration),
-			"stagefr-compresse": new TransformFlowStagefrCompressedTask(usecases.transformerFluxStagefrCompresse, configuration),
-			"stagefr-decompresse": new TransformFlowStagefrUncompressedTask(usecases.transformerFluxStagefrDecompresse, configuration),
-		};
-	}
 }
