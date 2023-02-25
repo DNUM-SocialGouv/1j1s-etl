@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.1.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.0.0...v4.1.0) (2023-02-25)
+
+
+### Bug Fixes
+
+* **configuration:** renommer root configuration des modules ([016ea02](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/016ea026bd97078bd37b0865ed0be2ceac75cc1e))
+
+
+### Code Refactoring
+
+* **multiple:** suppression de fichiers factory ([f808395](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/f808395a8e52a5c40b6d515c21829ecec30694a4))
+
 ## [4.0.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v3.5.0...v4.0.0) (2023-02-15)
 
 
