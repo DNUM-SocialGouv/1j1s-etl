@@ -4,14 +4,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import axios from "axios";
 import { Client } from "minio";
 
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
-
-import {
-	ConfigurationFactory,
-	MinioConfiguration,
-	StrapiConfiguration,
-	TaskConfiguration,
-} from "@evenements/src/chargement/configuration/configuration";
+import { Configuration, ConfigurationFactory } from "@evenements/src/chargement/configuration/configuration";
 import { EvenementsChargementLoggerStrategy } from "@evenements/src/chargement/configuration/logger-strategy";
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
@@ -25,7 +18,6 @@ import {
 } from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
 
 import { Shared } from "@shared/src";
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 import { DateService } from "@shared/src/date.service";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
@@ -33,89 +25,57 @@ import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.pa
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
-	imports: [
-		ConfigModule.forRoot({ load: [ConfigurationFactory.create] }),
-		Shared,
-	],
+	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
 	providers: [{
 		provide: EvenementsChargementLoggerStrategy,
 		inject: [ConfigService],
 		useFactory: (configurationService: ConfigService): EvenementsChargementLoggerStrategy => {
-			return new EvenementsChargementLoggerStrategy({
-				MINIO: configurationService.get<MinioConfiguration>("MINIO"),
-				TOUS_MOBILISES: configurationService.get<TaskConfiguration>("TOUS_MOBILISES"),
-				STRAPI: configurationService.get<StrapiConfiguration>("STRAPI"),
-				FEATURE_FLIPPING_CHARGEMENT: configurationService.get<boolean>("FEATURE_FLIPPING_CHARGEMENT"),
-				CONTEXT: configurationService.get<string>("CONTEXT"),
-				SENTRY: configurationService.get<SentryConfiguration>("SENTRY"),
-				NODE_ENV: configurationService.get<Environment>("NODE_ENV"),
-				DOMAINE: configurationService.get<Domaine>("DOMAINE"),
-				FLOWS: configurationService.get<Array<string>>("FLOWS"),
-				TEMPORARY_DIRECTORY_PATH: configurationService.get<string>("TEMPORARY_DIRECTORY_PATH"),
-				LOGGER_LOG_LEVEL: configurationService.get<LogLevel>("LOGGER_LOG_LEVEL"),
-			});
+			return new EvenementsChargementLoggerStrategy(configurationService.get<Configuration>("evenementsChargement"));
 		},
 	}, {
 		provide: "UnJeuneUneSolution.EvenementsRepository",
 		inject: [
 			ConfigService,
-			EvenementsChargementLoggerStrategy,
+			Client,
 			DateService,
+			EvenementsChargementLoggerStrategy,
 			"FileSystemClient",
 			JsonContentParser,
 			"UuidGenerator",
 		],
 		useFactory: (
 			configurationService: ConfigService,
-			loggerStrategy: EvenementsChargementLoggerStrategy,
+			minioClient: Client,
 			dateService: DateService,
+			loggerStrategy: EvenementsChargementLoggerStrategy,
 			fileSystemClient: FileSystemClient,
 			contentParser: JsonContentParser,
 			uuidGenerator: UuidGenerator,
 		): UnJeuneUneSolution.EvenementsRepository => {
-			const minioConfiguration = configurationService.get<MinioConfiguration>("MINIO");
-			const strapiConfiguration = configurationService.get<StrapiConfiguration>("STRAPI");
-			const minioClient = new Client({
-				accessKey: minioConfiguration.ACCESS_KEY,
-				secretKey: minioConfiguration.SECRET_KEY,
-				port: minioConfiguration.PORT,
-				endPoint: minioConfiguration.URL,
-			});
+			const configuration = configurationService.get<Configuration>("evenementsChargement");
 			const axiosInstance = axios.create({
-				baseURL: strapiConfiguration.BASE_URL,
+				baseURL: configuration.STRAPI.BASE_URL,
 				maxBodyLength: Infinity,
 				maxContentLength: Infinity,
 			});
 			const authenticationClient = new AuthenticationClient(
-				strapiConfiguration.AUTHENTICATION_URL,
+				configuration.STRAPI.AUTHENTICATION_URL,
 				{
-					username: strapiConfiguration.USERNAME,
-					password: strapiConfiguration.PASSWORD,
+					username: configuration.STRAPI.USERNAME,
+					password: configuration.STRAPI.PASSWORD,
 				},
 			);
 			const strapiEvenementHttpClient = new StrapiEvenementHttpClient(
 				axiosInstance,
 				authenticationClient,
-				strapiConfiguration.EVENEMENT_URL,
+				configuration.STRAPI.EVENEMENT_URL,
 			);
 
 			if (configurationService.get("FEATURE_FLIPPING_CHARGEMENT")) {
 				return new FeatureFlippingEvenementsRepository(
 					minioClient,
 					strapiEvenementHttpClient,
-					{
-						MINIO: configurationService.get<MinioConfiguration>("MINIO"),
-						TOUS_MOBILISES: configurationService.get<TaskConfiguration>("TOUS_MOBILISES"),
-						STRAPI: configurationService.get<StrapiConfiguration>("STRAPI"),
-						FEATURE_FLIPPING_CHARGEMENT: configurationService.get<boolean>("FEATURE_FLIPPING_CHARGEMENT"),
-						CONTEXT: configurationService.get<string>("CONTEXT"),
-						SENTRY: configurationService.get<SentryConfiguration>("SENTRY"),
-						NODE_ENV: configurationService.get<Environment>("NODE_ENV"),
-						DOMAINE: configurationService.get<Domaine>("DOMAINE"),
-						FLOWS: configurationService.get<Array<string>>("FLOWS"),
-						TEMPORARY_DIRECTORY_PATH: configurationService.get<string>("TEMPORARY_DIRECTORY_PATH"),
-						LOGGER_LOG_LEVEL: configurationService.get<LogLevel>("LOGGER_LOG_LEVEL"),
-					},
+					configuration,
 					loggerStrategy,
 					uuidGenerator,
 					dateService,
@@ -124,19 +84,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
 				return new MinioAndStrapiEvenementsRepository(
 					minioClient,
 					strapiEvenementHttpClient,
-					{
-						MINIO: configurationService.get<MinioConfiguration>("MINIO"),
-						TOUS_MOBILISES: configurationService.get<TaskConfiguration>("TOUS_MOBILISES"),
-						STRAPI: configurationService.get<StrapiConfiguration>("STRAPI"),
-						FEATURE_FLIPPING_CHARGEMENT: configurationService.get<boolean>("FEATURE_FLIPPING_CHARGEMENT"),
-						CONTEXT: configurationService.get<string>("CONTEXT"),
-						SENTRY: configurationService.get<SentryConfiguration>("SENTRY"),
-						NODE_ENV: configurationService.get<Environment>("NODE_ENV"),
-						DOMAINE: configurationService.get<Domaine>("DOMAINE"),
-						FLOWS: configurationService.get<Array<string>>("FLOWS"),
-						TEMPORARY_DIRECTORY_PATH: configurationService.get<string>("TEMPORARY_DIRECTORY_PATH"),
-						LOGGER_LOG_LEVEL: configurationService.get<LogLevel>("LOGGER_LOG_LEVEL"),
-					},
+					configuration,
 					fileSystemClient,
 					contentParser,
 					loggerStrategy,
