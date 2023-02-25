@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { Client } from "minio";
 import TurndownService from "turndown";
 
@@ -63,8 +63,9 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 	],
 	exports: [
 		"AssainisseurDeTexte",
-		Axios,
+		"AxiosInstance",
 		Client,
+		CountryToIso,
 		DateService,
 		FtpClient,
 		"FileSystemClient",

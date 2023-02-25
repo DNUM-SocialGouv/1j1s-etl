@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 
+import { Shared } from "@shared/src";
 import { DateService } from "@shared/src/date.service";
 
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
@@ -9,13 +10,14 @@ import {
 import {
 	ChargerFluxStagefrDecompresse,
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
+import { Gateways } from "@stages/src/chargement/configuration/gateways.container";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import {
 	ChargerOffresDeStageDomainService,
 } from "@stages/src/chargement/domain/service/charger-offres-de-stage.domain-service";
 
 @Module({
-	imports: [Usecases],
+	imports: [Gateways, Shared],
 	providers: [
 		{
 			provide: ChargerOffresDeStageDomainService,
@@ -27,10 +29,29 @@ import {
 				return new ChargerOffresDeStageDomainService(offreDeStageRepository, dateService);
 			},
 		},
-		ChargerFluxJobteaser,
-		ChargerFluxStagefrCompresse,
-		ChargerFluxStagefrDecompresse,
+		{
+			provide: ChargerFluxJobteaser,
+			inject: [ChargerOffresDeStageDomainService],
+			useFactory: (chargerOffresDeStageDomainService: ChargerOffresDeStageDomainService): ChargerFluxJobteaser => {
+				return new ChargerFluxJobteaser(chargerOffresDeStageDomainService);
+			},
+		},
+		{
+			provide: ChargerFluxStagefrCompresse,
+			inject: [ChargerOffresDeStageDomainService],
+			useFactory: (chargerOffresDeStageDomainService: ChargerOffresDeStageDomainService): ChargerFluxStagefrCompresse => {
+				return new ChargerFluxStagefrCompresse(chargerOffresDeStageDomainService);
+			},
+		},
+		{
+			provide: ChargerFluxStagefrDecompresse,
+			inject: [ChargerOffresDeStageDomainService],
+			useFactory: (chargerOffresDeStageDomainService: ChargerOffresDeStageDomainService): ChargerFluxStagefrDecompresse => {
+				return new ChargerFluxStagefrDecompresse(chargerOffresDeStageDomainService);
+			},
+		},
 	],
+	exports: [ChargerFluxJobteaser, ChargerFluxStagefrCompresse, ChargerFluxStagefrDecompresse],
 })
 export class Usecases {
 }

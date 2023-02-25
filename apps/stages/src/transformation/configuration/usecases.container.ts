@@ -60,14 +60,14 @@ import {
 		},
 		{
 			provide: TransformerFluxStagefrCompresse,
-			inject: ["OffreDeStageRepository", ConvertirJobteaser],
+			inject: ["OffreDeStageRepository", ConvertirStagefrCompresse],
 			useFactory: (offreDeStageRepository: OffreDeStageRepository, convertirOffreDeStage: ConvertirStagefrCompresse): TransformerFluxStagefrCompresse => {
 				return new TransformerFluxStagefrCompresse(offreDeStageRepository, convertirOffreDeStage);
 			},
 		},
 		{
 			provide: TransformerFluxStagefrDecompresse,
-			inject: ["OffreDeStageRepository", ConvertirJobteaser],
+			inject: ["OffreDeStageRepository", ConvertirStagefrDecompresse],
 			useFactory: (offreDeStageRepository: OffreDeStageRepository, convertirOffreDeStage: ConvertirStagefrDecompresse): TransformerFluxStagefrDecompresse => {
 				return new TransformerFluxStagefrDecompresse(offreDeStageRepository, convertirOffreDeStage);
 			},
