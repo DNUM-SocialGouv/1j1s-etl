@@ -7,7 +7,6 @@ import { Client } from "minio";
 import {
 	Configuration,
 	ConfigurationFactory,
-	StrapiConguration,
 } from "@logements/src/chargement/configuration/configuration";
 import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/configuration/logger-strategy";
 import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/service/annonce-de-logement.repository";
@@ -29,10 +28,6 @@ import { DateService } from "@shared/src/date.service";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-
-export type GatewayContainer = {
-    annonceDeLogementRepository: AnnonceDeLogementRepository
-}
 
 @Module({
 	imports: [
@@ -61,24 +56,24 @@ export type GatewayContainer = {
 		provide: AuthenticationClient,
 		inject: [ConfigService],
 		useFactory: (configurationService: ConfigService): AuthenticationClient => {
-			const strapiConfiguration = configurationService.get<StrapiConguration>("STRAPI");
+			const configuration = configurationService.get<Configuration>("chargementLogements");
 			const strapiCredentials = {
-				password: strapiConfiguration.PASSWORD,
-				username: strapiConfiguration.USERNAME,
+				password: configuration.STRAPI.PASSWORD,
+				username: configuration.STRAPI.USERNAME,
 			};
-			return new AuthenticationClient(strapiConfiguration.AUTHENTICATION_URL, strapiCredentials);
+			return new AuthenticationClient(configuration.STRAPI.AUTHENTICATION_URL, strapiCredentials);
 		},
 	}, {
 		provide: StrapiClient,
 		inject: [ConfigService, AuthenticationClient],
 		useFactory: (configurationService: ConfigService, authenticationClient: AuthenticationClient): StrapiClient => {
-			const strapiConfiguration = configurationService.get<StrapiConguration>("STRAPI");
+			const configuration = configurationService.get<Configuration>("chargementLogements");
 			const axiosInstance = axios.create({
-				baseURL: strapiConfiguration.BASE_URL,
+				baseURL: configuration.STRAPI.BASE_URL,
 				maxBodyLength: Infinity,
 				maxContentLength: Infinity,
 			});
-			return new StrapiClient(axiosInstance, strapiConfiguration.HOUSING_URL, authenticationClient);
+			return new StrapiClient(axiosInstance, configuration.STRAPI.HOUSING_URL, authenticationClient);
 		},
 	}, {
 		provide: "AnnonceDeLogementRepository",
