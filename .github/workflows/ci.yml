@@ -8,59 +8,74 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
-          cache: npm
+          cache: pnpm
           node-version-file: package.json
-      - run: npm ci
+      - run: pnpm i --frozen-lockfile
 
   Test:
     needs: Install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
-          cache: npm
+          cache: pnpm
           node-version-file: package.json
-      - run: npm ci
-      - run: npm test
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm test
 
   Lint:
     needs: Install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
-          cache: npm
+          cache: pnpm
           node-version-file: package.json
-      - run: npm ci
-      - run: npm run lint
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run lint
 
   Mutation:
     needs: Install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
-          cache: npm
+          cache: pnpm
           node-version-file: package.json
-      - run: npm ci
-      - run: npm run test:mutation
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run test:mutation
 
   Build:
     needs: Install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version-file: package.json
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+          cache: pnpm
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run build
 
   Versioning:
     needs: [Build, Test, Lint]
