@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.1.0...v4.1.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* **logements:** corriger variables environnement ([ddd6c17](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ddd6c17a62b6afead38484b137b713ca1613039c))
+
 ## [4.1.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.0.0...v4.1.0) (2023-02-25)
 
 
