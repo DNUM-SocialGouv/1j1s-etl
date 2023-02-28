@@ -8,12 +8,10 @@ import { Evenements } from "@evenements/src";
 
 import { Logements } from "@logements/src";
 
-import { Shared } from "@shared/src";
-
 import { Stages } from "@stages/src";
 
 @Module({
-  imports: [Evenements, Logements, Shared, Stages],
+  imports: [Evenements, Logements, Stages],
   providers: [
       ...ExtractCommand.registerWithSubCommands(),
       ...TransformCommand.registerWithSubCommands(),
