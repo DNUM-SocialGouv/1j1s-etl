@@ -1,5 +1,5 @@
 {
   "extension": ["ts"],
-  "spec": "apps/**/test/**/*.test.ts",
+  "spec": "apps/**/test/**/*.integration-test.ts",
   "require": ["ts-node/register", "tsconfig-paths/register", "dotenv/config"]
 }

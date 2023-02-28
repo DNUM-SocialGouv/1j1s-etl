@@ -1,13 +1,9 @@
 import pino from "pino";
 import { createWriteStream, PinoSentryOptions, Severity } from "pino-sentry";
 
-export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
+import { Environment } from "@configuration/src/configuration";
 
-enum Environment {
-	DEVELOPMENT = "development",
-	PRODUCTION = "production",
-	QUALIFICATION = "qualification"
-}
+export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
 export type LoggerConfiguration = { name: string }
 
@@ -74,7 +70,7 @@ export class LoggerFactory {
 	}
 
 	public create(configuration: LoggerConfiguration): Logger {
-		if (this.environment !== Environment.DEVELOPMENT) {
+		if (this.environment !== Environment.DEVELOPMENT && this.environment !== Environment.TEST) {
 			const pinoSentryStream = createWriteStream({
 				...this.sentryConfiguration,
 				decorateScope: ((data: unknown, scope: { setTags: (tags: Record<string, string>) => void }): void => {

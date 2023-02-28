@@ -3,7 +3,8 @@ import { Domaine, LogLevel } from "@shared/src/configuration/logger";
 export enum Environment {
 	DEVELOPMENT = "development",
 	PRODUCTION = "production",
-	QUALIFICATION = "qualification"
+	QUALIFICATION = "qualification",
+	TEST = "test"
 }
 
 type MinioConfiguration = {

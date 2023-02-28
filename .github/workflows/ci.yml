@@ -26,6 +26,19 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  Integration:
+    needs: Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version-file: package.json
+      - run: npm ci
+      - run: cp .env.test .env
+      - run: npm run test:integration
+
   Lint:
     needs: Install
     runs-on: ubuntu-latest
@@ -63,7 +76,7 @@ jobs:
       - run: npm run build
 
   Versioning:
-    needs: [Build, Test, Lint]
+    needs: [Build, Test, Integration, Lint]
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
