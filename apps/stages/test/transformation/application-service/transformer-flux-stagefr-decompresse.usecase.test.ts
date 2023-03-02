@@ -1,6 +1,7 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/library";
+
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
-import { expect, sinon, StubbedType, stubInterface } from "@shared/test/configuration";
 
 import {
 	TransformerFluxStagefrDecompresse,

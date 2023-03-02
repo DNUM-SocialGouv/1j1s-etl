@@ -1,5 +1,6 @@
+import { expect } from "@test/library";
+
 import { Devise } from "@shared/src/domain/model/devise.value-object";
-import { expect } from "@shared/test/configuration";
 
 describe("DeviseTest", () => {
 	context("Lorsque la valeur donnée au constructeur est 'EUR'", () => {

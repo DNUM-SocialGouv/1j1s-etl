@@ -1,4 +1,4 @@
-import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
+import { expect, StubbedClass, stubClass } from "@test/library";
 
 import { ChargerFluxStagefrDecompresse } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { FluxChargement } from "@stages/src/chargement/domain/model/flux";

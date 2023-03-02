@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/library";
+
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
 	ChargerEvenenementsDomainService,
@@ -11,10 +13,7 @@ import {
 	evenementLe26Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
-import { expect, sinon, StubbedType, stubInterface } from "@shared/test/configuration";
-
 describe("ChargerEvenenementsDomainServiceTest", () => {
-
 	context("lorsque je veux charger une liste d'évenements", () => {
 		let repository: StubbedType<UnJeuneUneSolution.EvenementsRepository>;
 		let service: ChargerEvenenementsDomainService;

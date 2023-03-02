@@ -4,6 +4,8 @@ import { TestingModule } from "@nestjs/testing";
 import { Client } from "minio";
 import { CommandTestFactory } from "nest-commander-testing";
 
+import { expect, StubbedClass, stubClass } from "@test/library";
+
 import { CliModule } from "@cli/src/cli.module";
 
 import {
@@ -26,8 +28,6 @@ import {
 import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
-
-import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
 
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {

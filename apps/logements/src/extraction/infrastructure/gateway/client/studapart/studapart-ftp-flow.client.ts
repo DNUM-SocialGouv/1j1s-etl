@@ -1,9 +1,9 @@
 import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
-import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
-import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
+import { FtpClient } from "@shared/src/infrastructure/gateway/client/ftp.client";
+import { StreamZipClient } from "@shared/src/infrastructure/gateway/client/stream-zip.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 
 export class StudapartFtpFlowClient implements FlowClient {

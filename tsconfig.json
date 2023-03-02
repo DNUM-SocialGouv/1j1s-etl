@@ -14,12 +14,12 @@
     "paths": {
       "@api/*": ["apps/api/*"],
       "@cli/*": ["apps/cli/*"],
-      "@configuration/*": ["apps/configuration/*"],
       "@evenements/*": ["apps/evenements/*"],
       "@logements/*": ["apps/logements/*"],
+      "@maintenance/*": ["apps/maintenance/*"],
       "@shared/*": ["apps/shared/*"],
       "@stages/*": ["apps/stages/*"],
-      "@test/*": ["apps/configuration/test/*"]
+      "@test/library": ["apps/shared/test/configuration.ts"]
     },
     "rootDir": "./",
     "baseUrl": "./",

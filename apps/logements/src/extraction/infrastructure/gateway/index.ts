@@ -13,8 +13,6 @@ import {
 import {
 	HousingsOnFlowNameStrategy,
 } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
-import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
-import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 import {
 	StudapartFtpFlowClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/studapart/studapart-ftp-flow.client";
@@ -25,6 +23,8 @@ import {
 import { Shared } from "@shared/src";
 import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";
+import { FtpClient } from "@shared/src/infrastructure/gateway/client/ftp.client";
+import { StreamZipClient } from "@shared/src/infrastructure/gateway/client/stream-zip.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 

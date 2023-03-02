@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubInterface } from "@test/library";
+
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/service/annonce-de-logement.repository";
@@ -7,8 +9,6 @@ import {
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
-
-import { expect, sinon, StubbedType, stubInterface } from "@shared/test/configuration";
 
 let annonceDeLogementRepository: StubbedType<AnnonceDeLogementRepository>;
 let chargerFluxImmojeune: ChargerAnnoncesDeLogementDomainService;

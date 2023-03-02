@@ -1,10 +1,11 @@
-import { Configuration } from "@shared/src/infrastructure/configuration/configuration";
-import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import {
 	LifecycleRule,
 	LifecycleRules,
 	MinioAdminStorageRepository,
-} from "@shared/src/infrastructure/gateway/repository/minio-admin-storage.repository";
+} from "@maintenance/src/repository/minio-admin-storage.repository";
+
+import { Configuration } from "@shared/src/infrastructure/configuration/configuration";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 
 export class Setup {
 	private static BUCKET_CREATION_FAILURE_MESSAGE = "Echec dans la création des seaux";

@@ -2,12 +2,13 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import sinon from "sinon";
 
+import { expect, StubbedClass, stubClass } from "@test/library";
+
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { CompressedFlowHttpClient } from "@shared/src/infrastructure/gateway/client/compressed-flow-http.client";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
-import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
 
 const contenuDecompresse = "<toto>Contenu du fichier</toto>";
 const urlDuFlux = "https://some.url.xml.gz";

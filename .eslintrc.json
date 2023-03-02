@@ -44,9 +44,9 @@
           ["^@test"],
           ["^@api"],
           ["^@cli"],
-          ["^@configuration"],
           ["^@evenements"],
           ["^@logements"],
+          ["^@maintenance"],
           ["^@shared"],
           ["^@stages"],
           ["^@?"],
@@ -62,6 +62,7 @@
           "domain": "evenements",
           "domainsToExclude": [
             "logements",
+            "maintenance",
             "stages"
           ]
         },
@@ -69,6 +70,24 @@
           "domain": "logements",
           "domainsToExclude": [
             "evenements",
+            "maintenance",
+            "stages"
+          ]
+        },
+        {
+          "domain": "maintenance",
+          "domainsToExclude": [
+            "evenements",
+            "logements",
+            "stages"
+          ]
+        },
+        {
+          "domain": "shared",
+          "domainsToExclude": [
+            "evenements",
+            "logements",
+            "maintenance",
             "stages"
           ]
         },
@@ -76,7 +95,8 @@
           "domain": "stages",
           "domainsToExclude": [
             "evenements",
-            "logements"
+            "logements",
+            "maintenance"
           ]
         }
       ]
@@ -84,7 +104,7 @@
   },
   "overrides": [
     {
-      "files": ["**/src/**/application-service/index.ts"],
+      "files": ["**/src/**/application-service/index.ts", "**/*.test.ts"],
       "rules": {
         "@sefr/no-onion-architecture-violation": "off"
       }
@@ -107,28 +127,6 @@
       "rules": {
         "@typescript-eslint/no-non-null-assertion": "off"
       }
-    },
-    {
-      "files": [
-        "**/*.test.ts"
-      ],
-      "rules": {
-        "@sefr/no-onion-architecture-violation": "off"
-      }
     }
-  ],
-  "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
-    },
-    "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": true,
-        "project": "./tsconfig.json"
-      }
-    }
-  }
+  ]
 }

@@ -1,5 +1,6 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { DateService } from "@shared/src/domain/service/date.service";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
