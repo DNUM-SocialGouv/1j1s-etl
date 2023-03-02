@@ -15,8 +15,8 @@ import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common
 import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration, ConfigurationFactory } from "@stages/src/extraction/configuration/configuration";
-import { StagesExtractionLoggerStrategy } from "@stages/src/extraction/configuration/logger.strategy";
+import { Configuration, ConfigurationFactory } from "@stages/src/extraction/infrastructure/configuration/configuration";
+import { StagesExtractionLoggerStrategy } from "@stages/src/extraction/infrastructure/configuration/logger.strategy";
 import { StagesOnFlowNameStrategy } from "@stages/src/extraction/infrastructure/gateway/client/flow.strategy";
 import {
 	MinioHttpFlowRepository,

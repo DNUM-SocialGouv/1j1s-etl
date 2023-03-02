@@ -9,8 +9,8 @@ import {
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
+import { Configuration } from "@stages/src/chargement/infrastructure/configuration/configuration";
 import { HttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 
 export class MinioHttpOffreDeStageRepository implements UnJeune1Solution.OffreDeStageRepository {

@@ -11,8 +11,8 @@ import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node
 import { ContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration, ConfigurationFactory } from "@stages/src/transformation/configuration/configuration";
-import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/configuration/logger-strategy";
+import { Configuration, ConfigurationFactory } from "@stages/src/transformation/infrastructure/configuration/configuration";
+import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/infrastructure/configuration/logger-strategy";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";

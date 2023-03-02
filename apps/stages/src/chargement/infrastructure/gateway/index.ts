@@ -10,9 +10,9 @@ import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authent
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration, ConfigurationFactory } from "@stages/src/chargement/configuration/configuration";
-import { StagesChargementLoggerStrategy } from "@stages/src/chargement/configuration/logger-strategy";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
+import { Configuration, ConfigurationFactory } from "@stages/src/chargement/infrastructure/configuration/configuration";
+import { StagesChargementLoggerStrategy } from "@stages/src/chargement/infrastructure/configuration/logger-strategy";
 import {
 	HttpClient,
 	StrapiOffreDeStageHttpClient,

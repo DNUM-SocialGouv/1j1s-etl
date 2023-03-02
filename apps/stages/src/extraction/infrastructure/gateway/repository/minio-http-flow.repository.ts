@@ -6,9 +6,9 @@ import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node
 import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 import { FluxRepository } from "@stages/src/extraction/domain/service/flux.repository";
+import { Configuration } from "@stages/src/extraction/infrastructure/configuration/configuration";
 
 export class MinioHttpFlowRepository implements FluxRepository {
 	private static COMPRESSED_FILE_EXTENSION = ".gz";

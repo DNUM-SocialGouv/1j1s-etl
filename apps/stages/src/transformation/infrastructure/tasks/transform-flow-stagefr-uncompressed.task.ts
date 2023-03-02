@@ -3,9 +3,9 @@ import { Task } from "@shared/src/infrastructure/task/task";
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
-import { TaskLog } from "@stages/src/transformation/configuration/log.decorator";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
+import { Configuration } from "@stages/src/transformation/infrastructure/configuration/configuration";
+import { TaskLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
 
 export class TransformFlowStagefrUncompressedTask implements Task {
 	constructor(

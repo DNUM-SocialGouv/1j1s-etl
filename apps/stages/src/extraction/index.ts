@@ -9,7 +9,7 @@ import {
 import {
 	ExtraireStagefrDecompresse,
 } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
-import { Configuration, ConfigurationFactory } from "@stages/src/extraction/configuration/configuration";
+import { Configuration, ConfigurationFactory } from "@stages/src/extraction/infrastructure/configuration/configuration";
 import { ExtractFlowJobteaserTask } from "@stages/src/extraction/infrastructure/tasks/extract-flow-jobteaser.task";
 import {
 	ExtractFlowStagefrCompressedTask,

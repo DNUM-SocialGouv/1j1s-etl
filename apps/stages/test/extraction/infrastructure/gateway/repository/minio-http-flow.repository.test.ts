@@ -8,8 +8,8 @@ import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node
 import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
+import { Configuration } from "@stages/src/extraction/infrastructure/configuration/configuration";
 import {
 	MinioHttpFlowRepository,
 } from "@stages/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";

@@ -1,6 +1,6 @@
 import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/infrastructure/configuration/logger";
 
-import { Configuration } from "@stages/src/chargement/configuration/configuration";
+import { Configuration } from "@stages/src/chargement/infrastructure/configuration/configuration";
 
 export class StagesChargementLoggerStrategy implements LoggerStrategy {
 	private readonly loggers: Map<string, Logger>;

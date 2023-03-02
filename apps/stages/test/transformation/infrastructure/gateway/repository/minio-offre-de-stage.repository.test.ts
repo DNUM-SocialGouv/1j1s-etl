@@ -9,9 +9,9 @@ import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-import { Configuration } from "@stages/src/transformation/configuration/configuration";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
+import { Configuration } from "@stages/src/transformation/infrastructure/configuration/configuration";
 import {
 	MinioOffreDeStageRepository,
 } from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
