@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { TransformerFluxImmojeune } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
@@ -13,7 +15,6 @@ import {
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
-import { expect, sinon, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let repository: StubbedType<AnnonceDeLogementRepository>;

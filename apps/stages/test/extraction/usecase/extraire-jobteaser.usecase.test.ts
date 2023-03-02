@@ -1,4 +1,4 @@
-import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
+import { expect, StubbedClass, stubClass } from "@test/library";
 
 import { ExtraireJobteaser } from "@stages/src/extraction/application-service/extraire-jobteaser.usecase";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";

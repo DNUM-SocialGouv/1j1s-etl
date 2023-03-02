@@ -1,11 +1,12 @@
 import { Client } from "minio";
 
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 import { Configuration } from "@stages/src/extraction/configuration/configuration";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";

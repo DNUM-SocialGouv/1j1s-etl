@@ -5,10 +5,9 @@ import axios from "axios";
 import { Client } from "minio";
 import TurndownService from "turndown";
 
-import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
-import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
-
 import { DateService } from "@shared/src/domain/service/date.service";
+import { FtpClient } from "@shared/src/infrastructure/gateway/client/ftp.client";
+import { StreamZipClient } from "@shared/src/infrastructure/gateway/client/stream-zip.client";
 import {
 	FileSystemClient,
 	NodeFileSystemClient,

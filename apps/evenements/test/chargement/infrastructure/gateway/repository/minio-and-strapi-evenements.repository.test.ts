@@ -1,5 +1,7 @@
 import { Client } from "minio";
 
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import { Configuration } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import {
@@ -25,7 +27,6 @@ import {
     RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 

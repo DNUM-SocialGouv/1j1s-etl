@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
 import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/infrastructure/configuration/logger-strategy";
@@ -17,7 +19,6 @@ import { ConfigurationFixtureBuilder } from "@logements/test/chargement/fixture/
 import { Flux } from "@shared/src/domain/model/flux";
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 let dateService: StubbedClass<DateService>;
 let httpClient: StubbedType<HttpClient>;

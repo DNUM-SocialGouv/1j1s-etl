@@ -1,3 +1,5 @@
+import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
 import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
@@ -11,7 +13,6 @@ import {
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
-import { expect, sinon, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
 let convertir: Convertir;

@@ -1,5 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 
+import { expect } from "@test/library";
+
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
@@ -9,7 +11,6 @@ import {
 } from "@logements/src/transformation/infrastructure/gateway/repository/annonce-de-logement-content-parser.strategy";
 
 import { ContentParserStrategyError, JsonContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
-import { expect } from "@shared/test/configuration";
 
 describe("AnnonceDeLogementContentParserStrategyTest", () => {
 	let contentParserStrategy: AnnonceDeLogementContentParserStrategy;

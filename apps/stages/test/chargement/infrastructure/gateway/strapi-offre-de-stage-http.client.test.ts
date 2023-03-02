@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
+import { expect, nock, spy } from "@test/library";
+
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
-import { expect, nock, spy } from "@shared/test/configuration";
 
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { OffreDeStageHttp, StrapiOffreDeStageHttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";

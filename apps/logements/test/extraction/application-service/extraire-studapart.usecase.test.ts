@@ -1,8 +1,8 @@
+import { expect, StubbedClass, stubClass } from "@test/library";
+
 import { ExtraireStudapart } from "@logements/src/extraction/application-service/extraire-studapart.usecase";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
 import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
-
-import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
 
 let flux: FluxExtraction;
 let usecase: ExtraireStudapart;

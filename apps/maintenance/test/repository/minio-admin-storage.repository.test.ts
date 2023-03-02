@@ -1,7 +1,8 @@
 import { Client } from "minio";
 
-import { MinioAdminStorageRepository } from "@shared/src/infrastructure/gateway/repository/minio-admin-storage.repository";
-import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
+import { expect, StubbedClass, stubClass } from "@test/library";
+
+import { MinioAdminStorageRepository } from "@maintenance/src/repository/minio-admin-storage.repository";
 
 const bucketName = "bucket-name";
 let minioClient: StubbedClass<Client>;

@@ -1,5 +1,7 @@
 import { Client } from "minio";
 
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+
 import { UnJeuneUneSolution } from "@evenements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
 import { Configuration } from "@evenements/src/transformation/infrastructure/configuration/configuration";
@@ -13,7 +15,6 @@ import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node
 import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 let localFileNameIncludingPath: string;
 let evenements: Array<UnJeuneUneSolution.Evenement>;
