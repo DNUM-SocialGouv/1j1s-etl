@@ -1,8 +1,8 @@
 import { Axios } from "axios";
 
-import { Configuration } from "@evenements/src/extraction/configuration/configuration";
+import { Configuration } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { AuthentificationErreur, LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 

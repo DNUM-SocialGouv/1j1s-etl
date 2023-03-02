@@ -1,10 +1,10 @@
-import { expect, StubbedClass, stubClass } from "@test/configuration";
-
 import {
 	ExtraireFluxEvenementTousMobilises,
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
 import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
 import { ExtraireFluxDomainService } from "@evenements/src/extraction/domain/service/extraire-flux.domain-service";
+
+import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
 
 const flux: FluxExtraction = new FluxExtraction(
 	"tousmobilises",

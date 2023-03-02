@@ -8,8 +8,8 @@ import { Convertir } from "@evenements/src/transformation/domain/service/tous-mo
 import { Gateways } from "@evenements/src/transformation/infrastructure/gateway";
 
 import { Shared } from "@shared/src";
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 @Module({
 	imports: [Gateways, Shared],

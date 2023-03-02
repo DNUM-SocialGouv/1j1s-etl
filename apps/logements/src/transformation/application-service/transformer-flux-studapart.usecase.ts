@@ -3,7 +3,7 @@ import { Studapart } from "@logements/src/transformation/domain/model/studapart"
 import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 
-import { Usecase } from "@shared/src/usecase";
+import { Usecase } from "@shared/src/application-service/usecase";
 
 export class TransformerFluxStudapart implements Usecase {
 	constructor(

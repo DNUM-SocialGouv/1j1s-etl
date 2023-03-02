@@ -57,7 +57,6 @@ et ressemble à l'arborescence suivante :
 ```markdown
 sous-module
 ├─── application-service
-├─── configuration
 ├─── domain
 │    ├── model
 │    └── service

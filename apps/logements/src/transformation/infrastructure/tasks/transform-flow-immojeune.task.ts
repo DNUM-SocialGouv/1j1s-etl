@@ -1,7 +1,7 @@
 import { TransformerFluxImmojeune } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
-import { Configuration } from "@logements/src/transformation/configuration/configuration";
-import { TaskLog } from "@logements/src/transformation/configuration/log.decorator";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
+import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
+import { TaskLog } from "@logements/src/transformation/infrastructure/configuration/log.decorator";
 
 import { Task } from "@shared/src/infrastructure/task/task";
 

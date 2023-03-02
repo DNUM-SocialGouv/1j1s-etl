@@ -2,7 +2,7 @@ import {
   ChargerEvenenementsDomainService,
 } from "@evenements/src/chargement/domain/service/charger-evenements.domain-service";
 
-import { Usecase } from "@shared/src/usecase";
+import { Usecase } from "@shared/src/application-service/usecase";
 
 export class ChargerFluxTousMobilises implements Usecase {
   constructor(private readonly domain: ChargerEvenenementsDomainService) {}

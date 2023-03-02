@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 
 import { Shared } from "@shared/src";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service/extraire-flux.domain-service";
 import { FluxRepository } from "@stages/src/extraction/domain/service/flux.repository";

@@ -1,7 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-import { expect, nock, spy } from "@test/configuration";
-
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
 	StrapiEvenementHttpClient,
@@ -13,6 +11,7 @@ import {
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { expect, nock, spy } from "@shared/test/configuration";
 
 const source = "tous-mobilises";
 const url = "evenements";

@@ -1,8 +1,8 @@
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
+import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
 import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
 import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 

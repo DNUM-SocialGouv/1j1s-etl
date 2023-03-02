@@ -1,4 +1,4 @@
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 import { FluxChargement } from "@stages/src/chargement/domain/model/flux";

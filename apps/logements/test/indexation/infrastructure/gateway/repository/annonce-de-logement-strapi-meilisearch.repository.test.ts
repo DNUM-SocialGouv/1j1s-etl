@@ -1,6 +1,4 @@
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
-
-import { Configuration } from "@logements/src/indexation/configuration/configuration";
+import { Configuration } from "@logements/src/indexation/infrastructure/configuration/configuration";
 import {
 	AnnonceDeLogementStrapiMeilisearchRepository,
 } from "@logements/src/indexation/infrastructure/gateway/repository/annonce-de-logement-strapi-meilisearch.repository";
@@ -9,6 +7,7 @@ import {
 } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";
 
 import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 const fieldsToRetrieve = "id,slug,titre,dateDeDisponibilite,devise,prix,prixHT,surface,surfaceMax,type,url,sourceUpdatedAt";
 const relationsToRetrieve = "localisation,imagesUrl";

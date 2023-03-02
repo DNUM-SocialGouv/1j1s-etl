@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
 import { Shared } from "@shared/src";
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
-import { Pays } from "@shared/src/pays";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { Pays } from "@shared/src/domain/service/pays";
 
 import { TransformerFluxJobteaser } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
 import { TransformerFluxStagefrCompresse } from "@stages/src/transformation/application-service/transformer-flux-stagefr-compresse.usecase";

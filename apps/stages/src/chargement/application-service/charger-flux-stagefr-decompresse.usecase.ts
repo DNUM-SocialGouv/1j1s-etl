@@ -1,4 +1,4 @@
-import { Usecase } from "@shared/src/usecase";
+import { Usecase } from "@shared/src/application-service/usecase";
 
 import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import {

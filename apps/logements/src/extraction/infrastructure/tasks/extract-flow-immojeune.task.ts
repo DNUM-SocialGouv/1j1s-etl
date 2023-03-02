@@ -1,7 +1,7 @@
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
-import { TaskLog } from "@logements/src/extraction/configuration/log.decorator";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
+import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
+import { TaskLog } from "@logements/src/extraction/infrastructure/configuration/log.decorator";
 
 import { Task } from "@shared/src/infrastructure/task/task";
 

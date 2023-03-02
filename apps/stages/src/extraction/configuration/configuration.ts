@@ -1,6 +1,5 @@
-import { Environment, SentryConfiguration } from "@configuration/src/configuration";
-
-import { Domaine, LogLevel } from "@shared/src/configuration/logger";
+import { Environment, SentryConfiguration } from "@shared/src/infrastructure/configuration/configuration";
+import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logger";
 
 type MinioConfiguration = {
 	ACCESS_KEY: string

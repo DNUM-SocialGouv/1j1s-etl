@@ -1,4 +1,4 @@
-import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/configuration/logger";
+import { Logger, LoggerFactory, LoggerStrategy, LoggerStrategyError } from "@shared/src/infrastructure/configuration/logger";
 
 import { Configuration } from "@stages/src/transformation/configuration/configuration";
 

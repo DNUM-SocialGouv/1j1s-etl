@@ -4,9 +4,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import axios from "axios";
 import { Client } from "minio";
 
-import { Configuration, ConfigurationFactory } from "@evenements/src/chargement/configuration/configuration";
-import { EvenementsChargementLoggerStrategy } from "@evenements/src/chargement/configuration/logger-strategy";
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+import { Configuration, ConfigurationFactory } from "@evenements/src/chargement/infrastructure/configuration/configuration";
+import { EvenementsChargementLoggerStrategy } from "@evenements/src/chargement/infrastructure/configuration/logger-strategy";
 import {
 	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
@@ -18,7 +18,7 @@ import {
 } from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
 
 import { Shared } from "@shared/src";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";

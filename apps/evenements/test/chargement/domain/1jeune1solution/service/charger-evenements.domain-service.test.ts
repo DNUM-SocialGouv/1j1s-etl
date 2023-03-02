@@ -1,5 +1,3 @@
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
-
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import {
 	ChargerEvenenementsDomainService,
@@ -12,6 +10,8 @@ import {
 	evenementDejaCharge2Le24Novembre, evenementDejaCharge2Le25Novembre,
 	evenementLe26Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
+
+import { expect, sinon, StubbedType, stubInterface } from "@shared/test/configuration";
 
 describe("ChargerEvenenementsDomainServiceTest", () => {
 

@@ -1,8 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import nock from "nock";
 
-import { expect } from "@test/configuration";
-
 import { AnnonceDeLogement } from "@logements/src/indexation/domain/model";
 import { AnnonceDeLogementFixtureBuilder } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";
 
@@ -12,6 +10,7 @@ import {
 	StrapiHttpClient,
 	StrapiResponse,
 } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { expect } from "@shared/test/configuration";
 
 const fieldsToRetrieve = "id,slug,titre,dateDeDisponibilite,devise,prix,prixHT,surface,surfaceMax,type,url,sourceUpdatedAt";
 const relationsToRetrieve = "localisation,imagesUrl";

@@ -2,17 +2,16 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import sinon from "sinon";
 
-import { expect, StubbedClass, stubClass } from "@test/configuration";
-
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
+import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
 import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
 import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 import {
     StudapartFtpFlowClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/studapart/studapart-ftp-flow.client";
 
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
+import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
 
 describe("StudapartFtpFlowClientTest", () => {
     const url = "ftp://url";

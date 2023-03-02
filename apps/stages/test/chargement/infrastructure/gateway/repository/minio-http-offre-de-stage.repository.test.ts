@@ -1,8 +1,6 @@
 import { Client } from "minio";
 
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
-
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
+import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import {
 	EcritureFluxErreur,
@@ -10,6 +8,7 @@ import {
 	RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 import { Configuration } from "@stages/src/chargement/configuration/configuration";
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";

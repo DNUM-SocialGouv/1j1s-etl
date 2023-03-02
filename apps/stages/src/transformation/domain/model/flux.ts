@@ -1,4 +1,4 @@
-import { Flux } from "@shared/src/flux";
+import { Flux } from "@shared/src/domain/model/flux";
 
 export class FluxTransformation extends Flux {
 	constructor(

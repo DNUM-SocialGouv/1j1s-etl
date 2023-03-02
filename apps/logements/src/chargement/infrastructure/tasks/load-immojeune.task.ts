@@ -1,9 +1,9 @@
-import { Configuration } from "@logements/src/chargement/configuration/configuration";
-import { TaskLog } from "@logements/src/chargement/configuration/log.decorator";
+import { Configuration } from "@logements/src/chargement/infrastructure/configuration/configuration";
+import { TaskLog } from "@logements/src/chargement/infrastructure/configuration/log.decorator";
 
-import { Flux } from "@shared/src/flux";
+import { Usecase } from "@shared/src/application-service/usecase";
+import { Flux } from "@shared/src/domain/model/flux";
 import { Task } from "@shared/src/infrastructure/task/task";
-import { Usecase } from "@shared/src/usecase";
 
 export class LoadImmojeuneTask implements Task {
 

@@ -1,5 +1,5 @@
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { StagefrDecompresse } from "@stages/src/transformation/domain/model/stagefr-decompresse";

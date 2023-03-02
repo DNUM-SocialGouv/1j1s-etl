@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 
 import { Shared } from "@shared/src";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import { ChargerFluxStagefrCompresse } from "@stages/src/chargement/application-service/charger-flux-stagefr-compresse.usecase";

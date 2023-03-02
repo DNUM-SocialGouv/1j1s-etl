@@ -4,11 +4,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { XMLParser } from "fast-xml-parser";
 import { Client } from "minio";
 
-import { Configuration, ConfigurationFactory } from "@logements/src/transformation/configuration/configuration";
-import { LogementsTransformationLoggerStrategy } from "@logements/src/transformation/configuration/logger-strategy";
 import {
 	AnnonceDeLogementRepository,
 } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import { Configuration, ConfigurationFactory } from "@logements/src/transformation/infrastructure/configuration/configuration";
+import { LogementsTransformationLoggerStrategy } from "@logements/src/transformation/infrastructure/configuration/logger-strategy";
 import {
 	AnnonceDeLogementContentParserStrategy,
 	StudapartOptionXmlParser,
@@ -18,8 +18,8 @@ import {
 } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 
 import { Shared } from "@shared/src";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import {
 	ContentParserStrategy,
