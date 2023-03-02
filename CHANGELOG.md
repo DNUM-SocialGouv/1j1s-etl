@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.1.1...v4.2.0) (2023-03-02)
+
+
+### Features
+
+* **maintenance:** ajout d'un contexte de maintenance ([523cbdb](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/523cbdbc8e46fdc975ba1337c234e26c86c0a476))
+
 ## [4.1.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.1.0...v4.1.1) (2023-02-27)
 
 
