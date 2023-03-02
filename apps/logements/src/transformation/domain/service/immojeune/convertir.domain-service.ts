@@ -1,9 +1,9 @@
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
 
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
-import { Devise } from "@shared/src/devise.value-object";
+import { Devise } from "@shared/src/domain/model/devise.value-object";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 export class Convertir {
 	private readonly correspondancesServicesInclus: Map<Immojeune.ServiceInclus, UnJeune1Solution.ServiceInclus.Nom>;

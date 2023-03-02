@@ -5,7 +5,7 @@ import { Usecases } from "@evenements/src/chargement/application-service";
 import {
 	ChargerFluxTousMobilises,
 } from "@evenements/src/chargement/application-service/charger-flux-tous-mobilises.usecase";
-import { Configuration, ConfigurationFactory } from "@evenements/src/chargement/configuration/configuration";
+import { Configuration, ConfigurationFactory } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import { LoadTousMobilisesTask } from "@evenements/src/chargement/infrastructure/tasks/load-tous-mobilises.task";
 
 @Module({

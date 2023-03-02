@@ -5,8 +5,8 @@ import {
 	MinioHttpAnnonceDeLogementRepository,
 } from "@logements/src/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
 
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 
 export class FeatureFlippingAnnonceDeLogementRepository extends MinioHttpAnnonceDeLogementRepository {
 	constructor(minioClient: StorageClient, httpClient: HttpClient, dateService: DateService, loggerStrategy: LoggerStrategy) {

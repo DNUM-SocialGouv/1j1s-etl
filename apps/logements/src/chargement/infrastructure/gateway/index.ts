@@ -4,12 +4,12 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import axios from "axios";
 import { Client } from "minio";
 
+import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/service/annonce-de-logement.repository";
 import {
 	Configuration,
 	ConfigurationFactory,
-} from "@logements/src/chargement/configuration/configuration";
-import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/configuration/logger-strategy";
-import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/service/annonce-de-logement.repository";
+} from "@logements/src/chargement/infrastructure/configuration/configuration";
+import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/infrastructure/configuration/logger-strategy";
 import { StrapiClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
 import {
 	MinioStorageClient,
@@ -23,8 +23,8 @@ import {
 } from "@logements/src/chargement/infrastructure/gateway/repository/minio-http-annonce-de-logement.repository";
 
 import { Shared } from "@shared/src";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";

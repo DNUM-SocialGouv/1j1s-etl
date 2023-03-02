@@ -1,4 +1,4 @@
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FlowClient } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";

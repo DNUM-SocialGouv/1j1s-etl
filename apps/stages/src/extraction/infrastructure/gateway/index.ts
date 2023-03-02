@@ -5,7 +5,7 @@ import { AxiosInstance } from "axios";
 import { Client } from "minio";
 
 import { Shared } from "@shared/src";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
 import { CompressedFlowHttpClient } from "@shared/src/infrastructure/gateway/client/compressed-flow-http.client";
 import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";

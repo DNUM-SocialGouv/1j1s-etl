@@ -1,4 +1,4 @@
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FlowClient, FlowStrategy, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 
 import { Configuration } from "@stages/src/extraction/configuration/configuration";

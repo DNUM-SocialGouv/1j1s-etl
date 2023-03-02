@@ -5,7 +5,7 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { Shared } from "@shared/src";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";

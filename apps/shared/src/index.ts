@@ -8,7 +8,7 @@ import TurndownService from "turndown";
 import { FtpClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/ftp.client";
 import { StreamZipClient } from "@logements/src/extraction/infrastructure/gateway/client/studapart/stream-zip.client";
 
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
 import {
 	FileSystemClient,
 	NodeFileSystemClient,

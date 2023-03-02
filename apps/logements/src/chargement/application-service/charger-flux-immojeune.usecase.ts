@@ -3,7 +3,7 @@ import {
 	ChargerAnnoncesDeLogementDomainService,
 } from "@logements/src/chargement/domain/service/charger-annonces-de-logement.domain-service";
 
-import { Usecase } from "@shared/src/usecase";
+import { Usecase } from "@shared/src/application-service/usecase";
 
 export class ChargerFluxImmojeune implements Usecase {
 	constructor(private readonly chargerAnnoncesDeLogement: ChargerAnnoncesDeLogementDomainService) {

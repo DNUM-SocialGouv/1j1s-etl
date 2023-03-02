@@ -4,8 +4,8 @@ import { AnnonceDeLogementRepository } from "@logements/src/chargement/domain/se
 import { HttpClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
 import { StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
 
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 
 export class MinioHttpAnnonceDeLogementRepository implements AnnonceDeLogementRepository {
 	private static readonly SPACE = 2;

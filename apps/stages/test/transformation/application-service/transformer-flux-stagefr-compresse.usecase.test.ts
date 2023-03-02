@@ -1,7 +1,6 @@
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
-
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { expect, sinon, StubbedType, stubInterface } from "@shared/test/configuration";
 
 import {
 	TransformerFluxStagefrCompresse,

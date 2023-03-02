@@ -1,5 +1,3 @@
-import { expect, sinon, StubbedType, stubInterface } from "@test/configuration";
-
 import {
     TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
@@ -12,8 +10,9 @@ import {
     evenement2Le24Novembre,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { expect, sinon, StubbedType, stubInterface } from "@shared/test/configuration";
 
 describe("TransformerFluxTousMobilisesUseCase", () => {
     let usecase: TransformerFluxTousMobilises;

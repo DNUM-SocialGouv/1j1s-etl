@@ -1,7 +1,7 @@
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
 import { ExtraireFluxDomainService } from "@logements/src/extraction/domain/service/extraire-flux.domain-service";
 
-import { Usecase } from "@shared/src/usecase";
+import { Usecase } from "@shared/src/application-service/usecase";
 
 export class ExtraireImmojeune implements Usecase {
 	constructor(private readonly extraireFluxDomainService: ExtraireFluxDomainService) {

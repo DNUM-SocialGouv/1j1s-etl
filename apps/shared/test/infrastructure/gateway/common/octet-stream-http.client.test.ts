@@ -4,12 +4,11 @@ import { AxiosInstance } from "axios";
 import sinon from "sinon";
 import { PassThrough, Writable } from "stream";
 
-import { expect } from "@test/configuration";
-
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { expect } from "@shared/test/configuration";
 
 const url = "http://some.url";
 const fileName = "7d92007e-3f8a-40ad-b648-3b4c806b9647";

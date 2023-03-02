@@ -1,12 +1,12 @@
 import { Client } from "minio";
 
-import { Configuration } from "@logements/src/transformation/configuration/configuration";
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
 
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParserStrategy } from "@shared/src/infrastructure/gateway/content.parser";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";

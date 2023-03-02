@@ -1,6 +1,6 @@
 import { XMLParser } from "fast-xml-parser";
 
-import { Flux } from "@shared/src/flux";
+import { Flux } from "@shared/src/domain/model/flux";
 
 export interface ContentParser {
 	parse<T>(content: string | Buffer): Promise<T>;

@@ -7,7 +7,7 @@ import { FluxRepository } from "@logements/src/extraction/domain/service/flux.re
 import { Gateways } from "@logements/src/extraction/infrastructure/gateway";
 
 import { Shared } from "@shared/src";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 @Module({
 	imports: [Gateways, Shared],

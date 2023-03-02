@@ -4,9 +4,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AxiosInstance } from "axios";
 import { Client } from "minio";
 
-import { Configuration, ConfigurationFactory } from "@logements/src/extraction/configuration/configuration";
-import { LogementsExtractionLoggerStrategy } from "@logements/src/extraction/configuration/logger.strategy";
 import { FluxRepository } from "@logements/src/extraction/domain/service/flux.repository";
+import { Configuration, ConfigurationFactory } from "@logements/src/extraction/infrastructure/configuration/configuration";
+import { LogementsExtractionLoggerStrategy } from "@logements/src/extraction/infrastructure/configuration/logger.strategy";
 import {
 	HousingBasicFlowHttpClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";
@@ -23,7 +23,7 @@ import {
 } from "@logements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 
 import { Shared } from "@shared/src";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";

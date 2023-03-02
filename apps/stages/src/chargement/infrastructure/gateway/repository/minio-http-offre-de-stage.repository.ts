@@ -1,6 +1,6 @@
 import { Client } from "minio";
 
-import { LoggerStrategy } from "@shared/src/configuration/logger";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import {
 	EcritureFluxErreur,

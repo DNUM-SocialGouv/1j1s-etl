@@ -3,15 +3,14 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import { Axios, AxiosError } from "axios";
 import sinon from "sinon";
 
-import { expect, StubbedClass, stubClass } from "@test/configuration";
-
-import { Configuration } from "@evenements/src/extraction/configuration/configuration";
+import { Configuration } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 import {
 	TousMobilisesBasicFlowHttpClient,
 } from "@evenements/src/extraction/infrastructure/gateway/client/tous-mobilises-basic-flow-http.client";
 
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { AuthentificationErreur, LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
+import { expect, StubbedClass, stubClass } from "@shared/test/configuration";
 
 let errorCode: number;
 let url: string;

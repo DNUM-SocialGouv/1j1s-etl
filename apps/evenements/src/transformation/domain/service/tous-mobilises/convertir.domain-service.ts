@@ -1,8 +1,8 @@
 import { UnJeuneUneSolution } from "@evenements/src/transformation/domain/model/1jeune1solution";
 import { TousMobilises } from "@evenements/src/transformation/domain/model/tous-mobilises";
 
-import { AssainisseurDeTexte } from "@shared/src/assainisseur-de-texte";
-import { DateService } from "@shared/src/date.service";
+import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 export class Convertir {
 	constructor(

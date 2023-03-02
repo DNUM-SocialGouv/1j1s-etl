@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-import { Logger } from "@shared/src/configuration/logger";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";
 
 export class HousingBasicFlowHttpClient extends BasicFlowHttpClient {

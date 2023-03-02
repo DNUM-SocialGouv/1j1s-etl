@@ -1,14 +1,14 @@
 import axios from "axios";
 import { Client } from "minio";
 
-import { Configuration } from "@evenements/src/chargement/configuration/configuration";
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
+import { Configuration } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import {
     StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {

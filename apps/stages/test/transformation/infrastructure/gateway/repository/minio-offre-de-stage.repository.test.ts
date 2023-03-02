@@ -1,13 +1,12 @@
 import { Client } from "minio";
 
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
-
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 import { Configuration } from "@stages/src/transformation/configuration/configuration";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";

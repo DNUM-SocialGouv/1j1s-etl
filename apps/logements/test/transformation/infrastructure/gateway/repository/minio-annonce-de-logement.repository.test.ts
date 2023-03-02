@@ -2,22 +2,21 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 
 import { Client } from "minio";
 
-import { expect, sinon, StubbedClass, stubClass } from "@test/configuration";
-
-import { Configuration } from "@logements/src/transformation/configuration/configuration";
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
+import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
 import { MinioAnnonceDeLogementRepository } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
 
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParserStrategy } from "@shared/src/infrastructure/gateway/content.parser";
 import { EcritureFluxErreur, RecupererContenuErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { expect, sinon, StubbedClass, stubClass } from "@shared/test/configuration";
 
 let localFileNameIncludingPath: string;
 let minioRepository: MinioAnnonceDeLogementRepository;

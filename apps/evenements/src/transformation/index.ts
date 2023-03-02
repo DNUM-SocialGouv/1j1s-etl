@@ -5,7 +5,7 @@ import { Usecases } from "@evenements/src/transformation/application-service";
 import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
-import { Configuration, ConfigurationFactory } from "@evenements/src/transformation/configuration/configuration";
+import { Configuration, ConfigurationFactory } from "@evenements/src/transformation/infrastructure/configuration/configuration";
 import {
 	TransformFlowTousMobilisesTask,
 } from "@evenements/src/transformation/infrastructure/tasks/transform-flow-tous-mobilises.task";

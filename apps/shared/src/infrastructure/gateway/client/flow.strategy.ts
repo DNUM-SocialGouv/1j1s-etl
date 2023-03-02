@@ -1,5 +1,5 @@
-import { Logger } from "@shared/src/configuration/logger";
-import { Flux } from "@shared/src/flux";
+import { Flux } from "@shared/src/domain/model/flux";
+import { Logger } from "@shared/src/infrastructure/configuration/logger";
 
 export interface FlowStrategy {
 	get(flow: Flux, logger: Logger): Promise<string>;

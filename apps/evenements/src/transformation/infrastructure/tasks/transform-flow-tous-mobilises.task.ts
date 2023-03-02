@@ -1,9 +1,9 @@
 import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
-import { Configuration } from "@evenements/src/transformation/configuration/configuration";
-import { TaskLog } from "@evenements/src/transformation/configuration/log.decorator";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
+import { Configuration } from "@evenements/src/transformation/infrastructure/configuration/configuration";
+import { TaskLog } from "@evenements/src/transformation/infrastructure/configuration/log.decorator";
 
 import { Task } from "@shared/src/infrastructure/task/task";
 

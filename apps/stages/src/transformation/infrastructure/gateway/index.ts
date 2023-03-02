@@ -5,8 +5,8 @@ import { XMLParser } from "fast-xml-parser";
 import { Client } from "minio";
 
 import { Shared } from "@shared/src";
-import { LoggerStrategy } from "@shared/src/configuration/logger";
-import { DateService } from "@shared/src/date.service";
+import { DateService } from "@shared/src/domain/service/date.service";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";

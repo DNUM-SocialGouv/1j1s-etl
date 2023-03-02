@@ -1,18 +1,17 @@
 import { Client } from "minio";
 
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
-
-import { Configuration } from "@logements/src/extraction/configuration/configuration";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
+import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
 import {
 	MinioHttpFlowRepository,
 } from "@logements/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 
-import { Logger, LoggerStrategy } from "@shared/src/configuration/logger";
+import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FlowStrategy } from "@shared/src/infrastructure/gateway/client/flow.strategy";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { EcritureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 const localFileNameIncludingPath = "/tmp/d184b5b1-75ad-44f0-8fe7-7c55208bf26c";
 let flow: FluxExtraction;

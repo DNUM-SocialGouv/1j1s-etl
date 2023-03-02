@@ -1,6 +1,6 @@
 import countries from "i18n-iso-countries";
 
-import { Pays } from "@shared/src/pays";
+import { Pays } from "@shared/src/domain/service/pays";
 
 export class CountryToIso implements Pays {
 	private static DEFAULT_LANGUAGE = "en";

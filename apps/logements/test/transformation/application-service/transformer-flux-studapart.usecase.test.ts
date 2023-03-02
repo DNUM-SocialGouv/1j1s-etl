@@ -1,5 +1,3 @@
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/configuration";
-
 import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
@@ -13,6 +11,8 @@ import {
 	AnnonceDeLogementStudapartContenuFixtureBuilder,
 	AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
+
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@shared/test/configuration";
 
 describe("TransformerFluxStudapartUseCaseTest", () => {
 	const fluxTransformation = new FluxTransformation("flux", "history", ".xml", ".xml");

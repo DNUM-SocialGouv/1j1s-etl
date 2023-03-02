@@ -5,7 +5,7 @@ import { Usecases } from "@evenements/src/extraction/application-service";
 import {
     ExtraireFluxEvenementTousMobilises,
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
-import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/configuration/configuration";
+import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 import {
     ExtractFlowTousMobilisesTask,
 } from "@evenements/src/extraction/infrastructure/tasks/extract-flow-tous-mobilises.task";
