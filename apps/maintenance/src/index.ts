@@ -1,5 +1,9 @@
 import { Module } from "@nestjs/common";
 
-@Module({})
+import { Shared } from "@shared/src";
+
+@Module({
+    imports: [ Shared ],
+})
 export class Maintenance {
 }
