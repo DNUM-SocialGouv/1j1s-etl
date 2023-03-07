@@ -59,44 +59,44 @@
       "error",
       [
         {
-          "domain": "evenements",
+          "domain": "@evenements",
           "domainsToExclude": [
-            "logements",
-            "maintenance",
-            "stages"
+            "@logements",
+            "@maintenance",
+            "@stages"
           ]
         },
         {
-          "domain": "logements",
+          "domain": "@logements",
           "domainsToExclude": [
-            "evenements",
-            "maintenance",
-            "stages"
+            "@evenements",
+            "@maintenance",
+            "@stages"
           ]
         },
         {
-          "domain": "maintenance",
+          "domain": "@maintenance",
           "domainsToExclude": [
-            "evenements",
-            "logements",
-            "stages"
+            "@evenements",
+            "@logements",
+            "@stages"
           ]
         },
         {
           "domain": "shared",
           "domainsToExclude": [
-            "evenements",
-            "logements",
-            "maintenance",
-            "stages"
+            "@evenements",
+            "@logements",
+            "@maintenance",
+            "@stages"
           ]
         },
         {
-          "domain": "stages",
+          "domain": "@stages",
           "domainsToExclude": [
-            "evenements",
-            "logements",
-            "maintenance"
+            "@evenements",
+            "@logements",
+            "@maintenance"
           ]
         }
       ]

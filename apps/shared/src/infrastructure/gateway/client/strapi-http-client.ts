@@ -43,6 +43,12 @@ export class StrapiHttpClient {
 
 		return [...firstPageResult, ...otherPagesResults];
 	}
+	
+	public async delete<T>(endpoint: string, id: string): Promise<void> {
+		await this.authenticationClient.handleAuthentication(this.axios);
+
+		await this.axios.delete<StrapiResponse<T>>(`${endpoint}/${id}`);
+	}
 
 	private buildParams(source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
 		return {
