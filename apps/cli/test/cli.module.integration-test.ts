@@ -29,6 +29,8 @@ import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 
+import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/purger-les-offres-de-stage.usecase";
+
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {
 	ChargerFluxStagefrCompresse,
@@ -322,6 +324,29 @@ describe("CliModuleTest", () => {
 
 				// Then
 				expect(chargerTousMobilises.executer).to.have.been.calledOnce;
+			});
+		});
+	});
+	context("Lorsque je lance la commande de maintenance", () => {
+		let purgerLesOffresDeStage: StubbedClass<PurgerLesOffresDeStage>;
+
+		beforeEach(async () => {
+			purgerLesOffresDeStage = stubClass(PurgerLesOffresDeStage);
+
+			cliModule = await CommandTestFactory.createTestingCommand({
+				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
+			})
+				.overrideProvider(Client).useValue(stubClass(Client))
+				.overrideProvider(PurgerLesOffresDeStage).useValue(purgerLesOffresDeStage)
+				.compile();
+		});
+		context("des offres de stage", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["maintain", "les-offres-de-stage"]);
+
+				// Then
+				expect(purgerLesOffresDeStage.executer).to.have.been.calledOnce;
 			});
 		});
 	});

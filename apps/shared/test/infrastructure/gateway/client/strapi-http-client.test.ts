@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import nock from "nock";
 
-import { expect } from "@test/library";
+import { expect, sinon } from "@test/library";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import {
@@ -84,5 +84,21 @@ describe("StrapiHttpClientTest", () => {
 			...dataPremierePage.map((data) => ({ ...data.attributes, id: data.id })),
 			...dataSecondePage.map((data) => ({ ...data.attributes, id: data.id })),
 		]);
+	});
+	it("supprime une entrée", async () => {
+		const spyAxios = sinon.spy(axiosInstance, "delete");
+		const id = "1";
+
+		nock("http://127.0.0.1/api")
+			.post("/auth")
+			.reply(200, "some token")
+			.delete(`${endpoint}/${id}`)
+			.reply(200);
+
+		// When
+		await strapiHttpClient.delete(endpoint, "1");
+
+		// Then
+		expect(spyAxios).to.have.been.calledWith(`${endpoint}/${id}`);
 	});
 });
