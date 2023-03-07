@@ -23,6 +23,7 @@ $ export SCALINGO_APP='1j1s-main-cms'
 $ export SCALINGO_REGION='osc-fr1'
 $ export ADDON_NAME='postgresql'
 $ export API_TOKEN='<la clef de prod>'
+$ export SCALINGO_DB_USER='<l'utilisateur db prod>'
 ```
 
 ### Connexion
@@ -40,7 +41,8 @@ Pour télécharger la dernière backup de la BDD en Production, il vous faut lan
 ```/bin/bash
 $ addon_id=$(scalingo addons | grep $ADDON_NAME | cut -d'|' -f3 | tr -d ' ')
 $ mkdir -p tmp
-$ scalingo --addon ${addon_id} backups-download --output tmp/backup.zip
+$ scalingo --addon ${addon_id} backups-download --output tmp/backup
+$ tar -zxvf ./tmp/backup
 ```
 
 ### Monter la backup en local
@@ -49,8 +51,11 @@ $ scalingo --addon ${addon_id} backups-download --output tmp/backup.zip
 Une fois le téléchargement terminé, il suffit de démarrer la BDD présente sur votre poste en lui chargeant le fichier.
 
 ```/bin/bash
-$ docker-compose cp ./tmp/backup.zip db:/backups/backup.dump
-$ docker-compose exec db pg_restore -U $DATABASE_USERNAME -d $DATABASE_NAME /backups/backup.dump
+$ docker-compose down -v
+$ docker-compose --env-file .env.docker up db -d
+$ docker-compose exec db psql -U data-user -d cms-principal -c "CREATE USER ${SCALINGO_DB_USER} SUPERUSER;"
+$ docker-compose cp ./tmp/backup.zip db:/backup
+$ docker-compose exec db pg_restore -U ${SCALINGO_DB_USER} -d ${DATABASE_NAME} /backup
 ```
 
 
