@@ -6,7 +6,7 @@
 
 Afin de pouvoir exécuter la procédure qui suit, vous devez avoir en votre possession une clef vous permettant de vous connecter sur la production du projet.
 
-Afin de manipuler les conteneurs et applications sur Scalingo, il vous faudra [installer leur CLI](https://doc.scalingo.com/platform/cli/start#install-scalingo-cli)
+Pour manipuler les conteneurs et applications sur Scalingo, il vous faudra [installer leur CLI](https://doc.scalingo.com/platform/cli/start#install-scalingo-cli)
 
 Vous pouvez exécuter la commande suivante pour installer ou mettre à jour `Scalingo CLI`:
 
