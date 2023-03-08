@@ -7,8 +7,8 @@ import {
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
 import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 import {
-    ExtractFlowTousMobilisesTask,
-} from "@evenements/src/extraction/infrastructure/tasks/extract-flow-tous-mobilises.task";
+    ExtractFlowTousMobilisesSubCommand,
+} from "@evenements/src/extraction/infrastructure/sub-command/extract-flow-tous-mobilises.sub-command";
 
 @Module({
     imports: [
@@ -19,17 +19,17 @@ import {
         Usecases,
     ],
     providers: [{
-        provide: ExtractFlowTousMobilisesTask,
+        provide: ExtractFlowTousMobilisesSubCommand,
         inject: [ConfigService, ExtraireFluxEvenementTousMobilises],
         useFactory: (
             configurationService: ConfigService,
             extraireFluxEvenementTousMobilises: ExtraireFluxEvenementTousMobilises
-        ): ExtractFlowTousMobilisesTask => {
+        ): ExtractFlowTousMobilisesSubCommand => {
             const configuration = configurationService.get<Configuration>("evenementsExtraction");
-            return new ExtractFlowTousMobilisesTask(extraireFluxEvenementTousMobilises, configuration);
+            return new ExtractFlowTousMobilisesSubCommand(extraireFluxEvenementTousMobilises, configuration);
         },
     }],
-    exports: [ExtractFlowTousMobilisesTask],
+    exports: [ExtractFlowTousMobilisesSubCommand],
 })
 export class Extraction {
 }

@@ -46,7 +46,7 @@
     "apps/stages/src/chargement/infrastructure/configuration/**/*.ts",
     "apps/stages/src/extraction/infrastructure/configuration/**/*.ts",
     "apps/stages/src/transformation/infrastructure/configuration/**/*.ts",
-    "**/*.task.ts"
+    "**/*.sub-command.ts"
   ],
   "ignoreStatic": true
 }

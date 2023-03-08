@@ -7,8 +7,8 @@ import {
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 import { Configuration, ConfigurationFactory } from "@evenements/src/transformation/infrastructure/configuration/configuration";
 import {
-	TransformFlowTousMobilisesTask,
-} from "@evenements/src/transformation/infrastructure/tasks/transform-flow-tous-mobilises.task";
+	TransformFlowTousMobilisesSubCommand,
+} from "@evenements/src/transformation/infrastructure/sub-command/transform-flow-tous-mobilises.sub-command";
 
 @Module({
 	imports: [
@@ -19,19 +19,19 @@ import {
 		Usecases,
 	],
 	providers: [{
-		provide: TransformFlowTousMobilisesTask,
+		provide: TransformFlowTousMobilisesSubCommand,
 		inject: [ConfigService, TransformerFluxTousMobilises],
 		useFactory: (
 			configurationService: ConfigService,
 			transformerFluxTousMobilises: TransformerFluxTousMobilises
-		): TransformFlowTousMobilisesTask => {
-			return new TransformFlowTousMobilisesTask(
+		): TransformFlowTousMobilisesSubCommand => {
+			return new TransformFlowTousMobilisesSubCommand(
 				transformerFluxTousMobilises,
 				configurationService.get<Configuration>("evenementsTransformation"),
 			);
 		},
 	}],
-	exports: [TransformFlowTousMobilisesTask],
+	exports: [TransformFlowTousMobilisesSubCommand],
 })
 export class Transformation {
 }

@@ -10,13 +10,13 @@ import {
 	ExtraireStagefrDecompresse,
 } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/extraction/infrastructure/configuration/configuration";
-import { ExtractFlowJobteaserTask } from "@stages/src/extraction/infrastructure/tasks/extract-flow-jobteaser.task";
+import { ExtractFlowJobteaserSubCommand } from "@stages/src/extraction/infrastructure/sub-command/extract-flow-jobteaser.sub-command";
 import {
-	ExtractFlowStagefrCompressedTask,
-} from "@stages/src/extraction/infrastructure/tasks/extract-flow-stagefr-compressed.task";
+	ExtractFlowStagefrCompressedSubCommand,
+} from "@stages/src/extraction/infrastructure/sub-command/extract-flow-stagefr-compressed.sub-command";
 import {
-	ExtractFlowStagefrUncompressedTask,
-} from "@stages/src/extraction/infrastructure/tasks/extract-flow-stagefr-uncompressed.task";
+	ExtractFlowStagefrUncompressedSubCommand,
+} from "@stages/src/extraction/infrastructure/sub-command/extract-flow-stagefr-uncompressed.sub-command";
 
 @Module({
 	imports: [
@@ -28,28 +28,28 @@ import {
 	],
 	providers: [
 		{
-			provide: ExtractFlowJobteaserTask,
+			provide: ExtractFlowJobteaserSubCommand,
 			inject: [ConfigService, ExtraireJobteaser],
-			useFactory: (configurationService: ConfigService, usecase: ExtraireJobteaser): ExtractFlowJobteaserTask => {
-				return new ExtractFlowJobteaserTask(usecase, configurationService.get<Configuration>("stagesExtraction"));
+			useFactory: (configurationService: ConfigService, usecase: ExtraireJobteaser): ExtractFlowJobteaserSubCommand => {
+				return new ExtractFlowJobteaserSubCommand(usecase, configurationService.get<Configuration>("stagesExtraction"));
 			},
 		},
 		{
-			provide: ExtractFlowStagefrCompressedTask,
+			provide: ExtractFlowStagefrCompressedSubCommand,
 			inject: [ConfigService, ExtraireStagefrCompresse],
-			useFactory: (configurationService: ConfigService, usecase: ExtraireStagefrCompresse): ExtractFlowStagefrCompressedTask => {
-				return new ExtractFlowStagefrCompressedTask(usecase, configurationService.get<Configuration>("stagesExtraction"));
+			useFactory: (configurationService: ConfigService, usecase: ExtraireStagefrCompresse): ExtractFlowStagefrCompressedSubCommand => {
+				return new ExtractFlowStagefrCompressedSubCommand(usecase, configurationService.get<Configuration>("stagesExtraction"));
 			},
 		},
 		{
-			provide: ExtractFlowStagefrUncompressedTask,
+			provide: ExtractFlowStagefrUncompressedSubCommand,
 			inject: [ConfigService, ExtraireStagefrDecompresse],
-			useFactory: (configurationService: ConfigService, usecase: ExtraireStagefrDecompresse): ExtractFlowStagefrUncompressedTask => {
-				return new ExtractFlowStagefrUncompressedTask(usecase, configurationService.get<Configuration>("stagesExtraction"));
+			useFactory: (configurationService: ConfigService, usecase: ExtraireStagefrDecompresse): ExtractFlowStagefrUncompressedSubCommand => {
+				return new ExtractFlowStagefrUncompressedSubCommand(usecase, configurationService.get<Configuration>("stagesExtraction"));
 			},
 		},
 	],
-	exports: [ExtractFlowJobteaserTask, ExtractFlowStagefrCompressedTask, ExtractFlowStagefrUncompressedTask],
+	exports: [ExtractFlowJobteaserSubCommand, ExtractFlowStagefrCompressedSubCommand, ExtractFlowStagefrUncompressedSubCommand],
 })
 export class Extraction {
 }

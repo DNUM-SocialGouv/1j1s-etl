@@ -9,7 +9,7 @@ import {
 	Configuration,
 	ConfigurationFactory,
 } from "@evenements/src/chargement/infrastructure/configuration/configuration";
-import { LoadTousMobilisesTask } from "@evenements/src/chargement/infrastructure/tasks/load-tous-mobilises.task";
+import { LoadFlowTousMobilisesSubCommand } from "@evenements/src/chargement/infrastructure/sub-command/load-flow-tous-mobilises.sub-command";
 
 @Module({
 	imports: [
@@ -20,14 +20,14 @@ import { LoadTousMobilisesTask } from "@evenements/src/chargement/infrastructure
 		Usecases,
 	],
 	providers: [{
-		provide: LoadTousMobilisesTask,
+		provide: LoadFlowTousMobilisesSubCommand,
 		inject: [ConfigService, ChargerFluxTousMobilises],
-		useFactory: (configurationService: ConfigService, usecase: ChargerFluxTousMobilises): LoadTousMobilisesTask => {
+		useFactory: (configurationService: ConfigService, usecase: ChargerFluxTousMobilises): LoadFlowTousMobilisesSubCommand => {
 			const configuration = configurationService.get<Configuration>("evenementsChargement");
-			return new LoadTousMobilisesTask(usecase, configuration);
+			return new LoadFlowTousMobilisesSubCommand(usecase, configuration);
 		},
 	}],
-	exports: [LoadTousMobilisesTask],
+	exports: [LoadFlowTousMobilisesSubCommand],
 })
 export class Chargement {
 }

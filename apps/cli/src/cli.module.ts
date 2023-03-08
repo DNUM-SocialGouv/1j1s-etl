@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
-import { ExtractCommand } from "@cli/src/extract/extract.command";
-import { LoadCommand } from "@cli/src/load/load.command";
+import { ExtractCommand } from "@cli/src/command/extract.command";
+import { LoadCommand } from "@cli/src/command/load.command";
 import { MaintainCommand } from "@cli/src/maintain/maintain.command";
-import { TransformCommand } from "@cli/src/transform/transform.command";
+import { TransformCommand } from "@cli/src/command/transform.command";
 
 import { Evenements } from "@evenements/src";
 

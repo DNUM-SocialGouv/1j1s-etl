@@ -5,8 +5,8 @@ import { Usecases } from "@logements/src/extraction/application-service";
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
 import { ExtraireStudapart } from "@logements/src/extraction/application-service/extraire-studapart.usecase";
 import { Configuration, ConfigurationFactory } from "@logements/src/extraction/infrastructure/configuration/configuration";
-import { ExtractFlowImmojeuneTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-immojeune.task";
-import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructure/tasks/extract-flow-studapart.task";
+import { ExtractFlowImmojeuneSubCommand } from "@logements/src/extraction/infrastructure/sub-command/extract-flow-immojeune.sub-command";
+import { ExtractFlowStudapartSubCommand } from "@logements/src/extraction/infrastructure/sub-command/extract-flow-studapart.sub-command";
 
 @Module({
 	imports: [
@@ -17,25 +17,25 @@ import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructu
 		Usecases,
 	],
 	providers: [{
-		provide: ExtractFlowImmojeuneTask,
+		provide: ExtractFlowImmojeuneSubCommand,
 		inject: [ConfigService, ExtraireImmojeune],
 		useFactory: (
 			configurationService: ConfigService,
 			extraireImmojeune: ExtraireImmojeune,
-		): ExtractFlowImmojeuneTask => {
-			return new ExtractFlowImmojeuneTask(extraireImmojeune, configurationService.get<Configuration>("extractionLogements"));
+		): ExtractFlowImmojeuneSubCommand => {
+			return new ExtractFlowImmojeuneSubCommand(extraireImmojeune, configurationService.get<Configuration>("extractionLogements"));
 		},
 	}, {
-		provide: ExtractFlowStudapartTask,
+		provide: ExtractFlowStudapartSubCommand,
 		inject: [ConfigService, ExtraireStudapart],
 		useFactory: (
 			configurationService: ConfigService,
 			extraireStudapart: ExtraireStudapart,
-		): ExtractFlowStudapartTask => {
-			return new ExtractFlowStudapartTask(extraireStudapart, configurationService.get<Configuration>("extractionLogements"));
+		): ExtractFlowStudapartSubCommand => {
+			return new ExtractFlowStudapartSubCommand(extraireStudapart, configurationService.get<Configuration>("extractionLogements"));
 		},
 	}],
-	exports: [ExtractFlowImmojeuneTask, ExtractFlowStudapartTask],
+	exports: [ExtractFlowImmojeuneSubCommand, ExtractFlowStudapartSubCommand],
 })
 export class Extraction {
 }
