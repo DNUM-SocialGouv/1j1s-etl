@@ -5,7 +5,7 @@ import {
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import { Configuration } from "@stages/src/chargement/infrastructure/configuration/configuration";
-import { TaskLog } from "@stages/src/chargement/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@stages/src/chargement/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: LoadFlowStagefrUncompressedSubCommand.FLOW_NAME,
@@ -20,7 +20,7 @@ export class LoadFlowStagefrUncompressedSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(LoadFlowStagefrUncompressedSubCommand.FLOW_NAME)
+	@CommandLog(LoadFlowStagefrUncompressedSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		await this.chargerStagefrDecompresse.executer(
 			new FluxChargement(

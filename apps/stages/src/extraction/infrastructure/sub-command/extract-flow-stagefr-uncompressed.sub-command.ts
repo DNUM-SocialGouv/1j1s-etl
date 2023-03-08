@@ -5,7 +5,7 @@ import {
 } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
 import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 import { Configuration } from "@stages/src/extraction/infrastructure/configuration/configuration";
-import { TaskLog } from "@stages/src/extraction/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@stages/src/extraction/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: ExtractFlowStagefrUncompressedSubCommand.FLOW_NAME,
@@ -20,7 +20,7 @@ export class ExtractFlowStagefrUncompressedSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(ExtractFlowStagefrUncompressedSubCommand.FLOW_NAME)
+	@CommandLog(ExtractFlowStagefrUncompressedSubCommand.FLOW_NAME)
 	public override async run(): Promise<void> {
 		await this.usecase.executer(
 			new FluxExtraction(

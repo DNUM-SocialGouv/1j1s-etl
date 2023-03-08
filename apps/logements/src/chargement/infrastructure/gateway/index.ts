@@ -9,7 +9,9 @@ import {
 	Configuration,
 	ConfigurationFactory,
 } from "@logements/src/chargement/infrastructure/configuration/configuration";
-import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/infrastructure/configuration/logger-strategy";
+import {
+	LogementsChargementLoggerStrategy,
+} from "@logements/src/chargement/infrastructure/configuration/logger-strategy";
 import { StrapiClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
 import {
 	MinioStorageClient,

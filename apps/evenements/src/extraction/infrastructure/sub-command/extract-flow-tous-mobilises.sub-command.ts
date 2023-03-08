@@ -5,7 +5,7 @@ import {
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
 import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
 import { Configuration } from "@evenements/src/extraction/infrastructure/configuration/configuration";
-import { TaskLog } from "@evenements/src/extraction/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@evenements/src/extraction/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: ExtractFlowTousMobilisesSubCommand.FLOW_NAME,
@@ -20,7 +20,7 @@ export class ExtractFlowTousMobilisesSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(ExtractFlowTousMobilisesSubCommand.FLOW_NAME)
+	@CommandLog(ExtractFlowTousMobilisesSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		await this.usecase.executer(
 			new FluxExtraction(

@@ -1,9 +1,11 @@
 import { CommandRunner, SubCommand } from "nest-commander";
 
-import { TransformerFluxStudapart } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
+import {
+	TransformerFluxStudapart,
+} from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
-import { TaskLog } from "@logements/src/transformation/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@logements/src/transformation/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: TransformFlowStudapartSubCommand.FLOW_NAME,
@@ -15,7 +17,7 @@ export class TransformFlowStudapartSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(TransformFlowStudapartSubCommand.FLOW_NAME)
+	@CommandLog(TransformFlowStudapartSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		return await this.usecase.executer(new FluxTransformation(
 			this.config.STUDAPART.NAME,

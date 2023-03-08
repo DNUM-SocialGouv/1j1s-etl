@@ -1,7 +1,7 @@
 import { CommandRunner, SubCommand } from "nest-commander";
 
 import { Configuration } from "@logements/src/chargement/infrastructure/configuration/configuration";
-import { TaskLog } from "@logements/src/chargement/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@logements/src/chargement/infrastructure/configuration/log.decorator";
 
 import { Usecase } from "@shared/src/application-service/usecase";
 import { Flux } from "@shared/src/domain/model/flux";
@@ -16,7 +16,7 @@ export class LoadFlowStudapartSubCommand extends CommandRunner {
         super();
     }
 
-    @TaskLog(LoadFlowStudapartSubCommand.FLOW_NAME)
+    @CommandLog(LoadFlowStudapartSubCommand.FLOW_NAME)
     public async run(): Promise<void> {
         await this.usecase.executer(
             new Flux(

@@ -9,7 +9,9 @@ import {
 	Configuration,
 	ConfigurationFactory,
 } from "@evenements/src/chargement/infrastructure/configuration/configuration";
-import { LoadFlowTousMobilisesSubCommand } from "@evenements/src/chargement/infrastructure/sub-command/load-flow-tous-mobilises.sub-command";
+import {
+	LoadFlowTousMobilisesSubCommand,
+} from "@evenements/src/chargement/infrastructure/sub-command/load-flow-tous-mobilises.sub-command";
 
 @Module({
 	imports: [

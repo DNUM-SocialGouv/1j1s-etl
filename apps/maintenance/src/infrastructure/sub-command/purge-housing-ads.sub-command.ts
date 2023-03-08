@@ -1,16 +1,22 @@
+import { CommandRunner, SubCommand } from "nest-commander";
+
 import {
 	PurgerLesAnnoncesDeLogement,
 } from "@maintenance/src/application-service/purger-les-annonces-de-logement.usecase";
 import { Configuration } from "@maintenance/src/infrastructure/configuration/configuration";
-import { TaskLog } from "@maintenance/src/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@maintenance/src/infrastructure/configuration/log.decorator";
 
-import { Task } from "@shared/src/infrastructure/task/task";
+@SubCommand({
+	name: PurgeHousingAdsSubCommand.PROCESS_NAME,
+})
+export class PurgeHousingAdsSubCommand extends CommandRunner {
+	public static readonly PROCESS_NAME = "purge-housing-ads";
 
-export class PurgeHousingAdsTask implements Task {
 	constructor(private readonly usecase: PurgerLesAnnoncesDeLogement, private readonly configuration: Configuration) {
+		super();
 	}
 
-	@TaskLog("purge-housing-ads")
+	@CommandLog(PurgeHousingAdsSubCommand.PROCESS_NAME)
 	public async run(): Promise<void> {
 		await this.usecase.executer(this.configuration.FLOWS);
 	}

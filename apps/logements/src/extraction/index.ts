@@ -4,9 +4,16 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Usecases } from "@logements/src/extraction/application-service";
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
 import { ExtraireStudapart } from "@logements/src/extraction/application-service/extraire-studapart.usecase";
-import { Configuration, ConfigurationFactory } from "@logements/src/extraction/infrastructure/configuration/configuration";
-import { ExtractFlowImmojeuneSubCommand } from "@logements/src/extraction/infrastructure/sub-command/extract-flow-immojeune.sub-command";
-import { ExtractFlowStudapartSubCommand } from "@logements/src/extraction/infrastructure/sub-command/extract-flow-studapart.sub-command";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@logements/src/extraction/infrastructure/configuration/configuration";
+import {
+	ExtractFlowImmojeuneSubCommand,
+} from "@logements/src/extraction/infrastructure/sub-command/extract-flow-immojeune.sub-command";
+import {
+	ExtractFlowStudapartSubCommand,
+} from "@logements/src/extraction/infrastructure/sub-command/extract-flow-studapart.sub-command";
 
 @Module({
 	imports: [

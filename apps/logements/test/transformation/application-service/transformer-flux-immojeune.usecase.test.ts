@@ -1,10 +1,14 @@
 import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/library";
 
-import { TransformerFluxImmojeune } from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
+import {
+	TransformerFluxImmojeune,
+} from "@logements/src/transformation/application-service/transformer-flux-immojeune.usecase";
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import {
+	AnnonceDeLogementRepository,
+} from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import { Convertir } from "@logements/src/transformation/domain/service/immojeune/convertir.domain-service";
 import {
 	AnnonceDeLogementFixtureBuilder,

@@ -5,8 +5,13 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { FluxRepository } from "@evenements/src/extraction/domain/service/flux.repository";
-import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/infrastructure/configuration/configuration";
-import { EvenementsExtractionLoggerStrategy } from "@evenements/src/extraction/infrastructure/configuration/logger.strategy";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@evenements/src/extraction/infrastructure/configuration/configuration";
+import {
+	EvenementsExtractionLoggerStrategy,
+} from "@evenements/src/extraction/infrastructure/configuration/logger.strategy";
 import {
 	TousMobilisesBasicFlowHttpClient,
 } from "@evenements/src/extraction/infrastructure/gateway/client/tous-mobilises-basic-flow-http.client";

@@ -5,9 +5,7 @@ import {
 } from "@evenements/src/chargement/infrastructure/sub-command/load-flow-tous-mobilises.sub-command";
 
 import { LoadFlowImmojeuneSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-immojeune.sub-command";
-import {
-	LoadFlowStudapartSubCommand,
-} from "@logements/src/chargement/infrastructure/sub-command/load-flow-studapart.sub-command";
+import { LoadFlowStudapartSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-studapart.sub-command";
 
 import { LoadFlowJobteaserSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-jobteaser.sub-command";
 import {
@@ -29,7 +27,7 @@ import {
 	],
 })
 export class LoadCommand extends CommandRunner {
-	public override async run(): Promise<void> {
+	public async run(): Promise<void> {
 		return Promise.resolve();
 	}
 }

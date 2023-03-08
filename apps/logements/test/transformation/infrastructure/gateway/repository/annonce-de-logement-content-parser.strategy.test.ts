@@ -6,11 +6,15 @@ import { FluxTransformation } from "@logements/src/transformation/domain/model/f
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
 import {
-    AnnonceDeLogementContentParserStrategy,
-    StudapartOptionXmlParser,
+	AnnonceDeLogementContentParserStrategy,
+	StudapartOptionXmlParser,
 } from "@logements/src/transformation/infrastructure/gateway/repository/annonce-de-logement-content-parser.strategy";
 
-import { ContentParserStrategyError, JsonContentParser, XmlContentParser } from "@shared/src/infrastructure/gateway/content.parser";
+import {
+	ContentParserStrategyError,
+	JsonContentParser,
+	XmlContentParser,
+} from "@shared/src/infrastructure/gateway/content.parser";
 
 describe("AnnonceDeLogementContentParserStrategyTest", () => {
 	let contentParserStrategy: AnnonceDeLogementContentParserStrategy;

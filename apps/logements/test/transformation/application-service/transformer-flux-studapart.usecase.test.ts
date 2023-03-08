@@ -4,7 +4,9 @@ import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import {
+	AnnonceDeLogementRepository,
+} from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 import {
 	AnnonceDeLogementFixtureBuilder,

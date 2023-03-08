@@ -11,7 +11,10 @@ import {
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
-import { Configuration, ConfigurationFactory } from "@stages/src/transformation/infrastructure/configuration/configuration";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@stages/src/transformation/infrastructure/configuration/configuration";
 import {
 	TransformFlowJobteaserSubCommand,
 } from "@stages/src/transformation/infrastructure/sub-command/transform-flow-jobteaser.sub-command";

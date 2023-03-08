@@ -7,8 +7,13 @@ import { Client } from "minio";
 import {
 	AnnonceDeLogementRepository,
 } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
-import { Configuration, ConfigurationFactory } from "@logements/src/transformation/infrastructure/configuration/configuration";
-import { LogementsTransformationLoggerStrategy } from "@logements/src/transformation/infrastructure/configuration/logger-strategy";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@logements/src/transformation/infrastructure/configuration/configuration";
+import {
+	LogementsTransformationLoggerStrategy,
+} from "@logements/src/transformation/infrastructure/configuration/logger-strategy";
 import {
 	AnnonceDeLogementContentParserStrategy,
 	StudapartOptionXmlParser,

@@ -3,7 +3,7 @@ import { Client } from "minio";
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import { Configuration } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import {
-    StrapiEvenementHttpClient,
+	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 
 import { DateService } from "@shared/src/domain/service/date.service";

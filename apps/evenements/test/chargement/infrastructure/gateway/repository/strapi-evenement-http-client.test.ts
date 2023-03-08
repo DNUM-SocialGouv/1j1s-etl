@@ -9,7 +9,8 @@ import {
 import {
 	evenement1Le24Novembre,
 	evenementDejaCharge1Le24Novembre,
-	evenementDejaCharge2Le24Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
+	evenementDejaCharge2Le24Novembre,
+	EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
