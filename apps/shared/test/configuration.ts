@@ -3,8 +3,7 @@ import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 import nock from "nock";
-import { createStubInstance, SinonStubbedInstance, SinonStubbedMember, StubbableType } from "sinon";
-import sinon, { spy } from "sinon";
+import sinon, { createStubInstance, SinonStubbedInstance, SinonStubbedMember, spy, StubbableType } from "sinon";
 import sinonChai from "sinon-chai";
 
 chai.use(sinonChai);

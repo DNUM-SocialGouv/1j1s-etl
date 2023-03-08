@@ -5,12 +5,16 @@ import {
 	ChargerEvenenementsDomainService,
 } from "@evenements/src/chargement/domain/service/charger-evenements.domain-service";
 import {
-	evenement1Le24Novembre, evenement2Le24Novembre,
-	evenement3Le25Novembre, evenement4Le25Novembre,
+	evenement1Le24Novembre,
+	evenement2Le24Novembre,
+	evenement3Le25Novembre,
+	evenement4Le25Novembre,
 	evenementDejaCharge1Le24Novembre,
 	evenementDejaCharge1Le25Novembre,
-	evenementDejaCharge2Le24Novembre, evenementDejaCharge2Le25Novembre,
-	evenementLe26Novembre, EvenementUnJeuneUneSolutionFixtureBuilder,
+	evenementDejaCharge2Le24Novembre,
+	evenementDejaCharge2Le25Novembre,
+	evenementLe26Novembre,
+	EvenementUnJeuneUneSolutionFixtureBuilder,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
 describe("ChargerEvenenementsDomainServiceTest", () => {

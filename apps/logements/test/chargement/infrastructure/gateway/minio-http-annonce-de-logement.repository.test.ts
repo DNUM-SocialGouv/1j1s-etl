@@ -2,7 +2,9 @@ import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } fr
 
 import { UnJeune1Solution } from "@logements/src/chargement/domain/model/1jeune1solution";
 import { FluxChargement } from "@logements/src/chargement/domain/model/flux";
-import { LogementsChargementLoggerStrategy } from "@logements/src/chargement/infrastructure/configuration/logger-strategy";
+import {
+	LogementsChargementLoggerStrategy,
+} from "@logements/src/chargement/infrastructure/configuration/logger-strategy";
 import { HttpClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
 import { StorageClient } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
 import {

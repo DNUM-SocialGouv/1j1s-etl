@@ -4,7 +4,9 @@ import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Pays } from "@shared/src/domain/service/pays";
 
-import { TransformerFluxJobteaser } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
+import {
+	TransformerFluxJobteaser,
+} from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Jobteaser } from "@stages/src/transformation/domain/model/jobteaser";

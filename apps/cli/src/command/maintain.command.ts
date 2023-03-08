@@ -1,9 +1,9 @@
 import { Command, CommandRunner } from "nest-commander";
 
-import { PurgeHousingAdsSubCommand } from "@cli/src/maintain/purge-housing-ads.sub-command";
+import { PurgeHousingAdsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-housing-ads.sub-command";
 import {
 	PurgeInternshipsSubCommand,
-} from "@cli/src/maintain/purge-internships.sub-command";
+} from "@maintenance/src/infrastructure/sub-command/purge-internships.sub-command";
 
 @Command({
 	name: "maintain",

@@ -5,7 +5,7 @@ import {
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
 import { Configuration } from "@evenements/src/transformation/infrastructure/configuration/configuration";
-import { TaskLog } from "@evenements/src/transformation/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@evenements/src/transformation/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: TransformFlowTousMobilisesSubCommand.FLOW_NAME,
@@ -20,7 +20,7 @@ export class TransformFlowTousMobilisesSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(TransformFlowTousMobilisesSubCommand.FLOW_NAME)
+	@CommandLog(TransformFlowTousMobilisesSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		await this.usecase.executer(
 			new FluxTransformation(

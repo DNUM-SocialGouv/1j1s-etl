@@ -8,7 +8,10 @@ import {
 import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
-import { Configuration, ConfigurationFactory } from "@logements/src/transformation/infrastructure/configuration/configuration";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@logements/src/transformation/infrastructure/configuration/configuration";
 import {
 	TransformFlowImmojeuneSubCommand,
 } from "@logements/src/transformation/infrastructure/sub-command/transform-flow-immojeune.sub-command";

@@ -1,10 +1,12 @@
 import { ConfigurationFactory } from "@stages/src/transformation/infrastructure/configuration/configuration";
-import { StagesTransformationLoggerStrategy } from "@stages/src/transformation/infrastructure/configuration/logger-strategy";
+import {
+	StagesTransformationLoggerStrategy,
+} from "@stages/src/transformation/infrastructure/configuration/logger-strategy";
 
 const configuration = ConfigurationFactory.create();
 const loggerStrategy = new StagesTransformationLoggerStrategy(configuration);
 
-export function TaskLog(flowName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
+export function CommandLog(flowName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
 	return function (target: unknown, propertyKey: string, descriptor: TypedPropertyDescriptor<() => Promise<void>>): PropertyDescriptor {
 		const originalMethod = descriptor.value;
 
@@ -15,7 +17,7 @@ export function TaskLog(flowName: string): (target: unknown, propertyKey: string
 			} catch (e) {
 				loggerStrategy.get(flowName).fatal({ msg: (<Error>e).message, extra: { stack: (<Error>e).stack } });
 			} finally {
-				loggerStrategy.get(flowName).info("End of transforming from [jobteaser] flow");
+				loggerStrategy.get(flowName).info(`End of transforming from [${flowName}] flow`);
 			}
 		};
 

@@ -2,7 +2,9 @@ import { expect, sinon, StubbedType, stubInterface } from "@test/library";
 
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
 import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
-import { HousingsOnFlowNameStrategy } from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
+import {
+	HousingsOnFlowNameStrategy,
+} from "@logements/src/extraction/infrastructure/gateway/client/housing-on-flow-name.strategy";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { FlowClient, FluxNonGereErreur } from "@shared/src/infrastructure/gateway/client/flow.strategy";

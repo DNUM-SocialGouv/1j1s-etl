@@ -7,7 +7,9 @@ import { expect, sinon, StubbedClass, stubClass } from "@test/library";
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
 import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
-import { MinioAnnonceDeLogementRepository } from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
+import {
+	MinioAnnonceDeLogementRepository,
+} from "@logements/src/transformation/infrastructure/gateway/repository/minio-annonce-de-logement.repository";
 import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";

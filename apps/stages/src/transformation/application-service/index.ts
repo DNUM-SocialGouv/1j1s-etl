@@ -5,9 +5,15 @@ import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Pays } from "@shared/src/domain/service/pays";
 
-import { TransformerFluxJobteaser } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
-import { TransformerFluxStagefrCompresse } from "@stages/src/transformation/application-service/transformer-flux-stagefr-compresse.usecase";
-import { TransformerFluxStagefrDecompresse } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
+import {
+	TransformerFluxJobteaser,
+} from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
+import {
+	TransformerFluxStagefrCompresse,
+} from "@stages/src/transformation/application-service/transformer-flux-stagefr-compresse.usecase";
+import {
+	TransformerFluxStagefrDecompresse,
+} from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
 import {
 	Convertir as ConvertirJobteaser,
 } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";

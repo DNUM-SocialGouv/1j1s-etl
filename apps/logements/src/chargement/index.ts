@@ -4,7 +4,10 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Usecases } from "@logements/src/chargement/application-service";
 import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
 import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
-import { Configuration, ConfigurationFactory } from "@logements/src/chargement/infrastructure/configuration/configuration";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@logements/src/chargement/infrastructure/configuration/configuration";
 import { LoadFlowImmojeuneSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-immojeune.sub-command";
 import { LoadFlowStudapartSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-studapart.sub-command";
 

@@ -5,16 +5,18 @@ import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } fr
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import { Configuration } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import {
-    StrapiEvenementHttpClient,
+	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 import {
-    MinioAndStrapiEvenementsRepository,
+	MinioAndStrapiEvenementsRepository,
 } from "@evenements/src/chargement/infrastructure/gateway/repository/minio-and-strapi-evenements.repository";
 import {
-    evenement1Le24Novembre, evenement2Le24Novembre,
-    evenementDejaCharge1Le24Novembre,
-    evenementDejaCharge1Le25Novembre,
-    evenementDejaCharge2Le24Novembre, evenementDejaCharge2Le25Novembre,
+	evenement1Le24Novembre,
+	evenement2Le24Novembre,
+	evenementDejaCharge1Le24Novembre,
+	evenementDejaCharge1Le25Novembre,
+	evenementDejaCharge2Le24Novembre,
+	evenementDejaCharge2Le25Novembre,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
 import { DateService } from "@shared/src/domain/service/date.service";
@@ -22,9 +24,9 @@ import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {
-    EcritureFluxErreur,
-    RecupererContenuErreur,
-    RecupererOffresExistantesErreur,
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+	RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 

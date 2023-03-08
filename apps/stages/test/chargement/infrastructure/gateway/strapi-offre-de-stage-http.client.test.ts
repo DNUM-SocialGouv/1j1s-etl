@@ -5,7 +5,10 @@ import { expect, nock, spy } from "@test/library";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
-import { OffreDeStageHttp, StrapiOffreDeStageHttpClient } from "@stages/src/chargement/infrastructure/gateway/client/http.client";
+import {
+	OffreDeStageHttp,
+	StrapiOffreDeStageHttpClient,
+} from "@stages/src/chargement/infrastructure/gateway/client/http.client";
 import { OffreDeStageFixtureBuilder } from "@stages/test/chargement/fixture/offre-de-stage.fixture-builder";
 
 const offreDeStageASupprimer = OffreDeStageFixtureBuilder.buildOffreDeStageASupprimer({}, "1");

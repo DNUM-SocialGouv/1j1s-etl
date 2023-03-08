@@ -5,8 +5,13 @@ import axios from "axios";
 import { Client } from "minio";
 
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
-import { Configuration, ConfigurationFactory } from "@evenements/src/chargement/infrastructure/configuration/configuration";
-import { EvenementsChargementLoggerStrategy } from "@evenements/src/chargement/infrastructure/configuration/logger-strategy";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@evenements/src/chargement/infrastructure/configuration/configuration";
+import {
+	EvenementsChargementLoggerStrategy,
+} from "@evenements/src/chargement/infrastructure/configuration/logger-strategy";
 import {
 	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";

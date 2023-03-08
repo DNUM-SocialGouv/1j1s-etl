@@ -5,7 +5,7 @@ import {
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Configuration } from "@stages/src/transformation/infrastructure/configuration/configuration";
-import { TaskLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: TransformFlowStagefrUncompressedSubCommand.FLOW_NAME,
@@ -20,7 +20,7 @@ export class TransformFlowStagefrUncompressedSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(TransformFlowStagefrUncompressedSubCommand.FLOW_NAME)
+	@CommandLog(TransformFlowStagefrUncompressedSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		await this.usecase.executer(
 			new FluxTransformation(

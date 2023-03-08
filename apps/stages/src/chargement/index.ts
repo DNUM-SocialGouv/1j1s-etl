@@ -11,7 +11,9 @@ import {
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/chargement/infrastructure/configuration/configuration";
 import { LoadFlowJobteaserSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-jobteaser.sub-command";
-import { LoadFlowStagefrCompressedSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-stagefr-compressed.sub-command";
+import {
+	LoadFlowStagefrCompressedSubCommand,
+} from "@stages/src/chargement/infrastructure/sub-command/load-flow-stagefr-compressed.sub-command";
 import {
 	LoadFlowStagefrUncompressedSubCommand,
 } from "@stages/src/chargement/infrastructure/sub-command/load-flow-stagefr-uncompressed.sub-command";

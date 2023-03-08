@@ -7,8 +7,8 @@ import {
 } from "@maintenance/src/application-service/purger-les-annonces-de-logement.usecase";
 import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/purger-les-offres-de-stage.usecase";
 import { Configuration, ConfigurationFactory } from "@maintenance/src/infrastructure/configuration/configuration";
-import { PurgeHousingAdsTask } from "@maintenance/src/infrastructure/task/purge-housing-ads.task";
-import { PurgeInternshipsTask } from "@maintenance/src/infrastructure/task/purge-internships.task";
+import { PurgeHousingAdsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-housing-ads.sub-command";
+import { PurgeInternshipsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-internships.sub-command";
 
 @Module({
 	imports: [
@@ -20,23 +20,23 @@ import { PurgeInternshipsTask } from "@maintenance/src/infrastructure/task/purge
 	],
 	providers: [
 		{
-			provide: PurgeInternshipsTask,
+			provide: PurgeInternshipsSubCommand,
 			inject: [ConfigService, PurgerLesOffresDeStage],
-			useFactory: (configurationService: ConfigService, purgerLesOffresDeStage: PurgerLesOffresDeStage): PurgeInternshipsTask => {
+			useFactory: (configurationService: ConfigService, purgerLesOffresDeStage: PurgerLesOffresDeStage): PurgeInternshipsSubCommand => {
 				const configuration = configurationService.get<Configuration>("maintenance");
-				return new PurgeInternshipsTask(purgerLesOffresDeStage, configuration);
+				return new PurgeInternshipsSubCommand(purgerLesOffresDeStage, configuration);
 			},
 		},
 		{
-			provide: PurgeHousingAdsTask,
+			provide: PurgeHousingAdsSubCommand,
 			inject: [ConfigService, PurgerLesAnnoncesDeLogement],
-			useFactory: (configurationService: ConfigService, purgerLesAnnoncesDeLogement: PurgerLesAnnoncesDeLogement): PurgeHousingAdsTask => {
+			useFactory: (configurationService: ConfigService, purgerLesAnnoncesDeLogement: PurgerLesAnnoncesDeLogement): PurgeHousingAdsSubCommand => {
 				const configuration = configurationService.get<Configuration>("maintenance");
-				return new PurgeHousingAdsTask(purgerLesAnnoncesDeLogement, configuration);
+				return new PurgeHousingAdsSubCommand(purgerLesAnnoncesDeLogement, configuration);
 			},
 		},
 	],
-	exports: [PurgeHousingAdsTask, PurgeInternshipsTask],
+	exports: [PurgeHousingAdsSubCommand, PurgeInternshipsSubCommand],
 })
 export class Maintenance {
 }

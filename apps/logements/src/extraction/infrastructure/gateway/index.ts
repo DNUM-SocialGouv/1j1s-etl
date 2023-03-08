@@ -5,8 +5,13 @@ import { AxiosInstance } from "axios";
 import { Client } from "minio";
 
 import { FluxRepository } from "@logements/src/extraction/domain/service/flux.repository";
-import { Configuration, ConfigurationFactory } from "@logements/src/extraction/infrastructure/configuration/configuration";
-import { LogementsExtractionLoggerStrategy } from "@logements/src/extraction/infrastructure/configuration/logger.strategy";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@logements/src/extraction/infrastructure/configuration/configuration";
+import {
+	LogementsExtractionLoggerStrategy,
+} from "@logements/src/extraction/infrastructure/configuration/logger.strategy";
 import {
 	HousingBasicFlowHttpClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/housing-basic-flow-http.client";

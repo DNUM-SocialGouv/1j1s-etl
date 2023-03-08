@@ -1,8 +1,9 @@
 import { Flux } from "@shared/src/domain/model/flux";
 import {
-  ContentParserStrategy, ContentParserStrategyError,
-  JsonContentParser,
-  XmlContentParser,
+	ContentParserStrategy,
+	ContentParserStrategyError,
+	JsonContentParser,
+	XmlContentParser,
 } from "@shared/src/infrastructure/gateway/content.parser";
 
 export class AnnonceDeLogementContentParserStrategy implements ContentParserStrategy {

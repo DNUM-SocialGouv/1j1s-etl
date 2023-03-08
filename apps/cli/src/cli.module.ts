@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 
 import { ExtractCommand } from "@cli/src/command/extract.command";
 import { LoadCommand } from "@cli/src/command/load.command";
-import { MaintainCommand } from "@cli/src/maintain/maintain.command";
+import { MaintainCommand } from "@cli/src/command/maintain.command";
 import { TransformCommand } from "@cli/src/command/transform.command";
 
 import { Evenements } from "@evenements/src";
@@ -16,10 +16,10 @@ import { Stages } from "@stages/src";
 @Module({
 	imports: [Evenements, Logements, Stages, Maintenance],
 	providers: [
-		...ExtractCommand.registerWithSubCommands(),
-		...TransformCommand.registerWithSubCommands(),
-		...LoadCommand.registerWithSubCommands(),
-		...MaintainCommand.registerWithSubCommands(),
+		ExtractCommand,
+		TransformCommand,
+		LoadCommand,
+		MaintainCommand,
 	],
 })
 export class CliModule {

@@ -3,7 +3,7 @@ import { CommandRunner, SubCommand } from "nest-commander";
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
 import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
 import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
-import { TaskLog } from "@logements/src/extraction/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@logements/src/extraction/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: ExtractFlowImmojeuneSubCommand.FLOW_NAME,
@@ -15,7 +15,7 @@ export class ExtractFlowImmojeuneSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(ExtractFlowImmojeuneSubCommand.FLOW_NAME)
+	@CommandLog(ExtractFlowImmojeuneSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		await this.usecase.executer(
 			new FluxExtraction(

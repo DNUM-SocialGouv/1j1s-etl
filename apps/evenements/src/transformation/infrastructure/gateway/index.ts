@@ -4,8 +4,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Client } from "minio";
 
 import { EvenementsRepository } from "@evenements/src/transformation/domain/service/evenements.repository";
-import { Configuration, ConfigurationFactory } from "@evenements/src/transformation/infrastructure/configuration/configuration";
-import { EvenementsTransformationLoggerStrategy } from "@evenements/src/transformation/infrastructure/configuration/logger-strategy";
+import {
+	Configuration,
+	ConfigurationFactory,
+} from "@evenements/src/transformation/infrastructure/configuration/configuration";
+import {
+	EvenementsTransformationLoggerStrategy,
+} from "@evenements/src/transformation/infrastructure/configuration/logger-strategy";
 import {
 	MinioEvenementRepository,
 } from "@evenements/src/transformation/infrastructure/gateway/repository/minio-evenement.repository";

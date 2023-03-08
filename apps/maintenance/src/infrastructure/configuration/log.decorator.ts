@@ -13,7 +13,7 @@ const logger = new LoggerFactory(
 	configuration.LOGGER.DOMAINE,
 ).create({ name: "maintenance" });
 
-export function TaskLog(maintenanceProcessName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
+export function CommandLog(maintenanceProcessName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
 	return function (target: unknown, propertyKey: string, descriptor: TypedPropertyDescriptor<() => Promise<void>>): PropertyDescriptor {
 		const originalMethod = descriptor.value;
 

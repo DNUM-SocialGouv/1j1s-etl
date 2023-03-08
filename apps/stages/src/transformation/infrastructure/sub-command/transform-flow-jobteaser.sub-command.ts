@@ -5,7 +5,7 @@ import {
 } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
 import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Configuration } from "@stages/src/transformation/infrastructure/configuration/configuration";
-import { TaskLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
+import { CommandLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
 
 @SubCommand({
 	name: TransformFlowJobteaserSubCommand.FLOW_NAME,
@@ -20,7 +20,7 @@ export class TransformFlowJobteaserSubCommand extends CommandRunner {
 		super();
 	}
 
-	@TaskLog(TransformFlowJobteaserSubCommand.FLOW_NAME)
+	@CommandLog(TransformFlowJobteaserSubCommand.FLOW_NAME)
 	public async run(): Promise<void> {
 		await this.usecase.executer(
 			new FluxTransformation(

@@ -1,15 +1,15 @@
 import { expect, sinon, StubbedType, stubInterface } from "@test/library";
 
 import {
-    TransformerFluxTousMobilises,
+	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 import { FluxTransformation } from "@evenements/src/transformation/domain/model/flux";
 import { TousMobilises } from "@evenements/src/transformation/domain/model/tous-mobilises";
 import { EvenementsRepository } from "@evenements/src/transformation/domain/service/evenements.repository";
 import { Convertir } from "@evenements/src/transformation/domain/service/tous-mobilises/convertir.domain-service";
 import {
-    evenement1Le24Novembre,
-    evenement2Le24Novembre,
+	evenement1Le24Novembre,
+	evenement2Le24Novembre,
 } from "@evenements/test/fixture/evenements-un-jeune-une-solution.fixture";
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";

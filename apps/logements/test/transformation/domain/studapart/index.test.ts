@@ -5,10 +5,10 @@ import { Studapart } from "@logements/src/transformation/domain/model/studapart"
 import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 import {
-    AnnonceDeLogementFixtureBuilder,
+	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
 import {
-    AnnonceDeLogementStudapartFixtureBuilder,
+	AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";

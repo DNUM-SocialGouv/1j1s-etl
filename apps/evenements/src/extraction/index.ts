@@ -3,11 +3,14 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { Usecases } from "@evenements/src/extraction/application-service";
 import {
-    ExtraireFluxEvenementTousMobilises,
+	ExtraireFluxEvenementTousMobilises,
 } from "@evenements/src/extraction/application-service/extraire-flux-evenement-tous-mobilises.usecase";
-import { Configuration, ConfigurationFactory } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 import {
-    ExtractFlowTousMobilisesSubCommand,
+	Configuration,
+	ConfigurationFactory,
+} from "@evenements/src/extraction/infrastructure/configuration/configuration";
+import {
+	ExtractFlowTousMobilisesSubCommand,
 } from "@evenements/src/extraction/infrastructure/sub-command/extract-flow-tous-mobilises.sub-command";
 
 @Module({

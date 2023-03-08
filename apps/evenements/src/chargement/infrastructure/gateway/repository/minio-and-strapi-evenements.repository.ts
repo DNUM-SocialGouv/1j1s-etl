@@ -4,7 +4,7 @@ import { Client } from "minio";
 import { UnJeuneUneSolution } from "@evenements/src/chargement/domain/model/1jeune1solution";
 import { Configuration } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import {
-    StrapiEvenementHttpClient,
+	StrapiEvenementHttpClient,
 } from "@evenements/src/chargement/infrastructure/gateway/client/strapi-evenement-http-client";
 
 import { DateService } from "@shared/src/domain/service/date.service";
@@ -12,9 +12,9 @@ import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger"
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { ContentParser } from "@shared/src/infrastructure/gateway/content.parser";
 import {
-    EcritureFluxErreur,
-    RecupererContenuErreur,
-    RecupererOffresExistantesErreur,
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+	RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 

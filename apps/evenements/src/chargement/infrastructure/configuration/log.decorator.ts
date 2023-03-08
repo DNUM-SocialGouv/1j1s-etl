@@ -6,7 +6,7 @@ import {
 const configuration = ConfigurationFactory.create();
 const loggerStrategy = new EvenementsChargementLoggerStrategy(configuration);
 
-export function TaskLog(flowName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
+export function CommandLog(flowName: string): (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor {
 	return function (target: unknown, propertyKey: string, descriptor: TypedPropertyDescriptor<() => Promise<void>>): PropertyDescriptor {
 		const originalMethod = descriptor.value;
 

@@ -6,7 +6,7 @@ import { expect, StubbedClass, stubClass } from "@test/library";
 
 import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
 import {
-    StudapartFtpFlowClient,
+	StudapartFtpFlowClient,
 } from "@logements/src/extraction/infrastructure/gateway/client/studapart/studapart-ftp-flow.client";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";

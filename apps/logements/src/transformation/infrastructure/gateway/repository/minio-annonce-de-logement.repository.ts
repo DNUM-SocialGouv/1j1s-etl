@@ -2,7 +2,9 @@ import { Client } from "minio";
 
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";
-import { AnnonceDeLogementRepository } from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
+import {
+	AnnonceDeLogementRepository,
+} from "@logements/src/transformation/domain/service/annonce-de-logement.repository";
 import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
 
 import { DateService } from "@shared/src/domain/service/date.service";
