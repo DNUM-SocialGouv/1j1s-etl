@@ -10,11 +10,11 @@ import {
 	ChargerFluxStagefrDecompresse,
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/chargement/infrastructure/configuration/configuration";
-import { LoadJobteaserTask } from "@stages/src/chargement/infrastructure/tasks/load-jobteaser.task";
-import { LoadStagefrCompressedTask } from "@stages/src/chargement/infrastructure/tasks/load-stagefr-compressed.task";
+import { LoadFlowJobteaserSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-jobteaser.sub-command";
+import { LoadFlowStagefrCompressedSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-stagefr-compressed.sub-command";
 import {
-	LoadStagefrUncompressedTask,
-} from "@stages/src/chargement/infrastructure/tasks/load-stagefr-uncompressed.task";
+	LoadFlowStagefrUncompressedSubCommand,
+} from "@stages/src/chargement/infrastructure/sub-command/load-flow-stagefr-uncompressed.sub-command";
 
 @Module({
 	imports: [
@@ -25,28 +25,28 @@ import {
 		Usecases,
 	],
 	providers: [{
-		provide: LoadJobteaserTask,
+		provide: LoadFlowJobteaserSubCommand,
 		inject: [ConfigService, ChargerFluxJobteaser],
-		useFactory: (configurationService: ConfigService, chargerFluxJobteaser: ChargerFluxJobteaser): LoadJobteaserTask => {
-			return new LoadJobteaserTask(chargerFluxJobteaser, configurationService.get<Configuration>("stagesChargement"));
+		useFactory: (configurationService: ConfigService, chargerFluxJobteaser: ChargerFluxJobteaser): LoadFlowJobteaserSubCommand => {
+			return new LoadFlowJobteaserSubCommand(chargerFluxJobteaser, configurationService.get<Configuration>("stagesChargement"));
 		},
 	}, {
-		provide: LoadStagefrCompressedTask,
+		provide: LoadFlowStagefrCompressedSubCommand,
 		inject: [ConfigService, ChargerFluxStagefrCompresse],
-		useFactory: (configurationService: ConfigService, chargerFluxStagefrCompresse: ChargerFluxStagefrCompresse): LoadStagefrCompressedTask => {
-			return new LoadStagefrCompressedTask(chargerFluxStagefrCompresse, configurationService.get<Configuration>("stagesChargement"));
+		useFactory: (configurationService: ConfigService, chargerFluxStagefrCompresse: ChargerFluxStagefrCompresse): LoadFlowStagefrCompressedSubCommand => {
+			return new LoadFlowStagefrCompressedSubCommand(chargerFluxStagefrCompresse, configurationService.get<Configuration>("stagesChargement"));
 		},
 	}, {
-		provide: LoadStagefrUncompressedTask,
+		provide: LoadFlowStagefrUncompressedSubCommand,
 		inject: [ConfigService, ChargerFluxStagefrDecompresse],
-		useFactory: (configurationService: ConfigService, chargerFluxStagefrCompresse: ChargerFluxStagefrDecompresse): LoadStagefrUncompressedTask => {
-			return new LoadStagefrUncompressedTask(chargerFluxStagefrCompresse, configurationService.get<Configuration>("stagesChargement"));
+		useFactory: (configurationService: ConfigService, chargerFluxStagefrCompresse: ChargerFluxStagefrDecompresse): LoadFlowStagefrUncompressedSubCommand => {
+			return new LoadFlowStagefrUncompressedSubCommand(chargerFluxStagefrCompresse, configurationService.get<Configuration>("stagesChargement"));
 		},
 	}],
 	exports: [
-		LoadJobteaserTask,
-		LoadStagefrCompressedTask,
-		LoadStagefrUncompressedTask,
+		LoadFlowJobteaserSubCommand,
+		LoadFlowStagefrCompressedSubCommand,
+		LoadFlowStagefrUncompressedSubCommand,
 	],
 })
 export class Chargement {

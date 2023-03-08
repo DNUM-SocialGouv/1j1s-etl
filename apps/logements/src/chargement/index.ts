@@ -5,8 +5,8 @@ import { Usecases } from "@logements/src/chargement/application-service";
 import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
 import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
 import { Configuration, ConfigurationFactory } from "@logements/src/chargement/infrastructure/configuration/configuration";
-import { LoadImmojeuneTask } from "@logements/src/chargement/infrastructure/tasks/load-immojeune.task";
-import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/tasks/load-studapart.task";
+import { LoadFlowImmojeuneSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-immojeune.sub-command";
+import { LoadFlowStudapartSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-studapart.sub-command";
 
 @Module({
 	imports: [
@@ -17,25 +17,25 @@ import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/task
 		Usecases,
 	],
 	providers: [{
-		provide: LoadImmojeuneTask,
+		provide: LoadFlowImmojeuneSubCommand,
 		inject: [ConfigService, ChargerFluxImmojeune],
 		useFactory: (
 			configurationService: ConfigService,
 			chargerFluxImmojeune: ChargerFluxImmojeune,
-		): LoadImmojeuneTask => {
-			return new LoadImmojeuneTask(chargerFluxImmojeune, configurationService.get<Configuration>("chargementLogements"));
+		): LoadFlowImmojeuneSubCommand => {
+			return new LoadFlowImmojeuneSubCommand(chargerFluxImmojeune, configurationService.get<Configuration>("chargementLogements"));
 		},
 	}, {
-		provide: LoadStudapartTask,
+		provide: LoadFlowStudapartSubCommand,
 		inject: [ConfigService, ChargerFluxStudapart],
 		useFactory: (
 			configurationService: ConfigService,
 			chargerFluxStudapart: ChargerFluxStudapart,
-		): LoadStudapartTask => {
-			return new LoadStudapartTask(chargerFluxStudapart, configurationService.get<Configuration>("chargementLogements"));
+		): LoadFlowStudapartSubCommand => {
+			return new LoadFlowStudapartSubCommand(chargerFluxStudapart, configurationService.get<Configuration>("chargementLogements"));
 		},
 	}],
-	exports: [LoadImmojeuneTask, LoadStudapartTask],
+	exports: [LoadFlowImmojeuneSubCommand, LoadFlowStudapartSubCommand],
 })
 export class Chargement {
 }

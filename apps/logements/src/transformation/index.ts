@@ -10,11 +10,11 @@ import {
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 import { Configuration, ConfigurationFactory } from "@logements/src/transformation/infrastructure/configuration/configuration";
 import {
-	TransformFlowImmojeuneTask,
-} from "@logements/src/transformation/infrastructure/tasks/transform-flow-immojeune.task";
+	TransformFlowImmojeuneSubCommand,
+} from "@logements/src/transformation/infrastructure/sub-command/transform-flow-immojeune.sub-command";
 import {
-	TransformFlowStudapartTask,
-} from "@logements/src/transformation/infrastructure/tasks/transform-flow-studapart.task";
+	TransformFlowStudapartSubCommand,
+} from "@logements/src/transformation/infrastructure/sub-command/transform-flow-studapart.sub-command";
 
 @Module({
 	imports: [
@@ -25,25 +25,25 @@ import {
 		Usecases,
 	],
 	providers: [{
-		provide: TransformFlowImmojeuneTask,
+		provide: TransformFlowImmojeuneSubCommand,
 		inject: [ConfigService, TransformerFluxImmojeune],
 		useFactory: (
 			configurationService: ConfigService,
 			transformerFluxImmojeune: TransformerFluxImmojeune
-		): TransformFlowImmojeuneTask => {
-			return new TransformFlowImmojeuneTask(transformerFluxImmojeune, configurationService.get<Configuration>("transformationLogements"));
+		): TransformFlowImmojeuneSubCommand => {
+			return new TransformFlowImmojeuneSubCommand(transformerFluxImmojeune, configurationService.get<Configuration>("transformationLogements"));
 		},
 	}, {
-		provide: TransformFlowStudapartTask,
+		provide: TransformFlowStudapartSubCommand,
 		inject: [ConfigService, TransformerFluxStudapart],
 		useFactory: (
 			configurationService: ConfigService,
 			transformerFluxStudapart: TransformerFluxStudapart
-		): TransformFlowStudapartTask => {
-			return new TransformFlowStudapartTask(transformerFluxStudapart, configurationService.get<Configuration>("transformationLogements"));
+		): TransformFlowStudapartSubCommand => {
+			return new TransformFlowStudapartSubCommand(transformerFluxStudapart, configurationService.get<Configuration>("transformationLogements"));
 		},
 	}],
-	exports: [TransformFlowImmojeuneTask, TransformFlowStudapartTask],
+	exports: [TransformFlowImmojeuneSubCommand, TransformFlowStudapartSubCommand],
 })
 export class Transformation {
 }
