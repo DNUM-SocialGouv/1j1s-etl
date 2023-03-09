@@ -23,7 +23,13 @@ import {
 } from "@stages/src/extraction/infrastructure/gateway/repository/minio-http-flow.repository";
 
 @Module({
-	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
+	imports: [
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.createRoot],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
+		Shared,
+	],
 	providers: [
 		{
 			provide: OctetStreamHttpClient,

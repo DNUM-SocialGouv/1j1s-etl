@@ -5,6 +5,7 @@ export type StrapiConfiguration = {
 	AUTHENTICATION_URL: string
 	BASE_URL: string
 	INTERNSHIP_ENDPOINT: string
+	HOUSING_ADS_ENDPOINT: string
 	PASSWORD: string
 	USERNAME: string
 }
@@ -17,17 +18,29 @@ export type MaintenanceLoggerConfiguration = {
 	NAME: string
 }
 
-type Configuration = {
+export type Configuration = {
+	FLOWS: Array<string>
 	LOGGER: MaintenanceLoggerConfiguration
 	SENTRY: SentryConfiguration
 	STRAPI: StrapiConfiguration
 }
 
 export class ConfigurationFactory {
+	public static createRoot(): { maintenance: Configuration } {
+		return {
+			maintenance: ConfigurationFactory.create(),
+		};
+	}
+
 	public static create(): Configuration {
 		const { getOrError } = ConfigurationFactory;
 
 		return {
+			FLOWS: [
+				getOrError("INTERNSHIPS_JOBTEASER_NAME"),
+				getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),
+				getOrError("INTERNSHIPS_STAGEFR_UNCOMPRESSED_NAME"),
+			],
 			LOGGER: {
 				CONTEXT: getOrError("MAINTENANCE_CONTEXT"),
 				DOMAINE: "Maintenance",
@@ -36,14 +49,15 @@ export class ConfigurationFactory {
 				NAME: getOrError("MAINTENANCE_LOGGER_NAME"),
 			},
 			SENTRY: {
-				DSN: getOrError("MAINTENANCE_SENTRY_DSN"),
+				DSN: getOrError("SENTRY_DSN"),
 				PROJECT: getOrError("npm_package_name"),
 				RELEASE: getOrError("npm_package_version"),
 			},
 			STRAPI: {
 				AUTHENTICATION_URL: getOrError("STRAPI_AUTHENTICATION_URL"),
 				BASE_URL: getOrError("STRAPI_BASE_URL"),
-				INTERNSHIP_ENDPOINT: getOrError("STRAPI_INTERNSHIP_URL"),
+				INTERNSHIP_ENDPOINT: getOrError("STRAPI_OFFRE_DE_STAGE_URL"),
+				HOUSING_ADS_ENDPOINT: getOrError("HOUSING_STRAPI_URL"),
 				PASSWORD: getOrError("STRAPI_PASSWORD"),
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},

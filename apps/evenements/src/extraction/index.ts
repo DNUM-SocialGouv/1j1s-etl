@@ -12,7 +12,10 @@ import {
 
 @Module({
     imports: [
-        ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
+        ConfigModule.forRoot({
+            load: [ConfigurationFactory.createRoot],
+            envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+        }),
         Usecases,
     ],
     providers: [{

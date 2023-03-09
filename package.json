@@ -19,7 +19,7 @@
     "prepare": "./setup.sh",
     "start": "nest start api",
     "test": "mocha",
-    "test:integration": "mocha --config .mocharc.integration.json",
+    "test:integration": "NODE_ENV=test DOTENV_CONFIG_PATH='.env.test' mocha --config .mocharc.integration.json",
     "test:mutation": "npx stryker run",
     "test:mutation:prepare": "tsc -p tsconfig.mutation.json"
   },

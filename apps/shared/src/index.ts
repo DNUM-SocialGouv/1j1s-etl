@@ -6,7 +6,9 @@ import { Client } from "minio";
 import TurndownService from "turndown";
 
 import { DateService } from "@shared/src/domain/service/date.service";
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FtpClient } from "@shared/src/infrastructure/gateway/client/ftp.client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
 import { StreamZipClient } from "@shared/src/infrastructure/gateway/client/stream-zip.client";
 import {
 	FileSystemClient,
@@ -19,7 +21,7 @@ import { UnzipClient } from "@shared/src/infrastructure/gateway/unzip.client";
 import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
-	imports: [ConfigModule.forRoot()],
+	imports: [ConfigModule.forRoot({ envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env" })],
 	providers: [
 		{
 			provide: "AssainisseurDeTexte",
@@ -56,6 +58,22 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 			provide: "Pays",
 			useValue: new CountryToIso(),
 		},
+		{
+			provide: StrapiHttpClient,
+			inject: [ConfigService],
+			useFactory: (configurationService: ConfigService): StrapiHttpClient => {
+				const authUrl = configurationService.get<string>("STRAPI_AUTHENTICATION_URL");
+				const strapiCredentials = {
+					password: configurationService.get<string>("STRAPI_PASSWORD"),
+					username: configurationService.get<string>("STRAPI_USERNAME"),
+				};
+				const authenticationClient = new AuthenticationClient(authUrl, strapiCredentials);
+				const axiosInstance = axios.create({
+					baseURL: configurationService.get<string>("STRAPI_BASE_URL"),
+				});
+				return new StrapiHttpClient(axiosInstance, authenticationClient);
+			},
+		},
 		StreamZipClient,
 		UnzipClient,
 		{
@@ -72,6 +90,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		"FileSystemClient",
 		JsonContentParser,
 		"Pays",
+		StrapiHttpClient,
 		StreamZipClient,
 		UnzipClient,
 		"UuidGenerator",

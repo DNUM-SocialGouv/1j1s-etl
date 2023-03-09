@@ -10,7 +10,10 @@ import { ExtractFlowStudapartTask } from "@logements/src/extraction/infrastructu
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.createRoot],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
 		Usecases,
 	],
 	providers: [{

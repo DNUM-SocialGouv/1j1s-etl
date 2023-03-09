@@ -25,7 +25,13 @@ import { JsonContentParser } from "@shared/src/infrastructure/gateway/content.pa
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 @Module({
-	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
+	imports: [
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.createRoot],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
+		Shared,
+	],
 	providers: [{
 		provide: EvenementsChargementLoggerStrategy,
 		inject: [ConfigService],
