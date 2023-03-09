@@ -31,19 +31,19 @@ export class StrapiHttpClient {
 	constructor(private readonly axios: AxiosInstance, private readonly authenticationClient: AuthenticationClient) {
 	}
 
-	public async get<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string): Promise<Array<T>> {
+	public async get<T>(endpoint: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string): Promise<Array<T>> {
 		await this.authenticationClient.handleAuthentication(this.axios);
 
 		const firstPage = 1;
-		const response = await this.axios.get<StrapiResponse<T>>(url, this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, firstPage));
+		const response = await this.axios.get<StrapiResponse<T>>(endpoint, this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, firstPage));
 		const firstPageResult = response.data.data.map(this.toRawValues);
 		const pageCount = response.data.meta.pagination.pageCount;
 
-		const otherPagesResults = await this.getDataForEachPage<T>(url, source, fieldsToRetrieve, relationsToRetrieve, pageCount);
+		const otherPagesResults = await this.getDataForEachPage<T>(endpoint, source, fieldsToRetrieve, relationsToRetrieve, pageCount);
 
 		return [...firstPageResult, ...otherPagesResults];
 	}
-	
+
 	public async delete<T>(endpoint: string, id: string): Promise<void> {
 		await this.authenticationClient.handleAuthentication(this.axios);
 

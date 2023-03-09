@@ -29,6 +29,9 @@ import {
 	TransformerFluxStudapart,
 } from "@logements/src/transformation/application-service/transformer-flux-studapart.usecase";
 
+import {
+	PurgerLesAnnoncesDeLogement,
+} from "@maintenance/src/application-service/purger-les-annonces-de-logement.usecase";
 import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/purger-les-offres-de-stage.usecase";
 
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
@@ -75,7 +78,7 @@ describe("CliModuleTest", () => {
 			extraireTousMobilises = stubClass(ExtraireFluxEvenementTousMobilises);
 
 			cliModule = await CommandTestFactory.createTestingCommand({
-				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
+				imports: [CliModule, ConfigModule.forRoot({ envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env" })],
 			})
 				.overrideProvider(Client).useValue(stubClass(Client))
 				.overrideProvider(ExtraireJobteaser).useValue(extraireJobteaser)
@@ -329,24 +332,38 @@ describe("CliModuleTest", () => {
 	});
 	context("Lorsque je lance la commande de maintenance", () => {
 		let purgerLesOffresDeStage: StubbedClass<PurgerLesOffresDeStage>;
+		let purgerLesAnnoncesDeLogement: StubbedClass<PurgerLesAnnoncesDeLogement>;
 
 		beforeEach(async () => {
 			purgerLesOffresDeStage = stubClass(PurgerLesOffresDeStage);
+			purgerLesAnnoncesDeLogement = stubClass(PurgerLesAnnoncesDeLogement);
 
 			cliModule = await CommandTestFactory.createTestingCommand({
 				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
 			})
 				.overrideProvider(Client).useValue(stubClass(Client))
 				.overrideProvider(PurgerLesOffresDeStage).useValue(purgerLesOffresDeStage)
+				.overrideProvider(PurgerLesAnnoncesDeLogement).useValue(purgerLesAnnoncesDeLogement)
 				.compile();
 		});
-		context("des offres de stage", () => {
+
+		context("qui purge les offres de stage", () => {
 			it("execute la commande", async () => {
 				// When
-				await CommandTestFactory.run(cliModule, ["maintain", "les-offres-de-stage"]);
+				await CommandTestFactory.run(cliModule, ["maintain", "purge-internships"]);
 
 				// Then
 				expect(purgerLesOffresDeStage.executer).to.have.been.calledOnce;
+			});
+		});
+
+		context("qui purge les annonces de logement", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["maintain", "purge-housing-ads"]);
+
+				// Then
+				expect(purgerLesAnnoncesDeLogement.executer).to.have.been.calledOnce;
 			});
 		});
 	});

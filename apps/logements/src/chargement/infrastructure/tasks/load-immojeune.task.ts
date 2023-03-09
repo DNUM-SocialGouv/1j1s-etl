@@ -6,7 +6,6 @@ import { Flux } from "@shared/src/domain/model/flux";
 import { Task } from "@shared/src/infrastructure/task/task";
 
 export class LoadImmojeuneTask implements Task {
-
     private static readonly FLOW_NAME = "immojeune";
 
     constructor(private readonly usecase: Usecase, private readonly configuration: Configuration) {
@@ -21,5 +20,4 @@ export class LoadImmojeuneTask implements Task {
             ),
         );
     }
-
 }

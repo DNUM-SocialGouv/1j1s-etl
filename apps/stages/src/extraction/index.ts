@@ -19,7 +19,13 @@ import {
 } from "@stages/src/extraction/infrastructure/tasks/extract-flow-stagefr-uncompressed.task";
 
 @Module({
-	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Usecases],
+	imports: [
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.createRoot],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
+		Usecases,
+	],
 	providers: [
 		{
 			provide: ExtractFlowJobteaserTask,

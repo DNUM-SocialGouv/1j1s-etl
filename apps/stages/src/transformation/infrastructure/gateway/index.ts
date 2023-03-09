@@ -18,7 +18,13 @@ import {
 } from "@stages/src/transformation/infrastructure/gateway/repository/minio-offre-de-stage.repository";
 
 @Module({
-	imports: [ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }), Shared],
+	imports: [
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.createRoot],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
+		Shared,
+	],
 	providers: [
 		{
 			provide: "LoggerStrategy",

@@ -10,7 +10,10 @@ import { LoadStudapartTask } from "@logements/src/chargement/infrastructure/task
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [ConfigurationFactory.createRoot] }),
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.createRoot],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
 		Usecases,
 	],
 	providers: [{

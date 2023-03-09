@@ -1,12 +1,16 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { AnnonceDeLogementRepository } from "@maintenance/src/domain/service/annonce-de-logement.repository";
 import { OffreDeStageRepository } from "@maintenance/src/domain/service/offre-de-stage.repository";
 import {
 	ConfigurationFactory,
 	MaintenanceLoggerConfiguration,
 	StrapiConfiguration,
 } from "@maintenance/src/infrastructure/configuration/configuration";
+import {
+	HttpHousingAdsRepository,
+} from "@maintenance/src/infrastructure/gateway/repository/http-housing-ads.repository";
 import {
 	HttpInternshipRepository,
 } from "@maintenance/src/infrastructure/gateway/repository/http-internship.repository";
@@ -17,7 +21,13 @@ import { Logger, LoggerFactory } from "@shared/src/infrastructure/configuration/
 import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
 
 @Module({
-	imports: [Shared, ConfigModule.forRoot({ load: [ConfigurationFactory.create] })],
+	imports: [
+		ConfigModule.forRoot({
+			load: [ConfigurationFactory.create],
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+		}),
+		Shared,
+	],
 	providers: [
 		{
 			provide: "Logger",
@@ -38,6 +48,14 @@ import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/stra
 			},
 		},
 		{
+			provide: "AnnonceDeLogementRepository",
+			inject: [ConfigService, StrapiHttpClient, "Logger"],
+			useFactory: (configurationService: ConfigService, strapiHttpClient: StrapiHttpClient, logger: Logger): AnnonceDeLogementRepository => {
+				const strapiConfiguration = configurationService.get<StrapiConfiguration>("STRAPI");
+				return new HttpHousingAdsRepository(strapiHttpClient, strapiConfiguration, logger);
+			},
+		},
+		{
 			provide: "OffreDeStageRepository",
 			inject: [ConfigService, StrapiHttpClient, "Logger"],
 			useFactory: (configurationService: ConfigService, strapiHttpClient: StrapiHttpClient, logger: Logger): OffreDeStageRepository => {
@@ -46,7 +64,7 @@ import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/stra
 			},
 		},
 	],
-	exports: ["OffreDeStageRepository"],
+	exports: ["AnnonceDeLogementRepository", "OffreDeStageRepository"],
 })
 export class Gateways {
 
