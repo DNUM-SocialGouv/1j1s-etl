@@ -14,7 +14,7 @@ C'est pourquoi nous avons identifié des contextes métier indépendants les uns
 
 **Au 30/01/2023 :**
 
-![architecture-etl](../assets/etl.png)
+![architecture-etl](../assets/big-picture-etl.png)
 
 ## Point d'entrée
 
