@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.4.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.3.0...v4.4.0) (2023-03-13)
+
+
+### Features
+
+* **mainteance:** purge des données de stages ([04252e9](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/04252e9f7b0cc538292d321395534956f8392a18))
+* **maintenance:** purge des annonces de logement ([8e4bd23](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/8e4bd23609238a32dfcc5a25a49c04690e226bf0))
+* **maintenance:** purger les offres de stage ([b19b17c](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/b19b17cc349fba570f2a644a6d0fbca70c697c18))
+
 ## [4.3.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.2.0...v4.3.0) (2023-03-06)
 
 
