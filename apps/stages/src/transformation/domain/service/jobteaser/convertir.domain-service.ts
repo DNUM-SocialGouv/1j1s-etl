@@ -91,7 +91,7 @@ export class Convertir {
 	private extraireEmployeur(employeur: Jobteaser.Employeur): UnJeune1Solution.Employeur {
 		return {
 			description: employeur.description ? this.assainisseurDeTexte.nettoyer(employeur.description) : undefined,
-			nom: this.assainisseurDeTexte.nettoyer(employeur.name),
+			nom: this.assainisseurDeTexte.nettoyer(employeur.name.toString()),
 			logoUrl: employeur.logo,
 			siteUrl: employeur.website,
 		};

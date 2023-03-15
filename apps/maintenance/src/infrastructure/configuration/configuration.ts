@@ -40,6 +40,8 @@ export class ConfigurationFactory {
 				getOrError("INTERNSHIPS_JOBTEASER_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_UNCOMPRESSED_NAME"),
+				getOrError("HOUSING_IMMOJEUNE_NAME"),
+				getOrError("HOUSING_STUDAPART_NAME"),
 			],
 			LOGGER: {
 				CONTEXT: getOrError("MAINTENANCE_CONTEXT"),
