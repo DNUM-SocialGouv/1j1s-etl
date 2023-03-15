@@ -12,7 +12,7 @@
 Ce projet a été réalisé en suivant au mieux les principes du [Domain-Driven Design](https://alexsoyes.com/ddd-domain-driven-design/).
 C'est pourquoi nous avons identifié des contextes métier indépendants les uns des autres comme représentés ci-dessous :
 
-**Au 30/01/2023 :**
+**Au 10/03/2023 :**
 
 ![architecture-etl](../assets/big-picture-etl.png)
 
@@ -25,7 +25,7 @@ Le point d'entrée de l'application est ici la Command Line Interface (CLI). En 
 Lancer une opération depuis la CLI demande quelques options nécessaires pour savoir quoi lancer :
 
 ```shell
-$ npm run cli -- [extract|transform|load]  [flowName]
+$ npm run cli -- [extract|transform|load] [flowName]
 ```
 
 Pour aller plus loin sur la commande `shell` ci-dessus :
@@ -40,6 +40,7 @@ Comme nous le disions plus haut, nous avons découpé notre application par cont
 identifiés les 3 modules suivants :
 - `evenements`
 - `logements`
+- `maintenance`
 - `stages`
 
 Cela se traduit dans le code par 3 modules distincts totalement isolés les uns des autres.

@@ -79,4 +79,10 @@ $ git checkout -b release/<votre numéro de version>
 ### Redéployer cette branche sur Scalingo
 
 Retournez maintenant sur Scalingo. Puis, dans l'onglet déploiement, sélectionnez le déploiement manuel qui vous permet 
-de choisir la branche à déployer. Sélectionnez celle que vous venez de créer puis déployez-la. And voilà.
+de choisir la branche à déployer. Sélectionnez celle que vous venez de créer puis déployez-la.
+
+### Rollback la base de données
+
+Vous trouverez les étapes à suivre dans cette [documentation](./rollback-database.md).
+
+**And voilà !**
