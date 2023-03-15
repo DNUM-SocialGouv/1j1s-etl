@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.4.0...v4.4.1) (2023-03-15)
+
+
+### Bug Fixes
+
+* **maintenance:** ajout des flux logements dans la configuration ([2bed632](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2bed632c5727eabe219c08d2c5f11bfc9f79862b))
+
 ## [4.4.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.3.0...v4.4.0) (2023-03-13)
 
 
