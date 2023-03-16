@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.4.1...v4.4.2) (2023-03-16)
+
+
+### Bug Fixes
+
+* **node:** augmenter heap limit memory nodejs ([6210cf0](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/6210cf0a69da4ed4ea3fc2ac6a03709086546690))
+
 ## [4.4.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.4.0...v4.4.1) (2023-03-15)
 
 
