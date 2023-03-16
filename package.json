@@ -10,7 +10,7 @@
     "build": "nest build cli && nest build api",
     "build:api": "nest build api",
     "build:cli": "nest build cli",
-    "cli": "node build/apps/cli/apps/cli/src/main.js",
+    "cli": "node --max-old-space-size=512 build/apps/cli/apps/cli/src/main.js",
     "coverage": "nyc mocha",
     "dev:api": "nest build api && nest start api",
     "dev:cli": "nest build cli && node -r dotenv/config build/apps/cli/apps/cli/src/main.js",
