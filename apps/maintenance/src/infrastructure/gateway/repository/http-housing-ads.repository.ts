@@ -17,9 +17,7 @@ export class HttpHousingAdsRepository implements AnnonceDeLogementRepository {
 		const housingAds: Array<AnnonceDeLogement> = [];
 
 		for await (const flow of flows) {
-			const flowHousingAds = await this.strapiHttpClient.get<AnnonceDeLogement>(
-				this.strapiConfiguration.HOUSING_ADS_ENDPOINT, flow, "id", ""
-			);
+			const flowHousingAds = await this.strapiHttpClient.get<AnnonceDeLogement>(this.strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", flow);
 			housingAds.push(...flowHousingAds);
 		}
 

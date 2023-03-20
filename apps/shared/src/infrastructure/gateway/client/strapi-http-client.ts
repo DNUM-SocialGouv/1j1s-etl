@@ -2,14 +2,14 @@ import { AxiosInstance } from "axios";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
-type StrapiQueryParam = "pagination[page]"
-	| "filters[source][$eq]"
-	| "fields"
-	| "pagination[pageSize]"
-	| "sort"
-	| "populate"
-
-type StrapiQueryParams = { params: Record<StrapiQueryParam, string | number> }
+type StrapiQueryParams = {
+	"pagination[page]": number,
+	"filters[source][$eq]"?: string,
+	"fields": string,
+	"pagination[pageSize]": number,
+	"sort": string,
+	"populate": string
+}
 
 export type StrapiBodyResponse<T> = { id: number, attributes: T }
 
@@ -31,11 +31,13 @@ export class StrapiHttpClient {
 	constructor(private readonly axios: AxiosInstance, private readonly authenticationClient: AuthenticationClient) {
 	}
 
-	public async get<T>(endpoint: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string): Promise<Array<T>> {
+	public async get<T>(endpoint: string, fieldsToRetrieve: string, relationsToRetrieve: string, source?: string): Promise<Array<T>> {
 		await this.authenticationClient.handleAuthentication(this.axios);
 
 		const firstPage = 1;
-		const response = await this.axios.get<StrapiResponse<T>>(endpoint, this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, firstPage));
+		const response = await this.axios.get<StrapiResponse<T>>(endpoint, {
+			params: this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, firstPage),
+		});
 		const firstPageResult = response.data.data.map(this.toRawValues);
 		const pageCount = response.data.meta.pagination.pageCount;
 
@@ -51,23 +53,31 @@ export class StrapiHttpClient {
 	}
 
 	private buildParams(source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
-		return {
-			params: {
-				"pagination[page]": pageNumber,
-				"filters[source][$eq]": encodeURI(source),
-				"fields": fieldsToRetrieve,
-				"populate": relationsToRetrieve,
-				"pagination[pageSize]": StrapiHttpClient.OCCURENCIES_PER_PAGE,
-				"sort": "identifiantSource",
-			},
+		const defaultParams = {
+			"pagination[page]": pageNumber,
+			"fields": fieldsToRetrieve,
+			"populate": relationsToRetrieve,
+			"pagination[pageSize]": StrapiHttpClient.OCCURENCIES_PER_PAGE,
 		};
+
+		if (source) {
+			return {
+				...defaultParams,
+				"filters[source][$eq]": encodeURI(source),
+				"sort": "identifiantSource",
+			};
+		}
+
+		return { ...defaultParams, "sort": "id" };
 	}
 
 	private async getDataForEachPage<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageCount: number): Promise<Array<T>> {
 		const data: Array<T> = [];
 
 		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {
-			const response = await this.axios.get<StrapiResponse<T>>(url, this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, pageNumber));
+			const response = await this.axios.get<StrapiResponse<T>>(url, {
+				params: this.buildParams(source, fieldsToRetrieve, relationsToRetrieve, pageNumber),
+			});
 			data.push(...response.data.data.map(this.toRawValues));
 		}
 

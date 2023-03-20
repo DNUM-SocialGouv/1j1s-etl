@@ -1,9 +1,6 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { AxiosInstance } from "axios";
-import sinon from "sinon";
 
-import { expect } from "@test/library";
+import { expect, sinon, StubbedType, stubInterface } from "@test/library";
 
 import {
 	HousingBasicFlowHttpClient,

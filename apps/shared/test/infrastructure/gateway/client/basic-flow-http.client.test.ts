@@ -1,9 +1,6 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { AxiosError, AxiosInstance } from "axios";
-import sinon from "sinon";
 
-import { expect } from "@test/library";
+import { expect, sinon, StubbedType, stubInterface } from "@test/library";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { BasicFlowHttpClient } from "@shared/src/infrastructure/gateway/client/basic-flow-http.client";

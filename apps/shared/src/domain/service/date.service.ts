@@ -20,4 +20,8 @@ export class DateService {
 	public toIsoDateFromFrenchFormatWithSeconds(date: string): string {
 		return DateTime.fromFormat(date, "dd/MM/yyyy HH:mm:ss", { locale: "fr-FR", zone: "Europe/Paris" }).toUTC().toISO();
 	}
+
+	public toFormat(date: Date, format: string): string {
+		return DateTime.fromJSDate(date).toFormat(format);
+	}
 }

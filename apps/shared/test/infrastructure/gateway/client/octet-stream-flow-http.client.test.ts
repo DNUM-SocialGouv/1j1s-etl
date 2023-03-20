@@ -1,8 +1,4 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
-import sinon from "sinon";
-
-import { expect, StubbedClass, stubClass } from "@test/library";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
 import { OctetStreamFlowHttpClient } from "@shared/src/infrastructure/gateway/client/octet-stream-flow-http.client";

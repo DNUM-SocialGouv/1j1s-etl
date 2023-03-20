@@ -1,8 +1,4 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
-import sinon from "sinon";
-
-import { expect, StubbedClass, stubClass } from "@test/library";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
 import {

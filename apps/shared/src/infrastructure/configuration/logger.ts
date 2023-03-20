@@ -7,7 +7,7 @@ export type LogLevel = "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 
 export type LoggerConfiguration = { name: string }
 
-export type Domaine = "Global" | "Logements" | "Stages" | "Évènements" | "Maintenance";
+export type Domaine = "Global" | "Logements" | "Stages" | "Évènements" | "Maintenance" | "Gestion des Contacts";
 
 export interface Logger {
 	debug(...args: Array<unknown>): void;

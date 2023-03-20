@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, Scope } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import axios from "axios";
@@ -29,6 +29,7 @@ import { NodeUuidGenerator } from "@shared/src/infrastructure/gateway/uuid.gener
 		},
 		{
 			provide: "AxiosInstance",
+			scope: Scope.TRANSIENT,
 			useValue: axios.create({ maxBodyLength: Infinity, maxContentLength: Infinity }),
 		},
 		{

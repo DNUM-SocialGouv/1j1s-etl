@@ -1,0 +1,76 @@
+import { Environment, SentryConfiguration } from "@shared/src/infrastructure/configuration/configuration";
+import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logger";
+
+export type MinioConfiguration = {
+	ACCESS_KEY: string;
+	BUCKET_NAME_EXPORT_CEJ: string;
+	PORT: number;
+	SECRET_KEY: string;
+	URL: string;
+}
+
+export type Configuration = {
+	CONTACTS_CEJ: {
+		DOMAINE: Domaine;
+		FEATURE_FLIPPING: boolean;
+		FILR_PASSWORD: string;
+		FILR_URL: string;
+		FILR_USERNAME: string;
+	}
+	CONTEXT: string;
+	ENVIRONMENT: Environment;
+	LOG_LEVEL: LogLevel
+	MINIO: MinioConfiguration;
+	SENTRY: SentryConfiguration;
+	TEMPORARY_DIRECTORY_PATH: string;
+}
+
+export class ConfigurationFactory {
+	public static createRoot(): { gestionDesContacts: Configuration } {
+		return {
+			gestionDesContacts: ConfigurationFactory.create(),
+		};
+	}
+
+	public static create(): Configuration {
+		const { getOrError, toBoolean } = ConfigurationFactory;
+
+		return {
+			CONTACTS_CEJ: {
+				DOMAINE: getOrError("CONTACTS_MANAGEMENT_CEJ_DOMAIN") as Domaine,
+				FEATURE_FLIPPING: toBoolean(getOrError("CONTACTS_MANAGEMENT_CEJ_FEATURE_FLIPPING")),
+				FILR_PASSWORD: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_PASSWORD"),
+				FILR_URL: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_URL"),
+				FILR_USERNAME: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_USERNAME"),
+			},
+			CONTEXT: "gestion-des-contacts",
+			ENVIRONMENT: getOrError("NODE_ENV") as Environment,
+			LOG_LEVEL: getOrError("CONTACTS_MANAGEMENT_LOG_LEVEL") as LogLevel,
+			MINIO: {
+				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
+				BUCKET_NAME_EXPORT_CEJ: getOrError("CONTACTS_MANAGEMENT_CEJ_MINIO_BUCKET_NAME"),
+				PORT: Number(getOrError("MINIO_PORT")),
+				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
+				URL: getOrError("MINIO_URL"),
+			},
+			SENTRY: {
+				DSN: getOrError("SENTRY_DSN"),
+				PROJECT: getOrError("npm_package_name"),
+				RELEASE: getOrError("npm_package_version"),
+			},
+			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
+		};
+	}
+
+	private static getOrError(environmentVariableKey: string): string {
+		const environmentVariable = process.env[environmentVariableKey];
+		if (!environmentVariable) {
+			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
+		}
+		return environmentVariable;
+	}
+
+	private static toBoolean(value: string): boolean {
+		return value.trim().toLowerCase() === "true";
+	}
+}
