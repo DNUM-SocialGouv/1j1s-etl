@@ -1,10 +1,7 @@
-import { StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@salesforce/ts-sinon";
-
 import { AxiosInstance } from "axios";
-import sinon from "sinon";
 import { PassThrough, Writable } from "stream";
 
-import { expect } from "@test/library";
+import { expect, sinon, StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@test/library";
 
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";

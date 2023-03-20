@@ -77,7 +77,7 @@ describe("StrapiHttpClientTest", () => {
 			.reply(200, secondeReponseStrapi);
 
 		// When
-		const resultat = await strapiHttpClient.get<{ titre: string, id: number, field1: string, field2: boolean }>(endpoint, source, fieldsToRetrieve, relationsToRetrieve);
+		const resultat = await strapiHttpClient.get<{ titre: string, id: number, field1: string, field2: boolean }>(endpoint, fieldsToRetrieve, relationsToRetrieve, source);
 
 		// Then
 		expect(resultat).to.have.deep.members([

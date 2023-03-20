@@ -1,4 +1,4 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
+import { StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@salesforce/ts-sinon";
 
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -21,4 +21,4 @@ export function stubClass<T>(
 
 export const expect = chai.expect;
 export const assert = chai.assert;
-export { nock, sinon, spy, StubbedType, stubInterface };
+export { nock, sinon, spy, StubbedType, stubInterface, StubbedCallableType, stubCallable };

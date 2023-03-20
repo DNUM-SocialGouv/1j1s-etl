@@ -18,6 +18,8 @@ import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 
+import { EnvoyerLesContactsCejAPoleEmploi } from "@gestion-des-contacts/src/application-service/envoyer-les-contacts-cej-a-pole-emploi.usecase";
+
 import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
 import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
 import { ExtraireImmojeune } from "@logements/src/extraction/application-service/extraire-immojeune.usecase";
@@ -330,6 +332,7 @@ describe("CliModuleTest", () => {
 			});
 		});
 	});
+
 	context("Lorsque je lance la commande de maintenance", () => {
 		let purgerLesOffresDeStage: StubbedClass<PurgerLesOffresDeStage>;
 		let purgerLesAnnoncesDeLogement: StubbedClass<PurgerLesAnnoncesDeLogement>;
@@ -364,6 +367,31 @@ describe("CliModuleTest", () => {
 
 				// Then
 				expect(purgerLesAnnoncesDeLogement.executer).to.have.been.calledOnce;
+			});
+		});
+	});
+
+	context("Lorsque je lance la commande d'historisation", () => {
+		let envoyerLesContactsCejAPoleEmploi: StubbedClass<EnvoyerLesContactsCejAPoleEmploi>;
+
+		beforeEach(async () => {
+			envoyerLesContactsCejAPoleEmploi = stubClass(EnvoyerLesContactsCejAPoleEmploi);
+
+			cliModule = await CommandTestFactory.createTestingCommand({
+				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
+			})
+				.overrideProvider(Client).useValue(stubClass(Client))
+				.overrideProvider(EnvoyerLesContactsCejAPoleEmploi).useValue(envoyerLesContactsCejAPoleEmploi)
+				.compile();
+		});
+
+		context("qui envoie les contacts CEJ à Pôle Emploi", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["send-contacts", "cej"]);
+
+				// Then
+				expect(envoyerLesContactsCejAPoleEmploi.executer).to.have.been.calledOnce;
 			});
 		});
 	});

@@ -1,9 +1,6 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { Axios, AxiosError } from "axios";
-import sinon from "sinon";
 
-import { expect, StubbedClass, stubClass } from "@test/library";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { Configuration } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 import {

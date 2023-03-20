@@ -1,6 +1,4 @@
-import { StubbedType } from "@salesforce/ts-sinon";
-
-import { expect, sinon, StubbedClass, stubClass, stubInterface } from "@test/library";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { StrapiConfiguration } from "@maintenance/src/infrastructure/configuration/configuration";
 import {
@@ -34,12 +32,12 @@ describe("HttpHousingAdsRepositoryTest", () => {
 			// Given
 			strapiHttpClient
 				.get
-				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "immojeune", "id", "")
+				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", "immojeune")
 				.resolves([{ id: "1" }, { id: "2" }, { id: "3" }]);
 
 			strapiHttpClient
 				.get
-				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "studapart", "id", "")
+				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", "studapart")
 				.resolves([{ id: "4" }, { id: "5" }]);
 
 			// When

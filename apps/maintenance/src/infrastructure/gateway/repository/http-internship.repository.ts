@@ -16,7 +16,7 @@ export class HttpInternshipRepository implements OffreDeStageRepository {
 	public async recuperer(flows: Array<string>): Promise<Array<OffreDeStage>> {
 		const internships: Array<OffreDeStage> = [];
 		for (const flow of flows) {
-			internships.push(...(await this.strapiHttpClient.get<OffreDeStage>(this.strapiConfiguration.INTERNSHIP_ENDPOINT, flow, "id", "")));
+			internships.push(...(await this.strapiHttpClient.get<OffreDeStage>(this.strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flow)));
 		}
 		return internships;
 	}

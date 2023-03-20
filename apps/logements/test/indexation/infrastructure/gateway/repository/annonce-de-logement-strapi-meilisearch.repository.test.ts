@@ -33,9 +33,9 @@ describe("AnnonceDeLogementStrapiMeilisearchRepositoryTest", () => {
 		delete annonceDeLogementStrapi.attributes.id;
 		strapiHttpClient.get.withArgs(
 			"https://some.url.com",
-			source,
 			fieldsToRetrieve,
 			relationsToRetrieve,
+			source,
 		).resolves([annonceDeLogementStrapi]);
 		annonceDeLogementRepository = new AnnonceDeLogementStrapiMeilisearchRepository(configuration, strapiHttpClient);
 

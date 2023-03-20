@@ -14,6 +14,7 @@
     "paths": {
       "@api/*": ["apps/api/*"],
       "@cli/*": ["apps/cli/*"],
+      "@gestion-des-contacts/*": ["apps/gestion-des-contacts/*"],
       "@evenements/*": ["apps/evenements/*"],
       "@logements/*": ["apps/logements/*"],
       "@maintenance/*": ["apps/maintenance/*"],

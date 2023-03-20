@@ -17,12 +17,7 @@ export class AnnonceDeLogementStrapiMeilisearchRepository implements AnnonceDeLo
 	}
 
 	public async recupererLesAnnonces(source: string): Promise<Array<AnnonceDeLogement.Brute>> {
-		const annoncesDeLogementStrapi = await this.strapiHttpClient.get<AnnonceDeLogementStrapi>(
-			this.configuration.STRAPI.ENDPOINT,
-			source,
-			AnnonceDeLogementStrapiMeilisearchRepository.FIELDS_TO_RETRIEVE,
-			AnnonceDeLogementStrapiMeilisearchRepository.RELATIONS_TO_RETRIEVE,
-		);
+		const annoncesDeLogementStrapi = await this.strapiHttpClient.get<AnnonceDeLogementStrapi>(this.configuration.STRAPI.ENDPOINT, AnnonceDeLogementStrapiMeilisearchRepository.FIELDS_TO_RETRIEVE, AnnonceDeLogementStrapiMeilisearchRepository.RELATIONS_TO_RETRIEVE, source);
 		return annoncesDeLogementStrapi.map((annonceDeLogementStrapi: AnnonceDeLogementStrapi) => new AnnonceDeLogement.Brute(
 			{ id: annonceDeLogementStrapi.id, ...annonceDeLogementStrapi.attributes }
 		));

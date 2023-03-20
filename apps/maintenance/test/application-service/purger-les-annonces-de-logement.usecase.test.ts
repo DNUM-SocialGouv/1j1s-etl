@@ -1,6 +1,4 @@
-import { StubbedType } from "@salesforce/ts-sinon";
-
-import { expect, sinon, stubInterface } from "@test/library";
+import { expect, sinon, StubbedType, stubInterface } from "@test/library";
 
 import {
 	PurgerLesAnnoncesDeLogement,

@@ -45,6 +45,7 @@
           ["^@api"],
           ["^@cli"],
           ["^@evenements"],
+          ["^@gestion-des-contacts"],
           ["^@logements"],
           ["^@maintenance"],
           ["^@shared"],
@@ -59,8 +60,18 @@
       "error",
       [
         {
+          "domain": "@gestion-des-contacts",
+          "domainsToExclude": [
+            "@evenements",
+            "@logements",
+            "@maintenance",
+            "@stages"
+          ]
+        },
+        {
           "domain": "@evenements",
           "domainsToExclude": [
+            "@gestion-des-contacts",
             "@logements",
             "@maintenance",
             "@stages"
@@ -70,6 +81,7 @@
           "domain": "@logements",
           "domainsToExclude": [
             "@evenements",
+            "@gestion-des-contacts",
             "@maintenance",
             "@stages"
           ]
@@ -78,6 +90,7 @@
           "domain": "@maintenance",
           "domainsToExclude": [
             "@evenements",
+            "@gestion-des-contacts",
             "@logements",
             "@stages"
           ]
@@ -86,6 +99,7 @@
           "domain": "shared",
           "domainsToExclude": [
             "@evenements",
+            "@gestion-des-contacts",
             "@logements",
             "@maintenance",
             "@stages"
@@ -95,6 +109,7 @@
           "domain": "@stages",
           "domainsToExclude": [
             "@evenements",
+            "@gestion-des-contacts",
             "@logements",
             "@maintenance"
           ]

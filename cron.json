@@ -71,6 +71,10 @@
     {
       "command": "30 4 * * * npm run cli -- load tous-mobilises",
       "size": "L"
+    },
+    {
+      "command": "0 1 * * 1 npm run cli -- send-contacts cej",
+      "size": "M"
     }
   ]
 }

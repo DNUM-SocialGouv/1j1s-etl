@@ -1,8 +1,6 @@
-import { StubbedType, stubInterface } from "@salesforce/ts-sinon";
-
 import { Client } from "minio";
 
-import { expect, sinon, StubbedClass, stubClass } from "@test/library";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation } from "@logements/src/transformation/domain/model/flux";

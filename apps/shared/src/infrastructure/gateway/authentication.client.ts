@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-type StrapiCredentials = {
+type Credentials = {
 	username: string
 	password: string
 }
@@ -10,7 +10,7 @@ export class AuthenticationClient {
 
 	constructor(
 		private readonly authUrl: string,
-		private readonly credentials: StrapiCredentials,
+		private readonly credentials: Credentials,
 		initialToken = ""
 	) {
 		this.token = initialToken;
