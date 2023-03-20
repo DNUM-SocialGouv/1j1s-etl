@@ -6,7 +6,7 @@
     },
     {
       "command": "30 7 * * * npm run cli -- transform jobteaser",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "45 7 * * * npm run cli -- load jobteaser",
@@ -18,7 +18,7 @@
     },
     {
       "command": "30 6 * * * npm run cli -- transform stagefr-compresse",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "45 6 * * * npm run cli -- load stagefr-compresse",
@@ -30,7 +30,7 @@
     },
     {
       "command": "30 6 * * * npm run cli -- transform stagefr-decompresse",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "45 6 * * * npm run cli -- load stagefr-decompresse",
@@ -42,7 +42,7 @@
     },
     {
       "command": "15 5 * * * npm run cli -- transform immojeune",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "30 5 * * * npm run cli -- load immojeune",
@@ -54,7 +54,7 @@
     },
     {
       "command": "15 5 * * * npm run cli -- transform studapart",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "30 5 * * * npm run cli -- load studapart",
@@ -66,7 +66,7 @@
     },
     {
       "command": "15 4 * * * npm run cli -- transform tous-mobilises",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "30 4 * * * npm run cli -- load tous-mobilises",
