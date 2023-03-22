@@ -12,12 +12,12 @@ export class MinioAdminStorageRepository {
 		}
 	}
 
-	public async setBucketLifecycle(bucketName: string, rules: LifecycleRules): Promise<void> {
-		await this.minioClient.setBucketLifecycle(bucketName, rules);
+	public setBucketLifecycle(bucketName: string, rules: LifecycleRules): Promise<void> {
+		return this.minioClient.setBucketLifecycle(bucketName, rules);
 	}
 
-	public async getRulesOnBucket(bucketName: string): Promise<Lifecycle> {
-		return await this.minioClient.getBucketLifecycle(bucketName);
+	public getRulesOnBucket(bucketName: string): Promise<Lifecycle> {
+		return this.minioClient.getBucketLifecycle(bucketName);
 	}
 
 	private bucketExists(bucketName: string): Promise<boolean> {

@@ -10,6 +10,11 @@ export type StrapiConfiguration = {
 	USERNAME: string
 }
 
+type MinioConfiguration = {
+	CONTACT_MANAGEMENT_CEJ_BUCKET_NAME: string;
+	CONTACTS_MANAGEMENT_CEJ_DAYS_AFTER_EXPIRATION: number;
+}
+
 export type MaintenanceLoggerConfiguration = {
 	CONTEXT: string,
 	DOMAINE: Domaine,
@@ -21,6 +26,7 @@ export type MaintenanceLoggerConfiguration = {
 export type Configuration = {
 	FLOWS: Array<string>
 	LOGGER: MaintenanceLoggerConfiguration
+	MINIO: MinioConfiguration
 	SENTRY: SentryConfiguration
 	STRAPI: StrapiConfiguration
 }
@@ -49,6 +55,10 @@ export class ConfigurationFactory {
 				ENVIRONMENT: getOrError("NODE_ENV") as Environment,
 				LOG_LEVEL: getOrError("MAINTENANCE_LOG_LEVEL") as LogLevel,
 				NAME: getOrError("MAINTENANCE_LOGGER_NAME"),
+			},
+			MINIO: {
+				CONTACT_MANAGEMENT_CEJ_BUCKET_NAME: getOrError("CONTACTS_MANAGEMENT_CEJ_MINIO_BUCKET_NAME"),
+				CONTACTS_MANAGEMENT_CEJ_DAYS_AFTER_EXPIRATION: Number(getOrError("CONTACTS_MANAGEMENT_CEJ_MINIO_DAYS_AFTER_EXPIRATION")),
 			},
 			SENTRY: {
 				DSN: getOrError("SENTRY_DSN"),

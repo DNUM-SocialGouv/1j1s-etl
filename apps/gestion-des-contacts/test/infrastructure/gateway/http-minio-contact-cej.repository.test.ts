@@ -52,6 +52,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		configuration.CONTACTS_CEJ.FILR_URL = `https://mesfichiers.some-url.net?file_name=${fileName}`;
 		configuration.CONTACTS_CEJ.FILR_PASSWORD = "s0m3P4$$wOrd";
 		configuration.CONTACTS_CEJ.FILR_USERNAME = "someUser";
+		configuration.STRAPI.CEJ_ENDPOINT = "contact-cejs";
 		httpClient = stubInterface<AxiosInstance>(sinon);
 		minioClient = stubClass(Client);
 		strapiHttpClient = stubClass(StrapiHttpClient);
@@ -146,7 +147,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		const contactCej = ContactCejFixtureBuilder.build();
 		strapiHttpClient
 			.get
-			.withArgs("/contact-cejs", "prenom,nom,email,telephone,age,ville,code_postal,createdAt", "")
+			.withArgs("contact-cejs", "prenom,nom,email,telephone,age,ville,code_postal,createdAt", "")
 			.resolves([ContactCejFixtureBuilder.buildStrapi()]);
 
 		// When
@@ -154,26 +155,28 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 
 		// Then
 		expect(strapiHttpClient.get).to.have.been.calledOnceWithExactly(
-			"/contact-cejs",
+			"contact-cejs",
 			"prenom,nom,email,telephone,age,ville,code_postal,createdAt",
 			""
 		);
 		expect(contactsCej).to.have.deep.members([{ ...contactCej }]);
 	});
 
-	it("supprime les contacts CEJ", async () => {
-		// Given
-		const contactsCejs = [
-			ContactCejFixtureBuilder.build({ id: "1" }),
-			ContactCejFixtureBuilder.build({ id: "2" }),
-			ContactCejFixtureBuilder.build({ id: "3" }),
-		];
+	context("Lorsque la suppression d'un contact CEJ fonctionne correctement", () => {
+		it("supprime les contacts CEJ", async () => {
+			// Given
+			const contactsCejs = [
+				ContactCejFixtureBuilder.build({ id: "1" }),
+				ContactCejFixtureBuilder.build({ id: "2" }),
+				ContactCejFixtureBuilder.build({ id: "3" }),
+			];
 
-		// When
-		await contactCejRepository.supprimerLesContactsEnvoyesAPoleEmploi(contactsCejs);
+			// When
+			await contactCejRepository.supprimerLesContactsEnvoyesAPoleEmploi(contactsCejs);
 
-		// Then
-		expect(strapiHttpClient.delete.callCount).to.eql(3);
+			// Then
+			expect(strapiHttpClient.delete.callCount).to.eql(3);
+		});
 	});
 
 	context("Lorsque la suppression d'un contact CEJ échoue", () => {
@@ -187,7 +190,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 
 			strapiHttpClient
 				.delete
-				.withArgs("/contact-cejs", "2")
+				.withArgs("contact-cejs", "2")
 				.rejects(new Error("Oops! Something went wrong :-("));
 
 			// When

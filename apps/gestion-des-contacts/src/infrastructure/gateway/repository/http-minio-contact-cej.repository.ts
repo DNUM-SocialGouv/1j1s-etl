@@ -25,7 +25,6 @@ export type StrapiContactCej = {
 export class HttpMinioContactCejRepository implements ContactCejRepository {
 	private static readonly FIELDS_TO_RETRIEVE = "prenom,nom,email,telephone,age,ville,code_postal,createdAt";
 	private static readonly RELATIONS_TO_RETRIEVE = "";
-	private static readonly CEJ_ENDPOINT = "/contact-cejs";
 	private static readonly CSV_HEADERS: Array<Record<"id" | "title", string>> = [
 		{ id: "dateDeCreation", title: "Date de création" },
 		{ id: "nom", title: "Nom" },
@@ -65,17 +64,20 @@ export class HttpMinioContactCejRepository implements ContactCejRepository {
 	}
 
 	public async recupererLesContactsCej(): Promise<Array<ContactCej>> {
-		const { CEJ_ENDPOINT, FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE } = HttpMinioContactCejRepository;
+		const { FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE } = HttpMinioContactCejRepository;
+		const cejEndpoint = this.configuration.STRAPI.CEJ_ENDPOINT;
 
-		const contactsCej = await this.strapiHttpClient.get<StrapiContactCej>(CEJ_ENDPOINT, FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE);
+		const contactsCej = await this.strapiHttpClient.get<StrapiContactCej>(cejEndpoint, FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE);
 
 		return this.toContactsCej(contactsCej);
 	}
 
 	public async supprimerLesContactsEnvoyesAPoleEmploi(contactsCej: Array<ContactCej>): Promise<void> {
+		const cejEndpoint = this.configuration.STRAPI.CEJ_ENDPOINT;
+
 		for (const contactCej of contactsCej) {
 			try {
-				await this.strapiHttpClient.delete(HttpMinioContactCejRepository.CEJ_ENDPOINT, contactCej.id);
+				await this.strapiHttpClient.delete(cejEndpoint, contactCej.id);
 			} catch(error) {
 				this.logger.info(`Deletion of contact cej with id=[${contactCej.id}] has failed`);
 			}
@@ -122,21 +124,21 @@ export class HttpMinioContactCejRepository implements ContactCejRepository {
 		throw error;
 	}
 
-	private toContactsCej(contactsCej: Array<StrapiContactCej>): Array<ContactCej> {
-		return contactsCej.map((contactCej) => this.toContactCej(contactCej));
+	private toContactsCej(strapiContactsCej: Array<StrapiContactCej>): Array<ContactCej> {
+		return strapiContactsCej.map((strapiContactCej) => this.toContactCej(strapiContactCej));
 	}
 
-	private toContactCej(contactCej: StrapiContactCej): ContactCej {
+	private toContactCej(strapiContactCej: StrapiContactCej): ContactCej {
 		return {
-			id: contactCej.id,
-			prenom: contactCej.prenom,
-			nom: contactCej.nom,
-			email: contactCej.email,
-			telephone: contactCej.telephone,
-			age: contactCej.age,
-			ville: contactCej.ville,
-			codePostal: contactCej.code_postal,
-			dateDeCreation: contactCej.createdAt,
+			id: strapiContactCej.id,
+			prenom: strapiContactCej.prenom,
+			nom: strapiContactCej.nom,
+			email: strapiContactCej.email,
+			telephone: strapiContactCej.telephone,
+			age: strapiContactCej.age,
+			ville: strapiContactCej.ville,
+			codePostal: strapiContactCej.code_postal,
+			dateDeCreation: strapiContactCej.createdAt,
 		};
 	}
 }
