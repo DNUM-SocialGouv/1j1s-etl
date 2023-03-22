@@ -22,6 +22,9 @@ export type Configuration = {
 	LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration;
 	SENTRY: SentryConfiguration;
+	STRAPI: {
+		CEJ_ENDPOINT: string;
+	}
 	TEMPORARY_DIRECTORY_PATH: string;
 }
 
@@ -57,6 +60,9 @@ export class ConfigurationFactory {
 				DSN: getOrError("SENTRY_DSN"),
 				PROJECT: getOrError("npm_package_name"),
 				RELEASE: getOrError("npm_package_version"),
+			},
+			STRAPI: {
+				CEJ_ENDPOINT: getOrError("STRAPI_CEJ_ENDPOINT"),
 			},
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
 		};

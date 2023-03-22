@@ -7,10 +7,7 @@ import {
 
 @Command({
 	name: "maintain",
-	subCommands: [
-		PurgeInternshipsSubCommand,
-		PurgeHousingAdsSubCommand,
-	],
+	subCommands: [PurgeInternshipsSubCommand, PurgeHousingAdsSubCommand],
 })
 export class MaintainCommand extends CommandRunner {
 	public override async run(): Promise<void> {
