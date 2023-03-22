@@ -1,4 +1,8 @@
-import { Environment, SentryConfiguration } from "@shared/src/infrastructure/configuration/configuration";
+import {
+	ConfigurationValidator,
+	Environment,
+	SentryConfiguration,
+} from "@shared/src/infrastructure/configuration/configuration";
 import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logger";
 
 type MinioConfiguration = {
@@ -34,11 +38,9 @@ export type Configuration = {
 	TEMPORARY_DIRECTORY_PATH: string
 }
 
-export class ConfigurationFactory {
+export class ConfigurationFactory extends ConfigurationValidator {
 	public static createRoot(): { extractionLogements: Configuration } {
-		return {
-			extractionLogements: ConfigurationFactory.create(),
-		};
+		return { extractionLogements: ConfigurationFactory.create() };
 	}
 
 	public static create(): Configuration {
@@ -81,21 +83,5 @@ export class ConfigurationFactory {
 			},
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
 		};
-	}
-
-	private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			return defaultValue;
-		}
-		return environmentVariable;
-	}
-
-	private static getOrError(environmentVariableKey: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
-		}
-		return environmentVariable;
 	}
 }

@@ -1,4 +1,8 @@
-import { Environment, SentryConfiguration } from "@shared/src/infrastructure/configuration/configuration";
+import {
+	ConfigurationValidator,
+	Environment,
+	SentryConfiguration,
+} from "@shared/src/infrastructure/configuration/configuration";
 import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logger";
 
 export type StrapiConfiguration = {
@@ -31,7 +35,7 @@ export type Configuration = {
 	STRAPI: StrapiConfiguration
 }
 
-export class ConfigurationFactory {
+export class ConfigurationFactory extends ConfigurationValidator {
 	public static createRoot(): { maintenance: Configuration } {
 		return { maintenance: ConfigurationFactory.create() };
 	}
@@ -72,13 +76,5 @@ export class ConfigurationFactory {
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},
 		};
-	}
-
-	private static getOrError(environmentVariableKey: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
-		}
-		return environmentVariable;
 	}
 }
