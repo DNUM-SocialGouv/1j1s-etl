@@ -18,6 +18,3 @@ sidebar_position: 1000
 | Configurer les `git-secret` pour le dépôt `1j1s-infrastructure`    |        |
 | Déployer les applications en local                                 |        |
 | Faire un rapport d'étonnement / feedback                           |        |
-
-
-
