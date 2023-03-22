@@ -42,5 +42,3 @@ Dans ce cas-là, référez-vous directement à la [documentation de Scalingo](ht
  sur le sujet.
 
 **And voilà !**
-
-

@@ -62,5 +62,3 @@ sous-module
 ├─── infrastructure
 └─── index.ts
 ```
-
----

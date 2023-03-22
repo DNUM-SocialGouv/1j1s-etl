@@ -27,4 +27,3 @@ Cette commande génère un contenu statique dans le répertoire `build` et peut 
 ### Déploiement
 
 La documentation est déployé automatiquement une fois mergée sur la branche main, grâce au workflow Github Actions `Publier la documentation sur les pages GitHub`.
-
