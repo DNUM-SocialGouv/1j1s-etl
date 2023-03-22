@@ -1,4 +1,4 @@
-import { Environment } from "@shared/src/infrastructure/configuration/configuration";
+import { ConfigurationValidator, Environment } from "@shared/src/infrastructure/configuration/configuration";
 import { Domaine } from "@shared/src/infrastructure/configuration/logger";
 
 type SentryConfiguration = {
@@ -29,7 +29,7 @@ export type Configuration = {
 	STRAPI: StrapiConguration
 }
 
-export class ConfigurationFactory {
+export class ConfigurationFactory extends ConfigurationValidator {
 	public static create(): Configuration {
 		const { getOrError, toBoolean } = ConfigurationFactory;
 
@@ -54,17 +54,5 @@ export class ConfigurationFactory {
 				USERNAME: getOrError("STRAPI_USERNAME"),
 			},
 		};
-	}
-
-	private static getOrError(environmentVariableKey: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
-		}
-		return environmentVariable;
-	}
-
-	private static toBoolean(value: string): boolean {
-		return value.trim().toLowerCase() === "true";
 	}
 }

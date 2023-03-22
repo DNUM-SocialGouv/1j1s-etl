@@ -3,7 +3,7 @@ import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logg
 export enum Environment {
 	DEVELOPMENT = "development",
 	PRODUCTION = "production",
-	QUALIFICATION = "qualification",
+	RECETTE = "recette",
 	TEST = "test"
 }
 
@@ -77,7 +77,33 @@ export type Configuration = {
 	TEMPORARY_DIRECTORY_PATH: string
 }
 
-export class ConfigurationFactory {
+export abstract class ConfigurationValidator {
+	protected static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
+		const environmentVariable = process.env[environmentVariableKey];
+		if (!environmentVariable) {
+			return defaultValue;
+		}
+		return environmentVariable;
+	}
+
+	protected static getOrError(environmentVariableKey: string): string {
+		const environmentVariable = process.env[environmentVariableKey];
+		if (!environmentVariable) {
+			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
+		}
+		return environmentVariable;
+	}
+
+	protected static toBoolean(value: string): boolean {
+		return value.trim().toLowerCase() === "true";
+	}
+
+	protected static toValidEnableStatus(value: string): "Enabled" | "Disabled" {
+		return (value === "Enabled" || value === "Disabled") ? value : "Disabled";
+	}
+}
+
+export class ConfigurationFactory extends ConfigurationValidator {
 	public static create(): Configuration {
 		const { getOrError, getOrDefault, toBoolean, toValidEnableStatus } = ConfigurationFactory;
 		const DEFAULT_MINIO_PORT = "9000";
@@ -151,29 +177,5 @@ export class ConfigurationFactory {
 			},
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
 		};
-	}
-
-	private static getOrDefault(environmentVariableKey: string, defaultValue: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			return defaultValue;
-		}
-		return environmentVariable;
-	}
-
-	private static getOrError(environmentVariableKey: string): string {
-		const environmentVariable = process.env[environmentVariableKey];
-		if (!environmentVariable) {
-			throw new Error(`Environment variable with name ${environmentVariableKey} is unknown`);
-		}
-		return environmentVariable;
-	}
-
-	private static toBoolean(value: string): boolean {
-		return value.trim().toLowerCase() === "true";
-	}
-
-	private static toValidEnableStatus(value: string): "Enabled" | "Disabled" {
-		return (value === "Enabled" || value === "Disabled") ? value : "Disabled";
 	}
 }
