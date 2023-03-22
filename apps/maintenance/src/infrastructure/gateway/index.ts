@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { Client } from "minio";
+
 import { AnnonceDeLogementRepository } from "@maintenance/src/domain/service/annonce-de-logement.repository";
 import { OffreDeStageRepository } from "@maintenance/src/domain/service/offre-de-stage.repository";
 import {
@@ -14,6 +16,9 @@ import {
 import {
 	HttpInternshipRepository,
 } from "@maintenance/src/infrastructure/gateway/repository/http-internship.repository";
+import {
+	MinioAdminStorageRepository,
+} from "@maintenance/src/infrastructure/gateway/repository/minio-admin-storage.repository";
 
 import { Shared } from "@shared/src";
 import { SentryConfiguration } from "@shared/src/infrastructure/configuration/configuration";
@@ -29,6 +34,13 @@ import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/stra
 		Shared,
 	],
 	providers: [
+		{
+			provide: MinioAdminStorageRepository,
+			inject: [Client],
+			useFactory: (minioClient: Client): MinioAdminStorageRepository => {
+				return new MinioAdminStorageRepository(minioClient);
+			},
+		},
 		{
 			provide: "Logger",
 			inject: [ConfigService],
@@ -64,8 +76,7 @@ import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/stra
 			},
 		},
 	],
-	exports: ["AnnonceDeLogementRepository", "OffreDeStageRepository"],
+	exports: ["AnnonceDeLogementRepository", "OffreDeStageRepository", MinioAdminStorageRepository],
 })
 export class Gateways {
-
 }

@@ -35,6 +35,7 @@ import {
 	PurgerLesAnnoncesDeLogement,
 } from "@maintenance/src/application-service/purger-les-annonces-de-logement.usecase";
 import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/purger-les-offres-de-stage.usecase";
+import { MinioAdminStorageRepository } from "@maintenance/src/infrastructure/gateway/repository/minio-admin-storage.repository";
 
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {
@@ -392,6 +393,32 @@ describe("CliModuleTest", () => {
 
 				// Then
 				expect(envoyerLesContactsCejAPoleEmploi.executer).to.have.been.calledOnce;
+			});
+		});
+	});
+
+	context("Lorsque je lance la commande de création du bucket pour l'export CEJ", () => {
+		let minioAdminStorageClient: StubbedClass<MinioAdminStorageRepository>;
+
+		beforeEach(async () => {
+			minioAdminStorageClient = stubClass(MinioAdminStorageRepository);
+
+			cliModule = await CommandTestFactory.createTestingCommand({
+				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
+			})
+				.overrideProvider(Client).useValue(stubClass(Client))
+				.overrideProvider(MinioAdminStorageRepository).useValue(minioAdminStorageClient)
+				.compile();
+		});
+
+		context("qui envoie les contacts CEJ à Pôle Emploi", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["mkbucket", "cej"]);
+
+				// Then
+				expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
+				expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnce;
 			});
 		});
 	});
