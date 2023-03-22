@@ -33,9 +33,7 @@ export type Configuration = {
 
 export class ConfigurationFactory {
 	public static createRoot(): { maintenance: Configuration } {
-		return {
-			maintenance: ConfigurationFactory.create(),
-		};
+		return { maintenance: ConfigurationFactory.create() };
 	}
 
 	public static create(): Configuration {
