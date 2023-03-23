@@ -6,7 +6,7 @@ import {
 import { ContactCejRepository } from "@gestion-des-contacts/src/domain/service/contact-cej.repository";
 import { ContactCejFixtureBuilder } from "@gestion-des-contacts/test/fixture/contact-cej.fixture-builder";
 
-const contactCejs = [
+const contactsCej = [
 	ContactCejFixtureBuilder.build(),
 	ContactCejFixtureBuilder.build({
 		prenom: "Julie",
@@ -30,14 +30,14 @@ describe("EnvoyerLesContactsCejAPoleEmploiUsecaseTest", () => {
 
 	it("je dépose les contacts contrat d'engagement jeunes dans le répertoire souhaité", async () => {
 		// Given
-		contactCejRepository.recupererLesContactsCej.resolves(contactCejs);
+		contactCejRepository.recupererLesContactsCej.resolves(contactsCej);
 
 		// When
 		await usecase.executer();
 
 		// Then
 		expect(contactCejRepository.envoyerLesContactsCejAPoleEmploi).to.have.been.called;
-		expect(contactCejRepository.envoyerLesContactsCejAPoleEmploi).to.have.been.calledWith(contactCejs);
+		expect(contactCejRepository.envoyerLesContactsCejAPoleEmploi).to.have.been.calledWith(contactsCej);
 	});
 
 	it("je récupère les contacts de contrat d'engagement jeunes", async () => {
@@ -53,12 +53,12 @@ describe("EnvoyerLesContactsCejAPoleEmploiUsecaseTest", () => {
 
 	it("je supprime les contacts de contrat d'engagement jeunes", async () => {
 		// Given
-		contactCejRepository.recupererLesContactsCej.resolves(contactCejs);
+		contactCejRepository.recupererLesContactsCej.resolves(contactsCej);
 
 		// When
 		await usecase.executer();
 
 		// Then
-		expect(contactCejRepository.supprimerLesContactsEnvoyesAPoleEmploi).to.have.been.calledWith(contactCejs);
+		expect(contactCejRepository.supprimerLesContactsEnvoyesAPoleEmploi).to.have.been.calledWith(contactsCej);
 	});
 });
