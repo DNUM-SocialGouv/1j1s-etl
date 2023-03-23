@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.5.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.4.2...v4.5.0) (2023-03-23)
+
+
+### Features
+
+* **contact:** ajout d'une commande d'envoi des contacts cej ([cc86454](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/cc8645414f87c4ce4c8c258a095d012e3c26ca5e))
+* **maintenance:** ajout commande creation bucket ([2659fa6](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2659fa67f37bab4e8516bb642a974124bb9a0279))
+
+
+### Bug Fixes
+
+* **api:** utilisation var env port ([003b483](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/003b483ff6c2248201b4cdfd7fa304c343506b0d))
+
 ## [4.4.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.4.1...v4.4.2) (2023-03-16)
 
 
