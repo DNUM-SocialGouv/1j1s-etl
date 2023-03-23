@@ -1,8 +1,8 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { Client } from "minio";
 
-import { ContactCej } from "@gestion-des-contacts/src/domain/model/contact-cej";
-import { ContactCejRepository } from "@gestion-des-contacts/src/domain/service/contact-cej.repository";
+import { ContactPoe } from "@gestion-des-contacts/src/domain/model/contact-poe";
+import { ContactPoeRepository } from "@gestion-des-contacts/src/domain/service/contact-poe.repository";
 import { Configuration } from "@gestion-des-contacts/src/infrastructure/configuration/configuration";
 
 import { DateService } from "@shared/src/domain/service/date.service";
@@ -11,6 +11,7 @@ import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/stra
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 
 export type StrapiContactPoe = {
+    id: string;
     nom_societe: string;
     code_postal: string;
     ville: string;
@@ -28,7 +29,7 @@ export type StrapiContactPoe = {
     createdAt: string;
 }
 
-export class HttpMinioContactCejRepository implements ContactCejRepository {
+export class HttpMinioContactPoeRepository implements ContactPoeRepository {
     private static readonly FIELDS_TO_RETRIEVE = "nom_societe,code_postal,ville,siret,taille,secteur,prenom,telephone,nom,travail,erreur,nombreARecruter,commentaire,email,createdAt";
     private static readonly RELATIONS_TO_RETRIEVE = "";
     private static readonly CSV_HEADERS: Array<Record<"id" | "title", string>> = [
@@ -60,15 +61,15 @@ export class HttpMinioContactCejRepository implements ContactCejRepository {
     ) {
     }
 
-    public async envoyerLesContactsCejAPoleEmploi(contactsCej: Array<ContactCej>): Promise<void> {
+    public async envoyerLesContactsPoeAPoleEmploi(contactsPoe: Array<ContactPoe>): Promise<void> {
         const now = this.dateService.maintenant();
         const fileName = this.buildFileName(now);
         const fileNameIncludingPath = `${this.configuration.TEMPORARY_DIRECTORY_PATH}/${fileName}`;
 
         try {
-            const contactsCejAsCsvBuffer = await this.formatToCsvBuffer(fileNameIncludingPath, contactsCej);
+            const contactsPoeAsCsvBuffer = await this.formatToCsvBuffer(fileNameIncludingPath, contactsPoe);
             await this.createBackUpOnMinio(fileName, fileNameIncludingPath);
-            await this.sendToPoleEmploi(contactsCejAsCsvBuffer, fileName);
+            await this.sendToPoleEmploi(contactsPoeAsCsvBuffer, fileName);
         } catch(error) {
             this.handleError(<Error>error);
         } finally {
@@ -76,49 +77,49 @@ export class HttpMinioContactCejRepository implements ContactCejRepository {
         }
     }
 
-    public async recupererLesContactsCej(): Promise<Array<ContactCej>> {
-        const { FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE } = HttpMinioContactCejRepository;
-        const cejEndpoint = this.configuration.STRAPI.CEJ_ENDPOINT;
+    public async recupererLesContactsPoe(): Promise<Array<ContactPoe>> {
+        const { FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE } = HttpMinioContactPoeRepository;
+        const poeEndpoint = this.configuration.STRAPI.POE_ENDPOINT;
 
-        const contactsCej = await this.strapiHttpClient.get<StrapiContactPoe>(cejEndpoint, FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE);
+        const contactsPoe = await this.strapiHttpClient.get<StrapiContactPoe>(poeEndpoint, FIELDS_TO_RETRIEVE, RELATIONS_TO_RETRIEVE);
 
-        return this.toContactsCej(contactsCej);
+        return this.toContactsPoe(contactsPoe);
     }
 
-    public async supprimerLesContactsEnvoyesAPoleEmploi(contactsCej: Array<ContactCej>): Promise<void> {
-        const cejEndpoint = this.configuration.STRAPI.CEJ_ENDPOINT;
+    public async supprimerLesContactsEnvoyesAPoleEmploi(contactsPoe: Array<ContactPoe>): Promise<void> {
+        const poeEndpoint = this.configuration.STRAPI.POE_ENDPOINT;
 
-        for (const contactCej of contactsCej) {
+        for (const contactPoe of contactsPoe) {
             try {
-                await this.strapiHttpClient.delete(cejEndpoint, contactCej.id);
+                await this.strapiHttpClient.delete(poeEndpoint, contactPoe.id);
             } catch(error) {
-                this.logger.info(`Deletion of contact cej with id=[${contactCej.id}] has failed`);
+                this.logger.info(`Deletion of contact poe with id=[${contactPoe.id}] has failed`);
             }
         }
     }
 
-    private async formatToCsvBuffer(fileNameIncludingPath: string, contactsCej: Array<ContactCej>): Promise<Buffer> {
-        await this.fileSystemClient.writeCsv(fileNameIncludingPath, contactsCej, HttpMinioContactCejRepository.CSV_HEADERS);
+    private async formatToCsvBuffer(fileNameIncludingPath: string, contactsPoe: Array<ContactPoe>): Promise<Buffer> {
+        await this.fileSystemClient.writeCsv(fileNameIncludingPath, contactsPoe, HttpMinioContactPoeRepository.CSV_HEADERS);
         return await this.fileSystemClient.read(fileNameIncludingPath);
     }
 
-    private async sendToPoleEmploi(contactsCejAsCsvBuffer: Buffer, fileName: string): Promise<void> {
-        await this.httpClient.post(this.configuration.CONTACTS_CEJ.FILR_URL, contactsCejAsCsvBuffer, this.buildParams(fileName));
+    private async sendToPoleEmploi(contactsPoeAsCsvBuffer: Buffer, fileName: string): Promise<void> {
+        await this.httpClient.post(this.configuration.CONTACTS_POE.FILR_URL, contactsPoeAsCsvBuffer, this.buildParams(fileName));
     }
 
     private async createBackUpOnMinio(fileName: string, fileNameIncludingPath: string): Promise<void> {
-        await this.minioClient.fPutObject(this.configuration.MINIO.BUCKET_NAME_EXPORT_CEJ, fileName, fileNameIncludingPath);
+        await this.minioClient.fPutObject(this.configuration.MINIO.BUCKET_NAME_EXPORT_POE, fileName, fileNameIncludingPath);
     }
 
     private buildFileName(now: Date): string {
-        return this.dateService.toFormat(now, "yyMMdd").concat("_export_api-contact-cej.csv");
+        return this.dateService.toFormat(now, "yyMMdd").concat("_export_api-contact-poe.csv"); //TODO vérifier le nom attendu avec Laurent
     }
 
     private buildParams(fileName: string): AxiosRequestConfig {
         return {
             auth: {
-                username: this.configuration.CONTACTS_CEJ.FILR_USERNAME,
-                password: this.configuration.CONTACTS_CEJ.FILR_PASSWORD,
+                username: this.configuration.CONTACTS_POE.FILR_USERNAME,
+                password: this.configuration.CONTACTS_POE.FILR_PASSWORD,
             },
             headers: { "Content-Type": "application/octet-stream" },
             params: { file_name: fileName },
@@ -129,29 +130,36 @@ export class HttpMinioContactCejRepository implements ContactCejRepository {
         const extra = { error: JSON.stringify(error) };
 
         if (error instanceof AxiosError) {
-            this.logger.error({ msg: "L'envoi du fichier des contacts CEJ à Pôle Emploi a échoué", extra });
+            this.logger.error({ msg: "L'envoi du fichier des contacts POE à Pôle Emploi a échoué", extra });
         } else {
-            this.logger.error({ msg: "Une erreur d'écriture est survenue avant l'envoi du fichier des contacts CEJ", extra });
+            this.logger.error({ msg: "Une erreur d'écriture est survenue avant l'envoi du fichier des contacts POE", extra });
         }
 
         throw error;
     }
 
-    private toContactsCej(strapiContactsCej: Array<StrapiContactPoe>): Array<ContactCej> {
-        return strapiContactsCej.map((strapiContactCej) => this.toContactCej(strapiContactCej));
+    private toContactsPoe(strapiContactsPoe: Array<StrapiContactPoe>): Array<ContactPoe> {
+        return strapiContactsPoe.map((strapiContactPoe) => this.toContactPoe(strapiContactPoe));
     }
 
-    private toContactCej(strapiContactCej: StrapiContactPoe): ContactCej {
+    private toContactPoe(strapiContactPoe: StrapiContactPoe): ContactPoe {
         return {
-            id: strapiContactCej.id,
-            prenom: strapiContactCej.prenom,
-            nom: strapiContactCej.nom,
-            email: strapiContactCej.email,
-            telephone: strapiContactCej.telephone,
-            age: strapiContactCej.age,
-            ville: strapiContactCej.ville,
-            codePostal: strapiContactCej.code_postal,
-            dateDeCreation: strapiContactCej.createdAt,
+            id: strapiContactPoe.id,
+            nomSociete: strapiContactPoe.nom_societe,
+            codePostal: strapiContactPoe.code_postal,
+            ville: strapiContactPoe.ville,
+            siret: strapiContactPoe.siret,
+            taille: strapiContactPoe.taille,
+            secteur: strapiContactPoe.secteur,
+            prenom: strapiContactPoe.prenom,
+            telephone: strapiContactPoe.telephone,
+            nom: strapiContactPoe.nom,
+            travail: strapiContactPoe.travail,
+            erreur: strapiContactPoe.erreur,
+            nombreARecruter: strapiContactPoe.nombreARecruter,
+            commentaire: strapiContactPoe.commentaire,
+            email: strapiContactPoe.email,
+            dateDeCreation: strapiContactPoe.createdAt,
         };
     }
 }
