@@ -73,6 +73,7 @@ export class ConfigurationFactory extends ConfigurationValidator {
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				BUCKET_NAME_EXPORT_CEJ: getOrError("CONTACTS_MANAGEMENT_CEJ_MINIO_BUCKET_NAME"),
+				BUCKET_NAME_EXPORT_POE: getOrError("CONTACTS_MANAGEMENT_POE_MINIO_BUCKET_NAME"),
 				PORT: Number(getOrError("MINIO_PORT")),
 				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 				URL: getOrError("MINIO_URL"),
@@ -84,6 +85,7 @@ export class ConfigurationFactory extends ConfigurationValidator {
 			},
 			STRAPI: {
 				CEJ_ENDPOINT: getOrError("STRAPI_CEJ_ENDPOINT"),
+				POE_ENDPOINT: getOrError("STRAPI_POE_ENDPOINT"),
 			},
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
 		};
