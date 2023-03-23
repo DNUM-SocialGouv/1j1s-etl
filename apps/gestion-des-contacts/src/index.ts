@@ -6,12 +6,18 @@ import {
 	EnvoyerLesContactsCejAPoleEmploi,
 } from "@gestion-des-contacts/src/application-service/envoyer-les-contacts-cej-a-pole-emploi.usecase";
 import {
+	EnvoyerLesContactsPoeAPoleEmploi,
+} from "@gestion-des-contacts/src/application-service/envoyer-les-contacts-poe-a-pole-emploi.usecase";
+import {
 	Configuration,
 	ConfigurationFactory,
 } from "@gestion-des-contacts/src/infrastructure/configuration/configuration";
 import {
 	SendContactCejToPoleEmploiSubCommand,
 } from "@gestion-des-contacts/src/infrastructure/sub-command/send-contact-cej-to-pole-emploi.sub-command";
+import {
+	SendContactPoeToPoleEmploiSubCommand,
+} from "@gestion-des-contacts/src/infrastructure/sub-command/send-contact-poe-to-pole-emploi.sub-command";
 
 @Module({
 	imports: [
@@ -30,8 +36,19 @@ import {
 				? new SendContactCejToPoleEmploiSubCommand({ executer: () => Promise.resolve() })
 				: new SendContactCejToPoleEmploiSubCommand(usecase);
 		},
-	}],
-	exports: [SendContactCejToPoleEmploiSubCommand],
+	},
+		{
+			provide: SendContactPoeToPoleEmploiSubCommand,
+			inject: [ConfigService, EnvoyerLesContactsPoeAPoleEmploi],
+			useFactory: (configurationService: ConfigService, usecase: EnvoyerLesContactsPoeAPoleEmploi): SendContactPoeToPoleEmploiSubCommand => {
+				const isFeatureFlipped = configurationService.get<Configuration>("gestionDesContacts").CONTACTS_POE.FEATURE_FLIPPING;
+				return isFeatureFlipped
+					? new SendContactPoeToPoleEmploiSubCommand({ executer: () => Promise.resolve() })
+					: new SendContactPoeToPoleEmploiSubCommand(usecase);
+			},
+		},
+	],
+	exports: [SendContactCejToPoleEmploiSubCommand, SendContactPoeToPoleEmploiSubCommand],
 })
 export class GestionDesContacts {
 }

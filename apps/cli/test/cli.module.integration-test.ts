@@ -19,6 +19,9 @@ import {
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 
 import { EnvoyerLesContactsCejAPoleEmploi } from "@gestion-des-contacts/src/application-service/envoyer-les-contacts-cej-a-pole-emploi.usecase";
+import {
+	EnvoyerLesContactsPoeAPoleEmploi,
+} from "@gestion-des-contacts/src/application-service/envoyer-les-contacts-poe-a-pole-emploi.usecase";
 
 import { ChargerFluxImmojeune } from "@logements/src/chargement/application-service/charger-flux-immojeune.usecase";
 import { ChargerFluxStudapart } from "@logements/src/chargement/application-service/charger-flux-studapart.usecase";
@@ -372,17 +375,20 @@ describe("CliModuleTest", () => {
 		});
 	});
 
-	context("Lorsque je lance la commande d'historisation", () => {
+	context("Lorsque je lance la commande d'envoi de contact", () => {
 		let envoyerLesContactsCejAPoleEmploi: StubbedClass<EnvoyerLesContactsCejAPoleEmploi>;
+		let envoyerLesContactsPoeAPoleEmploi: StubbedClass<EnvoyerLesContactsPoeAPoleEmploi>;
 
 		beforeEach(async () => {
 			envoyerLesContactsCejAPoleEmploi = stubClass(EnvoyerLesContactsCejAPoleEmploi);
+			envoyerLesContactsPoeAPoleEmploi = stubClass(EnvoyerLesContactsPoeAPoleEmploi);
 
 			cliModule = await CommandTestFactory.createTestingCommand({
 				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
 			})
 				.overrideProvider(Client).useValue(stubClass(Client))
 				.overrideProvider(EnvoyerLesContactsCejAPoleEmploi).useValue(envoyerLesContactsCejAPoleEmploi)
+				.overrideProvider(EnvoyerLesContactsPoeAPoleEmploi).useValue(envoyerLesContactsPoeAPoleEmploi)
 				.compile();
 		});
 
@@ -395,6 +401,17 @@ describe("CliModuleTest", () => {
 				expect(envoyerLesContactsCejAPoleEmploi.executer).to.have.been.calledOnce;
 			});
 		});
+
+		context("qui envoie les contacts POE à Pôle Emploi", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["send-contacts", "poe"]);
+
+				// Then
+				expect(envoyerLesContactsPoeAPoleEmploi.executer).to.have.been.calledOnce;
+			});
+		});
+
 	});
 
 	context("Lorsque je lance la commande de création du bucket pour l'export CEJ", () => {
