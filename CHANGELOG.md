@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.5.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.5.0...v4.5.1) (2023-03-23)
+
+
+### Miscellaneous Chores
+
+* release 4.5.1 ([f571645](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/f571645be6f1a2515a744ff833afe1241a94d8ff))
+
 ## [4.5.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.4.2...v4.5.0) (2023-03-23)
 
 
