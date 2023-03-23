@@ -8,13 +8,22 @@ import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logg
 export type MinioConfiguration = {
 	ACCESS_KEY: string;
 	BUCKET_NAME_EXPORT_CEJ: string;
+	BUCKET_NAME_EXPORT_POE: string;
 	PORT: number;
 	SECRET_KEY: string;
 	URL: string;
 }
 
+//TODO grouper config FILR
 export type Configuration = {
 	CONTACTS_CEJ: {
+		DOMAINE: Domaine;
+		FEATURE_FLIPPING: boolean;
+		FILR_PASSWORD: string;
+		FILR_URL: string;
+		FILR_USERNAME: string;
+	}
+	CONTACTS_POE: {
 		DOMAINE: Domaine;
 		FEATURE_FLIPPING: boolean;
 		FILR_PASSWORD: string;
@@ -28,6 +37,7 @@ export type Configuration = {
 	SENTRY: SentryConfiguration;
 	STRAPI: {
 		CEJ_ENDPOINT: string;
+		POE_ENDPOINT: string;
 	}
 	TEMPORARY_DIRECTORY_PATH: string;
 }
@@ -49,6 +59,13 @@ export class ConfigurationFactory extends ConfigurationValidator {
 				FILR_PASSWORD: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_PASSWORD"),
 				FILR_URL: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_URL"),
 				FILR_USERNAME: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_USERNAME"),
+			},
+			CONTACTS_POE: {
+				DOMAINE: getOrError("CONTACTS_MANAGEMENT_POE_DOMAIN") as Domaine,
+				FEATURE_FLIPPING: toBoolean(getOrError("CONTACTS_MANAGEMENT_POE_FEATURE_FLIPPING")),
+				FILR_PASSWORD: getOrError("CONTACTS_MANAGEMENT_POE_FILR_PASSWORD"),
+				FILR_URL: getOrError("CONTACTS_MANAGEMENT_POE_FILR_URL"),
+				FILR_USERNAME: getOrError("CONTACTS_MANAGEMENT_POE_FILR_USERNAME"),
 			},
 			CONTEXT: "gestion-des-contacts",
 			ENVIRONMENT: getOrError("NODE_ENV") as Environment,
