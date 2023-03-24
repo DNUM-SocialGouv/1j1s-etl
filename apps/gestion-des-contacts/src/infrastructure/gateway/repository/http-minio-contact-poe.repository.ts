@@ -35,19 +35,19 @@ export class HttpMinioContactPoeRepository implements ContactPoeRepository {
     private static readonly CSV_HEADERS: Array<Record<"id" | "title", string>> = [
         { id: "dateDeCreation", title: "Date de création" },
         { id: "nomSociete", title: "Nom Société" },
-        { id: "siret", title: "Siret" },
         { id: "taille", title: "Taille" },
+        { id: "siret", title: "Siret" },
         { id: "secteur", title: "Secteur" },
         { id: "codePostal", title: "Code postal" },
         { id: "ville", title: "Ville" },
         { id: "nom", title: "Nom" },
         { id: "prenom", title: "Prénom" },
-        { id: "telephone", title: "Téléphone" },
         { id: "email", title: "Email" },
+        { id: "telephone", title: "Téléphone" },
         { id: "travail", title: "Travail" },
-        { id: "erreur", title: "Erreur" },
         { id: "nombreARecruter", title: "Nombre à recruter" },
         { id: "commentaire", title: "Commentaire" },
+        { id: "erreur", title: "Erreur" },
     ];
 
     constructor(
