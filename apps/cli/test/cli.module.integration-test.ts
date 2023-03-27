@@ -411,10 +411,9 @@ describe("CliModuleTest", () => {
 				expect(envoyerLesContactsPoeAPoleEmploi.executer).to.have.been.calledOnce;
 			});
 		});
-
 	});
 
-	context("Lorsque je lance la commande de création du bucket pour l'export CEJ", () => {
+	context("Lorsque je lance la commande de création du bucket", () => {
 		let minioAdminStorageClient: StubbedClass<MinioAdminStorageRepository>;
 
 		beforeEach(async () => {
@@ -428,10 +427,21 @@ describe("CliModuleTest", () => {
 				.compile();
 		});
 
-		context("qui envoie les contacts CEJ à Pôle Emploi", () => {
+		context("pour l'export CEJ", () => {
 			it("execute la commande", async () => {
 				// When
 				await CommandTestFactory.run(cliModule, ["mkbucket", "cej"]);
+
+				// Then
+				expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
+				expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnce;
+			});
+		});
+
+		context("pour l'export POE", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["mkbucket", "poe"]);
 
 				// Then
 				expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;

@@ -7,9 +7,9 @@ import {
 	MinioAdminStorageRepository,
 } from "@maintenance/src/infrastructure/gateway/repository/minio-admin-storage.repository";
 
-@SubCommand({ name: CreateContactCejMinioBucketSubCommand.PROCESS_NAME })
-export class CreateContactCejMinioBucketSubCommand extends CommandRunner {
-	private static readonly PROCESS_NAME = "cej";
+@SubCommand({ name: CreateContactPoeMinioBucketSubCommand.PROCESS_NAME })
+export class CreateContactPoeMinioBucketSubCommand extends CommandRunner {
+	private static readonly PROCESS_NAME = "poe";
 
 	constructor(
 		private readonly minioAdminStorageClient: MinioAdminStorageRepository,
@@ -18,9 +18,9 @@ export class CreateContactCejMinioBucketSubCommand extends CommandRunner {
 		super();
 	}
 
-	@CommandLog(CreateContactCejMinioBucketSubCommand.PROCESS_NAME)
+	@CommandLog(CreateContactPoeMinioBucketSubCommand.PROCESS_NAME)
 	public override async run(): Promise<void> {
-		const bucketName = this.configuration.MINIO.CONTACTS_MANAGEMENT_CEJ_BUCKET_NAME;
+		const bucketName = this.configuration.MINIO.CONTACTS_MANAGEMENT_POE_BUCKET_NAME;
 		await this.minioAdminStorageClient.createBucket(bucketName);
 
 		const lifecycleRules = this.createLifecycleRules(bucketName);
@@ -32,7 +32,7 @@ export class CreateContactCejMinioBucketSubCommand extends CommandRunner {
 			Rule: [{
 				ID: bucketName,
 				Status: "Enabled",
-				Expiration: { Days: this.configuration.MINIO.CONTACTS_MANAGEMENT_CEJ_DAYS_AFTER_EXPIRATION },
+				Expiration: { Days: this.configuration.MINIO.CONTACTS_MANAGEMENT_POE_DAYS_AFTER_EXPIRATION },
 				Filter: { Prefix: "" },
 			}],
 		};

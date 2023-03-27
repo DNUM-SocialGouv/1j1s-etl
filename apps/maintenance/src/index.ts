@@ -14,6 +14,9 @@ import {
 import {
 	CreateContactCejMinioBucketSubCommand,
 } from "@maintenance/src/infrastructure/sub-command/create-contact-cej-minio-bucket.sub-command";
+import {
+	CreateContactPoeMinioBucketSubCommand,
+} from "@maintenance/src/infrastructure/sub-command/create-contact-poe-minio-bucket.sub-command";
 import { PurgeHousingAdsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-housing-ads.sub-command";
 import { PurgeInternshipsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-internships.sub-command";
 
@@ -51,8 +54,21 @@ import { PurgeInternshipsSubCommand } from "@maintenance/src/infrastructure/sub-
 				return new CreateContactCejMinioBucketSubCommand(minioAdminStorageClient, configuration);
 			},
 		},
+		{
+			provide: CreateContactPoeMinioBucketSubCommand,
+			inject: [ConfigService, MinioAdminStorageRepository],
+			useFactory: (configurationService: ConfigService, minioAdminStorageClient: MinioAdminStorageRepository): CreateContactPoeMinioBucketSubCommand => {
+				const configuration = configurationService.get<Configuration>("maintenance");
+				return new CreateContactPoeMinioBucketSubCommand(minioAdminStorageClient, configuration);
+			},
+		},
 	],
-	exports: [PurgeHousingAdsSubCommand, PurgeInternshipsSubCommand, CreateContactCejMinioBucketSubCommand],
+	exports: [
+		PurgeHousingAdsSubCommand,
+		PurgeInternshipsSubCommand,
+		CreateContactCejMinioBucketSubCommand,
+		CreateContactPoeMinioBucketSubCommand,
+	],
 })
 export class Maintenance {
 }
