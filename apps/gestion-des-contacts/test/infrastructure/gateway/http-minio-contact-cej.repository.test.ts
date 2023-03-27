@@ -52,8 +52,8 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		configuration.MINIO.BUCKET_NAME_EXPORT_CEJ = "bucket-name";
 		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp";
 		configuration.CONTACTS_CEJ.FILR_URL = `https://mesfichiers.some-url.net?file_name=${fileName}`;
-		configuration.CONTACTS_CEJ.FILR_PASSWORD = "s0m3P4$$wOrd";
-		configuration.CONTACTS_CEJ.FILR_USERNAME = "someUser";
+		configuration.FILR.PASSWORD = "s0m3P4$$wOrd";
+		configuration.FILR.USERNAME = "someUser";
 		configuration.STRAPI.CEJ_ENDPOINT = "contact-cejs";
 		httpClient = stubInterface<AxiosInstance>(sinon);
 		minioClient = stubClass(Client);
@@ -105,8 +105,8 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 					configuration.CONTACTS_CEJ.FILR_URL,
 					fileContentAsBuffer, {
 						auth: {
-							username: configuration.CONTACTS_CEJ.FILR_USERNAME,
-							password: configuration.CONTACTS_CEJ.FILR_PASSWORD,
+							username: configuration.FILR.USERNAME,
+							password: configuration.FILR.PASSWORD,
 						},
 						headers: { "Content-Type": "application/octet-stream" },
 						params: { file_name: fileName },

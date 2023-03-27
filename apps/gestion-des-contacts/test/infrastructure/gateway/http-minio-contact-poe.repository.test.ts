@@ -57,8 +57,8 @@ describe("HttpMinioContactPoeRepositoryTest", () => {
 		configuration.MINIO.BUCKET_NAME_EXPORT_POE = "bucket-name";
 		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp";
 		configuration.CONTACTS_POE.FILR_URL = `https://mesfichiers.some-url.net?file_name=${fileName}`;
-		configuration.CONTACTS_POE.FILR_PASSWORD = "s0m3P4$$wOrd";
-		configuration.CONTACTS_POE.FILR_USERNAME = "someUser";
+		configuration.FILR.PASSWORD = "s0m3P4$$wOrd";
+		configuration.FILR.USERNAME = "someUser";
 		configuration.STRAPI.POE_ENDPOINT = "contact-poes";
 		httpClient = stubInterface<AxiosInstance>(sinon);
 		minioClient = stubClass(Client);
@@ -104,8 +104,8 @@ describe("HttpMinioContactPoeRepositoryTest", () => {
 					configuration.CONTACTS_POE.FILR_URL,
 					fileContentAsBuffer, {
 						auth: {
-							username: configuration.CONTACTS_POE.FILR_USERNAME,
-							password: configuration.CONTACTS_POE.FILR_PASSWORD,
+							username: configuration.FILR.USERNAME,
+							password: configuration.FILR.PASSWORD,
 						},
 						headers: { "Content-Type": "application/octet-stream" },
 						params: { file_name: fileName },

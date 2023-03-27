@@ -104,8 +104,8 @@ export class HttpMinioContactCejRepository implements ContactCejRepository {
 	private buildParams(fileName: string): AxiosRequestConfig {
 		return {
 			auth: {
-				username: this.configuration.CONTACTS_CEJ.FILR_USERNAME,
-				password: this.configuration.CONTACTS_CEJ.FILR_PASSWORD,
+				username: this.configuration.FILR.USERNAME,
+				password: this.configuration.FILR.PASSWORD,
 			},
 			headers: { "Content-Type": "application/octet-stream" },
 			params: { file_name: fileName },
