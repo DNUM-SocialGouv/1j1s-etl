@@ -3,7 +3,7 @@ import { StubbedCallableType, StubbedType, stubCallable, stubInterface } from "@
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 import nock from "nock";
-import sinon, { createStubInstance, SinonStubbedInstance, SinonStubbedMember, spy, StubbableType } from "sinon";
+import sinon, { createStubInstance, SinonFakeTimers,SinonStubbedInstance, SinonStubbedMember, spy, StubbableType } from "sinon";
 import sinonChai from "sinon-chai";
 
 chai.use(sinonChai);
@@ -21,4 +21,4 @@ export function stubClass<T>(
 
 export const expect = chai.expect;
 export const assert = chai.assert;
-export { nock, sinon, spy, StubbedType, stubInterface, StubbedCallableType, stubCallable };
+export { nock, sinon, SinonFakeTimers, spy, StubbedType, stubInterface, StubbedCallableType, stubCallable };
