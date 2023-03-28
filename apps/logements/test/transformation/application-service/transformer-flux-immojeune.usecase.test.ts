@@ -1,4 +1,4 @@
-import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/library";
+import { expect, sinon, SinonFakeTimers, StubbedType, stubInterface } from "@test/library";
 
 import {
 	TransformerFluxImmojeune,
@@ -21,21 +21,25 @@ import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-
 import { DateService } from "@shared/src/domain/service/date.service";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
+let clock: SinonFakeTimers;
 let repository: StubbedType<AnnonceDeLogementRepository>;
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
 let usecase: TransformerFluxImmojeune;
 let flux: FluxTransformation;
-let dateService: StubbedType<DateService>;
+let dateService: DateService;
 
 describe("TransformerFluxImmojeuneTest", () => {
 	beforeEach(() => {
+		clock = sinon.useFakeTimers(dateEcriture);
 		repository = stubInterface(sinon);
 		assainisseurDeTexte = stubInterface(sinon);
-		dateService = stubClass(DateService);
-		dateService.maintenant.returns(dateEcriture);
-		dateService.toIsoDateFromFrenchFormatWithSeconds.restore();
+		dateService = new DateService();
 		usecase = new TransformerFluxImmojeune(repository, new Convertir(assainisseurDeTexte, dateService));
 		flux = new FluxTransformation("flux", "old", ".json", ".json");
+	});
+
+	afterEach(() => {
+		clock.restore();
 	});
 
 	context("Lorsque je transforme le flux en provenance d'immojeune", () => {

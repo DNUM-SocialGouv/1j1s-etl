@@ -1,4 +1,6 @@
-import { expect, sinon, StubbedType, stubClass, stubInterface } from "@test/library";
+import { Settings } from "luxon";
+
+import { expect, sinon, SinonFakeTimers, StubbedType, stubInterface } from "@test/library";
 
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
@@ -14,20 +16,27 @@ import {
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
 
+Settings.defaultZone = "Europe/London";
+
+const maintenant = new Date("2022-12-01T01:00:00.000+01:00");
 let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
 let convertir: Convertir;
-let dateService: StubbedType<DateService>;
+let clock: SinonFakeTimers;
+let dateService: DateService;
 
 describe("StudapartTest", () => {
     beforeEach(() => {
         assainisseurDeTexte = stubInterface(sinon);
         assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
 
-        dateService = stubClass(DateService);
-        dateService.stringifyMaintenant.returns("2022-12-01T00:00:00.000Z");
-        dateService.toIsoDateAvecDate.restore();
+        clock = sinon.useFakeTimers(maintenant);
+        dateService = new DateService();
 
         convertir = new Convertir(assainisseurDeTexte, dateService);
+    });
+
+    afterEach(() => {
+        clock.restore();
     });
 
     context("Lorsque je reçois une annonce studapart de type apartment, rental et avec une seule room", () => {

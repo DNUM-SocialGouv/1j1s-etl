@@ -2,7 +2,7 @@ import { AxiosError, AxiosInstance } from "axios";
 import { Client } from "minio";
 import { PassThrough } from "stream";
 
-import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+import { expect, sinon, SinonFakeTimers, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { Configuration } from "@gestion-des-contacts/src/infrastructure/configuration/configuration";
 import {
@@ -32,20 +32,22 @@ const contactCejs = [
 	ContactCejFixtureBuilder.build(),
 	ContactCejFixtureBuilder.build({ id: "2" }),
 ];
+let clock: SinonFakeTimers;
 let logger: StubbedType<Logger>;
 let httpClient: StubbedType<AxiosInstance>;
 let fileSystemClient: StubbedType<FileSystemClient>;
 let minioClient: StubbedClass<Client>;
 let configuration: StubbedType<Configuration>;
-let dateService: StubbedClass<DateService>;
+let dateService: DateService;
 let strapiHttpClient: StubbedClass<StrapiHttpClient>;
 let contactCejRepository: HttpMinioContactCejRepository;
 
 describe("HttpMinioContactCejRepositoryTest", () => {
 	beforeEach(() => {
+		clock = sinon.useFakeTimers(date);
 		logger = stubInterface<Logger>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
-		dateService = stubClass(DateService);
+		dateService = new DateService();
 		configuration = stubInterface<Configuration>(sinon);
 		configuration.MINIO.BUCKET_NAME_EXPORT_CEJ = "bucket-name";
 		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp";
@@ -57,16 +59,24 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		minioClient = stubClass(Client);
 		strapiHttpClient = stubClass(StrapiHttpClient);
 
-		contactCejRepository = new HttpMinioContactCejRepository(strapiHttpClient, minioClient, dateService, fileSystemClient, httpClient as unknown as AxiosInstance, configuration, logger);
+		contactCejRepository = new HttpMinioContactCejRepository(
+			strapiHttpClient,
+			minioClient,
+			dateService,
+			fileSystemClient,
+			httpClient as unknown as AxiosInstance,
+			configuration,
+			logger
+		);
+	});
+
+	afterEach(() => {
+		clock.restore();
 	});
 
 	context("Lorsque j'envoie les données contacts CEJ", () => {
 		context("et que tout se passe bien", () => {
 			it("copie les contacts engagement jeune", async () => {
-				// Given
-				dateService.maintenant.returns(date);
-				dateService.toFormat.restore();
-
 				// When
 				await contactCejRepository.envoyerLesContactsCejAPoleEmploi(contactCejs);
 
@@ -86,8 +96,6 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 					.read
 					.withArgs(fileNameIncludingPath)
 					.resolves(fileContentAsBuffer);
-				dateService.maintenant.returns(date);
-				dateService.toFormat.restore();
 
 				// When
 				await contactCejRepository.envoyerLesContactsCejAPoleEmploi(contactCejs);
@@ -111,8 +119,6 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 			context("et que l'origine de l'erreur est dans le dépôt du fichier", () => {
 				it("log une erreur spécifique et remonte l'erreur", async () => {
 					// Given
-					dateService.maintenant.returns(date);
-					dateService.toFormat.restore();
 					const axiosError = new AxiosError("Oops something went wrong!", "404");
 					httpClient.post.rejects(axiosError);
 
@@ -127,8 +133,6 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 
 			it("log l'erreur qui s'est produite et remonte l'erreur", async () => {
 				// Given
-				dateService.maintenant.returns(date);
-				dateService.toFormat.restore();
 				const error = new Error("Oops something went wrong!");
 				httpClient.post.rejects(error);
 
