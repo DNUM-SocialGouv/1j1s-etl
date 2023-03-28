@@ -7,9 +7,7 @@ import { FluxTransformation } from "@stages/src/transformation/domain/model/flux
 import { Configuration } from "@stages/src/transformation/infrastructure/configuration/configuration";
 import { CommandLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: TransformFlowStagefrUncompressedSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: TransformFlowStagefrUncompressedSubCommand.FLOW_NAME })
 export class TransformFlowStagefrUncompressedSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "stagefr-decompresse";
 

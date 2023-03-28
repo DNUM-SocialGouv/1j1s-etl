@@ -4,9 +4,7 @@ import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/pur
 import { Configuration } from "@maintenance/src/infrastructure/configuration/configuration";
 import { CommandLog } from "@maintenance/src/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: PurgeInternshipsSubCommand.PROCESS_NAME,
-})
+@SubCommand({ name: PurgeInternshipsSubCommand.PROCESS_NAME })
 export class PurgeInternshipsSubCommand extends CommandRunner {
 	public static readonly PROCESS_NAME = "purge-internships";
 

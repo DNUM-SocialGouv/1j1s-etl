@@ -6,9 +6,7 @@ import {
 import { Configuration } from "@evenements/src/chargement/infrastructure/configuration/configuration";
 import { CommandLog } from "@evenements/src/chargement/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: LoadFlowTousMobilisesSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: LoadFlowTousMobilisesSubCommand.FLOW_NAME })
 export class LoadFlowTousMobilisesSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "tous-mobilises";
 

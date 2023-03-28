@@ -4,9 +4,7 @@ import { CommandLog } from "@gestion-des-contacts/src/infrastructure/configurati
 
 import { Usecase } from "@shared/src/application-service/usecase";
 
-@SubCommand({
-	name: SendContactPoeToPoleEmploiSubCommand.CONTACT_NAME,
-})
+@SubCommand({ name: SendContactPoeToPoleEmploiSubCommand.CONTACT_NAME })
 export class SendContactPoeToPoleEmploiSubCommand extends CommandRunner {
 	private static readonly CONTACT_NAME = "poe";
 

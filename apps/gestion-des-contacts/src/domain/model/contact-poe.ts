@@ -1,4 +1,3 @@
-
 export type ContactPoe = {
     id: string;
     nomSociete: string;

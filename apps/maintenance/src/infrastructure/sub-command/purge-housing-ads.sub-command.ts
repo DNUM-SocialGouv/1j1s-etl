@@ -6,9 +6,7 @@ import {
 import { Configuration } from "@maintenance/src/infrastructure/configuration/configuration";
 import { CommandLog } from "@maintenance/src/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: PurgeHousingAdsSubCommand.PROCESS_NAME,
-})
+@SubCommand({ name: PurgeHousingAdsSubCommand.PROCESS_NAME })
 export class PurgeHousingAdsSubCommand extends CommandRunner {
 	public static readonly PROCESS_NAME = "purge-housing-ads";
 

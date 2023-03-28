@@ -7,9 +7,7 @@ import { FluxTransformation } from "@evenements/src/transformation/domain/model/
 import { Configuration } from "@evenements/src/transformation/infrastructure/configuration/configuration";
 import { CommandLog } from "@evenements/src/transformation/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: TransformFlowTousMobilisesSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: TransformFlowTousMobilisesSubCommand.FLOW_NAME })
 export class TransformFlowTousMobilisesSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "tous-mobilises";
 
