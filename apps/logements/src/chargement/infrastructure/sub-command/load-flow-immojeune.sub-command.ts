@@ -6,9 +6,7 @@ import { CommandLog } from "@logements/src/chargement/infrastructure/configurati
 import { Usecase } from "@shared/src/application-service/usecase";
 import { Flux } from "@shared/src/domain/model/flux";
 
-@SubCommand({
-    name: LoadFlowImmojeuneSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: LoadFlowImmojeuneSubCommand.FLOW_NAME })
 export class LoadFlowImmojeuneSubCommand extends CommandRunner {
     private static readonly FLOW_NAME = "immojeune";
 

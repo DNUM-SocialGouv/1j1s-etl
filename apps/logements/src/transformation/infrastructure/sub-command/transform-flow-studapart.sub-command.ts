@@ -7,9 +7,7 @@ import { FluxTransformation } from "@logements/src/transformation/domain/model/f
 import { Configuration } from "@logements/src/transformation/infrastructure/configuration/configuration";
 import { CommandLog } from "@logements/src/transformation/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: TransformFlowStudapartSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: TransformFlowStudapartSubCommand.FLOW_NAME })
 export class TransformFlowStudapartSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "studapart";
 

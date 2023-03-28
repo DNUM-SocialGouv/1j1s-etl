@@ -5,9 +5,7 @@ import { FluxExtraction } from "@logements/src/extraction/domain/model/flux";
 import { Configuration } from "@logements/src/extraction/infrastructure/configuration/configuration";
 import { CommandLog } from "@logements/src/extraction/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: ExtractFlowStudapartSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: ExtractFlowStudapartSubCommand.FLOW_NAME })
 export class ExtractFlowStudapartSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "studapart";
 

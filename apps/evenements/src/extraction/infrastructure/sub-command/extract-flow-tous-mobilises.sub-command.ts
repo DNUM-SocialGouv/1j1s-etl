@@ -7,9 +7,7 @@ import { FluxExtraction } from "@evenements/src/extraction/domain/model/flux";
 import { Configuration } from "@evenements/src/extraction/infrastructure/configuration/configuration";
 import { CommandLog } from "@evenements/src/extraction/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: ExtractFlowTousMobilisesSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: ExtractFlowTousMobilisesSubCommand.FLOW_NAME })
 export class ExtractFlowTousMobilisesSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "tous-mobilises";
 

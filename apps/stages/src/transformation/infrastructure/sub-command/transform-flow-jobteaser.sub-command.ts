@@ -7,9 +7,7 @@ import { FluxTransformation } from "@stages/src/transformation/domain/model/flux
 import { Configuration } from "@stages/src/transformation/infrastructure/configuration/configuration";
 import { CommandLog } from "@stages/src/transformation/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: TransformFlowJobteaserSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: TransformFlowJobteaserSubCommand.FLOW_NAME })
 export class TransformFlowJobteaserSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "jobteaser";
 

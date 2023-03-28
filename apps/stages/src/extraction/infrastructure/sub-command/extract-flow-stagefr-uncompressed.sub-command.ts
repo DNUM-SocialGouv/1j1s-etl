@@ -7,9 +7,7 @@ import { FluxExtraction } from "@stages/src/extraction/domain/model/flux";
 import { Configuration } from "@stages/src/extraction/infrastructure/configuration/configuration";
 import { CommandLog } from "@stages/src/extraction/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: ExtractFlowStagefrUncompressedSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: ExtractFlowStagefrUncompressedSubCommand.FLOW_NAME })
 export class ExtractFlowStagefrUncompressedSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "stagefr-decompresse";
 

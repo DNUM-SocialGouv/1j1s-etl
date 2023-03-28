@@ -5,9 +5,7 @@ import { FluxChargement } from "@stages/src/chargement/domain/model/flux";
 import { Configuration } from "@stages/src/chargement/infrastructure/configuration/configuration";
 import { CommandLog } from "@stages/src/chargement/infrastructure/configuration/log.decorator";
 
-@SubCommand({
-	name: LoadFlowJobteaserSubCommand.FLOW_NAME,
-})
+@SubCommand({ name: LoadFlowJobteaserSubCommand.FLOW_NAME })
 export class LoadFlowJobteaserSubCommand extends CommandRunner {
 	private static readonly FLOW_NAME = "jobteaser";
 

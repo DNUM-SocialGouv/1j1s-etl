@@ -112,7 +112,7 @@ export class HttpMinioContactPoeRepository implements ContactPoeRepository {
     }
 
     private buildFileName(now: Date): string {
-        return this.dateService.toFormat(now, "yyMMdd").concat("_export_api-contact-poe.csv"); //TODO vérifier le nom attendu avec Laurent
+        return this.dateService.toFormat(now, "yyMMdd").concat("_export_api-contact-poe.csv");
     }
 
     private buildParams(fileName: string): AxiosRequestConfig {
