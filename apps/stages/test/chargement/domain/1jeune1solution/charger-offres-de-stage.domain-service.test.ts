@@ -256,7 +256,6 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 				offreDeStageRepository.recupererOffresExistantes.resolves(offresDeStagesExistantes);
 			});
 
-			//TODO ajouter ces offres à nos cas d'erreurs
 			it("Je ne charge pas ces offres de stage", async () => {
 				await domainService.charger(flux);
 
