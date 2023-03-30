@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.6.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.5.1...v4.6.0) (2023-03-30)
+
+
+### Features
+
+* **maintenance:** ajout creation bucket poe ([298def6](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/298def64e6de6c50b9d5ffef427d9a47a76dfef7))
+* **POE:** ajout du repository contact poe ([e9213ee](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/e9213eecde77dc276fe66187b0905abb6270d690))
+* **POE:** ajout du usecase ([1597b66](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/1597b668b2323cd890b547b86a05038d87a30195))
+* **POE:** ajout subcommand envoi contacts poe ([2d0835b](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2d0835bdc577404cd68f8eef82c7bba0d19eec12))
+* **POE:** ordre des colonnes CSV ([f274030](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/f274030ce1fedaef7b7f3bbb9b411e7b6efc17c4))
+
 ## [4.5.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.5.0...v4.5.1) (2023-03-23)
 
 
