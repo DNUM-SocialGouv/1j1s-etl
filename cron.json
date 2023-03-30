@@ -75,6 +75,10 @@
     {
       "command": "0 1 * * 1 npm run cli -- send-contacts cej",
       "size": "M"
+    },
+    {
+      "command": "15 1 * * 1 npm run cli -- send-contacts poe",
+      "size": "M"
     }
   ]
 }
