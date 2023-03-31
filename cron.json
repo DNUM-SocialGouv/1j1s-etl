@@ -2,7 +2,7 @@
   "jobs": [
     {
       "command": "0 7 * * * npm run cli -- extract jobteaser",
-      "size": "S"
+      "size": "XL"
     },
     {
       "command": "30 7 * * * npm run cli -- transform jobteaser",
@@ -10,11 +10,11 @@
     },
     {
       "command": "45 7 * * * npm run cli -- load jobteaser",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "0 6 * * * npm run cli -- extract stagefr-compresse",
-      "size": "S"
+      "size": "XL"
     },
     {
       "command": "30 6 * * * npm run cli -- transform stagefr-compresse",
@@ -22,11 +22,11 @@
     },
     {
       "command": "45 6 * * * npm run cli -- load stagefr-compresse",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "0 6 * * * npm run cli -- extract stagefr-decompresse",
-      "size": "S"
+      "size": "XL"
     },
     {
       "command": "30 6 * * * npm run cli -- transform stagefr-decompresse",
@@ -34,11 +34,11 @@
     },
     {
       "command": "45 6 * * * npm run cli -- load stagefr-decompresse",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "0 5 * * * npm run cli -- extract immojeune",
-      "size": "S"
+      "size": "XL"
     },
     {
       "command": "15 5 * * * npm run cli -- transform immojeune",
@@ -46,11 +46,11 @@
     },
     {
       "command": "30 5 * * * npm run cli -- load immojeune",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "0 5 * * * npm run cli -- extract studapart",
-      "size": "S"
+      "size": "XL"
     },
     {
       "command": "15 5 * * * npm run cli -- transform studapart",
@@ -58,11 +58,11 @@
     },
     {
       "command": "30 5 * * * npm run cli -- load studapart",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "0 4 * * * npm run cli -- extract tous-mobilises",
-      "size": "S"
+      "size": "XL"
     },
     {
       "command": "15 4 * * * npm run cli -- transform tous-mobilises",
@@ -70,15 +70,15 @@
     },
     {
       "command": "30 4 * * * npm run cli -- load tous-mobilises",
-      "size": "L"
+      "size": "XL"
     },
     {
       "command": "0 1 * * 1 npm run cli -- send-contacts cej",
-      "size": "M"
+      "size": "XL"
     },
     {
       "command": "15 1 * * 1 npm run cli -- send-contacts poe",
-      "size": "M"
+      "size": "XL"
     }
   ]
 }
