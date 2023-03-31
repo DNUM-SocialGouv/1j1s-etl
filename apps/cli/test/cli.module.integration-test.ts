@@ -427,25 +427,74 @@ describe("CliModuleTest", () => {
 				.compile();
 		});
 
-		context("pour l'export CEJ", () => {
-			it("execute la commande", async () => {
+		context("et que je ne spécifie que le nom du bucket", () => {
+			it("crée le bucket et la règle de cycle de vie par défaut", async () => {
+				// Given
+				const bucketName = "some-bucket";
+				const defaultDaysAfterExpiration = Number(process.env["MINIO_DAYS_AFTER_EXPIRATION"]);
+
 				// When
-				await CommandTestFactory.run(cliModule, ["mkbucket", "cej"]);
+				await CommandTestFactory.run(cliModule, ["mkbucket", "-b", bucketName]);
 
 				// Then
+				const expectedLifecycleRule = {
+					Rule: [{
+						ID: bucketName,
+						Status: "Enabled",
+						Expiration: { Days: defaultDaysAfterExpiration },
+						Filter: { Prefix: "" },
+					}],
+				};
 				expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
-				expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnce;
+				expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnceWith(bucketName, expectedLifecycleRule);
 			});
 		});
 
-		context("pour l'export POE", () => {
-			it("execute la commande", async () => {
-				// When
-				await CommandTestFactory.run(cliModule, ["mkbucket", "poe"]);
+		context("et que je spécifie à la fois le nom du bucket et le nombre de jours après expiration", () => {
+			context("et que ce nombre est une durée positive", () => {
+				it("crée le bucket et la règle de cycle de vie avec le nombre de jours après expiration souhaité  en valeur absolue", async () => {
+					// Given
+					const bucketName = "some-bucket";
+					const daysAfterExpiration = 30;
 
-				// Then
-				expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
-				expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnce;
+					// When
+					await CommandTestFactory.run(cliModule, ["mkbucket", "-b", bucketName, "-e", daysAfterExpiration.toString()]);
+
+					// Then
+					const expectedLifecycleRule = {
+						Rule: [{
+							ID: bucketName,
+							Status: "Enabled",
+							Expiration: { Days: daysAfterExpiration },
+							Filter: { Prefix: "" },
+						}],
+					};
+					expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
+					expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnceWith(bucketName, expectedLifecycleRule);
+				});
+			});
+
+			context("et que ce nombre est une durée négative", () => {
+				it("crée le bucket et la règle de cycle de vie avec le nombre de jours après expiration souhaité en valeur absolue", async () => {
+					// Given
+					const bucketName = "some-bucket";
+					const daysAfterExpiration = -30;
+
+					// When
+					await CommandTestFactory.run(cliModule, ["mkbucket", "-b", bucketName, "-e", daysAfterExpiration.toString()]);
+
+					// Then
+					const expectedLifecycleRule = {
+						Rule: [{
+							ID: bucketName,
+							Status: "Enabled",
+							Expiration: { Days: -daysAfterExpiration },
+							Filter: { Prefix: "" },
+						}],
+					};
+					expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
+					expect(minioAdminStorageClient.setBucketLifecycle).to.have.been.calledOnceWith(bucketName, expectedLifecycleRule);
+				});
 			});
 		});
 	});

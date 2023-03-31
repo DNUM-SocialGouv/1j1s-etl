@@ -6,17 +6,12 @@ import {
 	PurgerLesAnnoncesDeLogement,
 } from "@maintenance/src/application-service/purger-les-annonces-de-logement.usecase";
 import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/purger-les-offres-de-stage.usecase";
+import { CreateMinioBucketCommand } from "@maintenance/src/infrastructure/command/create-minio-bucket.command";
 import { Configuration, ConfigurationFactory } from "@maintenance/src/infrastructure/configuration/configuration";
 import { Gateways } from "@maintenance/src/infrastructure/gateway";
 import {
 	MinioAdminStorageRepository,
 } from "@maintenance/src/infrastructure/gateway/repository/minio-admin-storage.repository";
-import {
-	CreateContactCejMinioBucketSubCommand,
-} from "@maintenance/src/infrastructure/sub-command/create-contact-cej-minio-bucket.sub-command";
-import {
-	CreateContactPoeMinioBucketSubCommand,
-} from "@maintenance/src/infrastructure/sub-command/create-contact-poe-minio-bucket.sub-command";
 import { PurgeHousingAdsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-housing-ads.sub-command";
 import { PurgeInternshipsSubCommand } from "@maintenance/src/infrastructure/sub-command/purge-internships.sub-command";
 
@@ -47,27 +42,17 @@ import { PurgeInternshipsSubCommand } from "@maintenance/src/infrastructure/sub-
 			},
 		},
 		{
-			provide: CreateContactCejMinioBucketSubCommand,
-			inject: [ConfigService, MinioAdminStorageRepository],
-			useFactory: (configurationService: ConfigService, minioAdminStorageClient: MinioAdminStorageRepository): CreateContactCejMinioBucketSubCommand => {
-				const configuration = configurationService.get<Configuration>("maintenance");
-				return new CreateContactCejMinioBucketSubCommand(minioAdminStorageClient, configuration);
-			},
-		},
-		{
-			provide: CreateContactPoeMinioBucketSubCommand,
-			inject: [ConfigService, MinioAdminStorageRepository],
-			useFactory: (configurationService: ConfigService, minioAdminStorageClient: MinioAdminStorageRepository): CreateContactPoeMinioBucketSubCommand => {
-				const configuration = configurationService.get<Configuration>("maintenance");
-				return new CreateContactPoeMinioBucketSubCommand(minioAdminStorageClient, configuration);
+			provide: CreateMinioBucketCommand,
+			inject: [MinioAdminStorageRepository],
+			useFactory: (minioAdminStorageClient: MinioAdminStorageRepository): CreateMinioBucketCommand => {
+				return new CreateMinioBucketCommand(minioAdminStorageClient);
 			},
 		},
 	],
 	exports: [
+		CreateMinioBucketCommand,
 		PurgeHousingAdsSubCommand,
 		PurgeInternshipsSubCommand,
-		CreateContactCejMinioBucketSubCommand,
-		CreateContactPoeMinioBucketSubCommand,
 	],
 })
 export class Maintenance {
