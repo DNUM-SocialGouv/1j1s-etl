@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 
-import { CreateMinioBucketCommand } from "@cli/src/command/create-minio-bucket.command";
 import { ExtractCommand } from "@cli/src/command/extract.command";
 import { LoadCommand } from "@cli/src/command/load.command";
 import { MaintainCommand } from "@cli/src/command/maintain.command";
@@ -20,7 +19,6 @@ import { Stages } from "@stages/src";
 @Module({
 	imports: [Evenements, GestionDesContacts, Logements, Maintenance, Stages],
 	providers: [
-		CreateMinioBucketCommand,
 		ExtractCommand,
 		TransformCommand,
 		LoadCommand,
