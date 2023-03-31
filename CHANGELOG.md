@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.6.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.0...v4.6.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* augmenter cron size ([7b85ae2](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/7b85ae2cf5d797b77d99d7cca7ffb0b8a1ce8ed9))
+
+
+### Code Refactoring
+
+* **setup:** simplification setup via une commande ([fc920e8](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/fc920e83c50e8b4841bf4906e4bac1efe0f5524b))
+
 ## [4.6.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.5.1...v4.6.0) (2023-03-30)
 
 
