@@ -65,7 +65,7 @@
     "@stryker-mutator/typescript-checker": "~6.4.2",
     "@types/chai": "~4.3.1",
     "@types/chai-as-promised": "~7.1.5",
-    "@types/luxon": "~3.2.0",
+    "@types/luxon": "~3.3.0",
     "@types/minio": "~7.0.18",
     "@types/mocha": "~10.0.0",
     "@types/node": "~18.15.11",
