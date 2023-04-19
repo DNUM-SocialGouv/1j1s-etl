@@ -96,6 +96,12 @@ const config = {
             label: 'ETL',
           },
           {
+            position: 'left',
+            label: 'Front',
+            href: 'https://dnum-socialgouv.github.io/1j1s-front/docs/architecture',
+            target: '_self',
+          },
+          {
             type: 'docsVersionDropdown',
             position: 'right',
           },
