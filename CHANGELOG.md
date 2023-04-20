@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.6.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.2...v4.6.3) (2023-04-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency fast-xml-parser to ~4.2.0 ([#219](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/219)) ([386866e](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/386866e9b9d4ff6f2ede9d8a707bb1c607442784))
+
 ## [4.6.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.1...v4.6.2) (2023-04-19)
 
 
