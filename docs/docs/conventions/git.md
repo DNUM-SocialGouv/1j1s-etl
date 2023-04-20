@@ -1,4 +1,11 @@
-# Git
+---
+sidebar_label: Git
+sidebar_position: 1
+---
+
+# Standards d'équipe liés à Git
+
+_20 Avril 2023_
 
 ## Commit
 

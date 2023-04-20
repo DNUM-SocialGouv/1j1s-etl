@@ -1,10 +1,29 @@
+---
+sidebar_label: Comment purger les données ?
+sidebar_position: 2
+---
+
 # Purge des données
 
-**Respectez les prérequis avant de commencer**
+_20 Avril 2023_
 
 ## Contexte d'utilisation
 
 - Lorsque des données sont corrompues et que l'origine est introuvable. 
+
+## Prérequis
+
+ * Avoir un token permettant l'accèes à l'application sur scalingo
+
+## Conseils
+
+### Variables d'environnements
+
+```env
+
+SCALINGO_APP=${APP_NAME}
+
+```
 
 ## Commande à lancer
 

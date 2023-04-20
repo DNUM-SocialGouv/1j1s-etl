@@ -1,4 +1,11 @@
+---
+sidebar_label: Comment resynchroniser les données Meilisearch avec celles de Strapi ?
+sidebar_position: 6
+---
+
 # Resynchroniser les données Meilisearch avec celles de Strapi
+
+_20 Avril 2023_
 
 ## Contexte
 

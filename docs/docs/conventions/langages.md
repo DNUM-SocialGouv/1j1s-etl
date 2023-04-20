@@ -1,4 +1,12 @@
-# Langages
+---
+sidebar_label: Langages
+sidebar_position: 2
+---
+
+# Standards d'équipe liés au Code
+
+_20 Avril 2023_
+
 
 ## Choix du langage
 

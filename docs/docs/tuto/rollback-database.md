@@ -1,4 +1,11 @@
+---
+sidebar_label: Comment Rollback la base de données ?
+sidebar_position: 1
+---
+
 # Rollback de base de données
+
+_20 Avril 2023_
 
 ## Accéder au dashboard de la base de données
 

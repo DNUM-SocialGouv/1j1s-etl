@@ -1,8 +1,11 @@
 ---
-sidebar_position: 1000
+sidebar_label: Checklist d'onboarding
+sidebar_position: 0
 ---
 
 # Checklist d'onboarding
+
+_20 Avril 2023_
 
 | Action                                                             | Statut |  
 |--------------------------------------------------------------------|--------|
