@@ -46,7 +46,7 @@
     "luxon": "~3.3.0",
     "meilisearch": "~0.32.0",
     "minio": "~7.0.33",
-    "nest-commander": "~3.6.1",
+    "nest-commander": "~3.7.0",
     "node-stream-zip": "~1.15.0",
     "pino": "~8.11.0",
     "pino-sentry": "~0.14.0",
