@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.6.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.3...v4.6.4) (2023-04-25)
+
+
+### Bug Fixes
+
+* **deps:** update nest monorepo to ~9.4.0 ([#221](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/221)) ([9dbb69c](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/9dbb69cfbb6fa7f54403a11ba10808e303a632a9))
+
 ## [4.6.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.2...v4.6.3) (2023-04-20)
 
 
