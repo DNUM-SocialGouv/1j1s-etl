@@ -1,4 +1,11 @@
+---
+sidebar_label: Minio, comment ça marche ?
+sidebar_position: 3
+---
+
 # Comment consulter le contenu du dépôt MinIO
+
+_20 Avril 2023_
 
 Nous utilisons l'interface `Amazon Web Services Command Line Interface (CLI)` afin de pouvoir consulter
 le contenu du dépôt de fichier MinIO que nous utilisons sur le projet.

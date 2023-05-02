@@ -1,8 +1,11 @@
 ---
+sidebar_label: Prérequis d'installation
 sidebar_position: 1
 ---
 
 # Prérequis d'installation
+
+_20 Avril 2023_
 
 ## Introduction
 

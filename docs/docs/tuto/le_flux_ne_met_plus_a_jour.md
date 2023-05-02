@@ -1,4 +1,11 @@
+---
+sidebar_label: Que faire Lorsque le flux ne se mets plus à jour ?
+sidebar_position: 5
+---
+
 # Lorsque le flux ne se mets plus à jour
+
+_20 Avril 2023_
 
 ## Détail de l’erreur
 Le flux ne se met plus à jour sur Strapi ou plusieurs offres sont toujours disponibles pour le flux mais ces dernières sont peut être obsolètes.
