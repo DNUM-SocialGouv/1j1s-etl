@@ -73,7 +73,7 @@ Utilisez par défaut la valeur `M` et augmentez si besoin.
 Déployez votre nouvelle version de votre code sur Scalingo. Si le fichier `cron.json` est correctement renseigné, vous
 verrez apparaître vos Scheduled Tasks dans l'onglet `Ressources` sur le panneau `Scheduled Tasks` comme ci-dessous :
 
-![img.png](assets/scalingo-scheduled-task.png)
+![img.png](../assets/scalingo-scheduled-task.png)
 
 ## Exemple de fichier `cron.json`
 
