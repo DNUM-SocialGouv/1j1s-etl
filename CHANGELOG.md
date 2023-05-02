@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.6.7](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.6...v4.6.7) (2023-05-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency minio to ~7.1.0 ([#236](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/236)) ([4f1690a](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/4f1690a29bfb179292e29f49da5bfa936a8f8f95))
+
 ## [4.6.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.5...v4.6.6) (2023-04-28)
 
 
