@@ -31,7 +31,7 @@ export class Convertir {
 
 	depuisStudapartVersUnJeuneUneSolution(studapartLogement: Studapart.AnnonceDeLogement): UnJeune1Solution.AnnonceDeLogement {
 		return {
-			identifiantSource: studapartLogement.id,
+			identifiantSource: studapartLogement.id.toString(),
 			titre: studapartLogement.title,
 			description: this.assainisseurDeTexte.nettoyer(studapartLogement.description),
 			url: studapartLogement.url_redirection,

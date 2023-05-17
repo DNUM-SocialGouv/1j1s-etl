@@ -6,7 +6,7 @@ export namespace Studapart {
     }
 
     export type AnnonceDeLogement = {
-        id: string
+        id: string | number
         url_redirection: string
         title: string
         description: string
