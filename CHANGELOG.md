@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.6.11](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.10...v4.6.11) (2023-05-22)
+
+
+### Bug Fixes
+
+* **studapart:** identifiantSource de Studapart est transformé en string ([#248](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/248)) ([488ab44](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/488ab44e78b3383cd1c3bde9f8f49b8e756feec8))
+
 ## [4.6.10](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.9...v4.6.10) (2023-05-09)
 
 
