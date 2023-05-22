@@ -23,6 +23,7 @@ let assainisseurDeTexte: StubbedType<AssainisseurDeTexte>;
 let convertir: Convertir;
 let clock: SinonFakeTimers;
 let dateService: DateService;
+let annonceDeLogementFromStudapartFixtureBase: Partial<UnJeune1Solution.AnnonceDeLogement>;
 
 describe("StudapartTest", () => {
     beforeEach(() => {
@@ -33,6 +34,13 @@ describe("StudapartTest", () => {
         dateService = new DateService();
 
         convertir = new Convertir(assainisseurDeTexte, dateService);
+
+        annonceDeLogementFromStudapartFixtureBase = {
+            source: UnJeune1Solution.Source.STUDAPART,
+            servicesOptionnels: [],
+            prixHT: 0,
+            surfaceMax: undefined,
+        };
     });
 
     afterEach(() => {
@@ -70,11 +78,8 @@ describe("StudapartTest", () => {
             );
             const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
                 {
-                    source: UnJeune1Solution.Source.STUDAPART,
-                    servicesOptionnels: [],
-                    prixHT: 0,
+                    ...annonceDeLogementFromStudapartFixtureBase,
                     servicesInclus: [{ nom: UnJeune1Solution.ServiceInclus.Nom.TV }],
-                    surfaceMax: undefined,
                     typeBien: UnJeune1Solution.TypeBien.MAISON,
                     etage: 2,
                     type: UnJeune1Solution.Type.LOGEMENT_CHEZ_L_HABITANT,
@@ -115,10 +120,7 @@ describe("StudapartTest", () => {
             );
             const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
                 {
-                    source: UnJeune1Solution.Source.STUDAPART,
-                    servicesOptionnels: [],
-                    prixHT: 0,
-                    surfaceMax: undefined,
+                    ...annonceDeLogementFromStudapartFixtureBase,
                     type: UnJeune1Solution.Type.LOGEMENT_CONTRE_SERVICES,
                     servicesInclus: [
                         { nom: UnJeune1Solution.ServiceInclus.Nom.TV },
@@ -146,16 +148,31 @@ describe("StudapartTest", () => {
         });
     });
 
+    context("Lorsque je reçois une annonce studapart ayant un number en id (logement de type résidence)", () => {
+        it("je retourne un logement UnJeuneUneSolution dont l’identifiantSource est une string", () => {
+            const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build(
+                { id: 2809 }
+            );
+            const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+                {
+                    ...annonceDeLogementFromStudapartFixtureBase,
+                    identifiantSource: "2809",
+                }
+            );
+
+            const result = convertir.depuisStudapartVersUnJeuneUneSolution(annonceDeLogementStudapart);
+
+            expect(result).to.deep.equal(expected);
+        });
+    });
+
     context("Lorsque je reçois une annonce sans pièce", () => {
       it("je retourne un logement UnJeuneUneSolution avec un nombre de pièce à 0", () => {
         const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build({ rooms: undefined });
         const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
           {
-            source: UnJeune1Solution.Source.STUDAPART,
-            servicesOptionnels: [],
-            prixHT: 0,
+              ...annonceDeLogementFromStudapartFixtureBase,
             servicesInclus: [{ nom: UnJeune1Solution.ServiceInclus.Nom.TV }],
-            surfaceMax: undefined,
             garantie: 0,
           }
         );
@@ -171,11 +188,8 @@ describe("StudapartTest", () => {
         const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build({ options: undefined });
         const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
           {
-            source: UnJeune1Solution.Source.STUDAPART,
-            servicesOptionnels: [],
-            prixHT: 0,
+            ...annonceDeLogementFromStudapartFixtureBase,
             servicesInclus: [],
-            surfaceMax: undefined,
           }
         );
 
