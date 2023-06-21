@@ -6,6 +6,8 @@ export namespace UnJeune1Solution {
 	export type OffreDeStage = {
 		titre: string
 		dateDeDebut: string
+		dateDeDebutMin: string
+		dateDeDebutMax: string
 		description: string
 		urlDeCandidature?: string
 		sourceCreatedAt: string
