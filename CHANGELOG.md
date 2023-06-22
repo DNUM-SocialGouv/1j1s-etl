@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.17...v4.7.0) (2023-06-22)
+
+
+### Features
+
+* **stage:** ajout d'une dateDeDebutMin et une dateDeDebutMax lors de la transformation ([#277](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/277)) ([12fad63](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/12fad63a458d1810cbccdf7f8f5982ac434665a9))
+
 ## [4.6.17](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.6.16...v4.6.17) (2023-06-22)
 
 
