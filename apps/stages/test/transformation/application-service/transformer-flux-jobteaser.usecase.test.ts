@@ -37,12 +37,12 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					dureeEnJourMax: undefined,
 					dureeEnJour: 5400,
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -66,9 +66,7 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
 				offreDeStageRepository.recuperer.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -98,10 +96,10 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -128,9 +126,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				offreDeStageRepository.recuperer.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -170,10 +167,10 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -205,9 +202,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				offreDeStageRepository.recuperer.resolves({
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -247,10 +243,10 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					employeur: {
 						description: undefined,
-						nom: "Nom de l'entreprise",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -281,9 +277,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -326,10 +321,10 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -366,9 +361,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -414,7 +408,7 @@ describe("TransformerFluxJobteaserTest", () => {
 					dateDeDebut: dateEcriture.toISOString(),
 					dateDeDebutMax: dateEcriture.toISOString(),
 					dateDeDebutMin: dateEcriture.toISOString(),
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					domaines: [
 						{ nom: UnJeune1Solution.Domaine.CHIMIE_BIOLOGIE_AGRONOMIE },
 						{ nom: UnJeune1Solution.Domaine.JOURNALISME_RP_MEDIAS },
@@ -422,8 +416,8 @@ describe("TransformerFluxJobteaserTest", () => {
 					dureeEnJour: undefined,
 					dureeEnJourMax: undefined,
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -442,9 +436,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -491,13 +484,13 @@ describe("TransformerFluxJobteaserTest", () => {
 					dateDeDebut: dateEcriture.toISOString(),
 					dateDeDebutMin: dateEcriture.toISOString(),
 					dateDeDebutMax: dateEcriture.toISOString(),
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
 					dureeEnJourMax: undefined,
 					dureeEnJour: undefined,
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -523,9 +516,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
@@ -569,10 +561,10 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					description: "\"\n\n\nContenu\n\n",
+					description: "<p>Contenu</p>-nettoyé",
 					employeur: {
-						description: "Description de l'entreprise\n===========================",
-						nom: "Nom de l'entreprise",
+						description: "<h1>Description de l'entreprise</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
 						logoUrl: "http://url.du.logo",
 						siteUrl: "http://site.de.l.entreprise",
 					},
@@ -604,9 +596,8 @@ describe("TransformerFluxJobteaserTest", () => {
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				assainisseurDeTexte.nettoyer.withArgs("<h1>Description de l'entreprise</h1>").returns("Description de l'entreprise\n===========================");
-				assainisseurDeTexte.nettoyer.withArgs("<p>Contenu</p>").returns("\"\n\n\nContenu\n\n");
-				assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+
 				const fluxJobteaser = {
 					jobs: {
 						job: [OffreDeStageJobteaserFixtureBuilder.build({
