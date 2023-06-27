@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.1...v4.7.2) (2023-06-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nest-commander to ~3.11.0 ([#286](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/286)) ([2463f58](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2463f58dbe0dafb0d510f984ef50e88802179307))
+
 ## [4.7.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.0...v4.7.1) (2023-06-26)
 
 
