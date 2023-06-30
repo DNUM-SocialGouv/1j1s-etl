@@ -76,6 +76,8 @@ export enum TypeAnnonce {
 	COLOCATION = "colocation",
 	COURTE = "courte",
 	INTERGENERATIONNEL = "habitation intergénérationnelle",
+	LOGEMENT_CHEZ_L_HABITANT = "logement chez l'habitant",
+	LOGEMENT_CONTRE_SERVICES = "logement contre services",
 	LOCATION = "location",
 	RESIDENCE = "résidence",
 	SOUS_LOCATION = "sous-location",
