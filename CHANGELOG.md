@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.2...v4.7.3) (2023-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update nest monorepo to v10 (major) ([#272](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/272)) ([f071093](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/f071093a3cf8ad5df45dce839d7b00cb5658d711))
+
 ## [4.7.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.1...v4.7.2) (2023-06-27)
 
 
