@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.3...v4.7.4) (2023-07-01)
+
+
+### Bug Fixes
+
+* **logement:** ajout des types 'logement chez l'habitant' et 'logemen… ([#291](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/291)) ([22b74ee](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/22b74eea1dc9d261d8da4f5188792fb809aa41d5))
+
 ## [4.7.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.2...v4.7.3) (2023-06-30)
 
 
