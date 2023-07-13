@@ -405,7 +405,6 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					dateDeDebut: dateEcriture.toISOString(),
 					dateDeDebutMax: dateEcriture.toISOString(),
 					dateDeDebutMin: dateEcriture.toISOString(),
 					description: "<p>Contenu</p>-nettoyé",
@@ -481,7 +480,6 @@ describe("TransformerFluxJobteaserTest", () => {
 				dossierDHistorisation = "history";
 				nomDuFlux = "source";
 				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					dateDeDebut: dateEcriture.toISOString(),
 					dateDeDebutMin: dateEcriture.toISOString(),
 					dateDeDebutMax: dateEcriture.toISOString(),
 					description: "<p>Contenu</p>-nettoyé",
@@ -577,7 +575,6 @@ describe("TransformerFluxJobteaserTest", () => {
 						region: "Occitanie",
 						pays: "FR",
 					},
-					dateDeDebut: dateEcriture.toISOString(),
 					dateDeDebutMin: dateEcriture.toISOString(),
 					dateDeDebutMax: dateEcriture.toISOString(),
 					dureeEnJour: 150,

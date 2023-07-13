@@ -76,7 +76,6 @@ export class Convertir {
 			source: UnJeune1Solution.Source.JOBTEASER,
 			urlDeCandidature: offreDeStage.external_url,
 			teletravailPossible: undefined,
-			dateDeDebut: offreDeStage.start_date || maintenant,
 			dateDeDebutMin: offreDeStage.start_date || maintenant,
 			dateDeDebutMax: offreDeStage.start_date || maintenant,
 			sourceCreatedAt: offreDeStage.date_created,

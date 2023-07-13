@@ -1,7 +1,6 @@
 export namespace UnJeune1Solution {
 	export type AttributsDOffreDeStage = {
 		titre?: string,
-		dateDeDebut?: string,
 		dateDeDebutMax?: string,
 		dateDeDebutMin?: string,
 		description?: string,
@@ -39,7 +38,6 @@ export namespace UnJeune1Solution {
 
 	export class OffreDeStage {
 		public readonly titre?: string;
-		public readonly dateDeDebut?: string;
 		public readonly dateDeDebutMin?: string;
 		public readonly dateDeDebutMax?: string;
 		public readonly description?: string;
@@ -59,7 +57,6 @@ export namespace UnJeune1Solution {
 
 		constructor(attributs: AttributsDOffreDeStage) {
 			this.titre = attributs.titre;
-			this.dateDeDebut = attributs.dateDeDebut;
 			this.dateDeDebutMax = attributs.dateDeDebutMax;
 			this.dateDeDebutMin = attributs.dateDeDebutMin;
 			this.description = attributs.description;
@@ -81,7 +78,6 @@ export namespace UnJeune1Solution {
 		public recupererAttributs(): Readonly<AttributsDOffreDeStage> {
 			return {
 				titre: this.titre,
-				dateDeDebut: this.dateDeDebut,
 				dateDeDebutMax: this.dateDeDebutMax,
 				dateDeDebutMin: this.dateDeDebutMin,
 				description: this.description,
