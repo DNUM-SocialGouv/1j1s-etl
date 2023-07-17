@@ -49,7 +49,7 @@ export class ConfigurationFactory extends ConfigurationValidator {
         const DEFAULT_HISTORY_DIRECTORY_NAME = "history";
 
         return {
-            CONTEXT: "evenements/extraction",
+            CONTEXT: "evenements/transformation",
             DOMAINE: "Évènements",
             FLOWS: [
                 getOrError("EVENTS_TOUS_MOBILISES_NAME"),

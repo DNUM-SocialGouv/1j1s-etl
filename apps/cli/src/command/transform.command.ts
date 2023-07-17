@@ -5,6 +5,10 @@ import {
 } from "@evenements/src/transformation/infrastructure/sub-command/transform-flow-tous-mobilises.sub-command";
 
 import {
+	TransformFlowOnisepSubCommand,
+} from "@formations-initiales/src/transformation/infrastructure/sub-command/transform-flow-onisep.sub-command";
+
+import {
 	TransformFlowImmojeuneSubCommand,
 } from "@logements/src/transformation/infrastructure/sub-command/transform-flow-immojeune.sub-command";
 import {
@@ -30,6 +34,7 @@ import {
 		TransformFlowJobteaserSubCommand,
 		TransformFlowStagefrCompressedSubCommand,
 		TransformFlowStagefrUncompressedSubCommand,
+		TransformFlowOnisepSubCommand,
 	],
 })
 export class TransformCommand extends CommandRunner {
