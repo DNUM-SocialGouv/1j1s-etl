@@ -26,7 +26,7 @@ export class MinioHttpFlowRepository implements FluxRepository {
 	public recuperer(flow: FluxExtraction): Promise<string> {
 		const logger = this.loggerStrategy.get(flow.nom);
 		return this.flowStrategy.get(flow, logger);
-    }
+	}
 
 	public async enregistrer(
 		cheminFichierIncluantNom: string,

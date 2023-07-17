@@ -7,6 +7,7 @@
       "@cli/*": ["apps/cli/*"],
       "@configuration/*": ["apps/configuration/*"],
       "@evenements/*": ["apps/evenements/*"],
+      "@formations-initiales/*": ["apps/formations-initiales/*"],
       "@gestion-des-contacts/*": ["apps/gestion-des-contacts/*"],
       "@logements/*": ["apps/logements/*"],
       "@maintenance/*": ["apps/maintenance/*"],

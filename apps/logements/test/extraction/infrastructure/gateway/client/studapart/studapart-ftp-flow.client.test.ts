@@ -50,7 +50,7 @@ describe("StudapartFtpFlowClientTest", () => {
         it("j'appelle le serveur FTP avec le chemin du fichier à copier/coller", async () => {
             await studapartFtpFlowClient.pull(url, logger);
 
-            expect(ftpClient.downloadFileAndCopy).to.have.been.calledWith("tpm-unjeuneunesolution.zip", "unjeuneunesolution.zip");
+            expect(ftpClient.downloadFileAndCopy).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip", "unjeuneunesolution-studapart.zip");
         });
     });
 
@@ -58,20 +58,20 @@ describe("StudapartFtpFlowClientTest", () => {
         it("je décompresse le fichier", async () => {
             await studapartFtpFlowClient.pull(url, logger);
 
-            expect(streamZipClient.extract).to.have.been.calledWith("tpm-unjeuneunesolution.zip", "unjeuneunesolution.xml", "tpm-extract-unjeuneunesolution.xml");
+            expect(streamZipClient.extract).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip", "unjeuneunesolution-studapart.xml", "tpm-extract-unjeuneunesolution-studapart.xml");
         });
 
         it("et je retourne le contenu du flux sous forme de chaîne de caractères", async () => {
             await studapartFtpFlowClient.pull(url, logger);
 
-            expect(fileSystemClient.read).to.have.been.calledWith("tpm-extract-unjeuneunesolution.xml");
+            expect(fileSystemClient.read).to.have.been.calledWith("tpm-extract-unjeuneunesolution-studapart.xml");
         });
 
         it("et enfin je supprime les fichiers temporaires", async () => {
             await studapartFtpFlowClient.pull(url, logger);
 
-            expect(fileSystemClient.delete).to.have.been.calledWith("tpm-unjeuneunesolution.zip");
-            expect(fileSystemClient.delete).to.have.been.calledWith("tpm-extract-unjeuneunesolution.xml");
+            expect(fileSystemClient.delete).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip");
+            expect(fileSystemClient.delete).to.have.been.calledWith("tpm-extract-unjeuneunesolution-studapart.xml");
             expect(ftpClient.closeConnection).to.have.been.calledWith();
         });
     });

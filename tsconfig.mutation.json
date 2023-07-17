@@ -13,6 +13,7 @@
     ],
     "paths": {
       "@evenements/*": ["apps/evenements/*"],
+      "@formations-initiales/*": ["apps/formations-initiales/*"],
       "@logements/*": ["apps/logements/*"],
       "@maintenance/*": ["apps/maintenance/*"],
       "@shared/*": ["apps/shared/*"],

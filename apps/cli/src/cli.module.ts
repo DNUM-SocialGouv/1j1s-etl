@@ -8,6 +8,8 @@ import { TransformCommand } from "@cli/src/command/transform.command";
 
 import { Evenements } from "@evenements/src";
 
+import { FormationsInitiales } from "@formations-initiales/src";
+
 import { GestionDesContacts } from "@gestion-des-contacts/src";
 
 import { Logements } from "@logements/src";
@@ -17,7 +19,7 @@ import { Maintenance } from "@maintenance/src";
 import { Stages } from "@stages/src";
 
 @Module({
-	imports: [Evenements, GestionDesContacts, Logements, Maintenance, Stages],
+	imports: [Evenements, GestionDesContacts, Logements, Maintenance, Stages, FormationsInitiales],
 	providers: [
 		ExtractCommand,
 		TransformCommand,

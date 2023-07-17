@@ -5,6 +5,10 @@ import {
 } from "@evenements/src/extraction/infrastructure/sub-command/extract-flow-tous-mobilises.sub-command";
 
 import {
+	ExtractFlowOnisepSubCommand,
+} from "@formations-initiales/src/extraction/infrastructure/sub-command/extract-flow-onisep.sub-command";
+
+import {
 	ExtractFlowImmojeuneSubCommand,
 } from "@logements/src/extraction/infrastructure/sub-command/extract-flow-immojeune.sub-command";
 import {
@@ -24,6 +28,7 @@ import {
 @Command({
 	name: "extract",
 	subCommands: [
+		ExtractFlowOnisepSubCommand,
 		ExtractFlowTousMobilisesSubCommand,
 		ExtractFlowImmojeuneSubCommand,
 		ExtractFlowStudapartSubCommand,
