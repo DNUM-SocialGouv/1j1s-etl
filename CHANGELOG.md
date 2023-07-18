@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.5](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.4...v4.7.5) (2023-07-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency clsx to v2 ([#300](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/300)) ([e7b5576](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/e7b5576ae865fca1bed588be546700df74ee7914))
+
 ## [4.7.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.3...v4.7.4) (2023-07-01)
 
 
