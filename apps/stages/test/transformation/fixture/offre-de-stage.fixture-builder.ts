@@ -30,7 +30,6 @@ export class OffreDeStageFixtureBuilder {
 			sourceCreatedAt: "2022-01-01T00:00:00.000Z",
 			sourceUpdatedAt: "2022-01-01T00:00:00.000Z",
 			sourcePublishedAt: "2022-01-01T00:00:00.000Z",
-			dateDeDebut: "2022-06-01T00:00:00.000Z",
 			dateDeDebutMin: "2022-06-01T00:00:00.000Z",
 			dateDeDebutMax: "2022-06-01T00:00:00.000Z",
 			teletravailPossible: true,

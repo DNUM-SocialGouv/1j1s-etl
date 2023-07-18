@@ -13,7 +13,6 @@ export class Convertir {
 			identifiantSource: offreDeStage.jobid,
 			titre: this.assainisseurDeTexte.nettoyer(offreDeStage.title),
 			description: this.assainisseurDeTexte.nettoyer(offreDeStage.description),
-			dateDeDebut: this.dateService.maintenant().toISOString(),
 			dateDeDebutMin: this.dateService.maintenant().toISOString(),
 			dateDeDebutMax: this.dateService.maintenant().toISOString(),
 			employeur: {
