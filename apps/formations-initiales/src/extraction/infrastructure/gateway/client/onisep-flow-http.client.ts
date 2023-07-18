@@ -6,7 +6,7 @@ import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common
 import { LectureFluxErreur } from "@shared/src/infrastructure/gateway/flux.erreur";
 
 export class OnisepFlowHttpClient implements FlowClient {
-  TMP_FILE_ZIP_PATH = "tpm-unjeuneunesolution-onisep.zip";
+  TMP_FILE_ZIP_PATH = "tmp-unjeuneunesolution-onisep.zip";
 
   constructor(
     private readonly httpClient: OctetStreamHttpClient,

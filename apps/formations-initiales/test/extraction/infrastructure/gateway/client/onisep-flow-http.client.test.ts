@@ -18,7 +18,7 @@ describe("OnisepFlowHttpClient", () => {
   let logger: StubbedType<Logger>;
 
   let onisepFlowHttpClient: OnisepFlowHttpClient;
-  const TMP_FILE_ZIP_PATH = "tpm-unjeuneunesolution-onisep.zip";
+  const TMP_FILE_ZIP_PATH = "tmp-unjeuneunesolution-onisep.zip";
 
   beforeEach(() => {
     httpClient = stubClass(OctetStreamHttpClient);

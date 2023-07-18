@@ -11,14 +11,14 @@ export class StreamZipClient {
     async extractOnlyFileWithUnknowName(filePath: string): Promise<string | Buffer> {
         const zip = new StreamZip.async({ file: filePath });
         const entries = await zip.entries();
+        const entriesNames = Object.keys(entries);
 
-        if (Object.keys(entries).length > 1) {
+        if (entriesNames.length > 1) {
             throw new Error("Multiple files inside the zip");
         }
+        const onlyEntryInZip = entries[entriesNames[0]];
 
-        const data = await zip.entryData(entries[Object.keys(entries)[0]]);
-        await zip.close();
-
+        const data = await zip.entryData(onlyEntryInZip);
         return data;
     }
 }
