@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.8.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.5...v4.8.0) (2023-07-18)
+
+
+### Features
+
+* **stage:** nettoyage de la donnée dateDeDebut de stage ([#298](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/298)) ([8778a3e](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/8778a3eea9db844cf3cd534c6beca9adaedc3bb0))
+
 ## [4.7.5](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.7.4...v4.7.5) (2023-07-18)
 
 
