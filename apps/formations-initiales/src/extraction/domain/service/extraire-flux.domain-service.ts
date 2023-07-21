@@ -1,7 +1,7 @@
-import { DateService } from "@shared/src/domain/service/date.service";
+import { FluxExtraction } from "@formations-initiales/src/extraction/domain/model/flux";
+import { FluxRepository } from "@formations-initiales/src/extraction/domain/service/flux.repository";
 
-import { FluxExtraction } from "../model/flux";
-import { FluxRepository } from "./flux.repository";
+import { DateService } from "@shared/src/domain/service/date.service";
 
 export class ExtraireFluxDomainService {
   private static readonly SEPARATEUR_DE_CHEMIN = "/";

@@ -18,7 +18,6 @@ export class StreamZipClient {
         }
         const onlyEntryInZip = entries[entriesNames[0]];
 
-        const data = await zip.entryData(onlyEntryInZip);
-        return data;
+        return await zip.entryData(onlyEntryInZip);
     }
 }

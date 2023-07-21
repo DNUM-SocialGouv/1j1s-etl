@@ -15,9 +15,7 @@ export class CompressedFlowHttpClient implements FlowClient {
 		try {
 			logger.info(`Starting to pull flow from url ${url}`);
 			const fileContent = await this.octetStreamHttpClient.readStream(url);
-			console.log("fileContent", fileContent);
 			const unzippedFileContent = await this.unzipClient.unzipGzip(fileContent);
-			console.log("unzippedFileContent", unzippedFileContent);
 			return unzippedFileContent.toString();
 		} catch (e) {
 			throw new LectureFluxErreur(url);

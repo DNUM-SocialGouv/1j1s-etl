@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AxiosInstance } from "axios";
 import { Client } from "minio";
 
+import { Configuration, ConfigurationFactory } from "@formations-initiales/src/extraction/infrastructure/configuration/configuration";
 import {
   FormationsInitialesExtractionLoggerStrategy,
 } from "@formations-initiales/src/extraction/infrastructure/configuration/logger.strategy";
@@ -20,8 +21,6 @@ import { StreamZipClient } from "@shared/src/infrastructure/gateway/client/strea
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { OctetStreamHttpClient } from "@shared/src/infrastructure/gateway/common/octet-stream-http.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
-
-import { Configuration, ConfigurationFactory } from "../configuration/configuration";
 
 @Module({
     imports: [

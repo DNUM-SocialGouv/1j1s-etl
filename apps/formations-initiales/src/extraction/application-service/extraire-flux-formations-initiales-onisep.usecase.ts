@@ -1,9 +1,9 @@
-import { Usecase } from "@shared/src/application-service/usecase";
-
-import { FluxExtraction } from "../domain/model/flux";
+import { FluxExtraction } from "@formations-initiales/src/extraction/domain/model/flux";
 import {
   ExtraireFluxDomainService,
-} from "../domain/service/extraire-flux.domain-service";
+} from "@formations-initiales/src/extraction/domain/service/extraire-flux.domain-service";
+
+import { Usecase } from "@shared/src/application-service/usecase";
 
 export class ExtraireFluxFormationsInitialesOnisep implements Usecase {
   constructor(private readonly extraireFlux: ExtraireFluxDomainService) {
