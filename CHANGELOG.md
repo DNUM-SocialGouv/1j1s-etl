@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.9.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.8.1...v4.9.0) (2023-07-25)
+
+
+### Features
+
+* **formation:** ajout extraction flux onisep ([#302](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/302)) ([ae7529e](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ae7529e0681aedd08a3c47307bf28dbcd59cf854))
+
 ## [4.8.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.8.0...v4.8.1) (2023-07-20)
 
 
