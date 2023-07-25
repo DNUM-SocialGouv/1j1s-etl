@@ -79,6 +79,10 @@
     {
       "command": "15 1 * * 1 npm run cli -- send-contacts poe",
       "size": "XL"
+    },
+    {
+      "command": "0 7 1 * * npm run cli -- extract onisep",
+      "size": "XL"
     }
   ]
 }

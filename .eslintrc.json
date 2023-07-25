@@ -21,37 +21,92 @@
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
     "@typescript-eslint/unbound-method": "off",
-    "comma-dangle": ["error", "always-multiline"],
-    "complexity": ["error", 10],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "complexity": [
+      "error",
+      10
+    ],
     "eol-last": "error",
-    "max-depth": ["error", 2],
-    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "max-depth": [
+      "error",
+      2
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
     "no-multi-spaces": "error",
-    "object-curly-spacing": ["error", "always"],
-    "quotes": ["error", "double"],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
     "semi": "error",
     "space-infix-ops": "error",
     "simple-import-sort/imports": [
       "error",
       {
         "groups": [
-          ["^\\u0000"],
-          ["^node:"],
-          ["^(@(?!(api|cli|configuration|evenements|logements|shared|stages)))"],
-          ["^[a-zA-Z0-9]?"],
-          ["^@test"],
-          ["^@api"],
-          ["^@cli"],
-          ["^@evenements"],
-          ["^@gestion-des-contacts"],
-          ["^@logements"],
-          ["^@maintenance"],
-          ["^@shared"],
-          ["^@stages"],
-          ["^@?"],
-          ["^\\."]
+          [
+            "^\\u0000"
+          ],
+          [
+            "^node:"
+          ],
+          [
+            "^(@(?!(api|cli|configuration|evenements|formations-initiales|logements|shared|stages)))"
+          ],
+          [
+            "^[a-zA-Z0-9]?"
+          ],
+          [
+            "^@test"
+          ],
+          [
+            "^@api"
+          ],
+          [
+            "^@cli"
+          ],
+          [
+            "^@evenements"
+          ],
+          [
+            "^@formations-initiales"
+          ],
+          [
+            "^@gestion-des-contacts"
+          ],
+          [
+            "^@logements"
+          ],
+          [
+            "^@maintenance"
+          ],
+          [
+            "^@shared"
+          ],
+          [
+            "^@stages"
+          ],
+          [
+            "^@?"
+          ],
+          [
+            "^\\."
+          ]
         ]
       }
     ],
@@ -65,7 +120,8 @@
             "@evenements",
             "@logements",
             "@maintenance",
-            "@stages"
+            "@stages",
+            "@formations-initiales"
           ]
         },
         {
@@ -74,7 +130,8 @@
             "@gestion-des-contacts",
             "@logements",
             "@maintenance",
-            "@stages"
+            "@stages",
+            "@formations-initiales"
           ]
         },
         {
@@ -83,7 +140,8 @@
             "@evenements",
             "@gestion-des-contacts",
             "@maintenance",
-            "@stages"
+            "@stages",
+            "@formations-initiales"
           ]
         },
         {
@@ -92,7 +150,8 @@
             "@evenements",
             "@gestion-des-contacts",
             "@logements",
-            "@stages"
+            "@stages",
+            "@formations-initiales"
           ]
         },
         {
@@ -102,7 +161,8 @@
             "@gestion-des-contacts",
             "@logements",
             "@maintenance",
-            "@stages"
+            "@stages",
+            "@formations-initiales"
           ]
         },
         {
@@ -111,7 +171,18 @@
             "@evenements",
             "@gestion-des-contacts",
             "@logements",
-            "@maintenance"
+            "@maintenance",
+            "@formations-initiales"
+          ]
+        },
+        {
+          "domain": "@formations-initiales",
+          "domainsToExclude": [
+            "@evenements",
+            "@gestion-des-contacts",
+            "@logements",
+            "@maintenance",
+            "@stages"
           ]
         }
       ]
@@ -119,7 +190,10 @@
   },
   "overrides": [
     {
-      "files": ["**/src/**/application-service/index.ts", "**/*.test.ts"],
+      "files": [
+        "**/src/**/application-service/index.ts",
+        "**/*.test.ts"
+      ],
       "rules": {
         "@sefr/no-onion-architecture-violation": "off"
       }

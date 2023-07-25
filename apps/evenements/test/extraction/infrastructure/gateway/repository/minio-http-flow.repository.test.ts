@@ -35,7 +35,7 @@ describe("MinioHttpFlowRepositoryTest", () => {
 
 		flow = new FluxExtraction(
 			"tousmobilises",
-			".json",
+			".xml",
 			"history",
 			"http://some.url",
 		);
