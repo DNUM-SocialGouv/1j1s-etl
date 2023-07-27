@@ -3,11 +3,11 @@ export namespace UnJeuneUneSolution {
     identifiant: string
     intitule: string
     duree: string
-    certification: string
+    certification?: string
     niveauEtudesVise: string
-    description: string
-    attendusParcoursup: string
-    conditionsAcces: string
-    poursuiteEtudes: string
+    description?: string
+    attendusParcoursup?: string
+    conditionsAcces?: string
+    poursuiteEtudes?: string
   }
 }
