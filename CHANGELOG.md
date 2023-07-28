@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.10.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.9.0...v4.10.0) (2023-07-28)
+
+
+### Features
+
+* **formation:** transformation fiches formations initiales ([#308](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/308)) ([2088b41](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2088b415cbb8106699d65d543b86e1d70990d173))
+
 ## [4.9.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.8.1...v4.9.0) (2023-07-25)
 
 
