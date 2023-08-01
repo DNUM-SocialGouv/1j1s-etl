@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.10.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.0...v4.10.1) (2023-08-01)
+
+
+### Bug Fixes
+
+* **logement:** filename studapart ([#315](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/315)) ([3c58170](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/3c581705be218bcbd829f97ac060b2cbb639c164))
+
 ## [4.10.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.9.0...v4.10.0) (2023-07-28)
 
 
