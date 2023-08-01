@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.10.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.1...v4.10.2) (2023-08-01)
+
+
+### Bug Fixes
+
+* utilisation du bucket minio approprié pour la transformation des… ([#317](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/317)) ([6a567d0](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/6a567d048571c50a5bf2c46bc03174563d8e841e))
+
 ## [4.10.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.0...v4.10.1) (2023-08-01)
 
 
