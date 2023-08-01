@@ -66,10 +66,10 @@ export class ConfigurationFactory extends ConfigurationValidator {
             ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
             HISTORY_DIRECTORY_NAME: getOrDefault("MINIO_HISTORY_DIRECTORY_NAME", DEFAULT_HISTORY_DIRECTORY_NAME),
             PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
-            RAW_BUCKET_NAME: getOrDefault("EVENTS_MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
+            RAW_BUCKET_NAME: getOrDefault("FORMATIONS_INITIALES_MINIO_RAW_BUCKET_NAME", DEFAULT_RAW_BUCKET_NAME),
             SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
             URL: getOrError("MINIO_URL"),
-            TRANSFORMED_BUCKET_NAME: getOrError("EVENTS_MINIO_TRANSFORMED_BUCKET_NAME"),
+            TRANSFORMED_BUCKET_NAME: getOrError("FORMATIONS_INITIALES_MINIO_TRANSFORMED_BUCKET_NAME"),
         },
         NODE_ENV: getOrError("NODE_ENV") as Environment,
         SENTRY: {
