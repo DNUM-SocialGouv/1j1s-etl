@@ -10,8 +10,8 @@ export class StudapartFtpFlowClient implements FlowClient {
 
     TMP_FILE_ZIP_PATH = "tpm-unjeuneunesolution-studapart.zip";
     TMP_EXTRACT_XML = "tpm-extract-unjeuneunesolution-studapart.xml";
-    FILE_PATH_FROM_REMOTE = "unjeuneunesolution-studapart.zip";
-    FILE_NAME_IN_ZIP = "unjeuneunesolution-studapart.xml";
+    FILE_PATH_FROM_REMOTE = "unjeuneunesolution.zip";
+    FILE_NAME_IN_ZIP = "unjeuneunesolution.xml";
 
     constructor(
         private readonly configuration: Configuration,

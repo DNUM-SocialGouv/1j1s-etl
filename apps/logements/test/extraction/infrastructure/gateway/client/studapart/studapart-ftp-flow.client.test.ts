@@ -50,7 +50,7 @@ describe("StudapartFtpFlowClientTest", () => {
         it("j'appelle le serveur FTP avec le chemin du fichier à copier/coller", async () => {
             await studapartFtpFlowClient.pull(url, logger);
 
-            expect(ftpClient.downloadFileAndCopy).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip", "unjeuneunesolution-studapart.zip");
+            expect(ftpClient.downloadFileAndCopy).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip", "unjeuneunesolution.zip");
         });
     });
 
@@ -58,7 +58,7 @@ describe("StudapartFtpFlowClientTest", () => {
         it("je décompresse le fichier", async () => {
             await studapartFtpFlowClient.pull(url, logger);
 
-            expect(streamZipClient.extract).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip", "unjeuneunesolution-studapart.xml", "tpm-extract-unjeuneunesolution-studapart.xml");
+            expect(streamZipClient.extract).to.have.been.calledWith("tpm-unjeuneunesolution-studapart.zip", "unjeuneunesolution.xml", "tpm-extract-unjeuneunesolution-studapart.xml");
         });
 
         it("et je retourne le contenu du flux sous forme de chaîne de caractères", async () => {
