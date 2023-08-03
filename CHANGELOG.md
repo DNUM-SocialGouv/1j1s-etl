@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.10.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.2...v4.10.3) (2023-08-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency meilisearch to ~0.34.0 ([#313](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/313)) ([24131e8](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/24131e8205fc2b2123bb8e4b7141ff9e0518f6a5))
+
 ## [4.10.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.1...v4.10.2) (2023-08-01)
 
 
