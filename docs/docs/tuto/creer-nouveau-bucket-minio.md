@@ -9,7 +9,7 @@ _01 Août 2023_
 
 
 ## Contexte
-Lors de la création d'une nouvelle étape d'Extract / Transform / Load, il faut créer les buckets correspondant sur Minio qui accueillera les fichiers correspondants.
+Lors de la création d'une nouvelle étape d'Extract / Transform / Load, il faut créer les buckets correspondants sur Minio qui accueilleront les fichiers correspondants.
 
 Exemple pour les différentes étapes d'ETL des annonces de logements, je dois créer les buckets suivants : 
 ```
