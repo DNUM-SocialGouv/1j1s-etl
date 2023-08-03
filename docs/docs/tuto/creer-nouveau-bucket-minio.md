@@ -13,7 +13,9 @@ Lors de la création d'une nouvelle étape d'Extract / Transform / Load, il faut
 
 Exemple pour les différentes étapes d'ETL des annonces de logements, je dois créer les buckets suivants : 
 ```
-HOUSING_MINIO_RAW_BUCKET_NAME=housing-raw-bucket
+HOUSING_MINIO_RAW_BUCKET_NAME=housing-raw
+HOUSING_MINIO_TRANSFORMED_BUCKET_NAME =housing-json
+HOUSING_MINIO_RESULT_BUCKET_NAME=housing-result
 HOUSING_MINIO_TRANSFORMED_BUCKET_NAME=housing-transform-bucket
 HOUSING_MINIO_RESULT_BUCKET_NAME=housing-result-bucket
 ```
