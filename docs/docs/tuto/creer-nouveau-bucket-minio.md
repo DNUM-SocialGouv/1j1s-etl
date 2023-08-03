@@ -28,7 +28,7 @@ scalingo --region osc-fr1 --app [NOM_APPLICATION_SCALINGO] run "npm run cli -- m
 ```
 
 ### Exemple
-Exemple en _recette_ pour la création de `HOUSING_MINIO_RAW_BUCKET_NAME` qui vaut `housing-raw-bucket`:
+Exemple en _recette_ pour la création de `HOUSING_MINIO_RAW_BUCKET_NAME` qui vaut `housing-raw`:
 ```shell
 scalingo --region osc-fr1 --app 1j1s-stage-orchestrateur-transform-load run "npm run cli -- mkbucket -b housing-raw-bucket"
 ```
