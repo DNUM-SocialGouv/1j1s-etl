@@ -16,7 +16,7 @@ import {
 } from "@formations-initiales/src/chargement/infrastructure/configuration/logger-strategy";
 import {
   HttpClient,
-  StrapiFormationInitialeHttpClient,
+  StrapiFormationsInitialesHttpClient,
 } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
 import {
   FeatureFlippingFormationsInitialesRepository,
@@ -57,7 +57,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
       const axiosInstance = axios.create({
         baseURL: configuration.STRAPI.BASE_URL,
       });
-      return new StrapiFormationInitialeHttpClient(axiosInstance, authenticationClient, configuration.STRAPI.FORMATION_INITIALE_URL);
+      return new StrapiFormationsInitialesHttpClient(axiosInstance, authenticationClient, configuration.STRAPI.FORMATION_INITIALE_URL);
     },
   }, {
     provide: FormationsInitialesChargementLoggerStrategy,

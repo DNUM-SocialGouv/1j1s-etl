@@ -6,7 +6,7 @@ import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authent
 
 export interface HttpClient {
 	delete(formationInitiale: UnJeuneUneSolution.FormationInitialeASupprimer): Promise<void>;
-	getAll(source: string): Promise<Array<FormationInitialeHttp>>;
+	getAll(): Promise<Array<FormationInitialeHttp>>;
 	post(formationInitiale: UnJeuneUneSolution.FormationInitialeASauvegarder): Promise<void>;
 }
 
@@ -26,11 +26,10 @@ export type FormationInitialeHttp = {
 	readonly id: string;
 	readonly attributes: {
 		readonly identifiant: string;
-		readonly sourceUpdatedAt: string;
 	}
 }
 
-export class StrapiFormationInitialeHttpClient implements HttpClient {
+export class StrapiFormationsInitialesHttpClient implements HttpClient {
 	private static FIELDS_TO_RETRIEVE = "identifiant,id";
 	private static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
@@ -51,12 +50,13 @@ export class StrapiFormationInitialeHttpClient implements HttpClient {
 			this.formationInitialeUrl,
 			{
 				params: {
-					"fields": StrapiFormationInitialeHttpClient.FIELDS_TO_RETRIEVE,
-					"pagination[pageSize]": StrapiFormationInitialeHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
+					"fields": StrapiFormationsInitialesHttpClient.FIELDS_TO_RETRIEVE,
+					"pagination[pageSize]": StrapiFormationsInitialesHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiant",
 				},
 			},
 		);
+		console.log(JSON.stringify(result.data.data));
 		const formationsInitiales = result.data.data;
 		const pageCount = result.data.meta.pagination.pageCount;
 
@@ -66,9 +66,9 @@ export class StrapiFormationInitialeHttpClient implements HttpClient {
 					this.formationInitialeUrl,
 					{
 						params: {
-							"fields": StrapiFormationInitialeHttpClient.FIELDS_TO_RETRIEVE,
+							"fields": StrapiFormationsInitialesHttpClient.FIELDS_TO_RETRIEVE,
 							"pagination[page]": pageNumber,
-							"pagination[pageSize]": StrapiFormationInitialeHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
+							"pagination[pageSize]": StrapiFormationsInitialesHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 							"sort": "identifiant",
 						},
 					},
@@ -82,6 +82,6 @@ export class StrapiFormationInitialeHttpClient implements HttpClient {
 	public async post(formationInitiale: UnJeuneUneSolution.FormationInitialeASauvegarder): Promise<void> {
 		await this.authClient.handleAuthentication(this.axios);
 		const body = { data: formationInitiale.recupererAttributs() };
-		return this.axios.post(this.formationInitialeUrl, body);
+		await this.axios.post(this.formationInitialeUrl, body);
 	}
 }

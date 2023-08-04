@@ -9,8 +9,8 @@ import {
 	FormationsInitialesChargementRepository,
 } from "@formations-initiales/src/chargement/domain/service/formations-initiales-chargement.repository";
 import {
-	FormationsInitialesFixtureBuilder,
-} from "@formations-initiales/test/chargement/fixture/formations-initiales-builder";
+	FormationInitialeFixtureBuilder,
+} from "@formations-initiales/test/chargement/fixture/formation-initiale-fixture.builder";
 
 import { DateService } from "@shared/src/domain/service/date.service";
 
@@ -46,20 +46,20 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 
 	context("Lorsque l'on charge l‘ensemble des formations intiales", () => {
 		beforeEach(() => {
-			formationsInitialesASupprimer = [FormationsInitialesFixtureBuilder.buildFormationsInitialesASupprimer(), FormationsInitialesFixtureBuilder.buildFormationsInitialesASupprimer({
+			formationsInitialesASupprimer = [FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(), FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer({
 				identifiant: "id2",
 				intitule: "Patissier",
 			}, "id2")];
-			formationsInitialesASauvegarder = [FormationsInitialesFixtureBuilder.buildFormationsInitialesASauvegarder(), FormationsInitialesFixtureBuilder.buildFormationsInitialesASauvegarder({
+			formationsInitialesASauvegarder = [FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(), FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder({
 				identifiant: "id2",
 				intitule: "Patissier a sauvegarder",
 			})];
 
-			formationsInitialesASupprimerEnErreur = [FormationsInitialesFixtureBuilder.buildFormationsInitialesEnErreur({
+			formationsInitialesASupprimerEnErreur = [FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur({
 				identifiant: "idASupprimerEnErreur",
 				intitule: "Intituler formation a supprimer en erreur",
 			})];
-			formationsInitialesASauvegarderEnErreur = [FormationsInitialesFixtureBuilder.buildFormationsInitialesEnErreur({
+			formationsInitialesASauvegarderEnErreur = [FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur({
 				identifiant: "idASauvegarderEnErreur",
 				intitule: "Intituler formation a sauvegarder en erreur",
 			})];

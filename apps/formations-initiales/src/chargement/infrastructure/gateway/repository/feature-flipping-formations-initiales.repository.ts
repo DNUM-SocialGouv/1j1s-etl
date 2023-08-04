@@ -24,7 +24,7 @@ export class FeatureFlippingFormationsInitialesRepository extends MinioAndStrapi
 	}
 
 	public override chargerLesFormationsInitialesDansLeCMS(
-		formationsInitiales: Array<UnJeuneUneSolution.FormationInitiale>,
+		formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>,
 		flowName: string,
 	): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>> {
 		this.loggerStrategy.get(flowName).debug(`Nombre de formations initiales à publier : ${formationsInitiales.length}`);

@@ -1,7 +1,7 @@
 import { UnJeuneUneSolution } from "@formations-initiales/src/chargement/domain/model/1jeune1solution";
 import FormationInitiale = UnJeuneUneSolution.FormationInitiale;
 
-export class FormationsInitialesFixtureBuilder {
+export class FormationInitialeFixtureBuilder {
 	static DEFAULTS_ATTRIBUTS = {
 		identifiant: "id",
 		intitule: "Boulanger BM",
@@ -16,7 +16,7 @@ export class FormationsInitialesFixtureBuilder {
 	static DEFAULT_ID = "Identifiant technique";
 
 	static buildFormationsInitialesASauvegarder(formationInitiale?: Partial<UnJeuneUneSolution.FormationInitialeASauvegarder>): UnJeuneUneSolution.FormationInitialeASauvegarder {
-		return new UnJeuneUneSolution.FormationInitialeASauvegarder({ ...FormationsInitialesFixtureBuilder.DEFAULTS_ATTRIBUTS, ...formationInitiale });
+		return new UnJeuneUneSolution.FormationInitialeASauvegarder({ ...FormationInitialeFixtureBuilder.DEFAULTS_ATTRIBUTS, ...formationInitiale });
 	}
 
 	static buildFormationsInitialesASupprimer(
@@ -24,7 +24,17 @@ export class FormationsInitialesFixtureBuilder {
 		id?: string,
 	): UnJeuneUneSolution.FormationInitialeASupprimer {
 		return new UnJeuneUneSolution.FormationInitialeASupprimer(
-			{ ...FormationsInitialesFixtureBuilder.DEFAULTS_ATTRIBUTS, ...formationInitiale },
+			{
+				identifiant: this.DEFAULTS_ATTRIBUTS.identifiant,
+				intitule: undefined,
+				duree: undefined,
+				certification: undefined,
+				niveauEtudesVise: undefined,
+				description: undefined,
+				attendusParcoursup: undefined,
+				conditionsAcces: undefined,
+				poursuiteEtudes: undefined,
+			},
 			id || this.DEFAULT_ID,
 		);
 	}
@@ -35,7 +45,7 @@ export class FormationsInitialesFixtureBuilder {
 	): UnJeuneUneSolution.FormationInitialeEnErreur {
 		return {
 			motif: motif ?? "Une erreur est survenue lors de l‘action demandée",
-			formationInitiale: new FormationInitiale({ ...FormationsInitialesFixtureBuilder.DEFAULTS_ATTRIBUTS, ...formationInitiale }),
+			formationInitiale: new FormationInitiale({ ...FormationInitialeFixtureBuilder.DEFAULTS_ATTRIBUTS, ...formationInitiale }),
 		};
 	}
 }

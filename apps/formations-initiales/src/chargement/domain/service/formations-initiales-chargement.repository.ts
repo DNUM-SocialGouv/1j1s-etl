@@ -1,7 +1,7 @@
 import { UnJeuneUneSolution } from "@formations-initiales/src/chargement/domain/model/1jeune1solution";
 
 export interface FormationsInitialesChargementRepository {
-	chargerLesFormationsInitialesDansLeCMS(formationsInitiales: Array<UnJeuneUneSolution.FormationInitiale>, nomDuFlux: string): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>>;
+	chargerLesFormationsInitialesDansLeCMS(formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>, nomDuFlux: string): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>>;
 
 	recupererFormationsInitialesASupprimer(flux: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASupprimer>>;
 
