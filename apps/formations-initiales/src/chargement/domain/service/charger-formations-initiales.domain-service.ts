@@ -6,7 +6,6 @@ import {
 
 import { DateService } from "@shared/src/domain/service/date.service";
 
-
 export class ChargerFormationsInitialesDomainService {
 	static readonly INDENTATION_JSON: number = 2;
 	static readonly REMPLACANT_JSON: null = null;
