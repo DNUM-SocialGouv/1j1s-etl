@@ -69,6 +69,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
     provide: "FormationsInitialesChargementRepository",
     inject: [
       ConfigService,
+      AuthenticationClient,
       Client,
       "HttpClient",
       "FileSystemClient",
@@ -77,6 +78,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
     ],
     useFactory: (
       configurationService: ConfigService,
+      authenticationClient: AuthenticationClient,
       minioClient: Client,
       httpClient: HttpClient,
       fileSystemClient: FileSystemClient,

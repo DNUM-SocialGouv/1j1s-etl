@@ -9,11 +9,10 @@ import {
 import {
 	FormationsInitialesChargementRepository,
 } from "@formations-initiales/src/chargement/domain/service/formations-initiales-chargement.repository";
+import { Gateway } from "@formations-initiales/src/chargement/infrastructure/gateway";
 
 import { Shared } from "@shared/src";
 import { DateService } from "@shared/src/domain/service/date.service";
-
-import { Gateway } from "@formations-initiales/src/chargement/infrastructure/gateway";
 
 @Module({
 	exports: [ChargerFluxOnisep],
