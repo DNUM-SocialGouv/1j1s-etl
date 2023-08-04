@@ -18,6 +18,10 @@ import {
 	TransformerFluxTousMobilises,
 } from "@evenements/src/transformation/application-service/transformer-flux-tous-mobilises.usecase";
 
+import {
+	ChargerFluxOnisep,
+} from "@formations-initiales/src/chargement/application-service/charger-flux-onisep.usecase";
+
 import { EnvoyerLesContactsCejAPoleEmploi } from "@gestion-des-contacts/src/application-service/envoyer-les-contacts-cej-a-pole-emploi.usecase";
 import {
 	EnvoyerLesContactsPoeAPoleEmploi,
@@ -254,6 +258,7 @@ describe("CliModuleTest", () => {
 		let chargerImmojeune: StubbedClass<ChargerFluxImmojeune>;
 		let chargerStudapart: StubbedClass<ChargerFluxStudapart>;
 		let chargerTousMobilises: StubbedClass<ChargerFluxTousMobilises>;
+		let chargerOnisep: StubbedClass<ChargerFluxOnisep>;
 
 		beforeEach(async () => {
 			chargerJobteaser = stubClass(ChargerFluxJobteaser);
@@ -262,11 +267,13 @@ describe("CliModuleTest", () => {
 			chargerImmojeune = stubClass(ChargerFluxImmojeune);
 			chargerStudapart = stubClass(ChargerFluxStudapart);
 			chargerTousMobilises = stubClass(ChargerFluxTousMobilises);
+			chargerOnisep = stubClass(ChargerFluxOnisep);
 
 			cliModule = await CommandTestFactory.createTestingCommand({
 				imports: [CliModule, ConfigModule.forRoot({ envFilePath: ".env.test" })],
 			})
 				.overrideProvider(Client).useValue(stubClass(Client))
+				.overrideProvider(ChargerFluxOnisep).useValue(chargerOnisep)
 				.overrideProvider(ChargerFluxJobteaser).useValue(chargerJobteaser)
 				.overrideProvider(ChargerFluxStagefrCompresse).useValue(chargerStagefrCompresse)
 				.overrideProvider(ChargerFluxStagefrDecompresse).useValue(chargerStagefrDecompresse)
@@ -274,6 +281,16 @@ describe("CliModuleTest", () => {
 				.overrideProvider(ChargerFluxStudapart).useValue(chargerStudapart)
 				.overrideProvider(ChargerFluxTousMobilises).useValue(chargerTousMobilises)
 				.compile();
+		});
+
+		context("du flux Onisep", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["load", "jobteaser"]);
+
+				// Then
+				expect(chargerJobteaser.executer).to.have.been.calledOnce;
+			});
 		});
 
 		context("du flux Jobteaser", () => {
