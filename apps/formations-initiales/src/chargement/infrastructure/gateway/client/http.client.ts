@@ -31,7 +31,7 @@ export type FormationInitialeHttp = {
 }
 
 export class StrapiFormationInitialeHttpClient implements HttpClient {
-	private static FIELDS_TO_RETRIEVE = "identifiant,id,sourceUpdatedAt";
+	private static FIELDS_TO_RETRIEVE = "identifiant,id";
 	private static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
 	constructor(
@@ -46,12 +46,11 @@ export class StrapiFormationInitialeHttpClient implements HttpClient {
 		return this.axios.delete(`${this.formationInitialeUrl}/${formationInitiale.id}`);
 	}
 
-	public async getAll(source: string): Promise<Array<FormationInitialeHttp>> {
+	public async getAll(): Promise<Array<FormationInitialeHttp>> {
 		const result = await this.axios.get<StrapiResponse>(
 			this.formationInitialeUrl,
 			{
 				params: {
-					"filters[source][$eq]": encodeURI(source),
 					"fields": StrapiFormationInitialeHttpClient.FIELDS_TO_RETRIEVE,
 					"pagination[pageSize]": StrapiFormationInitialeHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiant",
@@ -67,7 +66,6 @@ export class StrapiFormationInitialeHttpClient implements HttpClient {
 					this.formationInitialeUrl,
 					{
 						params: {
-							"filters[source][$eq]": encodeURI(source),
 							"fields": StrapiFormationInitialeHttpClient.FIELDS_TO_RETRIEVE,
 							"pagination[page]": pageNumber,
 							"pagination[pageSize]": StrapiFormationInitialeHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
