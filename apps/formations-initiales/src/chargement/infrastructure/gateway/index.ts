@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import axios from "axios/index";
+import axios from "axios";
 import { Client } from "minio";
 
 import {
