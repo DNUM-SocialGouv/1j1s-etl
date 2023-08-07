@@ -44,8 +44,8 @@ export class Convertir {
 			etage: this.depuisEtage(studapartLogement),
 			dateDeDisponibilite: this.dateService.toIsoDateAvecDate(studapartLogement.availability_date),
 			bilanEnergetique: {
-				consommationEnergetique: studapartLogement.energy_consumption,
-				emissionDeGaz: studapartLogement.greenhouse_gases_emission,
+				consommationEnergetique: this.depuisConsommationEnergetique(studapartLogement.energy_consumption),
+				emissionDeGaz: this.depuisEmissionDeGazAEffetDeSerre(studapartLogement.greenhouse_gases_emission),
 			},
 			meuble: this.estMeuble(studapartLogement),
 			localisation: {
@@ -67,6 +67,20 @@ export class Convertir {
 			charge: Number(studapartLogement.charges),
 			garantie: this.depuisGarantie(studapartLogement.rooms),
 		};
+	}
+
+	private depuisConsommationEnergetique(studapartConsommationEnergetique: Studapart.ConsommationEnergetique): string | undefined {
+		if (studapartConsommationEnergetique === Studapart.ENERGY_CONSUMPTION_VALEUR_NON_RENSEIGNEE) {
+			return undefined;
+		}
+		return studapartConsommationEnergetique;
+	}
+
+	private depuisEmissionDeGazAEffetDeSerre(studapartEmissionDeGazAEffetDeSerre: Studapart.EmissionDeGazAEffetDeSerre): string | undefined {
+		if (studapartEmissionDeGazAEffetDeSerre === Studapart.GREENHOUSE_GASES_EMISSION_VALEUR_NON_RENSEIGNEE) {
+			return undefined;
+		}
+		return studapartEmissionDeGazAEffetDeSerre;
 	}
 
 	private estMeuble(studapartLogement: Studapart.AnnonceDeLogement): boolean {
