@@ -14,8 +14,6 @@ import {
 
 import { DateService } from "@shared/src/domain/service/date.service";
 
-import { OffreDeStageFixtureBuilder } from "@stages/test/chargement/fixture/offre-de-stage.fixture-builder";
-
 const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;
 let extensionDuFichierDeResultat: string;
@@ -74,7 +72,7 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 		it("Je charge les formations intiales", async () => {
 			const nomDuFichierASauvegarder = `${nomDuFlux}/${maintenant}_${extensionDuFichierDeResultat}`;
 			const nomDuFichierEnErreur = `${nomDuFlux}/${maintenant}_ERROR_${extensionDuFichierDeResultat}`;
-			const formationsInitialesEnErreur = formationsInitialesASupprimerEnErreur.concat(formationsInitialesASauvegarderEnErreur)
+			const formationsInitialesEnErreur = formationsInitialesASupprimerEnErreur.concat(formationsInitialesASauvegarderEnErreur);
 
 			await domainService.charger(flux);
 

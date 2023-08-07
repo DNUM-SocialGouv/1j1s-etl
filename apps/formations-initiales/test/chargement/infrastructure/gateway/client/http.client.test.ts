@@ -18,7 +18,6 @@ import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authent
 const formationInitialeASupprimer = FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer({}, "1");
 const formationInitialeASauvegarder = FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder();
 const formationInitialeUrl = "/formation-initiale-details";
-const source = "source";
 const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 const formationsInitialesHttp: Array<FormationInitialeHttp> = [
   FormationInitialeHttpFixtureBuilder.build(),

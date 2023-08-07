@@ -1,6 +1,6 @@
 import { ConfigurationFactory } from "@formations-initiales/src/chargement/infrastructure/configuration/configuration";
 import {
-  FormationsInitialesChargementLoggerStrategy
+  FormationsInitialesChargementLoggerStrategy,
 } from "@formations-initiales/src/chargement/infrastructure/configuration/logger-strategy";
 
 const configuration = ConfigurationFactory.create();
