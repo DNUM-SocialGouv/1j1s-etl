@@ -5,6 +5,12 @@ export namespace Studapart {
         unjeuneunesolution: { item: Array<AnnonceDeLogement> }
     }
 
+    export const ENERGY_CONSUMPTION_VALEUR_NON_RENSEIGNEE = 0;
+    export const GREENHOUSE_GASES_EMISSION_VALEUR_NON_RENSEIGNEE = 0;
+
+    export type ConsommationEnergetique = string | typeof ENERGY_CONSUMPTION_VALEUR_NON_RENSEIGNEE;
+    export type EmissionDeGazAEffetDeSerre = string | typeof GREENHOUSE_GASES_EMISSION_VALEUR_NON_RENSEIGNEE
+
     export type AnnonceDeLogement = {
         id: string | number
         url_redirection: string
@@ -18,8 +24,8 @@ export namespace Studapart {
         rooms?: Array<Room>
         floor_number?: string
         availability_date: string
-        energy_consumption: string
-        greenhouse_gases_emission: string
+        energy_consumption: ConsommationEnergetique
+        greenhouse_gases_emission: EmissionDeGazAEffetDeSerre
         furnished: StudapartBoolean
         address: string
         city: string

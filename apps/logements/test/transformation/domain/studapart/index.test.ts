@@ -198,4 +198,27 @@ describe("StudapartTest", () => {
         expect(result).to.deep.equal(expected);
       });
     });
+
+    context("Lorsque je reçois une annonce avec des éléments de bilan énergétique à 0", () => {
+      it("je retourne un logement avec les éléments correspondants à undefined", () => {
+        const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build({
+          energy_consumption: 0,
+          greenhouse_gases_emission: 0,
+        });
+
+        const expected: UnJeune1Solution.AnnonceDeLogement = AnnonceDeLogementFixtureBuilder.build(
+          {
+            ...annonceDeLogementFromStudapartFixtureBase,
+            bilanEnergetique: {
+              consommationEnergetique: undefined,
+              emissionDeGaz: undefined,
+            },
+          }
+        );
+
+        const result = convertir.depuisStudapartVersUnJeuneUneSolution(annonceDeLogementStudapart);
+
+        expect(result).to.deep.equal(expected);
+      });
+    });
 });
