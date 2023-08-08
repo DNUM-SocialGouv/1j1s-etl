@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.10.5](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.4...v4.10.5) (2023-08-08)
+
+
+### Bug Fixes
+
+* prise en compte de la valeur 0 pour le bilan energetique des ann… ([#324](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/324)) ([4fe81ba](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/4fe81ba8b5c24bf46ad744dab0a1189eefc8e377))
+
 ## [4.10.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.3...v4.10.4) (2023-08-07)
 
 
