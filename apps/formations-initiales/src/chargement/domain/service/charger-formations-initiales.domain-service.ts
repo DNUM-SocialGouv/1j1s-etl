@@ -14,9 +14,9 @@ export class ChargerFormationsInitialesDomainService {
 	}
 
 	async charger(flux: FluxChargement): Promise<void> {
+		const formationsInitialesASauvegarder = await this.formationsInitialesRepository.recupererFormationsInitialesASauvegarder(flux.nom);
 		const formationsInitialesASupprimer = await this.formationsInitialesRepository.recupererFormationsInitialesASupprimer(flux.nom);
 		const formationInitialesASupprimerEnErreur = await this.formationsInitialesRepository.supprimer(formationsInitialesASupprimer, flux.nom);
-		const formationsInitialesASauvegarder = await this.formationsInitialesRepository.recupererFormationsInitialesASauvegarder(flux.nom);
 		const formationsInitialesASauvegarderEnErreur = await this.formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationsInitialesASauvegarder, flux.nom);
 		const formationsInitialesEnErreur = formationInitialesASupprimerEnErreur.concat(formationsInitialesASauvegarderEnErreur);
 

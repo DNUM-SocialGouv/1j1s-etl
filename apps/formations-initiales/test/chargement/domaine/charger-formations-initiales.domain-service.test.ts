@@ -62,9 +62,9 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 				intitule: "Intituler formation a sauvegarder en erreur",
 			})];
 
+			formationsInitialesRepository.recupererFormationsInitialesASauvegarder.resolves(formationsInitialesASauvegarder);
 			formationsInitialesRepository.recupererFormationsInitialesASupprimer.resolves(formationsInitialesASupprimer);
 			formationsInitialesRepository.supprimer.resolves(formationsInitialesASupprimerEnErreur);
-			formationsInitialesRepository.recupererFormationsInitialesASauvegarder.resolves(formationsInitialesASauvegarder);
 			formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS.resolves(formationsInitialesASauvegarderEnErreur);
 			formationsInitialesRepository.enregistrerDansLeMinio.resolves(Promise<void>);
 		});
@@ -76,14 +76,14 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 
 			await domainService.charger(flux);
 
+			expect(formationsInitialesRepository.recupererFormationsInitialesASauvegarder).to.have.been.calledOnce;
+			expect(formationsInitialesRepository.recupererFormationsInitialesASauvegarder).to.have.been.calledWith(nomDuFlux);
+
 			expect(formationsInitialesRepository.recupererFormationsInitialesASupprimer).to.have.been.calledOnce;
 			expect(formationsInitialesRepository.recupererFormationsInitialesASupprimer).to.have.been.calledWith(nomDuFlux);
 
 			expect(formationsInitialesRepository.supprimer).to.have.been.calledOnce;
 			expect(formationsInitialesRepository.supprimer).to.have.been.calledWith(formationsInitialesASupprimer);
-
-			expect(formationsInitialesRepository.recupererFormationsInitialesASauvegarder).to.have.been.calledOnce;
-			expect(formationsInitialesRepository.recupererFormationsInitialesASauvegarder).to.have.been.calledWith(nomDuFlux);
 
 			expect(formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS).to.have.been.calledOnce;
 			expect(formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS).to.have.been.calledWith(formationsInitialesASauvegarder);

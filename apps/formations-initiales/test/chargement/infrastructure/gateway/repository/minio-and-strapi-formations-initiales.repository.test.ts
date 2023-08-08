@@ -74,6 +74,86 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
     );
   });
 
+  context("recupererFormationsInitialesASauvegarder", () => {
+    it("renvoie les formations initiales à sauvegarder", async () => {
+      // Given
+      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+      ];
+      const fileContent = JSON.stringify(formationsInitiales);
+      fileSystemClient.read.resolves(fileContent);
+
+      // When
+      const result = await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+
+      // Then
+      expect(result).to.deep.equal(formationsInitiales);
+    });
+    it("Enregistre les formations initiales du minio en local", async () => {
+      // Given
+      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+      ];
+      const fileContent = JSON.stringify(formationsInitiales);
+      const sourceFilePath = `${nomDuFlux}/latest${configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
+      fileSystemClient.read.resolves(fileContent);
+
+      // When
+      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+
+      // Then
+      expect(minioClient.fGetObject).to.have.been.calledOnce;
+      expect(minioClient.fGetObject.getCall(0).args).to.deep.equal([
+        configuration.MINIO.TRANSFORMED_BUCKET_NAME,
+        sourceFilePath,
+        localFileNameIncludingPath,
+      ]);
+    });
+    it("Lit le fichier local", async () => {
+      // Given
+      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+      ];
+      const fileContent = JSON.stringify(formationsInitiales);
+      fileSystemClient.read.resolves(fileContent);
+
+      // When
+      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+
+      // Then
+      expect(fileSystemClient.read).to.have.been.calledOnce;
+      expect(fileSystemClient.read.getCall(0).args).to.deep.equal([
+        localFileNameIncludingPath,
+      ]);
+    });
+    it("supprime le fichier local", async () => {
+      // Given
+      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+      ];
+      const fileContent = JSON.stringify(formationsInitiales);
+      fileSystemClient.read.resolves(fileContent);
+
+      // When
+      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+
+      // Then
+      expect(fileSystemClient.delete).to.have.been.calledOnce;
+      expect(fileSystemClient.delete.getCall(0).args).to.deep.equal([
+        localFileNameIncludingPath,
+      ]);
+    });
+    context("Lorsqu'une erreur survient", () => {
+      it("renvoie une erreur", async () => {
+        // Given
+        fileSystemClient.read.rejects(new Error("Une erreur est survenue"));
+
+        // Then
+        await expect(minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux)).to.be.rejectedWith(new RecupererContenuErreur().message);
+      });
+    });
+  });
+
   context("chargerLesFormationsInitialesDansLeCMS", () => {
     context("Lorsque je n'ai pas de formations initiales à charger", () => {
       beforeEach(() => {
@@ -289,86 +369,6 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
           formationInitiale: formationsInitiales[0],
           motif: motif,
         }]);
-      });
-    });
-  });
-
-  context("recupererFormationsInitialesASauvegarder", () => {
-    it("renvoie les formations initiales à sauvegarder", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      fileSystemClient.read.resolves(fileContent);
-
-      // When
-      const result = await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
-
-      // Then
-      expect(result).to.deep.equal(formationsInitiales);
-    });
-    it("Enregistre les formations initiales du minio en local", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      const sourceFilePath = `${nomDuFlux}/latest${configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
-      fileSystemClient.read.resolves(fileContent);
-
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
-
-      // Then
-      expect(minioClient.fGetObject).to.have.been.calledOnce;
-      expect(minioClient.fGetObject.getCall(0).args).to.deep.equal([
-        configuration.MINIO.TRANSFORMED_BUCKET_NAME,
-        sourceFilePath,
-        localFileNameIncludingPath,
-      ]);
-    });
-    it("Lit le fichier local", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      fileSystemClient.read.resolves(fileContent);
-
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
-
-      // Then
-      expect(fileSystemClient.read).to.have.been.calledOnce;
-      expect(fileSystemClient.read.getCall(0).args).to.deep.equal([
-        localFileNameIncludingPath,
-      ]);
-    });
-    it("supprime le fichier local", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      fileSystemClient.read.resolves(fileContent);
-
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
-
-      // Then
-      expect(fileSystemClient.delete).to.have.been.calledOnce;
-      expect(fileSystemClient.delete.getCall(0).args).to.deep.equal([
-        localFileNameIncludingPath,
-      ]);
-    });
-    context("Lorsqu'une erreur survient", () => {
-      it("renvoie une erreur", async () => {
-        // Given
-        fileSystemClient.read.rejects(new Error("Une erreur est survenue"));
-
-        // Then
-        await expect(minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux)).to.be.rejectedWith(new RecupererContenuErreur().message);
       });
     });
   });
