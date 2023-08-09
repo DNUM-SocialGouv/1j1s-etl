@@ -43,7 +43,7 @@
     "csv-writer": "~1.6.0",
     "fast-xml-parser": "~4.2.0",
     "i18n-iso-countries": "~7.6.0",
-    "luxon": "~3.3.0",
+    "luxon": "~3.4.0",
     "meilisearch": "~0.34.0",
     "minio": "~7.1.0",
     "nest-commander": "~3.11.0",
