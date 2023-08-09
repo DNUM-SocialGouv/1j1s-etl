@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.10.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.5...v4.10.6) (2023-08-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency luxon to ~3.4.0 ([#327](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/327)) ([51d4864](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/51d4864511d16504ff3180785051d0d02cf42652))
+
 ## [4.10.5](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.4...v4.10.5) (2023-08-08)
 
 
