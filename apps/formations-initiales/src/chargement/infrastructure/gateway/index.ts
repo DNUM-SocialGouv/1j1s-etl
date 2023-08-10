@@ -88,11 +88,6 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
       const configuration = configurationService.get<Configuration>("formationsInitialesChargement");
       if (configuration.FORMATIONS_INITIALES_LOAD_FEATURE_FLIPPING) {
         return new FeatureFlippingFormationsInitialesRepository(
-          configuration,
-          minioClient,
-          httpClient,
-          fileSystemClient,
-          uuidGenerator,
           loggerStrategy,
         );
       } else {

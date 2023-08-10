@@ -69,7 +69,7 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 			formationsInitialesRepository.enregistrerDansLeMinio.resolves(Promise<void>);
 		});
 
-		it("Je charge les formations intiales", async () => {
+		it("Je charge les formations initiales", async () => {
 			const nomDuFichierASauvegarder = `${nomDuFlux}/${maintenant}_${extensionDuFichierDeResultat}`;
 			const nomDuFichierEnErreur = `${nomDuFlux}/${maintenant}_ERROR_${extensionDuFichierDeResultat}`;
 			const formationsInitialesEnErreur = formationsInitialesASupprimerEnErreur.concat(formationsInitialesASauvegarderEnErreur);
