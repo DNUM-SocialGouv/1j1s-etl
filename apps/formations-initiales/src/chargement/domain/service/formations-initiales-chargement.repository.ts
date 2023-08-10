@@ -9,7 +9,7 @@ export interface FormationsInitialesChargementRepository {
 
 	supprimer(formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer>, flowName: string): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>>;
 
-	enregistrerHistoriqueDesFormationsEnErreur(formationsAEnregistrerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, formationsASupprimerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void>;
+	enregistrerHistoriqueDesFormationsEnErreur(formationsASauvegarderEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, formationsASupprimerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void>;
 
 	enregistrerHistoriqueDesFormationsSauvegardees(formationsSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>, nomDuFlux: string): Promise<void>;
 }

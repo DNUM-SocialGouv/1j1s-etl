@@ -18,14 +18,9 @@ export class ChargerFormationsInitialesDomainService {
 		const formationsInitialesASupprimer = await this.formationsInitialesRepository.recupererFormationsInitialesASupprimer(flux.nom);
 		const formationInitialesASupprimerEnErreur = await this.formationsInitialesRepository.supprimer(formationsInitialesASupprimer, flux.nom);
 		const formationsInitialesASauvegarderEnErreur = await this.formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationsInitialesASauvegarder, flux.nom);
-		const formationsInitialesEnErreur = formationInitialesASupprimerEnErreur.concat(formationsInitialesASauvegarderEnErreur);
 
-		await this.enregistrerLesResultatsDuChargementDansLeMinio(
-			flux.nom,
-			flux.extension,
-			formationsInitialesASauvegarder,
-			formationsInitialesEnErreur,
-		);
+		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees(formationsInitialesASauvegarder, flux.nom);
+		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsEnErreur(formationsInitialesASauvegarderEnErreur, formationInitialesASupprimerEnErreur, flux.nom);
 	}
 
 	private async enregistrerLesResultatsDuChargementDansLeMinio(
@@ -56,9 +51,8 @@ export class ChargerFormationsInitialesDomainService {
 			parametres.extensionDuFichier,
 			enErreur
 		);
-		await this.formationsInitialesRepository.enregistrerDansLeMinio(nomDuFichierDeResultat, contenu, parametres.nomDuFlux);
 	}
-	
+
 	private versJSONLisible(formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> | Array<UnJeuneUneSolution.FormationInitialeEnErreur>): string {
 		return JSON.stringify(
 			formationsInitiales,

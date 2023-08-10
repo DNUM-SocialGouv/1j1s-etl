@@ -72,7 +72,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 		}
 	}
 
-	private async enregistrerDansLeMinio(filePath: string, fileContent: string, flowName: string): Promise<void> {
+	private async historiser(filePath: string, fileContent: string, flowName: string): Promise<void> {
 		this.loggerStrategy.get(flowName).info(`Starting to save flow ${flowName}`);
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
