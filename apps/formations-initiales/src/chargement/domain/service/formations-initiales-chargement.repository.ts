@@ -5,9 +5,11 @@ export interface FormationsInitialesChargementRepository {
 
 	recupererFormationsInitialesASupprimer(flux: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASupprimer>>;
 
+	recupererFormationsInitialesASauvegarder(flux: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASauvegarder>>;
+
 	supprimer(formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer>, flowName: string): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>>;
 
-	enregistrerDansLeMinio(cheminDuFichier: string, contenu: string, nomDuFlux: string): Promise<void>;
+	enregistrerHistoriqueDesFormationsEnErreur(formationsAEnregistrerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, formationsASupprimerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void>;
 
-	recupererFormationsInitialesASauvegarder(flux: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASauvegarder>>;
+	enregistrerHistoriqueDesFormationsSauvegardees(formationsSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>, nomDuFlux: string): Promise<void>;
 }

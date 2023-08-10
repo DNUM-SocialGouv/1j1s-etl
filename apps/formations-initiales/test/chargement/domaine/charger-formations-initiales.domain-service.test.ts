@@ -53,14 +53,8 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 				intitule: "Patissier a sauvegarder",
 			})];
 
-			formationsInitialesASupprimerEnErreur = [FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur({
-				identifiant: "idASupprimerEnErreur",
-				intitule: "Intituler formation a supprimer en erreur",
-			})];
-			formationsInitialesASauvegarderEnErreur = [FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur({
-				identifiant: "idASauvegarderEnErreur",
-				intitule: "Intituler formation a sauvegarder en erreur",
-			})];
+			formationsInitialesASupprimerEnErreur = [];
+			formationsInitialesASauvegarderEnErreur = [];
 
 			formationsInitialesRepository.recupererFormationsInitialesASauvegarder.resolves(formationsInitialesASauvegarder);
 			formationsInitialesRepository.recupererFormationsInitialesASupprimer.resolves(formationsInitialesASupprimer);
@@ -71,8 +65,6 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 
 		it("Je charge les formations initiales", async () => {
 			const nomDuFichierASauvegarder = `${nomDuFlux}/${maintenant}_${extensionDuFichierDeResultat}`;
-			const nomDuFichierEnErreur = `${nomDuFlux}/${maintenant}_ERROR_${extensionDuFichierDeResultat}`;
-			const formationsInitialesEnErreur = formationsInitialesASupprimerEnErreur.concat(formationsInitialesASauvegarderEnErreur);
 
 			await domainService.charger(flux);
 
@@ -88,19 +80,15 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 			expect(formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS).to.have.been.calledOnce;
 			expect(formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS).to.have.been.calledWith(formationsInitialesASauvegarder);
 
-			expect(formationsInitialesRepository.enregistrerDansLeMinio).to.have.been.calledTwice;
+			expect(formationsInitialesRepository.enregistrerDansLeMinio).to.have.been.calledOnce;
 			expect(formationsInitialesRepository.enregistrerDansLeMinio.getCall(0).args).to.have.deep.members([
 				nomDuFichierASauvegarder,
 				JSON.stringify(
 					formationsInitialesASauvegarder, null, 2),
 				nomDuFlux,
 			]);
-			expect(formationsInitialesRepository.enregistrerDansLeMinio.getCall(1).args).to.have.deep.members([
-				nomDuFichierEnErreur,
-				JSON.stringify(
-					formationsInitialesEnErreur, null, 2),
-				nomDuFlux,
-			]);
 		});
+		it.todo("ne supprime pas les formations initiales qui n'ont pas pu être sauvegardées", () => {});
+		it.todo("historise les formations sauvegardées et les formations en erreur", () => {});
 	});
 });

@@ -263,7 +263,8 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
       });
     });
   });
-  
+
+  // TODO transformer en deux context sur enregistrerHistoriqueDesFormationsSauvegardees et enregistrerHistoriqueDesFormationsEnErreur
   context("enregistrerDansLeMinio", () => {
     beforeEach(() => {
       uuidGenerator.generate.returns(uuid);
@@ -371,5 +372,9 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
         }]);
       });
     });
+  });
+
+  context("", () => {
+
   });
 });

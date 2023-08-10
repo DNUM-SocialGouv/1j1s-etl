@@ -23,7 +23,11 @@ export class FeatureFlippingFormationsInitialesRepository implements FormationsI
 		return Promise.resolve([] as Array<UnJeuneUneSolution.FormationInitialeASupprimer>);
 	}
 
-	public async enregistrerDansLeMinio(): Promise<void> {
+	public async enregistrerHistoriqueDesFormationsEnErreur(): Promise<void> {
+		return Promise.resolve();
+	}
+
+	public async enregistrerHistoriqueDesFormationsSauvegardees(): Promise<void> {
 		return Promise.resolve();
 	}
 

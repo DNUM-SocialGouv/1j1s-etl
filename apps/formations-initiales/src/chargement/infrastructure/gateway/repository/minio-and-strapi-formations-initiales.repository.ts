@@ -72,7 +72,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 		}
 	}
 
-	public async enregistrerDansLeMinio(filePath: string, fileContent: string, flowName: string): Promise<void> {
+	private async enregistrerDansLeMinio(filePath: string, fileContent: string, flowName: string): Promise<void> {
 		this.loggerStrategy.get(flowName).info(`Starting to save flow ${flowName}`);
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
@@ -140,5 +140,13 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 		this.loggerStrategy.get(flowName).debug(`Starting to push formation initiale ${formationInitiale.identifiant} from flow ${flowName}`);
 		await this.httpClient.post(formationInitiale);
 		this.loggerStrategy.get(flowName).debug(`Ending to push formation initiale ${formationInitiale.identifiant} from flow ${flowName}`);
+	}
+
+	public async enregistrerHistoriqueDesFormationsSauvegardees(formationsSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>, nomDuFlux: string): Promise<void> {
+		// TODO creer le nom de fichier ici
+	}
+
+	public async enregistrerHistoriqueDesFormationsEnErreur(formationsAEnregistrerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, formationsASupprimerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void> {
+		// TODO creer le nom de fichier ici
 	}
 }
