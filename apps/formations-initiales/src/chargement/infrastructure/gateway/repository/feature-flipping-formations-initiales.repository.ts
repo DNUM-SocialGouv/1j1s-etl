@@ -23,22 +23,22 @@ export class FeatureFlippingFormationsInitialesRepository implements FormationsI
 	}
 
 	public async recupererFormationsInitialesASupprimer(flowName: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASupprimer>> {
-		this.loggerStrategy.get(flowName).info("Feature-flipping: Récupération des formations initiales à supprimer");
+		this.loggerStrategy.get(flowName).info("Feature-flipping: Retrieve formations initiales to delete");
 		return Promise.resolve([] as Array<UnJeuneUneSolution.FormationInitialeASupprimer>);
 	}
 
 	public enregistrerHistoriqueDesFormationsSauvegardees(formationsSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>, flowName: string): Promise<void> {
-		this.loggerStrategy.get(flowName).info(`Feature-flipping: Starting to save flow ${flowName}`);
+		this.loggerStrategy.get(flowName).info(`Feature-flipping: Starting to historize formations initiales sauvegardées flow ${flowName}`);
 		return Promise.resolve();
 	}
 
 	public enregistrerHistoriqueDesFormationsNonSauvegardees(formationsNonSauvegardees: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, flowName: string): Promise<void> {
-		this.loggerStrategy.get(flowName).info(`Feature-flipping: Starting to save flow ${flowName}`);
+		this.loggerStrategy.get(flowName).info(`Feature-flipping: Starting to historize formations initiales non sauvegardées flow ${flowName}`);
 		return Promise.resolve();
 	}
 
 	public enregistrerHistoriqueDesFormationsNonSupprimees(formationsNonSupprimees: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, flowName: string): Promise<void> {
-		this.loggerStrategy.get(flowName).info(`Feature-flipping: Starting to save flow ${flowName}`);
+		this.loggerStrategy.get(flowName).info(`Feature-flipping: Starting to historize formations initiales non supprimées flow ${flowName}`);
 		return Promise.resolve();
 	}
 

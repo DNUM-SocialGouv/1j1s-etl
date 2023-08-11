@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios/index';
+import { AxiosInstance, AxiosResponse } from 'axios/index';
 import { AuthenticationClient } from '@shared/src/infrastructure/gateway/authentication.client';
 import { UnJeuneUneSolution } from '@formations-initiales/src/chargement/domain/model/1jeune1solution';
 import { HttpClient } from '@formations-initiales/src/chargement/infrastructure/gateway/client/http.client';
@@ -38,36 +38,29 @@ export class StrapiFormationsInitialesHttpClient implements HttpClient {
 	}
 
 	public async getAll(): Promise<Array<FormationInitialeStrapiExtrait>> {
-		const result = await this.axios.get<StrapiResponse>(
+		const firstPageResult = await this.getFormationsInitialesByPage(1);
+		const formationsInitiales = firstPageResult.data.data;
+		const pageCount = firstPageResult.data.meta.pagination.pageCount;
+
+		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {
+			formationsInitiales.push(...(await this.getFormationsInitialesByPage(pageNumber)).data.data);
+		}
+
+		return formationsInitiales;
+	}
+
+	private async getFormationsInitialesByPage(pageNumber: number): Promise<AxiosResponse<StrapiResponse>> {
+		return await this.axios.get<StrapiResponse>(
 			this.formationInitialeUrl,
 			{
 				params: {
 					"fields": StrapiFormationsInitialesHttpClient.FIELDS_TO_RETRIEVE,
+					"pagination[page]": pageNumber,
 					"pagination[pageSize]": StrapiFormationsInitialesHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiant",
 				},
 			},
 		);
-		const formationsInitiales = result.data.data;
-		const pageCount = result.data.meta.pagination.pageCount;
-
-		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {
-			formationsInitiales.push(...
-				(await this.axios.get<StrapiResponse>(
-					this.formationInitialeUrl,
-					{
-						params: {
-							"fields": StrapiFormationsInitialesHttpClient.FIELDS_TO_RETRIEVE,
-							"pagination[page]": pageNumber,
-							"pagination[pageSize]": StrapiFormationsInitialesHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
-							"sort": "identifiant",
-						},
-					},
-				)).data.data,
-			);
-		}
-
-		return formationsInitiales;
 	}
 
 	public async post(formationInitiale: UnJeuneUneSolution.FormationInitialeASauvegarder): Promise<void> {

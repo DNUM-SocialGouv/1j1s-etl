@@ -71,7 +71,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 	}
 
 	public async recupererFormationsInitialesASupprimer(flowName: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASupprimer>> {
-		this.loggerStrategy.get(flowName).info(`Starting to pull existing formations intiales from flow ${flowName}`);
+		this.loggerStrategy.get(flowName).info(`Starting to pull existing formations intiales flow ${flowName} from CMS`);
 		try {
 			const formationsInitialesHttp = await this.httpClient.getAll();
 
@@ -82,7 +82,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 		} catch (e) {
 			throw new RecupererOffresExistantesErreur();
 		} finally {
-			this.loggerStrategy.get(flowName).info(`End of pulling existing formations initiales from flow ${flowName}`);
+			this.loggerStrategy.get(flowName).info(`End of pulling existing formations initiales flow ${flowName} from CMS`);
 		}
 	}
 
