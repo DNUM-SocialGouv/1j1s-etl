@@ -1,7 +1,9 @@
-import { AxiosInstance, AxiosResponse } from 'axios/index';
-import { AuthenticationClient } from '@shared/src/infrastructure/gateway/authentication.client';
-import { UnJeuneUneSolution } from '@formations-initiales/src/chargement/domain/model/1jeune1solution';
-import { HttpClient } from '@formations-initiales/src/chargement/infrastructure/gateway/client/http.client';
+import { AxiosInstance, AxiosResponse } from "axios";
+
+import { UnJeuneUneSolution } from "@formations-initiales/src/chargement/domain/model/1jeune1solution";
+import { HttpClient } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
+
+import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
 type StrapiResponse = {
 	data: Array<FormationInitialeStrapiExtrait>
