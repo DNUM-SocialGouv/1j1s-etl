@@ -286,10 +286,10 @@ describe("CliModuleTest", () => {
 		context("du flux Onisep", () => {
 			it("execute la commande", async () => {
 				// When
-				await CommandTestFactory.run(cliModule, ["load", "jobteaser"]);
+				await CommandTestFactory.run(cliModule, ["load", "onisep"]);
 
 				// Then
-				expect(chargerJobteaser.executer).to.have.been.calledOnce;
+				expect(chargerOnisep.executer).to.have.been.calledOnce;
 			});
 		});
 
