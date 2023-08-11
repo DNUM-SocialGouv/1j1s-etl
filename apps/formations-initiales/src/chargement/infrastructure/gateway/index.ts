@@ -16,7 +16,7 @@ import {
 } from "@formations-initiales/src/chargement/infrastructure/configuration/logger-strategy";
 import {
   HttpClient,
-  StrapiFormationsInitialesHttpClient,
+
 } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
 import {
   FeatureFlippingFormationsInitialesRepository,
@@ -31,6 +31,9 @@ import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger"
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
+import {
+  StrapiFormationsInitialesHttpClient
+} from '@formations-initiales/src/chargement/infrastructure/gateway/client/strapi-formations-initiales.httpClient';
 
 @Module({
   imports: [

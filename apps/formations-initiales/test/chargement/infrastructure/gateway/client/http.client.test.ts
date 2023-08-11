@@ -3,25 +3,25 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { expect, nock, sinon, spy } from "@test/library";
 
 import {
-  FormationInitialeHttp,
-  StrapiFormationsInitialesHttpClient,
-} from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
-import {
   FormationInitialeFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formation-initiale-fixture.builder";
 import {
-  FormationInitialeHttpFixtureBuilder,
+  FormationInitialeStrapiFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formations-initiales-http.fixture-builder";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import {
+	FormationInitialeStrapiExtrait,
+	StrapiFormationsInitialesHttpClient,
+} from '@formations-initiales/src/chargement/infrastructure/gateway/client/strapi-formations-initiales.httpClient';
 
 const formationInitialeASupprimer = FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer({}, "1");
 const formationInitialeASauvegarder = FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder();
 const formationInitialeUrl = "/formation-initiale-details";
 const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-const formationsInitialesHttp: Array<FormationInitialeHttp> = [
-  FormationInitialeHttpFixtureBuilder.build(),
-  FormationInitialeHttpFixtureBuilder.build({
+const formationsInitialesHttp: Array<FormationInitialeStrapiExtrait> = [
+  FormationInitialeStrapiFixtureBuilder.build(),
+  FormationInitialeStrapiFixtureBuilder.build({
     id: "1",
     attributes: {
       identifiant: "identifiant 1",

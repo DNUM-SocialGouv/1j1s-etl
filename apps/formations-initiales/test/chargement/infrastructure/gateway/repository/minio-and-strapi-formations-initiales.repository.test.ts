@@ -12,7 +12,7 @@ import {
 	FormationInitialeFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formation-initiale-fixture.builder";
 import {
-	FormationInitialeHttpFixtureBuilder,
+	FormationInitialeStrapiFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formations-initiales-http.fixture-builder";
 
 import { DateService } from "@shared/src/domain/service/date.service";
@@ -245,7 +245,7 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
 	context("recupererFormationsInitialesASupprimer", () => {
 		it("appelle le CMS pour récupérer les formations initiales", async () => {
 			// Given
-			httpClient.getAll.resolves([FormationInitialeHttpFixtureBuilder.build()]);
+			httpClient.getAll.resolves([FormationInitialeStrapiFixtureBuilder.build()]);
 
 			// When
 			await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux);
@@ -256,7 +256,7 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
 
 		it("renvoie les formations initiales à supprimer", async () => {
 			// Given
-			const formationInitialeHttp = FormationInitialeHttpFixtureBuilder.build();
+			const formationInitialeHttp = FormationInitialeStrapiFixtureBuilder.build();
 			httpClient.getAll.resolves([formationInitialeHttp]);
 
 			// When
@@ -409,7 +409,7 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
 		it("supprime les formations initiales du CMS", async () => {
 			// Given
 			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
-				FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeStrapiFixtureBuilder.build()),
 			];
 
 			// When
@@ -425,7 +425,7 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
 			it("renvoie 0 formations initiales en erreur", async () => {
 				// Given
 				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
-					FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeStrapiFixtureBuilder.build()),
 				];
 
 				// When
@@ -440,7 +440,7 @@ describe("MinioAndStrapiFormationsInitialesRepository", () => {
 			it("renvoie les formations initiales en erreur", async () => {
 				// Given
 				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
-					FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeStrapiFixtureBuilder.build()),
 				];
 				const motif = "Une erreur est survenue lors de l‘action demandée";
 				httpClient.delete.rejects(new Error(motif));

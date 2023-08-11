@@ -1,14 +1,16 @@
-import { FormationInitialeHttp } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
+import {
+  FormationInitialeStrapiExtrait
+} from '@formations-initiales/src/chargement/infrastructure/gateway/client/strapi-formations-initiales.httpClient';
 
-export class FormationInitialeHttpFixtureBuilder {
-  public static build(formationInitialeHttp?: Partial<FormationInitialeHttp>): FormationInitialeHttp {
-    const defaults: FormationInitialeHttp = {
+export class FormationInitialeStrapiFixtureBuilder {
+  public static build(formationInitialeStrapi?: Partial<FormationInitialeStrapiExtrait>): FormationInitialeStrapiExtrait {
+    const defaults: FormationInitialeStrapiExtrait = {
       id: "Identifiant technique",
       attributes: {
         identifiant: "id",
       },
     };
 
-    return { ...defaults, ...formationInitialeHttp };
+    return { ...defaults, ...formationInitialeStrapi };
   }
 }
