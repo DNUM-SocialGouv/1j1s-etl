@@ -83,6 +83,14 @@
     {
       "command": "0 7 1 * * npm run cli -- extract onisep",
       "size": "XL"
+    },
+    {
+      "command": "15 7 1 * * npm run cli -- transform onisep",
+      "size": "XL"
+    },
+    {
+      "command": "30 7 1 * * npm run cli -- load onisep",
+      "size": "XL"
     }
   ]
 }

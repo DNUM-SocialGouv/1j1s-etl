@@ -33,3 +33,11 @@ Exemple en _recette_ pour la création de `HOUSING_MINIO_RAW_BUCKET_NAME` qui va
 scalingo --region osc-fr1 --app 1j1s-stage-orchestrateur-transform-load run "npm run cli -- mkbucket -b housing-raw"
 ```
 
+### En local
+
+En local, on peut utiliser la commande suivante en s'assurant d'être branché sur le bon environnement :
+
+```shell
+npm run dev:cli -- mkbucket -b [BUCKET_NAME]
+```
+

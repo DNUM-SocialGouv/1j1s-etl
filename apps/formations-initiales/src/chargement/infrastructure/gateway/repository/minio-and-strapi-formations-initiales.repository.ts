@@ -87,7 +87,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 	}
 
 	private async historiser(filePath: string, fileContent: string, flowName: string): Promise<void> {
-		this.loggerStrategy.get(flowName).info(`Starting to save flow ${flowName}`);
+		this.loggerStrategy.get(flowName).info(`Starting to save formations initiales in Minio flow ${flowName}`);
 		const temporaryFileName = this.uuidGenerator.generate();
 		const localFileNameIncludingPath = this.configuration.TEMPORARY_DIRECTORY_PATH.concat(temporaryFileName);
 
@@ -102,7 +102,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 			throw new EcritureFluxErreur(flowName);
 		} finally {
 			await this.fileSystemClient.delete(localFileNameIncludingPath);
-			this.loggerStrategy.get(flowName).info(`End of saving flow ${flowName}`);
+			this.loggerStrategy.get(flowName).info(`End of saving formations initiales in Minio flow ${flowName}`);
 		}
 	}
 
@@ -121,10 +121,9 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 					msg: `The formation initiale from ${flowName} with id = ${formationInitiale.id} has not been deleted`,
 					extra: { error: JSON.stringify(error) },
 				});
-			} finally {
-				this.loggerStrategy.get(flowName).info(`End of deleting flow ${flowName}`);
 			}
 		}
+		this.loggerStrategy.get(flowName).info(`End of deleting flow ${flowName}`);
 		return formationsInitialesEnErreur;
 	}
 
