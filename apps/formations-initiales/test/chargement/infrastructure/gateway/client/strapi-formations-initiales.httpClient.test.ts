@@ -3,6 +3,10 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { expect, nock, sinon, spy } from "@test/library";
 
 import {
+	FormationInitialeStrapiExtrait,
+	StrapiFormationsInitialesHttpClient,
+} from "@formations-initiales/src/chargement/infrastructure/gateway/client/strapi-formations-initiales.httpClient";
+import {
   FormationInitialeFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formation-initiale-fixture.builder";
 import {
@@ -10,10 +14,6 @@ import {
 } from "@formations-initiales/test/chargement/fixture/formations-initiales-http.fixture-builder";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
-import {
-	FormationInitialeStrapiExtrait,
-	StrapiFormationsInitialesHttpClient,
-} from '@formations-initiales/src/chargement/infrastructure/gateway/client/strapi-formations-initiales.httpClient';
 
 const formationInitialeASupprimer = FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer({}, "1");
 const formationInitialeASauvegarder = FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder();
@@ -58,7 +58,7 @@ describe("StrapiFormationsInitialesHttpClient", () => {
     nock("http://localhost:1337/api")
       .post("/auth/local")
       .reply(200, { jwt })
-      .get("/formation-initiale-details?fields=identifiant,id&pagination[pageSize]=100&sort=identifiant")
+      .get("/formation-initiale-details?fields=identifiant,id&pagination[page]=1&pagination[pageSize]=100&sort=identifiant")
       .reply(200, {
         data: [formationsInitialesHttp[0]],
         meta: { pagination: { page: 1, pageSize: 1, pageCount: 2, total: 2 } },
@@ -89,6 +89,7 @@ describe("StrapiFormationsInitialesHttpClient", () => {
           {
             params: {
               fields: "identifiant,id",
+              "pagination[page]": 1,
               "pagination[pageSize]": 100,
               sort: "identifiant",
             },
