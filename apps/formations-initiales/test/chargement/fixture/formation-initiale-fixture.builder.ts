@@ -34,6 +34,7 @@ export class FormationInitialeFixtureBuilder {
 				attendusParcoursup: undefined,
 				conditionsAcces: undefined,
 				poursuiteEtudes: undefined,
+				...formationInitiale,
 			},
 			id || this.DEFAULT_ID,
 		);

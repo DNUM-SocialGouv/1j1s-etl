@@ -1,3 +1,4 @@
+import { UnJeuneUneSolution } from "@formations-initiales/src/chargement/domain/model/1jeune1solution";
 import { FluxChargement } from "@formations-initiales/src/chargement/domain/model/flux";
 import {
 	FormationsInitialesRepository,
@@ -10,11 +11,17 @@ export class ChargerFormationsInitialesDomainService {
 	async charger(flux: FluxChargement): Promise<void> {
 		const formationsInitialesASauvegarder = await this.formationsInitialesRepository.recupererFormationsInitialesASauvegarder(flux.nom);
 		const formationsInitialesASupprimer = await this.formationsInitialesRepository.recupererFormationsInitialesASupprimer(flux.nom);
-		const formationInitialesASupprimerEnErreur = await this.formationsInitialesRepository.supprimer(formationsInitialesASupprimer, flux.nom);
-		const { formationsInitialesSauvegardees, formationsInitialesEnErreur } = await this.formationsInitialesRepository.chargerLesFormationsInitiales(formationsInitialesASauvegarder, flux.nom);
+		const { formationsInitialesSauvegardees, formationsInitialesEnErreur : formationsInitialesNonSauvegardees } = await this.formationsInitialesRepository.chargerLesFormationsInitiales(formationsInitialesASauvegarder, flux.nom);
+
+		const formationsInitialesASupprimerSansCellesNonSauvegardees = formationsInitialesASupprimer.filter(this.isNotInFormationsInitialesEnErreur(formationsInitialesNonSauvegardees));
+		const formationInitialesNonSupprimees = await this.formationsInitialesRepository.supprimer(formationsInitialesASupprimerSansCellesNonSauvegardees, flux.nom);
 
 		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees(formationsInitialesSauvegardees, flux.nom);
-		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees(formationsInitialesEnErreur, flux.nom);
-		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees(formationInitialesASupprimerEnErreur, flux.nom);
+		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees(formationsInitialesNonSauvegardees, flux.nom);
+		await this.formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees(formationInitialesNonSupprimees, flux.nom);
+	}
+
+	private isNotInFormationsInitialesEnErreur(formationsInitialesNonSauvegardees: Array<UnJeuneUneSolution.FormationInitialeEnErreur>): (formationASupprimer: UnJeuneUneSolution.FormationInitialeASupprimer) => boolean {
+		return formationASupprimer => !formationsInitialesNonSauvegardees.find(enErreur => formationASupprimer.identifiant === enErreur.formationInitiale.identifiant);
 	}
 }
