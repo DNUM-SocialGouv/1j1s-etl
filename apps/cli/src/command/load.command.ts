@@ -4,6 +4,10 @@ import {
 	LoadFlowTousMobilisesSubCommand,
 } from "@evenements/src/chargement/infrastructure/sub-command/load-flow-tous-mobilises.sub-command";
 
+import {
+	LoadFlowOnisepSubCommand,
+} from "@formations-initiales/src/chargement/infrastructure/sub-command/load-flow-onisep.sub-command";
+
 import { LoadFlowImmojeuneSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-immojeune.sub-command";
 import { LoadFlowStudapartSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-studapart.sub-command";
 
@@ -24,6 +28,7 @@ import {
 		LoadFlowJobteaserSubCommand,
 		LoadFlowStagefrCompressedSubCommand,
 		LoadFlowStagefrUncompressedSubCommand,
+		LoadFlowOnisepSubCommand,
 	],
 })
 export class LoadCommand extends CommandRunner {
