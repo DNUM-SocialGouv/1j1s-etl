@@ -5,8 +5,8 @@ import axios from "axios";
 import { Client } from "minio";
 
 import {
-  FormationsInitialesChargementRepository,
-} from "@formations-initiales/src/chargement/domain/service/formations-initiales-chargement.repository";
+  FormationsInitialesRepository,
+} from "@formations-initiales/src/chargement/domain/service/formations-initiales.repository";
 import {
   Configuration,
   ConfigurationFactory,
@@ -26,6 +26,7 @@ import {
 } from "@formations-initiales/src/chargement/infrastructure/gateway/repository/minio-and-strapi-formations-initiales.repository";
 
 import { Shared } from "@shared/src";
+import { DateService } from "@shared/src/domain/service/date.service";
 import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
@@ -66,7 +67,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
       return new FormationsInitialesChargementLoggerStrategy(configurationService.get<Configuration>("formationsInitialesChargement"));
     },
   }, {
-    provide: "FormationsInitialesChargementRepository",
+    provide: "FormationsInitialesRepository",
     inject: [
       ConfigService,
       AuthenticationClient,
@@ -75,6 +76,7 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
       "FileSystemClient",
       "UuidGenerator",
       FormationsInitialesChargementLoggerStrategy,
+      DateService,
     ],
     useFactory: (
       configurationService: ConfigService,
@@ -84,7 +86,8 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
       fileSystemClient: FileSystemClient,
       uuidGenerator: UuidGenerator,
       loggerStrategy: FormationsInitialesChargementLoggerStrategy,
-    ): FormationsInitialesChargementRepository => {
+      dateService: DateService,
+    ): FormationsInitialesRepository => {
       const configuration = configurationService.get<Configuration>("formationsInitialesChargement");
       if (configuration.FORMATIONS_INITIALES_LOAD_FEATURE_FLIPPING) {
         return new FeatureFlippingFormationsInitialesRepository(
@@ -98,11 +101,12 @@ import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator
           fileSystemClient,
           uuidGenerator,
           loggerStrategy,
+          dateService,
         );
       }
     },
   }],
-  exports: ["FormationsInitialesChargementRepository"],
+  exports: ["FormationsInitialesRepository"],
 })
 export class Gateway {
 }

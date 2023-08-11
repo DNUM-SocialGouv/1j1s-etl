@@ -56,7 +56,6 @@ export class StrapiFormationsInitialesHttpClient implements HttpClient {
 				},
 			},
 		);
-		console.log(JSON.stringify(result.data.data));
 		const formationsInitiales = result.data.data;
 		const pageCount = result.data.meta.pagination.pageCount;
 

@@ -7,12 +7,11 @@ import {
 	ChargerFormationsInitialesDomainService,
 } from "@formations-initiales/src/chargement/domain/service/charger-formations-initiales.domain-service";
 import {
-	FormationsInitialesChargementRepository,
-} from "@formations-initiales/src/chargement/domain/service/formations-initiales-chargement.repository";
+	FormationsInitialesRepository,
+} from "@formations-initiales/src/chargement/domain/service/formations-initiales.repository";
 import { Gateway } from "@formations-initiales/src/chargement/infrastructure/gateway";
 
 import { Shared } from "@shared/src";
-import { DateService } from "@shared/src/domain/service/date.service";
 
 @Module({
 	exports: [ChargerFluxOnisep],
@@ -20,12 +19,11 @@ import { DateService } from "@shared/src/domain/service/date.service";
 	providers: [
 		{
 			provide: ChargerFormationsInitialesDomainService,
-			inject: ["FormationsInitialesChargementRepository", DateService],
+			inject: ["FormationsInitialesRepository"],
 			useFactory: (
-				formationsInitialesRepository: FormationsInitialesChargementRepository,
-				dateService: DateService,
+				formationsInitialesRepository: FormationsInitialesRepository,
 			): ChargerFormationsInitialesDomainService => {
-				return new ChargerFormationsInitialesDomainService(formationsInitialesRepository, dateService);
+				return new ChargerFormationsInitialesDomainService(formationsInitialesRepository);
 			},
 		},
 		{

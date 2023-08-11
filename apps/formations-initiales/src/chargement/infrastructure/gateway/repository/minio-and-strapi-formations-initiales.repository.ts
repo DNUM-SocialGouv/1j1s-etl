@@ -4,11 +4,12 @@ import {
 	UnJeuneUneSolution,
 } from "@formations-initiales/src/chargement/domain/model/1jeune1solution";
 import {
-	FormationsInitialesChargementRepository,
-} from "@formations-initiales/src/chargement/domain/service/formations-initiales-chargement.repository";
+	FormationsInitialesRepository,
+} from "@formations-initiales/src/chargement/domain/service/formations-initiales.repository";
 import { Configuration } from "@formations-initiales/src/chargement/infrastructure/configuration/configuration";
 import { HttpClient } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
 
+import { DateService } from "@shared/src/domain/service/date.service";
 import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import {
@@ -17,8 +18,11 @@ import {
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
-export class MinioAndStrapiFormationsInitialesRepository implements FormationsInitialesChargementRepository {
+export class MinioAndStrapiFormationsInitialesRepository implements FormationsInitialesRepository {
 	protected static NOM_DU_FICHIER_A_RECUPERER = "latest";
+	static readonly INDENTATION_JSON: number = 2;
+	static readonly REMPLACANT_JSON: null = null;
+	static readonly EXTENSION_DU_FICHIER: string = ".json";
 
 	constructor(
 		protected readonly configuration: Configuration,
@@ -27,21 +31,28 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 		protected readonly fileSystemClient: FileSystemClient,
 		protected readonly uuidGenerator: UuidGenerator,
 		protected readonly loggerStrategy: LoggerStrategy,
+		private readonly dateService: DateService,
 	) {
 	}
 
-	public async chargerLesFormationsInitialesDansLeCMS(
+	public async chargerLesFormationsInitiales(
 		formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>,
 		flowName: string,
-	): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>> {
+	): Promise<{
+		formationsInitialesSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>,
+		formationsInitialesEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>,
+	}> {
 		const logger = this.loggerStrategy.get(flowName);
 		logger.info(`Starting to load formations initiales from flow ${flowName}`);
-		logger.info(`The ${flowName} flow have ${formationsInitiales.length} formations initiales outdated`);
+		logger.info(`The ${flowName} flow have ${formationsInitiales.length} formations initiales to load`);
 		const formationsInitialesEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur> = [];
+		const formationsInitialesSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [];
 
 		for (const formationInitiale of formationsInitiales) {
 			try {
 				await this.chargerUneFormationInitialeDansLeCMS(flowName, formationInitiale);
+
+				formationsInitialesSauvegardees.push(formationInitiale);
 			} catch (error) {
 				formationsInitialesEnErreur.push({
 					formationInitiale: formationInitiale,
@@ -50,10 +61,13 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 			}
 		}
 
-		logger.info(`The ${flowName} flow have ${formationsInitialesEnErreur.length} formations initiales not updated`);
+		logger.info(`The ${flowName} flow have ${formationsInitialesEnErreur.length} formations initiales not loaded`);
 		logger.info(`Ending to load formations initiales from flow ${flowName}`);
 
-		return formationsInitialesEnErreur;
+		return {
+			formationsInitialesSauvegardees,
+			formationsInitialesEnErreur,
+		};
 	}
 
 	public async recupererFormationsInitialesASupprimer(flowName: string): Promise<Array<UnJeuneUneSolution.FormationInitialeASupprimer>> {
@@ -93,6 +107,7 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 	}
 
 	public async supprimer(formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer>, flowName: string): Promise<Array<UnJeuneUneSolution.FormationInitialeEnErreur>> {
+		this.loggerStrategy.get(flowName).info("Starting to delete the formations initiales");
 		const formationsInitialesEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur> = [];
 		for await (const formationInitiale of formationsInitiales) {
 			try {
@@ -143,10 +158,47 @@ export class MinioAndStrapiFormationsInitialesRepository implements FormationsIn
 	}
 
 	public async enregistrerHistoriqueDesFormationsSauvegardees(formationsSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>, nomDuFlux: string): Promise<void> {
-		// TODO creer le nom de fichier ici
+		const cheminDuFichier = this.creeLeCheminDuFichierDeResultat(
+			nomDuFlux,
+			MinioAndStrapiFormationsInitialesRepository.EXTENSION_DU_FICHIER,
+		);
+		const contenuDuFichier = this.versJSONLisible(formationsSauvegardees);
+
+		await this.historiser(cheminDuFichier, contenuDuFichier, nomDuFlux);
 	}
 
-	public async enregistrerHistoriqueDesFormationsEnErreur(formationsAEnregistrerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, formationsASupprimerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void> {
-		// TODO creer le nom de fichier ici
+	public async enregistrerHistoriqueDesFormationsNonSauvegardees(formationsNonSauvegardees: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void> {
+		const cheminDuFichierAEnregistrerEnErreur = this.creeLeCheminDuFichierDeResultat(
+			nomDuFlux,
+			MinioAndStrapiFormationsInitialesRepository.EXTENSION_DU_FICHIER,
+			"_NON_SAUVEGARDEES",
+		);
+		const contenuDuFichierAEnregistrerEnErreur = this.versJSONLisible(formationsNonSauvegardees);
+		await this.historiser(cheminDuFichierAEnregistrerEnErreur, contenuDuFichierAEnregistrerEnErreur, nomDuFlux);
+	}
+
+	public async enregistrerHistoriqueDesFormationsNonSupprimees(formationsNonSupprimees: Array<UnJeuneUneSolution.FormationInitialeEnErreur>, nomDuFlux: string): Promise<void> {
+		const cheminDuFichierASupprimerEnErreur = this.creeLeCheminDuFichierDeResultat(
+			nomDuFlux,
+			MinioAndStrapiFormationsInitialesRepository.EXTENSION_DU_FICHIER,
+			"_NON_SUPPRIMEES",
+		);
+
+		const contenuDuFichierASupprimerEnErreur = this.versJSONLisible(formationsNonSupprimees);
+		await this.historiser(cheminDuFichierASupprimerEnErreur, contenuDuFichierASupprimerEnErreur, nomDuFlux);
+	}
+
+	private creeLeCheminDuFichierDeResultat(
+		nomDuFlux: string, extensionDuFichier: string, motifErreur?: string,
+	): string {
+		return `${nomDuFlux}/${this.dateService.maintenant().toISOString()}${motifErreur ?? ""}${extensionDuFichier}`;
+	}
+
+	private versJSONLisible(formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> | Array<UnJeuneUneSolution.FormationInitialeEnErreur>): string {
+		return JSON.stringify(
+			formationsInitiales,
+			MinioAndStrapiFormationsInitialesRepository.REMPLACANT_JSON,
+			MinioAndStrapiFormationsInitialesRepository.INDENTATION_JSON,
+		);
 	}
 }

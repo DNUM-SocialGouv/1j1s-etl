@@ -6,27 +6,29 @@ import { UnJeuneUneSolution } from "@formations-initiales/src/chargement/domain/
 import { Configuration } from "@formations-initiales/src/chargement/infrastructure/configuration/configuration";
 import { HttpClient } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
 import {
-  MinioAndStrapiFormationsInitialesRepository,
+	MinioAndStrapiFormationsInitialesRepository,
 } from "@formations-initiales/src/chargement/infrastructure/gateway/repository/minio-and-strapi-formations-initiales.repository";
 import {
-  FormationInitialeFixtureBuilder,
+	FormationInitialeFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formation-initiale-fixture.builder";
 import {
-  FormationInitialeHttpFixtureBuilder,
+	FormationInitialeHttpFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formations-initiales-http.fixture-builder";
 
+import { DateService } from "@shared/src/domain/service/date.service";
 import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 import {
-  EcritureFluxErreur,
-  RecupererContenuErreur,
-  RecupererOffresExistantesErreur,
+	EcritureFluxErreur,
+	RecupererContenuErreur,
+	RecupererOffresExistantesErreur,
 } from "@shared/src/infrastructure/gateway/flux.erreur";
 import { UuidGenerator } from "@shared/src/infrastructure/gateway/uuid.generator";
 
 const uuid = "081e4a7c-6c27-4614-a2dd-ecaad37b9073";
 const localFileNameIncludingPath = `./tmp/${uuid}`;
-const filePathForMinio = "source/nom-du-fichier";
+
+const maintenant = "2022-01-01T00:00:00.000Z";
 
 let nomDuFlux: string;
 let formationInitialesACharger: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>;
@@ -38,343 +40,420 @@ let uuidGenerator: StubbedType<UuidGenerator>;
 let httpClient: StubbedType<HttpClient>;
 let loggerStrategy: StubbedType<LoggerStrategy>;
 let logger: StubbedType<Logger>;
+let dateService: StubbedType<DateService>;
 let minioAndStrapiFormationsInitialesRepository: MinioAndStrapiFormationsInitialesRepository;
 
 describe("MinioAndStrapiFormationsInitialesRepository", () => {
-  beforeEach(() => {
-    nomDuFlux = "source";
+	beforeEach(() => {
+		nomDuFlux = "source";
 
-    configuration = stubInterface<Configuration>(sinon);
-    configuration = stubInterface<Configuration>(sinon);
-    configuration.MINIO.TRANSFORMED_BUCKET_NAME = "json";
-    configuration.MINIO.TRANSFORMED_FILE_EXTENSION = ".json";
-    configuration.MINIO.RESULT_BUCKET_NAME = "result";
-    configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
+		configuration = stubInterface<Configuration>(sinon);
+		configuration = stubInterface<Configuration>(sinon);
+		configuration.MINIO.TRANSFORMED_BUCKET_NAME = "json";
+		configuration.MINIO.TRANSFORMED_FILE_EXTENSION = ".json";
+		configuration.MINIO.RESULT_BUCKET_NAME = "result";
+		configuration.TEMPORARY_DIRECTORY_PATH = "./tmp/";
 
-    minioClient = stubClass(Client);
+		minioClient = stubClass(Client);
 
-    fileSystemClient = stubInterface<FileSystemClient>(sinon);
+		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 
-    uuidGenerator = stubInterface<UuidGenerator>(sinon);
-    uuidGenerator.generate.returns(uuid);
+		uuidGenerator = stubInterface<UuidGenerator>(sinon);
+		uuidGenerator.generate.returns(uuid);
 
-    httpClient = stubInterface<HttpClient>(sinon);
+		httpClient = stubInterface<HttpClient>(sinon);
 
-    loggerStrategy = stubInterface<LoggerStrategy>(sinon);
-    logger = stubInterface<Logger>(sinon);
-    loggerStrategy.get.returns(logger);
+		loggerStrategy = stubInterface<LoggerStrategy>(sinon);
+		logger = stubInterface<Logger>(sinon);
+		loggerStrategy.get.returns(logger);
 
-    minioAndStrapiFormationsInitialesRepository = new MinioAndStrapiFormationsInitialesRepository(
-      configuration,
-      minioClient,
-      httpClient,
-      fileSystemClient,
-      uuidGenerator,
-      loggerStrategy
-    );
-  });
+		dateService = stubClass(DateService);
+		dateService.maintenant.returns(new Date(maintenant));
 
-  context("recupererFormationsInitialesASauvegarder", () => {
-    it("renvoie les formations initiales à sauvegarder", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      fileSystemClient.read.resolves(fileContent);
+		minioAndStrapiFormationsInitialesRepository = new MinioAndStrapiFormationsInitialesRepository(
+			configuration,
+			minioClient,
+			httpClient,
+			fileSystemClient,
+			uuidGenerator,
+			loggerStrategy,
+			dateService,
+		);
+	});
 
-      // When
-      const result = await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+	context("recupererFormationsInitialesASauvegarder", () => {
+		it("renvoie les formations initiales à sauvegarder", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+			];
+			const fileContent = JSON.stringify(formationsInitiales);
+			fileSystemClient.read.resolves(fileContent);
 
-      // Then
-      expect(result).to.deep.equal(formationsInitiales);
-    });
-    it("Enregistre les formations initiales du minio en local", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      const sourceFilePath = `${nomDuFlux}/latest${configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
-      fileSystemClient.read.resolves(fileContent);
+			// When
+			const result = await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
 
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+			// Then
+			expect(result).to.deep.equal(formationsInitiales);
+		});
+		it("Enregistre les formations initiales du minio en local", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+			];
+			const fileContent = JSON.stringify(formationsInitiales);
+			const sourceFilePath = `${nomDuFlux}/latest${configuration.MINIO.TRANSFORMED_FILE_EXTENSION}`;
+			fileSystemClient.read.resolves(fileContent);
 
-      // Then
-      expect(minioClient.fGetObject).to.have.been.calledOnce;
-      expect(minioClient.fGetObject.getCall(0).args).to.deep.equal([
-        configuration.MINIO.TRANSFORMED_BUCKET_NAME,
-        sourceFilePath,
-        localFileNameIncludingPath,
-      ]);
-    });
-    it("Lit le fichier local", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      fileSystemClient.read.resolves(fileContent);
+			// When
+			await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
 
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+			// Then
+			expect(minioClient.fGetObject).to.have.been.calledOnce;
+			expect(minioClient.fGetObject.getCall(0).args).to.deep.equal([
+				configuration.MINIO.TRANSFORMED_BUCKET_NAME,
+				sourceFilePath,
+				localFileNameIncludingPath,
+			]);
+		});
+		it("Lit le fichier local", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+			];
+			const fileContent = JSON.stringify(formationsInitiales);
+			fileSystemClient.read.resolves(fileContent);
 
-      // Then
-      expect(fileSystemClient.read).to.have.been.calledOnce;
-      expect(fileSystemClient.read.getCall(0).args).to.deep.equal([
-        localFileNameIncludingPath,
-      ]);
-    });
-    it("supprime le fichier local", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-      ];
-      const fileContent = JSON.stringify(formationsInitiales);
-      fileSystemClient.read.resolves(fileContent);
+			// When
+			await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
 
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
+			// Then
+			expect(fileSystemClient.read).to.have.been.calledOnce;
+			expect(fileSystemClient.read.getCall(0).args).to.deep.equal([
+				localFileNameIncludingPath,
+			]);
+		});
+		it("supprime le fichier local", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASauvegarder> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+			];
+			const fileContent = JSON.stringify(formationsInitiales);
+			fileSystemClient.read.resolves(fileContent);
 
-      // Then
-      expect(fileSystemClient.delete).to.have.been.calledOnce;
-      expect(fileSystemClient.delete.getCall(0).args).to.deep.equal([
-        localFileNameIncludingPath,
-      ]);
-    });
-    context("Lorsqu'une erreur survient", () => {
-      it("renvoie une erreur", async () => {
-        // Given
-        fileSystemClient.read.rejects(new Error("Une erreur est survenue"));
+			// When
+			await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux);
 
-        // Then
-        await expect(minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux)).to.be.rejectedWith(new RecupererContenuErreur().message);
-      });
-    });
-  });
+			// Then
+			expect(fileSystemClient.delete).to.have.been.calledOnce;
+			expect(fileSystemClient.delete.getCall(0).args).to.deep.equal([
+				localFileNameIncludingPath,
+			]);
+		});
+		context("Lorsqu'une erreur survient", () => {
+			it("renvoie une erreur", async () => {
+				// Given
+				fileSystemClient.read.rejects(new Error("Une erreur est survenue"));
 
-  context("chargerLesFormationsInitialesDansLeCMS", () => {
-    context("Lorsque je n'ai pas de formations initiales à charger", () => {
-      beforeEach(() => {
-        formationInitialesACharger = [];
-      });
+				// Then
+				await expect(minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASauvegarder(nomDuFlux)).to.be.rejectedWith(new RecupererContenuErreur().message);
+			});
+		});
+	});
 
-      it("je ne renvoie pas d'erreur", () => {
-        expect(async () => minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationInitialesACharger, nomDuFlux)
-        ).to.not.throw();
-      });
+	context("chargerLesFormationsInitiales", () => {
+		context("Lorsque je n'ai pas de formations initiales à charger", () => {
+			beforeEach(() => {
+				formationInitialesACharger = [];
+			});
 
-      it("je retourne un tableau vide", async () => {
-        const result = await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationInitialesACharger, nomDuFlux);
+			it("je ne renvoie pas d'erreur", () => {
+				expect(async () => minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitiales(formationInitialesACharger, nomDuFlux),
+				).to.not.throw();
+			});
 
-        expect(result).to.be.empty;
-      });
-    });
-    context("Lorsque j'ai des formations initiales à charger", () => {
-      beforeEach(() => {
-        formationInitialesACharger = [
-          FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-          FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
-        ];
-      });
+			it("je retourne un tableau vide", async () => {
+				const result = await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitiales(formationInitialesACharger, nomDuFlux);
 
-      it("charge les formations initiales dans le CMS", async () => {
-        // When
-        await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationInitialesACharger, nomDuFlux);
+				expect(result).to.deep.equal({
+					formationsInitialesSauvegardees: formationInitialesACharger,
+					formationsInitialesEnErreur: [],
+				});
+			});
+		});
+		context("Lorsque j'ai des formations initiales à charger", () => {
+			beforeEach(() => {
+				formationInitialesACharger = [
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+				];
+			});
 
-        // Then
-        expect(httpClient.post).to.have.been.calledTwice;
-        expect(httpClient.post.getCall(0).args).to.deep.equal([
-          formationInitialesACharger[0],
-        ]);
-        expect(httpClient.post.getCall(1).args).to.deep.equal([
-          formationInitialesACharger[1],
-        ]);
-      });
+			it("charge les formations initiales dans le CMS", async () => {
+				// When
+				await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitiales(formationInitialesACharger, nomDuFlux);
 
-      context("Lorsque le chargement des formations initiales dans le CMS est un succès", () => {
-        beforeEach(() => {
-          httpClient.post.resolves();
-        });
-        it("ne renvoie pas de formations initiales en erreur", async () => {
-          // When
-          const result = await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationInitialesACharger, nomDuFlux);
+				// Then
+				expect(httpClient.post).to.have.been.calledTwice;
+				expect(httpClient.post.getCall(0).args).to.deep.equal([
+					formationInitialesACharger[0],
+				]);
+				expect(httpClient.post.getCall(1).args).to.deep.equal([
+					formationInitialesACharger[1],
+				]);
+			});
 
-          // Then
-          expect(result).to.deep.equal([]);
-        });
-      });
+			context("Lorsque le chargement des formations initiales dans le CMS est un succès", () => {
+				beforeEach(() => {
+					httpClient.post.resolves();
+				});
+				it("ne renvoie pas de formations initiales en erreur", async () => {
+					// When
+					const result = await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitiales(formationInitialesACharger, nomDuFlux);
 
-      context("Lorsque le chargement des formations initiales dans le CMS est un échec", () => {
-        beforeEach(() => {
-          httpClient.post.onFirstCall().resolves();
-          httpClient.post.onSecondCall().rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
-        });
-        it("renvoie les formations initiales en erreur", async () => {
-          // When
-          const result = await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS(formationInitialesACharger, nomDuFlux);
+					// Then
+					expect(result).to.deep.equal({
+						formationsInitialesSauvegardees: formationInitialesACharger,
+						formationsInitialesEnErreur: [],
+					});
+				});
+			});
 
-          // Then
-          expect(result).to.deep.equal([
-            FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur(
-              formationInitialesACharger[1],
-              "Une erreur est survenue lors de l‘action demandée",
-            ),
-          ]);
-        });
-      });
-    });
-  });
+			context("Lorsque le chargement des formations initiales dans le CMS est un échec", () => {
+				beforeEach(() => {
+					httpClient.post.onFirstCall().resolves();
+					httpClient.post.onSecondCall().rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
+				});
+				it("renvoie les formations initiales en erreur", async () => {
+					// When
+					const result = await minioAndStrapiFormationsInitialesRepository.chargerLesFormationsInitiales(formationInitialesACharger, nomDuFlux);
 
-  context("recupererFormationsInitialesASupprimer", () => {
-    it("appelle le CMS pour récupérer les formations initiales", async () => {
-      // Given
-      httpClient.getAll.resolves([FormationInitialeHttpFixtureBuilder.build()]);
+					// Then
+					expect(result).to.deep.equal({
+						formationsInitialesEnErreur: [
+							FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur(
+								formationInitialesACharger[1],
+								"Une erreur est survenue lors de l‘action demandée",
+							)],
+						formationsInitialesSauvegardees: [formationInitialesACharger[0]],
+					});
+				});
+			});
+		});
+	});
 
-      // When
-      await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux);
+	context("recupererFormationsInitialesASupprimer", () => {
+		it("appelle le CMS pour récupérer les formations initiales", async () => {
+			// Given
+			httpClient.getAll.resolves([FormationInitialeHttpFixtureBuilder.build()]);
 
-      // Then
-      expect(httpClient.getAll).to.have.been.calledOnce;
-    });
+			// When
+			await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux);
 
-    it("renvoie les formations initiales à supprimer", async () => {
-      // Given
-      const formationInitialeHttp = FormationInitialeHttpFixtureBuilder.build();
-      httpClient.getAll.resolves([formationInitialeHttp]);
+			// Then
+			expect(httpClient.getAll).to.have.been.calledOnce;
+		});
 
-      // When
-      const result = await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux);
+		it("renvoie les formations initiales à supprimer", async () => {
+			// Given
+			const formationInitialeHttp = FormationInitialeHttpFixtureBuilder.build();
+			httpClient.getAll.resolves([formationInitialeHttp]);
 
-      // Then
-      expect(result).to.deep.equal([
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(formationInitialeHttp),
-      ]);
-    });
+			// When
+			const result = await minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux);
 
-    context("Lorsque le chargement des formations initiales dans le CMS est un échec", () => {
-      it("throw une erreur", async () => {
-        // Given
-        httpClient.getAll.rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
+			// Then
+			expect(result).to.deep.equal([
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(formationInitialeHttp),
+			]);
+		});
 
-        // Then
-        await expect(minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux)).to.be.rejectedWith(new RecupererOffresExistantesErreur().message);
-      });
-    });
-  });
+		context("Lorsque le chargement des formations initiales dans le CMS est un échec", () => {
+			it("throw une erreur", async () => {
+				// Given
+				httpClient.getAll.rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
 
-  // TODO transformer en deux context sur enregistrerHistoriqueDesFormationsSauvegardees et enregistrerHistoriqueDesFormationsEnErreur
-  context("enregistrerDansLeMinio", () => {
-    beforeEach(() => {
-      uuidGenerator.generate.returns(uuid);
-    });
-    it("ecrit le fichier dans le dossier temporaire", async () => {
-      // Given
-      const fileContent = "fileContent";
+				// Then
+				await expect(minioAndStrapiFormationsInitialesRepository.recupererFormationsInitialesASupprimer(nomDuFlux)).to.be.rejectedWith(new RecupererOffresExistantesErreur().message);
+			});
+		});
+	});
 
-      // When
-     //todo await minioAndStrapiFormationsInitialesRepository.enregistrerDansLeMinio(filePathForMinio, fileContent, nomDuFlux);
+	context("enregistrerHistoriqueDesFormationsSauvegardees", () => {
+		it("enregistre les formations initiales dans le minio", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitiale> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+			];
 
-      // Then
-      expect(fileSystemClient.write).to.have.been.calledOnce;
-      expect(fileSystemClient.write.getCall(0).args).to.deep.equal([
-        localFileNameIncludingPath,
-        fileContent,
-      ]);
-    });
-    it("enregistre les formations initiales dans le minio", async () => {
-      // 	public async enregistrerDansLeMinio(filePath: string, fileContent: string, flowName: string): Promise<void> {
-      // Given
-      const fileContent = "fileContent";
+			// When
+			await minioAndStrapiFormationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees(formationsInitiales, nomDuFlux);
 
-      // When
-    //todo  await minioAndStrapiFormationsInitialesRepository.enregistrerDansLeMinio(filePathForMinio, fileContent, nomDuFlux);
+			// Then
+			expect(fileSystemClient.write).to.have.been.calledOnce;
+			expect(fileSystemClient.write.getCall(0).args).to.deep.equal([
+				localFileNameIncludingPath,
+				JSON.stringify(
+					formationsInitiales,
+					MinioAndStrapiFormationsInitialesRepository.REMPLACANT_JSON,
+					MinioAndStrapiFormationsInitialesRepository.INDENTATION_JSON,
+				),
+			]);
+			expect(minioClient.fPutObject).to.have.been.calledOnceWithExactly(
+				configuration.MINIO.RESULT_BUCKET_NAME,
+				`${nomDuFlux}/${maintenant}${MinioAndStrapiFormationsInitialesRepository.EXTENSION_DU_FICHIER}`,
+				configuration.TEMPORARY_DIRECTORY_PATH.concat(uuid)
+			);
+		});
 
-      // Then
-      expect(minioClient.fPutObject).to.have.been.calledOnce;
-      expect(minioClient.fPutObject.getCall(0).args).to.deep.equal([
-        configuration.MINIO.RESULT_BUCKET_NAME,
-        filePathForMinio,
-        localFileNameIncludingPath,
-      ]);
-    });
-    context("Lorsque l'enregistrement dans le minio echoue", () => {
-      it("throw une erreur", async () => {
-        const fileContent = "fileContent";
-        minioClient.fPutObject.rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
+		context("Lorsque l'enregistrement dans le minio echoue", () => {
+			it("throw une erreur", async () => {
+				// Given
+				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitiale> = [
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASauvegarder(),
+				];
+				fileSystemClient.write.rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
 
-        //todo await expect(minioAndStrapiFormationsInitialesRepository.enregistrerDansLeMinio(filePathForMinio, fileContent, nomDuFlux)).to.be.rejectedWith(new EcritureFluxErreur(nomDuFlux).message);
-      });
-    });
-    it("supprime le fichier temporaire", async () => {
-      // Given
-      const fileContent = "fileContent";
+				// Then
+				await expect(minioAndStrapiFormationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees(formationsInitiales, nomDuFlux))
+					.to.be.rejectedWith(new EcritureFluxErreur(nomDuFlux).message);
+			});
+		});
+	});
 
-      // When
-     //todo await minioAndStrapiFormationsInitialesRepository.enregistrerDansLeMinio(filePathForMinio, fileContent, nomDuFlux);
+	context("enregistrerHistoriqueDesFormationsNonSauvegardees", () => {
+		it("enregistre les formations initiales non sauvegardées dans le minio", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeEnErreur> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur(),
+			];
 
-      // Then
-      expect(fileSystemClient.delete).to.have.been.calledOnce;
-      expect(fileSystemClient.delete.getCall(0).args).to.deep.equal([
-        localFileNameIncludingPath,
-      ]);
-    });
-  });
+			// When
+			await minioAndStrapiFormationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees(formationsInitiales, nomDuFlux);
 
-  context("supprimer", () => {
-    it("supprime les formations initiales du CMS", async () => {
-      // Given
-      const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
-        FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
-      ];
+			// Then
+			expect(fileSystemClient.write).to.have.been.calledOnce;
+			expect(fileSystemClient.write.getCall(0).args).to.deep.equal([
+				localFileNameIncludingPath,
+				JSON.stringify(
+					formationsInitiales,
+					MinioAndStrapiFormationsInitialesRepository.REMPLACANT_JSON,
+					MinioAndStrapiFormationsInitialesRepository.INDENTATION_JSON,
+				),
+			]);
+			expect(minioClient.fPutObject).to.have.been.calledOnceWithExactly(
+				configuration.MINIO.RESULT_BUCKET_NAME,
+				`${nomDuFlux}/${maintenant}_NON_SAUVEGARDEES${MinioAndStrapiFormationsInitialesRepository.EXTENSION_DU_FICHIER}`,
+				configuration.TEMPORARY_DIRECTORY_PATH.concat(uuid)
+			);
+		});
 
-      // When
-      await minioAndStrapiFormationsInitialesRepository.supprimer(formationsInitiales, nomDuFlux);
+		context("Lorsque l'enregistrement dans le minio echoue", () => {
+			it("throw une erreur", async () => {
+				// Given
+				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeEnErreur> = [
+					FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur(),
+				];
+				fileSystemClient.write.rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
 
-      // Then
-      expect(httpClient.delete).to.have.been.calledOnce;
-      expect(httpClient.delete.getCall(0).args).to.deep.equal([
-        formationsInitiales[0],
-      ]);
-    });
-    context("Lorsque la suppression des formations initiales dans le CMS est un succès", () => {
-      it("renvoie 0 formations initiales en erreur", async () => {
-        // Given
-        const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
-          FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
-        ];
+				// Then
+				await expect(minioAndStrapiFormationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees(formationsInitiales, nomDuFlux))
+					.to.be.rejectedWith(new EcritureFluxErreur(nomDuFlux).message);
+			});
+		});
+	});
 
-        // When
-        const result = await minioAndStrapiFormationsInitialesRepository.supprimer(formationsInitiales, nomDuFlux);
+	context("enregistrerHistoriqueDesFormationsNonSupprimees", () => {
+		it("enregistre les formations initiales non supprimées dans le minio", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeEnErreur> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur(),
+			];
 
-        // Then
-        expect(result).to.deep.equal([]);
-      });
-    });
+			// When
+			await minioAndStrapiFormationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees(formationsInitiales, nomDuFlux);
 
-    context("Lorsque la suppression des formations initiales dans le CMS est un échec", () => {
-      it("renvoie les formations initiales en erreur", async () => {
-        // Given
-        const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
-          FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
-        ];
-        const motif = "Une erreur est survenue lors de l‘action demandée";
-        httpClient.delete.rejects(new Error(motif));
+			// Then
+			expect(fileSystemClient.write).to.have.been.calledOnce;
+			expect(fileSystemClient.write.getCall(0).args).to.deep.equal([
+				localFileNameIncludingPath,
+				JSON.stringify(
+					formationsInitiales,
+					MinioAndStrapiFormationsInitialesRepository.REMPLACANT_JSON,
+					MinioAndStrapiFormationsInitialesRepository.INDENTATION_JSON,
+				),
+			]);
+			expect(minioClient.fPutObject).to.have.been.calledOnceWithExactly(
+				configuration.MINIO.RESULT_BUCKET_NAME,
+				`${nomDuFlux}/${maintenant}_NON_SUPPRIMEES${MinioAndStrapiFormationsInitialesRepository.EXTENSION_DU_FICHIER}`,
+				configuration.TEMPORARY_DIRECTORY_PATH.concat(uuid)
+			);
+		});
 
-        // When
-        const result = await minioAndStrapiFormationsInitialesRepository.supprimer(formationsInitiales, nomDuFlux);
+		context("Lorsque l'enregistrement dans le minio echoue", () => {
+			it("throw une erreur", async () => {
+				// Given
+				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeEnErreur> = [
+					FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur(),
+				];
+				fileSystemClient.write.rejects(new Error("Une erreur est survenue lors de l‘action demandée"));
 
-        // Then
-        expect(result).to.deep.equal([{
-          formationInitiale: formationsInitiales[0],
-          motif: motif,
-        }]);
-      });
-    });
-  });
+				// Then
+				await expect(minioAndStrapiFormationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees(formationsInitiales, nomDuFlux))
+					.to.be.rejectedWith(new EcritureFluxErreur(nomDuFlux).message);
+			});
+		});
+	});
 
-  context("", () => {
+	context("supprimer", () => {
+		it("supprime les formations initiales du CMS", async () => {
+			// Given
+			const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
+				FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
+			];
 
-  });
+			// When
+			await minioAndStrapiFormationsInitialesRepository.supprimer(formationsInitiales, nomDuFlux);
+
+			// Then
+			expect(httpClient.delete).to.have.been.calledOnce;
+			expect(httpClient.delete.getCall(0).args).to.deep.equal([
+				formationsInitiales[0],
+			]);
+		});
+		context("Lorsque la suppression des formations initiales dans le CMS est un succès", () => {
+			it("renvoie 0 formations initiales en erreur", async () => {
+				// Given
+				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
+				];
+
+				// When
+				const result = await minioAndStrapiFormationsInitialesRepository.supprimer(formationsInitiales, nomDuFlux);
+
+				// Then
+				expect(result).to.deep.equal([]);
+			});
+		});
+
+		context("Lorsque la suppression des formations initiales dans le CMS est un échec", () => {
+			it("renvoie les formations initiales en erreur", async () => {
+				// Given
+				const formationsInitiales: Array<UnJeuneUneSolution.FormationInitialeASupprimer> = [
+					FormationInitialeFixtureBuilder.buildFormationsInitialesASupprimer(FormationInitialeHttpFixtureBuilder.build()),
+				];
+				const motif = "Une erreur est survenue lors de l‘action demandée";
+				httpClient.delete.rejects(new Error(motif));
+
+				// When
+				const result = await minioAndStrapiFormationsInitialesRepository.supprimer(formationsInitiales, nomDuFlux);
+
+				// Then
+				expect(result).to.deep.equal([{
+					formationInitiale: formationsInitiales[0],
+					motif: motif,
+				}]);
+			});
+		});
+	});
 });

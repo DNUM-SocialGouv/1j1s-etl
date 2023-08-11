@@ -6,15 +6,12 @@ import {
 	ChargerFormationsInitialesDomainService,
 } from "@formations-initiales/src/chargement/domain/service/charger-formations-initiales.domain-service";
 import {
-	FormationsInitialesChargementRepository,
-} from "@formations-initiales/src/chargement/domain/service/formations-initiales-chargement.repository";
+	FormationsInitialesRepository,
+} from "@formations-initiales/src/chargement/domain/service/formations-initiales.repository";
 import {
 	FormationInitialeFixtureBuilder,
 } from "@formations-initiales/test/chargement/fixture/formation-initiale-fixture.builder";
 
-import { DateService } from "@shared/src/domain/service/date.service";
-
-const maintenant = "2022-01-01T00:00:00.000Z";
 let nomDuFlux: string;
 let extensionDuFichierDeResultat: string;
 let flux: FluxChargement;
@@ -24,9 +21,10 @@ let formationsInitialesASauvegarder: Array<UnJeuneUneSolution.FormationInitialeA
 let formationsInitialesASauvegarderEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>;
 let formationsInitialesASupprimerEnErreur: Array<UnJeuneUneSolution.FormationInitialeEnErreur>;
 
-let dateService: StubbedClass<DateService>;
-let formationsInitialesRepository: StubbedType<FormationsInitialesChargementRepository>;
+let formationsInitialesRepository: StubbedType<FormationsInitialesRepository>;
 let domainService: ChargerFormationsInitialesDomainService;
+
+let formationsInitialesSauvegardees: Array<UnJeuneUneSolution.FormationInitialeASauvegarder>;
 
 describe("ChargerFormationsInitialesDomainServiceTest", () => {
 	beforeEach(() => {
@@ -35,11 +33,8 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 
 		flux = new FluxChargement(nomDuFlux, extensionDuFichierDeResultat);
 
-		dateService = stubClass(DateService);
-		dateService.maintenant.returns(new Date(maintenant));
-
-		formationsInitialesRepository = stubInterface<FormationsInitialesChargementRepository>(sinon);
-		domainService = new ChargerFormationsInitialesDomainService(formationsInitialesRepository, dateService);
+		formationsInitialesRepository = stubInterface<FormationsInitialesRepository>(sinon);
+		domainService = new ChargerFormationsInitialesDomainService(formationsInitialesRepository);
 	});
 
 	context("Lorsque l'on charge l‘ensemble des formations intiales", () => {
@@ -60,9 +55,13 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 				formationsInitialesRepository.recupererFormationsInitialesASauvegarder.resolves(formationsInitialesASauvegarder);
 				formationsInitialesRepository.recupererFormationsInitialesASupprimer.resolves(formationsInitialesASupprimer);
 				formationsInitialesRepository.supprimer.resolves(formationsInitialesASupprimerEnErreur);
-				formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS.resolves(formationsInitialesASauvegarderEnErreur);
+				formationsInitialesRepository.chargerLesFormationsInitiales.resolves({
+					formationsInitialesSauvegardees: formationsInitialesASauvegarder,
+					formationsInitialesEnErreur: formationsInitialesASauvegarderEnErreur,
+				});
 				formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees.resolves(Promise<void>);
-				formationsInitialesRepository.enregistrerHistoriqueDesFormationsEnErreur.resolves(Promise<void>);
+				formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees.resolves(Promise<void>);
+				formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees.resolves(Promise<void>);
 			});
 
 			it("Je charge les formations initiales", async () => {
@@ -74,13 +73,14 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 
 				expect(formationsInitialesRepository.supprimer).to.have.been.calledOnceWithExactly(formationsInitialesASupprimer, nomDuFlux);
 
-				expect(formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS).to.have.been.calledOnceWithExactly(formationsInitialesASauvegarder, nomDuFlux);
+				expect(formationsInitialesRepository.chargerLesFormationsInitiales).to.have.been.calledOnceWithExactly(formationsInitialesASauvegarder, nomDuFlux);
 			});
 			it("historise les formations sauvegardées et les formations en erreur", async () => {
 				await domainService.charger(flux);
 
 				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees).to.have.been.calledOnceWithExactly(formationsInitialesASauvegarder, nomDuFlux);
-				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsEnErreur).to.have.been.calledOnceWithExactly([], [], nomDuFlux);
+				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees).to.have.been.calledOnceWithExactly([], nomDuFlux);
+				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees).to.have.been.calledOnceWithExactly([], nomDuFlux);
 			});
 		});
 
@@ -96,21 +96,28 @@ describe("ChargerFormationsInitialesDomainServiceTest", () => {
 				formationsInitialesASupprimerEnErreur = [ FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur({ identifiant: "2" })];
 				formationsInitialesASauvegarderEnErreur = [FormationInitialeFixtureBuilder.buildFormationsInitialesEnErreur({ identifiant: "4" })];
 
+				formationsInitialesSauvegardees = [formationsInitialesASauvegarder[0]];
+
 				formationsInitialesRepository.recupererFormationsInitialesASauvegarder.resolves(formationsInitialesASauvegarder);
 				formationsInitialesRepository.recupererFormationsInitialesASupprimer.resolves(formationsInitialesASupprimer);
 				formationsInitialesRepository.supprimer.resolves(formationsInitialesASupprimerEnErreur);
-				formationsInitialesRepository.chargerLesFormationsInitialesDansLeCMS.resolves(formationsInitialesASauvegarderEnErreur);
+				formationsInitialesRepository.chargerLesFormationsInitiales.resolves({
+					formationsInitialesSauvegardees: formationsInitialesSauvegardees,
+					formationsInitialesEnErreur: formationsInitialesASauvegarderEnErreur,
+				});
 				formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees.resolves(Promise<void>);
-				formationsInitialesRepository.enregistrerHistoriqueDesFormationsEnErreur.resolves(Promise<void>);
+				formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees.resolves(Promise<void>);
+				formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees.resolves(Promise<void>);
 			});
 
 			it("historise les formations sauvegardées et les formations en erreur", async () => {
 				await domainService.charger(flux);
 
-				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees).to.have.been.calledOnceWithExactly(formationsInitialesASauvegarder, nomDuFlux);
-				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsEnErreur).to.have.been.calledOnceWithExactly(formationsInitialesASauvegarderEnErreur, formationsInitialesASupprimerEnErreur, nomDuFlux);
+				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsSauvegardees).to.have.been.calledOnceWithExactly(formationsInitialesSauvegardees, nomDuFlux);
+				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSauvegardees).to.have.been.calledOnceWithExactly(formationsInitialesASauvegarderEnErreur, nomDuFlux);
+				expect(formationsInitialesRepository.enregistrerHistoriqueDesFormationsNonSupprimees).to.have.been.calledOnceWithExactly(formationsInitialesASupprimerEnErreur, nomDuFlux);
 			});
-			//it.todo("ne supprime pas les formations initiales qui n'ont pas pu être sauvegardées", () => {});
+			// it("ne supprime pas les formations initiales qui n'ont pas pu être sauvegardées", () => {});
 		});
 	});
 });
