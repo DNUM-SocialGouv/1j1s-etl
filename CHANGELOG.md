@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.11.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.6...v4.11.0) (2023-08-14)
+
+
+### Features
+
+* **formations init:** chargement des formations initiales dans le cms ([#321](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/321)) ([d282d58](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/d282d58bc17a3aa650114e977e158623b92082b2))
+
 ## [4.10.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.5...v4.10.6) (2023-08-09)
 
 
