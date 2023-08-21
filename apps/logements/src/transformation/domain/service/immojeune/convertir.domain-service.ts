@@ -30,9 +30,9 @@ export class Convertir {
 			description: this.assainisseurDeTexte.nettoyer(annonceDeLogement.description),
 			charge: annonceDeLogement.charges,
 			devise: new Devise(annonceDeLogement.currency).value,
-			garantie: annonceDeLogement.deposit,
+			garantie: this.refuserPrixNegatif(annonceDeLogement.deposit),
 			prix: annonceDeLogement.totalPricing,
-			prixHT: annonceDeLogement.rent,
+			prixHT: this.refuserPrixNegatif(annonceDeLogement.rent),
 			surface: annonceDeLogement.surface,
 			surfaceMax: 0,
 			meuble: annonceDeLogement.furnished,
@@ -61,6 +61,10 @@ export class Convertir {
 			type: this.traduireLeTypeDeLogement(annonceDeLogement.type.toLowerCase() as Immojeune.TypeDeLogement),
 			typeBien: this.traduireLeTypeDeBien(annonceDeLogement.property_type.toLowerCase() as Immojeune.TypeDeBien),
 		};
+	}
+
+	private refuserPrixNegatif(prix: number): number | undefined {
+		return prix >= 0 ? prix : undefined;
 	}
 
 	private interpreterLaDateSiFrancaise(date: string | undefined, maintenant: string): string {
@@ -190,4 +194,5 @@ export class Convertir {
 
 		return correspondanceTypesDeBien;
 	}
+
 }

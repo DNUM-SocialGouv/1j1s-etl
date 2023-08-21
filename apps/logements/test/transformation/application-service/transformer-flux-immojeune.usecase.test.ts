@@ -264,5 +264,37 @@ describe("TransformerFluxImmojeuneTest", () => {
 				]);
 			});
 		});
+
+		context("Et que le prix HT est inférieur à 0", () => {
+			it("retourne un prix HT à undefined", async () => {
+				const annonceImmojeuneRecuperee = [AnnonceDeLogementImmojeuneFixtureBuilder.build({ rent: -3 })];
+				assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
+				assainisseurDeTexte.nettoyer.withArgs("Le titre de l'annonce").returns("Le titre de l'annonce");
+				repository.recuperer.resolves(annonceImmojeuneRecuperee);
+
+				await usecase.executer(flux);
+
+				expect(repository.sauvegarder.getCall(0).args).to.have.deep.members([
+					[AnnonceDeLogementFixtureBuilder.build({ prixHT: undefined })],
+					new FluxTransformation("flux", "old", ".json", ".json"),
+				]);
+			});
+		});
+
+		context("Et que la garantie est inférieure à 0", () => {
+			it("retourne une garantie à undefined", async () => {
+				const annonceImmojeuneRecuperee = [AnnonceDeLogementImmojeuneFixtureBuilder.build({ deposit: -30 })];
+				assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
+				assainisseurDeTexte.nettoyer.withArgs("Le titre de l'annonce").returns("Le titre de l'annonce");
+				repository.recuperer.resolves(annonceImmojeuneRecuperee);
+
+				await usecase.executer(flux);
+
+				expect(repository.sauvegarder.getCall(0).args).to.have.deep.members([
+					[AnnonceDeLogementFixtureBuilder.build({ garantie: undefined })],
+					new FluxTransformation("flux", "old", ".json", ".json"),
+				]);
+			});
+		});
 	});
 });

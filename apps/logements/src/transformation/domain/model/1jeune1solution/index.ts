@@ -123,10 +123,10 @@ export namespace UnJeune1Solution {
 		imagesUrl: Array<UnJeune1Solution.ImagesUrl>
 		servicesInclus: Array<UnJeune1Solution.ServiceInclus>
 		servicesOptionnels: Array<UnJeune1Solution.ServiceOptionnel>
-		prixHT: number
+		prixHT?: number
 		prix?: number
 		devise: string
 		charge: number
-		garantie: number
+		garantie?: number
 	}
 }
