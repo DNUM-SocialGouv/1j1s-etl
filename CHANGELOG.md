@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.12.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.11.0...v4.12.0) (2023-08-21)
+
+
+### Features
+
+* **evenements:** suppression des CRONS du flux tous mobilisés ([#334](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/334)) ([33d6a48](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/33d6a480382875dd5a006ae6daf987c11cb38f2b))
+
 ## [4.11.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.10.6...v4.11.0) (2023-08-14)
 
 
