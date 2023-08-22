@@ -30,9 +30,9 @@ export class Convertir {
 			description: this.assainisseurDeTexte.nettoyer(annonceDeLogement.description),
 			charge: annonceDeLogement.charges,
 			devise: new Devise(annonceDeLogement.currency).value,
-			garantie: this.refuserPrixNegatif(annonceDeLogement.deposit),
+			garantie: this.refuserMontantNegatif(annonceDeLogement.deposit),
 			prix: annonceDeLogement.totalPricing,
-			prixHT: this.refuserPrixNegatif(annonceDeLogement.rent),
+			prixHT: this.refuserMontantNegatif(annonceDeLogement.rent),
 			surface: annonceDeLogement.surface,
 			surfaceMax: 0,
 			meuble: annonceDeLogement.furnished,
@@ -63,7 +63,7 @@ export class Convertir {
 		};
 	}
 
-	private refuserPrixNegatif(prix: number): number | undefined {
+	private refuserMontantNegatif(prix: number): number | undefined {
 		return prix >= 0 ? prix : undefined;
 	}
 
