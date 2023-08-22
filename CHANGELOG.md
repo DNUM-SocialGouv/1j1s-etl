@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.12.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.12.0...v4.12.1) (2023-08-22)
+
+
+### Bug Fixes
+
+* **deps:** update nest monorepo to ~10.2.0 ([#333](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/333)) ([bba7ee8](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/bba7ee85766dbe9ba5de0b5c2b0d9162c4030957))
+* **immojeune:** refuser le prix HT et garantie négative ([#336](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/336)) ([bdcbf36](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/bdcbf363cdae26cd0e77f9c0ed5caa53aba6b8bb))
+
 ## [4.12.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.11.0...v4.12.0) (2023-08-21)
 
 
