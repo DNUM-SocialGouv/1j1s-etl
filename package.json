@@ -38,7 +38,7 @@
     "@nestjs/config": "~3.0.0",
     "@nestjs/core": "~10.2.0",
     "@nestjs/platform-express": "~10.2.0",
-    "axios": "~1.4.0",
+    "axios": "~1.5.0",
     "basic-ftp": "~5.0.2",
     "csv-writer": "~1.6.0",
     "fast-xml-parser": "~4.2.0",
