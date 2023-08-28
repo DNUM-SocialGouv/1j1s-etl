@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.12.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.12.1...v4.12.2) (2023-08-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to ~1.5.0 ([0fa7eca](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/0fa7ecaccc2f43ad85edae72fff73e665626e512))
+
 ## [4.12.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.12.0...v4.12.1) (2023-08-22)
 
 
