@@ -11,9 +11,6 @@ import {
 import {
 	HttpMinioContactCejRepository,
 } from "@gestion-des-contacts/src/infrastructure/gateway/repository/http-minio-contact-cej.repository";
-import {
-	HttpMinioContactPoeRepository,
-} from "@gestion-des-contacts/src/infrastructure/gateway/repository/http-minio-contact-poe.repository";
 
 import { Shared } from "@shared/src";
 import { DateService } from "@shared/src/domain/service/date.service";
@@ -51,29 +48,8 @@ import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node
 				return new HttpMinioContactCejRepository(strapiHttpClient, minioClient, dateService, fileSystemClient, httpClient, configuration, logger);
 			},
 		},
-		{
-			provide: "ContactPoeRepository",
-			inject: [ConfigService, StrapiHttpClient, Client, DateService, "FileSystemClient", "AxiosInstance"],
-			useFactory: (
-				configurationService: ConfigService,
-				strapiHttpClient: StrapiHttpClient,
-				minioClient: Client,
-				dateService: DateService,
-				fileSystemClient: FileSystemClient,
-				httpClient: AxiosInstance,
-			): HttpMinioContactPoeRepository => {
-				const configuration = configurationService.get<Configuration>("gestionDesContacts");
-				const loggerFactory = new LoggerFactory(
-					configuration.SENTRY.DSN, configuration.SENTRY.PROJECT, configuration.SENTRY.RELEASE,
-					configuration.ENVIRONMENT, configuration.CONTEXT, configuration.LOG_LEVEL, configuration.CONTACTS_POE.DOMAINE,
-				);
-				const logger = loggerFactory.create({ name: "gestion-des-contacts" });
-
-				return new HttpMinioContactPoeRepository(strapiHttpClient, minioClient, dateService, fileSystemClient, httpClient, configuration, logger);
-			},
-		},
 	],
-	exports: ["ContactCejRepository", "ContactPoeRepository"],
+	exports: ["ContactCejRepository"],
 })
 export class Gateways {
 }

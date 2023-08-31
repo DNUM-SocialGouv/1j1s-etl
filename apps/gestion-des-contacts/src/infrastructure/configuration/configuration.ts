@@ -8,7 +8,6 @@ import { Domaine, LogLevel } from "@shared/src/infrastructure/configuration/logg
 export type MinioConfiguration = {
 	ACCESS_KEY: string;
 	BUCKET_NAME_EXPORT_CEJ: string;
-	BUCKET_NAME_EXPORT_POE: string;
 	PORT: number;
 	SECRET_KEY: string;
 	URL: string;
@@ -25,11 +24,6 @@ export type Configuration = {
 		FEATURE_FLIPPING: boolean;
 		FILR_URL: string;
 	}
-	CONTACTS_POE: {
-		DOMAINE: Domaine;
-		FEATURE_FLIPPING: boolean;
-		FILR_URL: string;
-	}
 	CONTEXT: string;
 	ENVIRONMENT: Environment;
 	FILR: FilRConfiguration;
@@ -38,7 +32,6 @@ export type Configuration = {
 	SENTRY: SentryConfiguration;
 	STRAPI: {
 		CEJ_ENDPOINT: string;
-		POE_ENDPOINT: string;
 	}
 	TEMPORARY_DIRECTORY_PATH: string;
 }
@@ -59,11 +52,6 @@ export class ConfigurationFactory extends ConfigurationValidator {
 				FEATURE_FLIPPING: toBoolean(getOrError("CONTACTS_MANAGEMENT_CEJ_FEATURE_FLIPPING")),
 				FILR_URL: getOrError("CONTACTS_MANAGEMENT_CEJ_FILR_URL"),
 			},
-			CONTACTS_POE: {
-				DOMAINE: getOrError("CONTACTS_MANAGEMENT_POE_DOMAIN") as Domaine,
-				FEATURE_FLIPPING: toBoolean(getOrError("CONTACTS_MANAGEMENT_POE_FEATURE_FLIPPING")),
-				FILR_URL: getOrError("CONTACTS_MANAGEMENT_POE_FILR_URL"),
-			},
 			CONTEXT: "gestion-des-contacts",
 			ENVIRONMENT: getOrError("NODE_ENV") as Environment,
 			FILR: {
@@ -74,7 +62,6 @@ export class ConfigurationFactory extends ConfigurationValidator {
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				BUCKET_NAME_EXPORT_CEJ: getOrError("CONTACTS_MANAGEMENT_CEJ_MINIO_BUCKET_NAME"),
-				BUCKET_NAME_EXPORT_POE: getOrError("CONTACTS_MANAGEMENT_POE_MINIO_BUCKET_NAME"),
 				PORT: Number(getOrError("MINIO_PORT")),
 				SECRET_KEY: getOrError("MINIO_SECRET_KEY"),
 				URL: getOrError("MINIO_URL"),
@@ -86,7 +73,6 @@ export class ConfigurationFactory extends ConfigurationValidator {
 			},
 			STRAPI: {
 				CEJ_ENDPOINT: getOrError("STRAPI_CEJ_ENDPOINT"),
-				POE_ENDPOINT: getOrError("STRAPI_POE_ENDPOINT"),
 			},
 			TEMPORARY_DIRECTORY_PATH: getOrError("TEMPORARY_DIRECTORY_PATH"),
 		};
