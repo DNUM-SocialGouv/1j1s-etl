@@ -12,7 +12,7 @@ le contenu du dépôt de fichier MinIO que nous utilisons sur le projet.
 
 ## Installation
 
-En fonction de votre environnement, vous devrez utiliser des manières différentes pour installer 
+En fonction de votre environnement, vous devrez utiliser des manières différentes pour installer
 l'`AWS CLI`.
 
 ### macOS
@@ -25,6 +25,7 @@ l'`AWS CLI`.
 ```shell
 $ brew install awscli
 ```
+
 </details>
 
 ### Linux
@@ -39,6 +40,7 @@ $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.z
 unzip awscliv2.zip
 sudo ./aws/install
 ```
+
 </details>
 
 ### Vérifier l'installation
@@ -57,8 +59,8 @@ aws-cli/<version> Python/<version> Darwin/<version> source/<nombre de bits> prom
 
 ## Configuration
 
-Pour pouvoir vous connecter au dépôt MinIO, vous allez devoir configurer votre CLI et en particulier 
-les `credentials`, nous y reviendrons dans un moment. Pour démarrer la configuration, il vous suffit 
+Pour pouvoir vous connecter au dépôt MinIO, vous allez devoir configurer votre CLI et en particulier
+les `credentials`, nous y reviendrons dans un moment. Pour démarrer la configuration, il vous suffit
 de lancer la commande :
 
 ```shell
@@ -97,8 +99,16 @@ Que faisons-nous ci-dessus ?
 
 * `--endpoint-url` nous permet de spécifier l'URL du cloud AWS auquel nous cherchons à nous connecter.
 * `s3` signifie que nous nous connectons à un Object Cloud Storage S3 et utilise le `bin` s3 présent
-dans la CLI AWS.
+  dans la CLI AWS.
 * `ls` permet de lister les fichiers présents dans un dossier (commande Unix).
 * `--recursive` permet d'afficher le contenu des sous-dossiers s'il y en a.
 * `--human-readable` permet d'afficher la sortie pour que ce soit compréhensible par l'humain.
 * `--summarize` affiche des informations élémentaires (nombre d'objets, taille totale...).
+
+### Supprimer un Bucket
+
+Afin de supprimer un bucket, utilisez la commande suivante:
+
+```shell
+$ aws --endpoint-url <url aws> s3 rb s3://nom-du-bucket
+```
