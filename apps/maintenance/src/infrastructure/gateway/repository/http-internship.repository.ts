@@ -3,7 +3,7 @@ import { OffreDeStageRepository } from "@maintenance/src/domain/service/offre-de
 import { StrapiConfiguration } from "@maintenance/src/infrastructure/configuration/configuration";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 export class HttpInternshipRepository implements OffreDeStageRepository {
 	constructor(

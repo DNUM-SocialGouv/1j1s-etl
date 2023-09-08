@@ -1,8 +1,9 @@
 import { AxiosInstance } from "axios";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { StrapiFieldsQueryBuilder } from "@shared/src/infrastructure/gateway/client/strapi/strapi-fields-query-builder";
 
-type StrapiQueryParams = {
+export type StrapiQueryParams = {
 	[key:string]: string | number,
 }
 
@@ -50,7 +51,7 @@ export class StrapiHttpClient {
 	private buildParams(source: string, fieldsToRetrieve: string[], relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
 		const defaultParams = {
 			"pagination[page]": pageNumber,
-			...this.buildFieldsQuery(fieldsToRetrieve),
+			...StrapiFieldsQueryBuilder.build(fieldsToRetrieve),
 			"populate": relationsToRetrieve,
 			"pagination[pageSize]": StrapiHttpClient.OCCURENCIES_PER_PAGE,
 		};
@@ -81,14 +82,5 @@ export class StrapiHttpClient {
 
 	private toRawValues<T>(body: StrapiBodyResponse<T>): T {
 		return { id: body.id, ...body.attributes };
-	}
-
-	private buildFieldsQuery(fieldsName: string[]): { [key: string]: string } {
-		return fieldsName
-			.map((field, index) => {
-				const propertyName = `fields[${index}]`;
-				return { [propertyName]: field };
-			})
-			.reduce((accumulator, currentValue) => ({ ...accumulator, ...currentValue }), {});
 	}
 }

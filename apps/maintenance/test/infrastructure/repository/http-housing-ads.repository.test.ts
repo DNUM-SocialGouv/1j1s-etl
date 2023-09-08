@@ -6,7 +6,7 @@ import {
 } from "@maintenance/src/infrastructure/gateway/repository/http-housing-ads.repository";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 const flows = ["immojeune", "studapart"];
 const error = new Error("Oops something went wrong!");

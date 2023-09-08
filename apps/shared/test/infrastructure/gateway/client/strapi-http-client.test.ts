@@ -8,7 +8,7 @@ import {
 	StrapiBodyResponse,
 	StrapiHttpClient,
 	StrapiResponse,
-} from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+} from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 const fieldsToRetrieve = ["field1","field2"];
 const relationsToRetrieve = "relation1,relation2";

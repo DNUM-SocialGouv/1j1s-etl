@@ -8,7 +8,7 @@ import {
 	AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/indexation/fixture/annonce-de-logement.fixture-builder";
 
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 const fieldsToRetrieve = ["id","slug","titre","dateDeDisponibilite","devise","prix","prixHT","surface","surfaceMax","type","url","sourceUpdatedAt"];
 const relationsToRetrieve = "localisation,imagesUrl";

@@ -1,6 +1,7 @@
 import { AxiosInstance } from "axios";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { StrapiFieldsQueryBuilder } from "@shared/src/infrastructure/gateway/client/strapi/strapi-fields-query-builder";
 
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 
@@ -51,13 +52,12 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 	}
 
 	public async getAll(source: string): Promise<Array<OffreDeStageHttp>> {
-		console.log(this.buildFieldsQuery(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE));
 		const result = await this.axios.get<StrapiResponse>(
 			this.offreDeStageUrl,
 			{
 				params: {
 					"filters[source][$eq]": encodeURI(source),
-					...this.buildFieldsQuery(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE),
+					...StrapiFieldsQueryBuilder.build(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE),
 					"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiantSource",
 				},
@@ -73,7 +73,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 					{
 						params: {
 							"filters[source][$eq]": encodeURI(source),
-							...this.buildFieldsQuery(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE),
+							...StrapiFieldsQueryBuilder.build(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE),
 							"pagination[page]": pageNumber,
 							"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 							"sort": "identifiantSource",
@@ -95,14 +95,5 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 	public async put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void> {
 		await this.authClient.handleAuthentication(this.axios);
 		return this.axios.put(`${this.offreDeStageUrl}/${offreDeStage.id}`, { data: offreDeStage.recupererAttributs() });
-	}
-
-	private buildFieldsQuery(fieldsName: string[]): { [key: string]: string } {
-		return fieldsName
-			.map((field, index) => {
-				const propertyName = `fields[${index}]`;
-				return { [propertyName]: field };
-			})
-			.reduce((accumulator, currentValue) => ({ ...accumulator, ...currentValue }), {});
 	}
 }

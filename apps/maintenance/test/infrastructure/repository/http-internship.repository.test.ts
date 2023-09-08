@@ -6,7 +6,7 @@ import { HttpInternshipRepository } from "@maintenance/src/infrastructure/gatewa
 import { OffreDeStageFixtureBuilder } from "@maintenance/test/fixture/offre-de-stage.fixture-builder";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 let strapiConfiguration: StubbedType<StrapiConfiguration>;
 let httpRepository: HttpInternshipRepository;

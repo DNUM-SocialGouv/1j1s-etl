@@ -2,7 +2,7 @@ import { AnnonceDeLogement } from "@logements/src/indexation/domain/model";
 import { AnnonceDeLogementRepository } from "@logements/src/indexation/domain/service/annonce-de-logement.repository";
 import { Configuration } from "@logements/src/indexation/infrastructure/configuration/configuration";
 
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 type AnnonceDeLogementStrapi = { id: string, attributes: Omit<AnnonceDeLogement.Attributs, "id"> };
 
