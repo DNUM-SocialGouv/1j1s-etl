@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.13.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.12.3...v4.13.0) (2023-09-08)
+
+
+### Features
+
+* **gestion-contact:** suppression de l'envoi des contacts POE ([#343](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/343)) ([551d8e1](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/551d8e1d87078095695c736ef5bb2c0a3084cdfb))
+
 ## [4.12.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.12.2...v4.12.3) (2023-09-04)
 
 
