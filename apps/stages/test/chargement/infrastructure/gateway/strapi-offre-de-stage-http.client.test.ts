@@ -67,7 +67,7 @@ describe("StrapiOffreDeStageHttpClient", () => {
 			.reply(200)
 			.put(`/offres-de-stage/${offreDeStageAMettreAJour.id}`)
 			.reply(200)
-			.get(`/offres-de-stage?filters[source][$eq]=${encodeURI(source)}&fields=identifiantSource,id,sourceUpdatedAt&pagination[pageSize]=100&sort=identifiantSource`)
+			.get(`/offres-de-stage?filters[source][$eq]=${encodeURI(source)}&fields[0]=identifiantSource&fields[1]=id&fields[2]=sourceUpdatedAt&pagination[pageSize]=100&sort=identifiantSource`)
 			.reply(200, { data: offresHttp, meta: { pagination: { page: 1, pageSize: 100, pageCount: 1, total: 2 } } });
 
 		strapiOffreDeStageHttpClient = new StrapiOffreDeStageHttpClient(axiosInstance, authClient, offreDeStageUrl);
@@ -145,7 +145,9 @@ describe("StrapiOffreDeStageHttpClient", () => {
 			expect(spyOnGet).to.have.been.calledWith(offreDeStageUrl, {
 				params: {
 					"filters[source][$eq]": encodeURI(source),
-					"fields": "identifiantSource,id,sourceUpdatedAt",
+					"fields[0]": "identifiantSource",
+					"fields[1]": "id",
+					"fields[2]": "sourceUpdatedAt",
 					"pagination[pageSize]": 100,
 					"sort": "identifiantSource",
 				},
