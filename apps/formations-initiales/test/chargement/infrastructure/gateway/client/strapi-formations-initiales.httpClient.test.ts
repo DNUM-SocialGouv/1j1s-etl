@@ -58,12 +58,12 @@ describe("StrapiFormationsInitialesHttpClient", () => {
     nock("http://localhost:1337/api")
       .post("/auth/local")
       .reply(200, { jwt })
-      .get("/formation-initiale-details?fields=identifiant,id&pagination[page]=1&pagination[pageSize]=100&sort=identifiant")
+      .get("/formation-initiale-details?fields[0]=identifiant&fields[1]=id&pagination[page]=1&pagination[pageSize]=100&sort=identifiant")
       .reply(200, {
         data: [formationsInitialesHttp[0]],
         meta: { pagination: { page: 1, pageSize: 1, pageCount: 2, total: 2 } },
       })
-      .get("/formation-initiale-details?fields=identifiant,id&pagination[page]=2&pagination[pageSize]=100&sort=identifiant")
+      .get("/formation-initiale-details?fields[0]=identifiant&fields[1]=id&pagination[page]=2&pagination[pageSize]=100&sort=identifiant")
       .reply(200, {
         data: [formationsInitialesHttp[1]],
         meta: { pagination: { page: 2, pageSize: 1, pageCount: 2, total: 2 } },
@@ -88,7 +88,8 @@ describe("StrapiFormationsInitialesHttpClient", () => {
           "/formation-initiale-details",
           {
             params: {
-              fields: "identifiant,id",
+              "fields[0]": "identifiant",
+              "fields[1]": "id",
               "pagination[page]": 1,
               "pagination[pageSize]": 100,
               sort: "identifiant",
@@ -99,7 +100,8 @@ describe("StrapiFormationsInitialesHttpClient", () => {
           "/formation-initiale-details",
           {
             params: {
-              fields: "identifiant,id",
+              "fields[0]": "identifiant",
+              "fields[1]": "id",
               "pagination[page]": 2,
               "pagination[pageSize]": 100,
               sort: "identifiant",
