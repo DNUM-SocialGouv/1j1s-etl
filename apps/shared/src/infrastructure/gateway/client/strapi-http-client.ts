@@ -3,12 +3,7 @@ import { AxiosInstance } from "axios";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 
 type StrapiQueryParams = {
-	"pagination[page]": number,
-	"filters[source][$eq]"?: string,
-	"fields": string,
-	"pagination[pageSize]": number,
-	"sort": string,
-	"populate": string
+	[key:string]: string | number,
 }
 
 export type StrapiBodyResponse<T> = { id: number, attributes: T }
@@ -31,7 +26,7 @@ export class StrapiHttpClient {
 	constructor(private readonly axios: AxiosInstance, private readonly authenticationClient: AuthenticationClient) {
 	}
 
-	public async get<T>(endpoint: string, fieldsToRetrieve: string, relationsToRetrieve: string, source?: string): Promise<Array<T>> {
+	public async get<T>(endpoint: string, fieldsToRetrieve: string[], relationsToRetrieve: string, source?: string): Promise<Array<T>> {
 		await this.authenticationClient.handleAuthentication(this.axios);
 
 		const firstPage = 1;
@@ -52,10 +47,10 @@ export class StrapiHttpClient {
 		await this.axios.delete<StrapiResponse<T>>(`${endpoint}/${id}`);
 	}
 
-	private buildParams(source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
+	private buildParams(source: string, fieldsToRetrieve: string[], relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
 		const defaultParams = {
 			"pagination[page]": pageNumber,
-			"fields": fieldsToRetrieve,
+			...this.buildFieldsQuery(fieldsToRetrieve),
 			"populate": relationsToRetrieve,
 			"pagination[pageSize]": StrapiHttpClient.OCCURENCIES_PER_PAGE,
 		};
@@ -71,7 +66,7 @@ export class StrapiHttpClient {
 		return { ...defaultParams, "sort": "id" };
 	}
 
-	private async getDataForEachPage<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageCount: number): Promise<Array<T>> {
+	private async getDataForEachPage<T>(url: string, source: string, fieldsToRetrieve: string[], relationsToRetrieve: string, pageCount: number): Promise<Array<T>> {
 		const data: Array<T> = [];
 
 		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {
@@ -86,5 +81,14 @@ export class StrapiHttpClient {
 
 	private toRawValues<T>(body: StrapiBodyResponse<T>): T {
 		return { id: body.id, ...body.attributes };
+	}
+
+	private buildFieldsQuery(fieldsName: string[]): { [key: string]: string } {
+		return fieldsName
+			.map((field, index) => {
+				const propertyName = `fields[${index}]`;
+				return { [propertyName]: field };
+			})
+			.reduce((accumulator, currentValue) => ({ ...accumulator, ...currentValue }), {});
 	}
 }

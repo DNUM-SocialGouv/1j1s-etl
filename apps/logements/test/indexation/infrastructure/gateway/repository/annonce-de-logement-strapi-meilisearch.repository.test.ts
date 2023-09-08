@@ -10,7 +10,7 @@ import {
 
 import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
 
-const fieldsToRetrieve = "id,slug,titre,dateDeDisponibilite,devise,prix,prixHT,surface,surfaceMax,type,url,sourceUpdatedAt";
+const fieldsToRetrieve = ["id","slug","titre","dateDeDisponibilite","devise","prix","prixHT","surface","surfaceMax","type","url","sourceUpdatedAt"];
 const relationsToRetrieve = "localisation,imagesUrl";
 const source = "une-source";
 let configuration: StubbedType<Configuration>;

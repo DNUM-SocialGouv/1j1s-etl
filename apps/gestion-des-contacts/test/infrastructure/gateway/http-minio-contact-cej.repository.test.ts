@@ -151,7 +151,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		const contactCej = ContactCejFixtureBuilder.build();
 		strapiHttpClient
 			.get
-			.withArgs("contact-cejs", "prenom,nom,email,telephone,age,ville,code_postal,createdAt", "")
+			.withArgs("contact-cejs", ["prenom","nom","email","telephone","age","ville","code_postal","createdAt"], "")
 			.resolves([ContactCejFixtureBuilder.buildStrapi()]);
 
 		// When
@@ -160,7 +160,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		// Then
 		expect(strapiHttpClient.get).to.have.been.calledOnceWithExactly(
 			"contact-cejs",
-			"prenom,nom,email,telephone,age,ville,code_postal,createdAt",
+			["prenom","nom","email","telephone","age","ville","code_postal","createdAt"],
 			""
 		);
 		expect(contactsCej).to.have.deep.members([{ ...contactCej }]);

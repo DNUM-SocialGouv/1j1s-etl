@@ -10,7 +10,7 @@ import {
 	StrapiResponse,
 } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
 
-const fieldsToRetrieve = "field1,field2";
+const fieldsToRetrieve = ["field1","field2"];
 const relationsToRetrieve = "relation1,relation2";
 const password = "s0m3p4$$w0rd";
 const username = "someUs3r";
@@ -71,9 +71,9 @@ describe("StrapiHttpClientTest", () => {
 		nock("http://127.0.0.1/api")
 			.post("/auth")
 			.reply(200, "some token")
-			.get("/ressource?pagination[page]=1&filters[source][$eq]=source&fields=field1,field2&pagination[pageSize]=100&sort=identifiantSource&populate=relation1,relation2")
+			.get("/ressource?pagination[page]=1&filters[source][$eq]=source&fields[0]=field1&fields[1]=field2&pagination[pageSize]=100&sort=identifiantSource&populate=relation1,relation2")
 			.reply(200, premiereReponseStrapi)
-			.get("/ressource?pagination[page]=2&filters[source][$eq]=source&fields=field1,field2&pagination[pageSize]=100&sort=identifiantSource&populate=relation1,relation2")
+			.get("/ressource?pagination[page]=2&filters[source][$eq]=source&fields[0]=field1&fields[1]=field2&pagination[pageSize]=100&sort=identifiantSource&populate=relation1,relation2")
 			.reply(200, secondeReponseStrapi);
 
 		// When

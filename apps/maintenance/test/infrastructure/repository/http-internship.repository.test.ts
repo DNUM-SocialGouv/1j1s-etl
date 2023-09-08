@@ -36,9 +36,9 @@ describe("HttpInternshipRepositoryTest", () => {
 			];
 			const flows = ["jobteaser", "stagefr-compresse", "stagefr-decompresse"];
 
-			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flows[0]).resolves(offreDeStageJobteaser);
-			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flows[1]).resolves(offreDeStageStagefrCompresse);
-			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flows[2]).resolves(offreDeStageStagefrDecompresse);
+			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flows[0]).resolves(offreDeStageJobteaser);
+			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flows[1]).resolves(offreDeStageStagefrCompresse);
+			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flows[2]).resolves(offreDeStageStagefrDecompresse);
 
 			// When
 			const result = await httpRepository.recuperer(flows);

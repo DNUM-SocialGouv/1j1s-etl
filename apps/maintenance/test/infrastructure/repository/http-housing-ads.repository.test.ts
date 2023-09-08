@@ -32,12 +32,12 @@ describe("HttpHousingAdsRepositoryTest", () => {
 			// Given
 			strapiHttpClient
 				.get
-				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", "immojeune")
+				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, ["id"], "", "immojeune")
 				.resolves([{ id: "1" }, { id: "2" }, { id: "3" }]);
 
 			strapiHttpClient
 				.get
-				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", "studapart")
+				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, ["id"], "", "studapart")
 				.resolves([{ id: "4" }, { id: "5" }]);
 
 			// When

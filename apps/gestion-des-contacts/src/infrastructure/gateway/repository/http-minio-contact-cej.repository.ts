@@ -23,7 +23,7 @@ export type StrapiContactCej = {
 }
 
 export class HttpMinioContactCejRepository implements ContactCejRepository {
-	private static readonly FIELDS_TO_RETRIEVE = "prenom,nom,email,telephone,age,ville,code_postal,createdAt";
+	private static readonly FIELDS_TO_RETRIEVE = ["prenom","nom","email","telephone","age","ville","code_postal","createdAt"];
 	private static readonly RELATIONS_TO_RETRIEVE = "";
 	private static readonly CSV_HEADERS: Array<Record<"id" | "title", string>> = [
 		{ id: "dateDeCreation", title: "Date de création" },
