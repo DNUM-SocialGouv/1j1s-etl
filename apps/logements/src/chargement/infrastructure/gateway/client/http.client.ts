@@ -35,7 +35,7 @@ export type AnnonceDeLogementHttp = {
 }
 
 export class StrapiClient implements HttpClient {
-	private static FIELDS_TO_RETRIEVE = "identifiantSource,id,sourceUpdatedAt";
+	private static FIELDS_TO_RETRIEVE = ["identifiantSource","id","sourceUpdatedAt"];
 	private static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
 	constructor(
@@ -50,7 +50,7 @@ export class StrapiClient implements HttpClient {
 			{
 				params: {
 					"filters[source][$eq]": encodeURI(source),
-					"fields": StrapiClient.FIELDS_TO_RETRIEVE,
+					...this.buildFieldsQuery(StrapiClient.FIELDS_TO_RETRIEVE),
 					"pagination[pageSize]": StrapiClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiantSource",
 				},
@@ -95,5 +95,14 @@ export class StrapiClient implements HttpClient {
 	public async delete(obsoleteHousingAdvertisement: UnJeune1Solution.AnnonceDeLogementObsolete): Promise<void> {
 		await this.authClient.handleAuthentication(this.axios);
 		await this.axios.delete<StrapiResponse>(`${this.housingAdvertisementUrl}/${obsoleteHousingAdvertisement.id}`);
+	}
+
+	private buildFieldsQuery(fieldsName: string[]): { [key: string]: string } {
+		return fieldsName
+			.map((field, index) => {
+				const propertyName = `fields[${index}]`;
+				return { [propertyName]: field };
+			})
+			.reduce((accumulator, currentValue) => ({ ...accumulator, ...currentValue }), {});
 	}
 }
