@@ -3,8 +3,14 @@ import { AxiosInstance } from "axios";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { StrapiFieldsQueryBuilder } from "@shared/src/infrastructure/gateway/client/strapi/strapi-fields-query-builder";
 
+export type StrapiFieldsPropertyName = `fields[${number}]`
 export type StrapiQueryParams = {
-	[key:string]: string | number,
+	"pagination[page]": number,
+	"filters[source][$eq]"?: string,
+	"pagination[pageSize]": number,
+	"sort": string,
+	"populate": string,
+	[key: StrapiFieldsPropertyName]: string,
 }
 
 export type StrapiBodyResponse<T> = { id: number, attributes: T }
