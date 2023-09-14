@@ -38,7 +38,7 @@ describe("HttpClientTest", () => {
 			nock("http://localhost:1337/api")
 				.post("/auth/local")
 				.reply(200, { jwt })
-				.get("?filters[source][$eq]=immojeune&fields=identifiantSource,id,sourceUpdatedAt&pagination[pageSize]=100&sort=identifiantSource")
+				.get("?filters[source][$eq]=immojeune&fields[0]=identifiantSource&fields[1]=id&fields[2]=sourceUpdatedAt&pagination[pageSize]=100&sort=identifiantSource")
 				.reply(200, {
 					data: [AnnonceDeLogementHttpFixtureBuilder.build()],
 					meta: { pagination: { page: 1, pageSize: 100, pageCount: 1, total: 2 } },
@@ -60,7 +60,9 @@ describe("HttpClientTest", () => {
 			expect(spyOnGet).to.have.been.calledWith(url, {
 					params: {
 						"filters[source][$eq]": "immojeune",
-						fields: "identifiantSource,id,sourceUpdatedAt",
+						"fields[0]": "identifiantSource",
+						"fields[1]": "id",
+						"fields[2]": "sourceUpdatedAt",
 						"pagination[pageSize]": 100,
 						sort: "identifiantSource",
 					},

@@ -3,7 +3,7 @@ import { AnnonceDeLogementRepository } from "@maintenance/src/domain/service/ann
 import { StrapiConfiguration } from "@maintenance/src/infrastructure/configuration/configuration";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 export class HttpHousingAdsRepository implements AnnonceDeLogementRepository {
 	constructor(
@@ -17,7 +17,7 @@ export class HttpHousingAdsRepository implements AnnonceDeLogementRepository {
 		const housingAds: Array<AnnonceDeLogement> = [];
 
 		for await (const flow of flows) {
-			const flowHousingAds = await this.strapiHttpClient.get<AnnonceDeLogement>(this.strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", flow);
+			const flowHousingAds = await this.strapiHttpClient.get<AnnonceDeLogement>(this.strapiConfiguration.HOUSING_ADS_ENDPOINT, ["id"], "", flow);
 			housingAds.push(...flowHousingAds);
 		}
 

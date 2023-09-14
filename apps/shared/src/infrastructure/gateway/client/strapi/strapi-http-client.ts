@@ -1,14 +1,16 @@
 import { AxiosInstance } from "axios";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { StrapiFieldsQueryBuilder } from "@shared/src/infrastructure/gateway/client/strapi/strapi-fields-query-builder";
 
-type StrapiQueryParams = {
+export type StrapiFieldsPropertyName = `fields[${number}]`
+export type StrapiQueryParams = {
 	"pagination[page]": number,
 	"filters[source][$eq]"?: string,
-	"fields": string,
 	"pagination[pageSize]": number,
 	"sort": string,
-	"populate": string
+	"populate": string,
+	[key: StrapiFieldsPropertyName]: string,
 }
 
 export type StrapiBodyResponse<T> = { id: number, attributes: T }
@@ -31,7 +33,7 @@ export class StrapiHttpClient {
 	constructor(private readonly axios: AxiosInstance, private readonly authenticationClient: AuthenticationClient) {
 	}
 
-	public async get<T>(endpoint: string, fieldsToRetrieve: string, relationsToRetrieve: string, source?: string): Promise<Array<T>> {
+	public async get<T>(endpoint: string, fieldsToRetrieve: string[], relationsToRetrieve: string, source?: string): Promise<Array<T>> {
 		await this.authenticationClient.handleAuthentication(this.axios);
 
 		const firstPage = 1;
@@ -52,10 +54,10 @@ export class StrapiHttpClient {
 		await this.axios.delete<StrapiResponse<T>>(`${endpoint}/${id}`);
 	}
 
-	private buildParams(source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
+	private buildParams(source: string, fieldsToRetrieve: string[], relationsToRetrieve: string, pageNumber: number): StrapiQueryParams {
 		const defaultParams = {
 			"pagination[page]": pageNumber,
-			"fields": fieldsToRetrieve,
+			...StrapiFieldsQueryBuilder.build(fieldsToRetrieve),
 			"populate": relationsToRetrieve,
 			"pagination[pageSize]": StrapiHttpClient.OCCURENCIES_PER_PAGE,
 		};
@@ -71,7 +73,7 @@ export class StrapiHttpClient {
 		return { ...defaultParams, "sort": "id" };
 	}
 
-	private async getDataForEachPage<T>(url: string, source: string, fieldsToRetrieve: string, relationsToRetrieve: string, pageCount: number): Promise<Array<T>> {
+	private async getDataForEachPage<T>(url: string, source: string, fieldsToRetrieve: string[], relationsToRetrieve: string, pageCount: number): Promise<Array<T>> {
 		const data: Array<T> = [];
 
 		for (let pageNumber = 2; pageNumber <= pageCount; pageNumber++) {

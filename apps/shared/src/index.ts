@@ -8,7 +8,7 @@ import TurndownService from "turndown";
 import { DateService } from "@shared/src/domain/service/date.service";
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
 import { FtpClient } from "@shared/src/infrastructure/gateway/client/ftp.client";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 import { StreamZipClient } from "@shared/src/infrastructure/gateway/client/stream-zip.client";
 import {
 	FileSystemClient,

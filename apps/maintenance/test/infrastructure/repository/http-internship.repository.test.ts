@@ -6,7 +6,7 @@ import { HttpInternshipRepository } from "@maintenance/src/infrastructure/gatewa
 import { OffreDeStageFixtureBuilder } from "@maintenance/test/fixture/offre-de-stage.fixture-builder";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 let strapiConfiguration: StubbedType<StrapiConfiguration>;
 let httpRepository: HttpInternshipRepository;
@@ -36,9 +36,9 @@ describe("HttpInternshipRepositoryTest", () => {
 			];
 			const flows = ["jobteaser", "stagefr-compresse", "stagefr-decompresse"];
 
-			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flows[0]).resolves(offreDeStageJobteaser);
-			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flows[1]).resolves(offreDeStageStagefrCompresse);
-			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flows[2]).resolves(offreDeStageStagefrDecompresse);
+			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flows[0]).resolves(offreDeStageJobteaser);
+			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flows[1]).resolves(offreDeStageStagefrCompresse);
+			strapiHttpClient.get.withArgs(strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flows[2]).resolves(offreDeStageStagefrDecompresse);
 
 			// When
 			const result = await httpRepository.recuperer(flows);

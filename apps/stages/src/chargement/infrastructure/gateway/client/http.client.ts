@@ -1,13 +1,17 @@
 import { AxiosInstance } from "axios";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { StrapiFieldsQueryBuilder } from "@shared/src/infrastructure/gateway/client/strapi/strapi-fields-query-builder";
 
 import { UnJeune1Solution } from "@stages/src/chargement/domain/model/1jeune1solution";
 
 export interface HttpClient {
 	delete(offreDeStage: UnJeune1Solution.OffreDeStageASupprimer): Promise<void>;
+
 	getAll(source: string): Promise<Array<OffreDeStageHttp>>;
+
 	post(offreDeStage: UnJeune1Solution.OffreDeStageAPublier): Promise<void>;
+
 	put(offreDeStage: UnJeune1Solution.OffreDeStageAMettreAJour): Promise<void>;
 }
 
@@ -32,7 +36,7 @@ export type OffreDeStageHttp = {
 }
 
 export class StrapiOffreDeStageHttpClient implements HttpClient {
-	private static FIELDS_TO_RETRIEVE = "identifiantSource,id,sourceUpdatedAt";
+	private static FIELDS_TO_RETRIEVE = ["identifiantSource", "id", "sourceUpdatedAt"];
 	private static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
 	constructor(
@@ -53,7 +57,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 			{
 				params: {
 					"filters[source][$eq]": encodeURI(source),
-					"fields": StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE,
+					...StrapiFieldsQueryBuilder.build(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE),
 					"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiantSource",
 				},
@@ -69,7 +73,7 @@ export class StrapiOffreDeStageHttpClient implements HttpClient {
 					{
 						params: {
 							"filters[source][$eq]": encodeURI(source),
-							"fields": StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE,
+							...StrapiFieldsQueryBuilder.build(StrapiOffreDeStageHttpClient.FIELDS_TO_RETRIEVE),
 							"pagination[page]": pageNumber,
 							"pagination[pageSize]": StrapiOffreDeStageHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 							"sort": "identifiantSource",

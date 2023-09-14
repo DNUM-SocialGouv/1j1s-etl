@@ -23,7 +23,7 @@ import {
 import { Shared } from "@shared/src";
 import { SentryConfiguration } from "@shared/src/infrastructure/configuration/configuration";
 import { Logger, LoggerFactory } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 @Module({
 	imports: [

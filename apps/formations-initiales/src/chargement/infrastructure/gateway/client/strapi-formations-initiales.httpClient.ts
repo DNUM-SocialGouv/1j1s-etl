@@ -4,6 +4,7 @@ import { UnJeuneUneSolution } from "@formations-initiales/src/chargement/domain/
 import { HttpClient } from "@formations-initiales/src/chargement/infrastructure/gateway/client/http.client";
 
 import { AuthenticationClient } from "@shared/src/infrastructure/gateway/authentication.client";
+import { StrapiFieldsQueryBuilder } from "@shared/src/infrastructure/gateway/client/strapi/strapi-fields-query-builder";
 
 type StrapiResponse = {
 	data: Array<FormationInitialeStrapiExtrait>
@@ -24,7 +25,7 @@ export type FormationInitialeStrapiExtrait = {
 }
 
 export class StrapiFormationsInitialesHttpClient implements HttpClient {
-	private static FIELDS_TO_RETRIEVE = "identifiant,id";
+	private static FIELDS_TO_RETRIEVE = ["identifiant","id"];
 	private static OCCURENCIES_NUMBER_PER_PAGE = 100;
 
 	constructor(
@@ -56,7 +57,7 @@ export class StrapiFormationsInitialesHttpClient implements HttpClient {
 			this.formationInitialeUrl,
 			{
 				params: {
-					"fields": StrapiFormationsInitialesHttpClient.FIELDS_TO_RETRIEVE,
+					...StrapiFieldsQueryBuilder.build(StrapiFormationsInitialesHttpClient.FIELDS_TO_RETRIEVE),
 					"pagination[page]": pageNumber,
 					"pagination[pageSize]": StrapiFormationsInitialesHttpClient.OCCURENCIES_NUMBER_PER_PAGE,
 					"sort": "identifiant",

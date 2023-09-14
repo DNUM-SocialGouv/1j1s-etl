@@ -3,7 +3,7 @@ import { OffreDeStageRepository } from "@maintenance/src/domain/service/offre-de
 import { StrapiConfiguration } from "@maintenance/src/infrastructure/configuration/configuration";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 export class HttpInternshipRepository implements OffreDeStageRepository {
 	constructor(
@@ -16,7 +16,7 @@ export class HttpInternshipRepository implements OffreDeStageRepository {
 	public async recuperer(flows: Array<string>): Promise<Array<OffreDeStage>> {
 		const internships: Array<OffreDeStage> = [];
 		for (const flow of flows) {
-			internships.push(...(await this.strapiHttpClient.get<OffreDeStage>(this.strapiConfiguration.INTERNSHIP_ENDPOINT, "id", "", flow)));
+			internships.push(...(await this.strapiHttpClient.get<OffreDeStage>(this.strapiConfiguration.INTERNSHIP_ENDPOINT, ["id"], "", flow)));
 		}
 		return internships;
 	}

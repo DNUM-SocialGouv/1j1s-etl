@@ -6,7 +6,7 @@ import {
 } from "@maintenance/src/infrastructure/gateway/repository/http-housing-ads.repository";
 
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 
 const flows = ["immojeune", "studapart"];
 const error = new Error("Oops something went wrong!");
@@ -32,12 +32,12 @@ describe("HttpHousingAdsRepositoryTest", () => {
 			// Given
 			strapiHttpClient
 				.get
-				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", "immojeune")
+				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, ["id"], "", "immojeune")
 				.resolves([{ id: "1" }, { id: "2" }, { id: "3" }]);
 
 			strapiHttpClient
 				.get
-				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, "id", "", "studapart")
+				.withArgs(strapiConfiguration.HOUSING_ADS_ENDPOINT, ["id"], "", "studapart")
 				.resolves([{ id: "4" }, { id: "5" }]);
 
 			// When

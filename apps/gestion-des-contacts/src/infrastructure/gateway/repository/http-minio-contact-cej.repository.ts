@@ -7,7 +7,7 @@ import { Configuration } from "@gestion-des-contacts/src/infrastructure/configur
 
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 
 export type StrapiContactCej = {
@@ -23,7 +23,7 @@ export type StrapiContactCej = {
 }
 
 export class HttpMinioContactCejRepository implements ContactCejRepository {
-	private static readonly FIELDS_TO_RETRIEVE = "prenom,nom,email,telephone,age,ville,code_postal,createdAt";
+	private static readonly FIELDS_TO_RETRIEVE = ["prenom","nom","email","telephone","age","ville","code_postal","createdAt"];
 	private static readonly RELATIONS_TO_RETRIEVE = "";
 	private static readonly CSV_HEADERS: Array<Record<"id" | "title", string>> = [
 		{ id: "dateDeCreation", title: "Date de création" },

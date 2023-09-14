@@ -12,7 +12,7 @@ import { ContactCejFixtureBuilder } from "@gestion-des-contacts/test/fixture/con
 
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Logger } from "@shared/src/infrastructure/configuration/logger";
-import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi-http-client";
+import { StrapiHttpClient } from "@shared/src/infrastructure/gateway/client/strapi/strapi-http-client";
 import { FileSystemClient } from "@shared/src/infrastructure/gateway/common/node-file-system.client";
 
 const date = new Date("2023-01-01T01:00:00.000Z");
@@ -151,7 +151,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		const contactCej = ContactCejFixtureBuilder.build();
 		strapiHttpClient
 			.get
-			.withArgs("contact-cejs", "prenom,nom,email,telephone,age,ville,code_postal,createdAt", "")
+			.withArgs("contact-cejs", ["prenom","nom","email","telephone","age","ville","code_postal","createdAt"], "")
 			.resolves([ContactCejFixtureBuilder.buildStrapi()]);
 
 		// When
@@ -160,7 +160,7 @@ describe("HttpMinioContactCejRepositoryTest", () => {
 		// Then
 		expect(strapiHttpClient.get).to.have.been.calledOnceWithExactly(
 			"contact-cejs",
-			"prenom,nom,email,telephone,age,ville,code_postal,createdAt",
+			["prenom","nom","email","telephone","age","ville","code_postal","createdAt"],
 			""
 		);
 		expect(contactsCej).to.have.deep.members([{ ...contactCej }]);
