@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.13.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.13.0...v4.13.1) (2023-09-14)
+
+
+### Bug Fixes
+
+* **strapi:** fixer les champs sur les appels vers strapi ([#351](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/351)) ([1eea8fb](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/1eea8fba60739194e51c38ea2eec8dbc15b54a60))
+
 ## [4.13.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.12.3...v4.13.0) (2023-09-08)
 
 
