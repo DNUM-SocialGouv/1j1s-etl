@@ -165,6 +165,7 @@ export class ConfigurationFactory extends ConfigurationValidator {
 				EXTRACT_LOG_LEVEL: getOrError("INTERNSHIPS_EXTRACT_LOG_LEVEL") as LogLevel,
 				FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("INTERNSHIPS_FEATURE_FLIPPING_CHARGEMENT", "false")),
 				FLOWS: [
+					getOrError("INTERNSHIPS_HELLOWORK_NAME"),
 					getOrError("INTERNSHIPS_JOBTEASER_NAME"),
 					getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),
 					getOrError("INTERNSHIPS_STAGEFR_UNCOMPRESSED_NAME"),

@@ -48,6 +48,7 @@ import {
 import {
 	ChargerFluxStagefrDecompresse,
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
+import { ExtraireHellowork } from "@stages/src/extraction/application-service/extraire-hellowork.usecase";
 import { ExtraireJobteaser } from "@stages/src/extraction/application-service/extraire-jobteaser.usecase";
 import {
 	ExtraireStagefrCompresse,
@@ -69,6 +70,7 @@ describe("CliModuleTest", () => {
 	let cliModule: TestingModule;
 
 	context("Lorsque je lance la commande d'extraction", () => {
+		let extraireHellowork: StubbedClass<ExtraireHellowork>;
 		let extraireJobteaser: StubbedClass<ExtraireJobteaser>;
 		let extraireStagefrCompresse: StubbedClass<ExtraireStagefrCompresse>;
 		let extraireStagefrDecompresse: StubbedClass<ExtraireStagefrDecompresse>;
@@ -77,6 +79,7 @@ describe("CliModuleTest", () => {
 		let extraireTousMobilises: StubbedClass<ExtraireFluxEvenementTousMobilises>;
 
 		beforeEach(async () => {
+			extraireHellowork = stubClass(ExtraireHellowork);
 			extraireJobteaser = stubClass(ExtraireJobteaser);
 			extraireStagefrCompresse = stubClass(ExtraireStagefrCompresse);
 			extraireStagefrDecompresse = stubClass(ExtraireStagefrDecompresse);
@@ -88,6 +91,7 @@ describe("CliModuleTest", () => {
 				imports: [CliModule, ConfigModule.forRoot({ envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env" })],
 			})
 				.overrideProvider(Client).useValue(stubClass(Client))
+				.overrideProvider(ExtraireHellowork).useValue(extraireHellowork)
 				.overrideProvider(ExtraireJobteaser).useValue(extraireJobteaser)
 				.overrideProvider(ExtraireStagefrCompresse).useValue(extraireStagefrCompresse)
 				.overrideProvider(ExtraireStagefrDecompresse).useValue(extraireStagefrDecompresse)
@@ -97,6 +101,16 @@ describe("CliModuleTest", () => {
 				.compile();
 		});
 
+		context("du flux Hellowork", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["extract", "hellowork"]);
+
+				// Then
+				expect(extraireHellowork.executer).to.have.been.calledOnce;
+			});
+		});
+		
 		context("du flux Jobteaser", () => {
 			it("execute la commande", async () => {
 				// When

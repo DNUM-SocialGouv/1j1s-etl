@@ -20,6 +20,7 @@ let flowStrategy: StagesOnFlowNameStrategy;
 describe("StagesOnFlowNameStrategyTest", () => {
 	beforeEach(() => {
 		const configuration = stubInterface<Configuration>(sinon);
+		configuration.HELLOWORK.NAME = "hellowork";
 		configuration.JOBTEASER.NAME = "jobteaser";
 		configuration.STAGEFR_COMPRESSED.NAME = "stagefr-compresse";
 		configuration.STAGEFR_UNCOMPRESSED.NAME = "stagefr-decompresse";
@@ -35,6 +36,19 @@ describe("StagesOnFlowNameStrategyTest", () => {
 			compressedFlowClient,
 			octetStreamFlowClient,
 		);
+	});
+
+	context("Lorsque je récupère le contenu du flux Jobteaser", () => {
+		beforeEach(() => {
+			flow = new FluxExtraction("hellowork", ".xml", "history", "http://some.url");
+		});
+
+		it("utilise le bon client pour Hellowork", async () => {
+			await flowStrategy.get(flow, logger);
+
+			expect(basicFlowClient.pull).to.have.been.calledOnce;
+			expect(basicFlowClient.pull).to.have.been.calledWith(url);
+		});
 	});
 
 	context("Lorsque je récupère le contenu du flux Jobteaser", () => {

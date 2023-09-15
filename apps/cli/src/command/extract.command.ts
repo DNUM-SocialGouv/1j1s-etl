@@ -16,6 +16,9 @@ import {
 } from "@logements/src/extraction/infrastructure/sub-command/extract-flow-studapart.sub-command";
 
 import {
+	ExtractFlowHelloworkSubCommand,
+} from "@stages/src/extraction/infrastructure/sub-command/extract-flow-hellowork.sub-command";
+import {
 	ExtractFlowJobteaserSubCommand,
 } from "@stages/src/extraction/infrastructure/sub-command/extract-flow-jobteaser.sub-command";
 import {
@@ -32,6 +35,7 @@ import {
 		ExtractFlowTousMobilisesSubCommand,
 		ExtractFlowImmojeuneSubCommand,
 		ExtractFlowStudapartSubCommand,
+		ExtractFlowHelloworkSubCommand,
 		ExtractFlowJobteaserSubCommand,
 		ExtractFlowStagefrCompressedSubCommand,
 		ExtractFlowStagefrUncompressedSubCommand,

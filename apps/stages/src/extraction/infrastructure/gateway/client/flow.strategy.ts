@@ -15,6 +15,8 @@ export class StagesOnFlowNameStrategy implements FlowStrategy {
 
 	public async get(flow: FluxExtraction, logger: Logger): Promise<string> {
 		switch (flow.nom) {
+			case this.configuration.HELLOWORK.NAME:
+				return this.basicFlowHttpClient.pull(flow.url, logger);
 			case this.configuration.JOBTEASER.NAME:
 				return this.basicFlowHttpClient.pull(flow.url, logger);
 			case this.configuration.STAGEFR_COMPRESSED.NAME:

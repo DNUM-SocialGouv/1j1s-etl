@@ -7,6 +7,7 @@ import { ExtraireFluxDomainService } from "@stages/src/extraction/domain/service
 import { FluxRepository } from "@stages/src/extraction/domain/service/flux.repository";
 import { Gateways } from "@stages/src/extraction/infrastructure/gateway";
 
+import { ExtraireHellowork } from "./extraire-hellowork.usecase";
 import { ExtraireJobteaser } from "./extraire-jobteaser.usecase";
 import { ExtraireStagefrCompresse } from "./extraire-stagefr-compresse.usecase";
 import { ExtraireStagefrDecompresse } from "./extraire-stagefr-decompresse.usecase";
@@ -19,6 +20,13 @@ import { ExtraireStagefrDecompresse } from "./extraire-stagefr-decompresse.useca
 			inject: ["FluxRepository", DateService],
 			useFactory: (fluxRepository: FluxRepository, dateService: DateService): ExtraireFluxDomainService => {
 				return new ExtraireFluxDomainService(fluxRepository, dateService);
+			},
+		},
+		{
+			provide: ExtraireHellowork,
+			inject: [ExtraireFluxDomainService],
+			useFactory: (extaireFluxDomainService: ExtraireFluxDomainService): ExtraireHellowork => {
+				return new ExtraireHellowork(extaireFluxDomainService);
 			},
 		},
 		{
@@ -43,7 +51,7 @@ import { ExtraireStagefrDecompresse } from "./extraire-stagefr-decompresse.useca
 			},
 		},
 	],
-	exports: [ExtraireJobteaser, ExtraireStagefrCompresse, ExtraireStagefrDecompresse],
+	exports: [ExtraireHellowork, ExtraireJobteaser, ExtraireStagefrCompresse, ExtraireStagefrDecompresse],
 })
 export class Usecases {
 }
