@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.13.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.13.2...v4.13.3) (2023-09-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nestjs/config to ~3.1.0 ([#353](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/353)) ([c59ba7b](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/c59ba7b0da2b3db944c3bd490bfde4348e5d9d5c))
+
 ## [4.13.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.13.1...v4.13.2) (2023-09-15)
 
 
