@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { Usecases } from "@stages/src/extraction/application-service";
+import { ExtraireHellowork } from "@stages/src/extraction/application-service/extraire-hellowork.usecase";
 import { ExtraireJobteaser } from "@stages/src/extraction/application-service/extraire-jobteaser.usecase";
 import {
 	ExtraireStagefrCompresse,
@@ -10,6 +11,9 @@ import {
 	ExtraireStagefrDecompresse,
 } from "@stages/src/extraction/application-service/extraire-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/extraction/infrastructure/configuration/configuration";
+import {
+	ExtractFlowHelloworkSubCommand,
+} from "@stages/src/extraction/infrastructure/sub-command/extract-flow-hellowork.sub-command";
 import {
 	ExtractFlowJobteaserSubCommand,
 } from "@stages/src/extraction/infrastructure/sub-command/extract-flow-jobteaser.sub-command";
@@ -29,6 +33,13 @@ import {
 		Usecases,
 	],
 	providers: [
+		{
+			provide: ExtractFlowHelloworkSubCommand,
+			inject: [ConfigService, ExtraireHellowork],
+			useFactory: (configurationService: ConfigService, usecase: ExtraireHellowork): ExtractFlowHelloworkSubCommand => {
+				return new ExtractFlowHelloworkSubCommand(usecase, configurationService.get<Configuration>("stagesExtraction"));
+			},
+		},
 		{
 			provide: ExtractFlowJobteaserSubCommand,
 			inject: [ConfigService, ExtraireJobteaser],
@@ -51,7 +62,7 @@ import {
 			},
 		},
 	],
-	exports: [ExtractFlowJobteaserSubCommand, ExtractFlowStagefrCompressedSubCommand, ExtractFlowStagefrUncompressedSubCommand],
+	exports: [ExtractFlowHelloworkSubCommand, ExtractFlowJobteaserSubCommand, ExtractFlowStagefrCompressedSubCommand, ExtractFlowStagefrUncompressedSubCommand],
 })
 export class Extraction {
 }

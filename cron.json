@@ -5,6 +5,10 @@
       "size": "XL"
     },
     {
+      "command": "0 4 * * * npm run cli -- extract hellowork",
+      "size": "XL"
+    },
+    {
       "command": "30 7 * * * npm run cli -- transform jobteaser",
       "size": "XL"
     },

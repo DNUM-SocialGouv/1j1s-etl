@@ -55,11 +55,12 @@ Démarrer le conteneur (dans l'onglet Resources mettre Qty: 1) web puis l'étein
 
 ### Stage
 
-| nom du flux\action | Extract | transform | load  |
-| :----------------- | :----:  | :-------: |:-----:|
-| jobteaser          |    X    |     X     |   X   |
-| stagefr-compresse  |    X    |     X     |   X   |
-| stagefr-decompresse|    X    |     X     |   X   |
+| nom du flux\action  | Extract | transform | load  |
+|:--------------------| :----:  | :-------: |:-----:|
+| hellowork           |    X    |     X     |   X   |
+| jobteaser           |    X    |     X     |   X   |
+| stagefr-compresse   |    X    |     X     |   X   |
+| stagefr-decompresse |    X    |     X     |   X   |
 
 ### Evenement
 
