@@ -5,7 +5,7 @@
       "size": "XL"
     },
     {
-      "command": "0 7 * * * npm run cli -- extract hellowork",
+      "command": "0 4 * * * npm run cli -- extract hellowork",
       "size": "XL"
     },
     {
