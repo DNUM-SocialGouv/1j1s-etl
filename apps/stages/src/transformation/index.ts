@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { Usecases } from "@stages/src/transformation/application-service";
 import {
+	TransformerFluxHellowork,
+} from "@stages/src/transformation/application-service/transformer-flux-hellowork.usecase";
+import {
 	TransformerFluxJobteaser,
 } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
 import {
@@ -15,6 +18,9 @@ import {
 	Configuration,
 	ConfigurationFactory,
 } from "@stages/src/transformation/infrastructure/configuration/configuration";
+import {
+	TransformFlowHelloworkSubCommand,
+} from "@stages/src/transformation/infrastructure/sub-command/transform-flow-hellowork.sub-command";
 import {
 	TransformFlowJobteaserSubCommand,
 } from "@stages/src/transformation/infrastructure/sub-command/transform-flow-jobteaser.sub-command";
@@ -34,6 +40,16 @@ import {
 		Usecases,
 	],
 	providers: [
+		{
+			provide: TransformFlowHelloworkSubCommand,
+			inject: [ConfigService, TransformerFluxHellowork],
+			useFactory: (
+				configurationService: ConfigService,
+				usecase: TransformerFluxHellowork
+			): TransformFlowHelloworkSubCommand => {
+				return new TransformFlowHelloworkSubCommand(usecase, configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
 		{
 			provide: TransformFlowJobteaserSubCommand,
 			inject: [ConfigService, TransformerFluxJobteaser],
@@ -66,6 +82,7 @@ import {
 		},
 	],
 	exports: [
+		TransformFlowHelloworkSubCommand,
 		TransformFlowJobteaserSubCommand,
 		TransformFlowStagefrCompressedSubCommand,
 		TransformFlowStagefrUncompressedSubCommand,
