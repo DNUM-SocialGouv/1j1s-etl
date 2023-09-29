@@ -29,7 +29,6 @@ export namespace Hellowork {
 		function?: string
 		seodomain?: _Domaine
 		category?: string
-		education?: string
 		salary?: string
 	}
 }

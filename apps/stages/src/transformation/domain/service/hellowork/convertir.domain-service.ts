@@ -80,8 +80,8 @@ export class Convertir {
 
 		return {
 			// TODO (BRUJ 29-09-2023): changer dateDeDebutMax/Min
-			dateDeDebutMax: "",
-			dateDeDebutMin: "",
+			dateDeDebutMax: undefined,
+			dateDeDebutMin: undefined,
 			description: offreDeStage.description,
 			domaines: [{ nom: this.traduireDomaine(offreDeStage.seodomain) }],
 			employeur: {
@@ -110,8 +110,8 @@ export class Convertir {
 			ville: offreDeStage.city,
 			codePostal: offreDeStage.postalcode,
 			pays: this.pays.versFormatISOAlpha2(offreDeStage.country),
-			latitude: Number(offreDeStage.geoloc.split(",")[0]),
-			longitude: Number(offreDeStage.geoloc.split(",")[1]),
+			latitude: offreDeStage.geoloc && Number(offreDeStage.geoloc.split(",")[0]),
+			longitude: offreDeStage.geoloc && Number(offreDeStage.geoloc?.split(",")[1]),
 		};
 	}
 }
