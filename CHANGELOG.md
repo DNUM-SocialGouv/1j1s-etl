@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.15.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.14.2...v4.15.0) (2023-10-03)
+
+
+### Features
+
+* **stages:** transformation du flux hello work ([#370](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/370)) ([476e228](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/476e228ca71e84f757dbdbcd710c3a41bc568772))
+
 ## [4.14.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.14.1...v4.14.2) (2023-10-02)
 
 
