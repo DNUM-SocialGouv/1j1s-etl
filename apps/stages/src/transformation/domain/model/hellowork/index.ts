@@ -12,7 +12,6 @@ export namespace Hellowork {
 	export type OffreDeStage = {
 		id: number;
 		reference?: string
-		// TODO (BRUJ 29-09-2023): format de la date
 		date: string
 		title: string
 		link: string
