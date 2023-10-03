@@ -10,17 +10,17 @@ export namespace Hellowork {
 	export import Domaine = _Domaine
 
 	export type OffreDeStage = {
-		id: string;
+		id: number;
 		reference?: string
 		// TODO (BRUJ 29-09-2023): format de la date
 		date: string
 		title: string
 		link: string
-		compagny: string
+		company: string
 		logo?: string
 		publisher?: string
 		city?: string
-		postalcode?: string
+		postalcode?: number
 		inseecode?: string
 		country?: string
 		geoloc?: string

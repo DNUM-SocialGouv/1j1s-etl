@@ -41,7 +41,7 @@ describe("TransformerFluxHelloworkTest", () => {
 						logoUrl: "http://url.du.logo",
 					},
 					domaines: [{ nom: UnJeune1Solution.Domaine.LOGISTIQUE }],
-					identifiantSource: "Identifiant source",
+					identifiantSource: "15788",
 					localisation: {
 						ville: "Marseille",
 						codePostal: "13000",
@@ -83,15 +83,15 @@ describe("TransformerFluxHelloworkTest", () => {
 						job: [OffreDeStageHelloworkFixtureBuilder.build({
 							title: "Titre de l'offre",
 							description: "Description de l'offre",
-							compagny: "Nom de l'entreprise",
+							company: "Nom de l'entreprise",
 							logo: "http://url.du.logo",
 							seodomain: Hellowork.Domaine.LOGISTIQUE,
 							date: "2022-01-01T00:00:00.000Z",
 							city: "Marseille",
-							postalcode: "13000",
+							postalcode: 13000,
 							country: "France",
 							link: "https://url-de-candidature.com",
-							id: "Identifiant source",
+							id: 15788,
 							geoloc: "15.5,16.78",
 						})],
 					},
@@ -114,6 +114,7 @@ describe("TransformerFluxHelloworkTest", () => {
 					dateDeDebutMin: undefined,
 					dateDeDebutMax: undefined,
 					source: Source.HELLOWORK,
+					identifiantSource: "15788",
 					localisation: {
 						ville: "Marseille",
 						codePostal: "13000",
@@ -147,8 +148,9 @@ describe("TransformerFluxHelloworkTest", () => {
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
 				const offreHellowork = OffreDeStageHelloworkFixtureBuilder.build({
 					city: "Marseille",
-					postalcode: "13000",
+					postalcode: 13000,
 					country: "France",
+					id: 15788,
 				});
 				delete offreHellowork.geoloc;
 				
@@ -176,6 +178,7 @@ describe("TransformerFluxHelloworkTest", () => {
 					dateDeDebutMax: undefined,
 					source: Source.HELLOWORK,
 					domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
+					identifiantSource: "15788",
 				}, {
 					latitude: undefined,
 					longitude: undefined,

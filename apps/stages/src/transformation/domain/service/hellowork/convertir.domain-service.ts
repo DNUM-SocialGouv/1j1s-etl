@@ -79,16 +79,15 @@ export class Convertir {
 		const maintenant = this.dateService.maintenant().toISOString();
 
 		return {
-			// TODO (BRUJ 29-09-2023): changer dateDeDebutMax/Min
 			dateDeDebutMax: undefined,
 			dateDeDebutMin: undefined,
 			description: offreDeStage.description,
 			domaines: [{ nom: this.traduireDomaine(offreDeStage.seodomain) }],
 			employeur: {
-				nom: offreDeStage.compagny,
+				nom: offreDeStage.company,
 				logoUrl: offreDeStage.logo,
 			},
-			identifiantSource: offreDeStage.id,
+			identifiantSource: offreDeStage.id.toString(),
 			localisation: this.recupererLaLocalisation(offreDeStage),
 			// TODO (BRUJ 29-09-2023): rajouter la rémunération en string
 			source: UnJeune1Solution.Source.HELLOWORK,
@@ -108,7 +107,7 @@ export class Convertir {
 	private recupererLaLocalisation(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.Localisation {
 		return {
 			ville: offreDeStage.city,
-			codePostal: offreDeStage.postalcode,
+			codePostal: offreDeStage.postalcode.toString(),
 			pays: this.pays.versFormatISOAlpha2(offreDeStage.country),
 			latitude: offreDeStage.geoloc && Number(offreDeStage.geoloc.split(",")[0]),
 			longitude: offreDeStage.geoloc && Number(offreDeStage.geoloc?.split(",")[1]),
