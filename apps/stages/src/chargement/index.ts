@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { Usecases } from "@stages/src/chargement/application-service";
+import { ChargerFluxHellowork } from "@stages/src/chargement/application-service/charger-flux-hellowork.usecase";
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {
 	ChargerFluxStagefrCompresse,
@@ -10,6 +11,9 @@ import {
 	ChargerFluxStagefrDecompresse,
 } from "@stages/src/chargement/application-service/charger-flux-stagefr-decompresse.usecase";
 import { Configuration, ConfigurationFactory } from "@stages/src/chargement/infrastructure/configuration/configuration";
+import {
+	LoadFlowHelloworkSubCommand,
+} from "@stages/src/chargement/infrastructure/sub-command/load-flow-hellowork.sub-command";
 import { LoadFlowJobteaserSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-jobteaser.sub-command";
 import {
 	LoadFlowStagefrCompressedSubCommand,
@@ -26,7 +30,15 @@ import {
 		}),
 		Usecases,
 	],
-	providers: [{
+	providers: [
+	{
+		provide: LoadFlowHelloworkSubCommand,
+		inject: [ConfigService, ChargerFluxHellowork],
+		useFactory: (configurationService: ConfigService, chargerFluxHellowork: ChargerFluxHellowork): LoadFlowHelloworkSubCommand => {
+			return new LoadFlowHelloworkSubCommand(chargerFluxHellowork, configurationService.get<Configuration>("stagesChargement"));
+		},
+	},
+	{
 		provide: LoadFlowJobteaserSubCommand,
 		inject: [ConfigService, ChargerFluxJobteaser],
 		useFactory: (configurationService: ConfigService, chargerFluxJobteaser: ChargerFluxJobteaser): LoadFlowJobteaserSubCommand => {
@@ -46,6 +58,7 @@ import {
 		},
 	}],
 	exports: [
+		LoadFlowHelloworkSubCommand,
 		LoadFlowJobteaserSubCommand,
 		LoadFlowStagefrCompressedSubCommand,
 		LoadFlowStagefrUncompressedSubCommand,

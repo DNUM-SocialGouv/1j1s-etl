@@ -41,6 +41,7 @@ import {
 import { PurgerLesOffresDeStage } from "@maintenance/src/application-service/purger-les-offres-de-stage.usecase";
 import { MinioAdminStorageRepository } from "@maintenance/src/infrastructure/gateway/repository/minio-admin-storage.repository";
 
+import { ChargerFluxHellowork } from "@stages/src/chargement/application-service/charger-flux-hellowork.usecase";
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {
 	ChargerFluxStagefrCompresse,
@@ -263,6 +264,7 @@ describe("CliModuleTest", () => {
 	});
 
 	context("Lorsque je lance la commande de chargement", () => {
+		let chargerHellowork: StubbedClass<ChargerFluxHellowork>;
 		let chargerJobteaser: StubbedClass<ChargerFluxJobteaser>;
 		let chargerStagefrCompresse: StubbedClass<ChargerFluxStagefrCompresse>;
 		let chargerStagefrDecompresse: StubbedClass<ChargerFluxStagefrDecompresse>;
@@ -272,6 +274,7 @@ describe("CliModuleTest", () => {
 		let chargerOnisep: StubbedClass<ChargerFluxOnisep>;
 
 		beforeEach(async () => {
+			chargerHellowork = stubClass(ChargerFluxHellowork);
 			chargerJobteaser = stubClass(ChargerFluxJobteaser);
 			chargerStagefrCompresse = stubClass(ChargerFluxStagefrCompresse);
 			chargerStagefrDecompresse = stubClass(ChargerFluxStagefrDecompresse);
@@ -285,6 +288,7 @@ describe("CliModuleTest", () => {
 			})
 				.overrideProvider(Client).useValue(stubClass(Client))
 				.overrideProvider(ChargerFluxOnisep).useValue(chargerOnisep)
+				.overrideProvider(ChargerFluxHellowork).useValue(chargerHellowork)
 				.overrideProvider(ChargerFluxJobteaser).useValue(chargerJobteaser)
 				.overrideProvider(ChargerFluxStagefrCompresse).useValue(chargerStagefrCompresse)
 				.overrideProvider(ChargerFluxStagefrDecompresse).useValue(chargerStagefrDecompresse)
@@ -301,6 +305,16 @@ describe("CliModuleTest", () => {
 
 				// Then
 				expect(chargerOnisep.executer).to.have.been.calledOnce;
+			});
+		});
+		
+		context("du flux Hellowork", () => {
+			it("execute la commande", async () => {
+				// When
+				await CommandTestFactory.run(cliModule, ["load", "hellowork"]);
+				
+				// Then
+				expect(chargerHellowork.executer).to.have.been.calledOnce;
 			});
 		});
 

@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { Shared } from "@shared/src";
 import { DateService } from "@shared/src/domain/service/date.service";
 
+import { ChargerFluxHellowork } from "@stages/src/chargement/application-service/charger-flux-hellowork.usecase";
 import { ChargerFluxJobteaser } from "@stages/src/chargement/application-service/charger-flux-jobteaser.usecase";
 import {
 	ChargerFluxStagefrCompresse,
@@ -50,8 +51,15 @@ import { Gateways } from "@stages/src/chargement/infrastructure/gateway";
 				return new ChargerFluxStagefrDecompresse(chargerOffresDeStageDomainService);
 			},
 		},
+		{
+			provide: ChargerFluxHellowork,
+			inject: [ChargerOffresDeStageDomainService],
+			useFactory: (chargerOffresDeStageDomainService: ChargerOffresDeStageDomainService): ChargerFluxHellowork => {
+				return new ChargerFluxHellowork(chargerOffresDeStageDomainService);
+			},
+		},
 	],
-	exports: [ChargerFluxJobteaser, ChargerFluxStagefrCompresse, ChargerFluxStagefrDecompresse],
+	exports: [ChargerFluxJobteaser, ChargerFluxStagefrCompresse, ChargerFluxStagefrDecompresse, ChargerFluxHellowork],
 })
 export class Usecases {
 }
