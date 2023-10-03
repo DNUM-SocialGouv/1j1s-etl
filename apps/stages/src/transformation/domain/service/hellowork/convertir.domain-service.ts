@@ -82,13 +82,13 @@ export class Convertir {
 			dateDeDebutMax: undefined,
 			dateDeDebutMin: undefined,
 			description: offreDeStage.description,
-			domaines: [{ nom: this.traduireDomaine(offreDeStage.seodomain) }],
+			domaines: [{ nom: this.mapDomaine(offreDeStage.seodomain) }],
 			employeur: {
 				nom: offreDeStage.company,
 				logoUrl: offreDeStage.logo,
 			},
 			identifiantSource: offreDeStage.id.toString(),
-			localisation: this.recupererLaLocalisation(offreDeStage),
+			localisation: this.mapLocalisation(offreDeStage),
 			// TODO (BRUJ 29-09-2023): rajouter la rémunération en string
 			source: UnJeune1Solution.Source.HELLOWORK,
 			sourceCreatedAt: offreDeStage.date,
@@ -99,12 +99,12 @@ export class Convertir {
 		};
 	}
 
-	private traduireDomaine(domaine: Hellowork.Domaine): UnJeune1Solution.Domaine {
+	private mapDomaine(domaine: Hellowork.Domaine): UnJeune1Solution.Domaine {
 		const traductionDomaine = this.correspondanceDomaines.get(domaine);
 		return traductionDomaine || UnJeune1Solution.Domaine.NON_APPLICABLE;
 	}
 
-	private recupererLaLocalisation(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.Localisation {
+	private mapLocalisation(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.Localisation {
 		return {
 			ville: offreDeStage.city,
 			codePostal: offreDeStage.postalcode.toString(),

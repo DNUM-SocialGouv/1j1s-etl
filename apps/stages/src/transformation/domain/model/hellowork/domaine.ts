@@ -59,5 +59,5 @@ export enum Domaine {
 	AERONAUTIQUE = "Aeronautique",
 	NAUTISME = "Nautisme",
 	DEFENSE = "Defense",
-	FERROVIAIRE = "Ferroviaire"
+	FERROVIAIRE = "Ferroviaire",
 }
