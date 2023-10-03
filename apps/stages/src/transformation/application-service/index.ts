@@ -6,6 +6,9 @@ import { DateService } from "@shared/src/domain/service/date.service";
 import { Pays } from "@shared/src/domain/service/pays";
 
 import {
+	TransformerFluxHellowork,
+} from "@stages/src/transformation/application-service/transformer-flux-hellowork.usecase";
+import {
 	TransformerFluxJobteaser,
 } from "@stages/src/transformation/application-service/transformer-flux-jobteaser.usecase";
 import {
@@ -14,6 +17,9 @@ import {
 import {
 	TransformerFluxStagefrDecompresse,
 } from "@stages/src/transformation/application-service/transformer-flux-stagefr-decompresse.usecase";
+import {
+	Convertir as ConvertirHellowork,
+} from "@stages/src/transformation/domain/service/hellowork/convertir.domain-service";
 import {
 	Convertir as ConvertirJobteaser,
 } from "@stages/src/transformation/domain/service/jobteaser/convertir.domain-service";
@@ -29,6 +35,13 @@ import { Gateways } from "@stages/src/transformation/infrastructure/gateway";
 @Module({
 	imports: [Gateways, Shared],
 	providers: [
+		{
+			provide: ConvertirHellowork,
+			inject: [DateService, "Pays"],
+			useFactory: (dateService: DateService, pays: Pays): ConvertirHellowork => {
+				return new ConvertirHellowork(dateService, pays);
+			},
+		},
 		{
 			provide: ConvertirJobteaser,
 			inject: [DateService, "AssainisseurDeTexte", "Pays"],
@@ -58,6 +71,13 @@ import { Gateways } from "@stages/src/transformation/infrastructure/gateway";
 			},
 		},
 		{
+			provide: TransformerFluxHellowork,
+			inject: ["OffreDeStageRepository", ConvertirHellowork],
+			useFactory: (offreDeStageRepository: OffreDeStageRepository, convertirOffreDeStage: ConvertirHellowork): TransformerFluxHellowork => {
+				return new TransformerFluxHellowork(offreDeStageRepository, convertirOffreDeStage);
+			},
+		},
+		{
 			provide: TransformerFluxStagefrCompresse,
 			inject: ["OffreDeStageRepository", ConvertirStagefrCompresse],
 			useFactory: (offreDeStageRepository: OffreDeStageRepository, convertirOffreDeStage: ConvertirStagefrCompresse): TransformerFluxStagefrCompresse => {
@@ -72,7 +92,7 @@ import { Gateways } from "@stages/src/transformation/infrastructure/gateway";
 			},
 		},
 	],
-	exports: [TransformerFluxJobteaser, TransformerFluxStagefrCompresse, TransformerFluxStagefrDecompresse],
+	exports: [TransformerFluxHellowork, TransformerFluxJobteaser, TransformerFluxStagefrCompresse, TransformerFluxStagefrDecompresse],
 })
 export class Usecases {
 }

@@ -16,6 +16,9 @@ import {
 } from "@logements/src/transformation/infrastructure/sub-command/transform-flow-studapart.sub-command";
 
 import {
+	TransformFlowHelloworkSubCommand,
+} from "@stages/src/transformation/infrastructure/sub-command/transform-flow-hellowork.sub-command";
+import {
 	TransformFlowJobteaserSubCommand,
 } from "@stages/src/transformation/infrastructure/sub-command/transform-flow-jobteaser.sub-command";
 import {
@@ -31,6 +34,7 @@ import {
 		TransformFlowTousMobilisesSubCommand,
 		TransformFlowImmojeuneSubCommand,
 		TransformFlowStudapartSubCommand,
+		TransformFlowHelloworkSubCommand,
 		TransformFlowJobteaserSubCommand,
 		TransformFlowStagefrCompressedSubCommand,
 		TransformFlowStagefrUncompressedSubCommand,

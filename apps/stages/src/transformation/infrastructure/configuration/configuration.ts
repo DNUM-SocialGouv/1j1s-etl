@@ -28,6 +28,7 @@ export type Configuration = {
 	DOMAINE: Domaine
 	FLOWS: Array<string>
 	JOBTEASER: TaskConfiguration
+	HELLOWORK: TaskConfiguration
 	LOGGER_LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration
 	NODE_ENV: Environment
@@ -50,10 +51,17 @@ export class ConfigurationFactory extends ConfigurationValidator {
 			CONTEXT: "transformation",
 			DOMAINE: "Stages",
 			FLOWS: [
+				getOrError("INTERNSHIPS_HELLOWORK_NAME"),
 				getOrError("INTERNSHIPS_JOBTEASER_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_UNCOMPRESSED_NAME"),
 			],
+			HELLOWORK: {
+				DIRECTORY_NAME: getOrError("INTERNSHIPS_HELLOWORK_DIRECTORY_NAME"),
+				NAME: getOrError("INTERNSHIPS_HELLOWORK_NAME"),
+				RAW_FILE_EXTENSION: getOrError("INTERNSHIPS_HELLOWORK_RAW_FILE_EXTENSION"),
+				TRANSFORMED_FILE_EXTENSION: getOrError("INTERNSHIPS_HELLOWORK_TRANSFORMED_FILE_EXTENSION"),
+			},
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrError("INTERNSHIPS_JOBTEASER_DIRECTORY_NAME"),
 				NAME: getOrError("INTERNSHIPS_JOBTEASER_NAME"),
