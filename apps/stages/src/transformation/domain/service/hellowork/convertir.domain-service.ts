@@ -109,8 +109,8 @@ export class Convertir {
 			ville: offreDeStage.city,
 			codePostal: offreDeStage.postalcode.toString(),
 			pays: this.pays.versFormatISOAlpha2(offreDeStage.country),
-			latitude: offreDeStage.geoloc && Number(offreDeStage.geoloc.split(",")[0]),
-			longitude: offreDeStage.geoloc && Number(offreDeStage.geoloc.split(",")[1]),
+			latitude: offreDeStage.geoloc ? Number(offreDeStage.geoloc.split(",")[0]) : undefined,
+			longitude: offreDeStage.geoloc ? Number(offreDeStage.geoloc.split(",")[1]) : undefined,
 		};
 	}
 }

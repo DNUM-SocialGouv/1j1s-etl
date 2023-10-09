@@ -11,6 +11,9 @@ import {
 import { LoadFlowImmojeuneSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-immojeune.sub-command";
 import { LoadFlowStudapartSubCommand } from "@logements/src/chargement/infrastructure/sub-command/load-flow-studapart.sub-command";
 
+import {
+	LoadFlowHelloworkSubCommand,
+} from "@stages/src/chargement/infrastructure/sub-command/load-flow-hellowork.sub-command";
 import { LoadFlowJobteaserSubCommand } from "@stages/src/chargement/infrastructure/sub-command/load-flow-jobteaser.sub-command";
 import {
 	LoadFlowStagefrCompressedSubCommand,
@@ -25,6 +28,7 @@ import {
 		LoadFlowTousMobilisesSubCommand,
 		LoadFlowImmojeuneSubCommand,
 		LoadFlowStudapartSubCommand,
+		LoadFlowHelloworkSubCommand,
 		LoadFlowJobteaserSubCommand,
 		LoadFlowStagefrCompressedSubCommand,
 		LoadFlowStagefrUncompressedSubCommand,

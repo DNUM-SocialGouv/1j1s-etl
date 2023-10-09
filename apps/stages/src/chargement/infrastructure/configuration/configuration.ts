@@ -26,6 +26,7 @@ export type Configuration = {
 	DOMAINE: Domaine
 	FEATURE_FLIPPING_CHARGEMENT: boolean
 	FLOWS: Array<string>
+	HELLOWORK: TaskConfiguration
 	JOBTEASER: TaskConfiguration
 	LOGGER_LOG_LEVEL: LogLevel
 	MINIO: MinioConfiguration
@@ -58,9 +59,15 @@ export class ConfigurationFactory extends ConfigurationValidator {
 			FEATURE_FLIPPING_CHARGEMENT: toBoolean(getOrDefault("INTERNSHIPS_FEATURE_FLIPPING_CHARGEMENT", "false")),
 			FLOWS: [
 				getOrError("INTERNSHIPS_JOBTEASER_NAME"),
+				getOrError("INTERNSHIPS_HELLOWORK_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_COMPRESSED_NAME"),
 				getOrError("INTERNSHIPS_STAGEFR_UNCOMPRESSED_NAME"),
 			],
+			HELLOWORK: {
+				DIRECTORY_NAME: getOrDefault("INTERNSHIPS_HELLOWORK_DIRECTORY_NAME", "hellowork"),
+				NAME: getOrDefault("INTERNSHIPS_HELLOWORK_NAME", "hellowork"),
+				TRANSFORMED_FILE_EXTENSION: getOrError("INTERNSHIPS_HELLOWORK_TRANSFORMED_FILE_EXTENSION"),
+			},
 			JOBTEASER: {
 				DIRECTORY_NAME: getOrDefault("INTERNSHIPS_JOBTEASER_DIRECTORY_NAME", "jobteaser"),
 				NAME: getOrDefault("INTERNSHIPS_JOBTEASER_NAME", "jobteaser"),
