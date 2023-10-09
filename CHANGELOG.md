@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.16.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.15.0...v4.16.0) (2023-10-09)
+
+
+### Features
+
+* **stages:** chargement du flux hellowork ([#372](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/372)) ([d50c9d0](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/d50c9d0c217ddbbee6aecc73959847f64f212998))
+
 ## [4.15.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.14.2...v4.15.0) (2023-10-03)
 
 
