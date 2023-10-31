@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.16.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.2...v4.16.3) (2023-10-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @mdx-js/react to v3 ([#388](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/388)) ([50d45d2](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/50d45d270390781351eeb432d9162d5d3dc26b23))
+* **deps:** update dependency axios to ~1.6.0 ([#389](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/389)) ([6753a8d](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/6753a8ddf1008ff650099fd9ecdc1f982af051f3))
+
 ## [4.16.2](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.1...v4.16.2) (2023-10-24)
 
 
