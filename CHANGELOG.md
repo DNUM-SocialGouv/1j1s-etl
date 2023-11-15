@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.16.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.3...v4.16.4) (2023-11-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency prism-react-renderer to ~2.2.0 ([#399](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/399)) ([32b2751](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/32b2751b749e55ef738ae860665bc675f245a9bc))
+
 ## [4.16.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.2...v4.16.3) (2023-10-30)
 
 
