@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.16.5](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.4...v4.16.5) (2023-11-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency meilisearch to ~0.36.0 ([#403](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/403)) ([ec33783](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ec33783c7862841c97bbb3ce7305527fa6bd829e))
+* **deps:** update docusaurus monorepo to v3 (major) ([#393](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/393)) ([dc2c7cc](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/dc2c7cc3fe3ae6b66c36551064b4b58bc8584004))
+
 ## [4.16.4](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.3...v4.16.4) (2023-11-14)
 
 
