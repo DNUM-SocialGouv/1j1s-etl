@@ -92,7 +92,7 @@
   },
   "engines": {
     "node": "18.15.0",
-    "npm": "9.9.2"
+    "npm": "10.2.4"
   },
   "nyc": {
     "extension": [
