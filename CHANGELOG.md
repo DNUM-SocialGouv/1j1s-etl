@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.16.7](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.6...v4.16.7) (2023-12-02)
+
+
+### Bug Fixes
+
+* **deps:** update docusaurus monorepo to v3.0.1 ([#410](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/410)) ([a41efe6](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/a41efe61af4662e507167cbad2d4099fad26314e))
+
 ## [4.16.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.5...v4.16.6) (2023-11-29)
 
 
