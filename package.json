@@ -48,7 +48,7 @@
     "minio": "~7.1.0",
     "nest-commander": "~3.12.0",
     "node-stream-zip": "~1.15.0",
-    "pino": "~8.16.0",
+    "pino": "~8.17.0",
     "pino-sentry": "~0.14.0",
     "reflect-metadata": "~0.1.13",
     "rxjs": "~7.8.0",
