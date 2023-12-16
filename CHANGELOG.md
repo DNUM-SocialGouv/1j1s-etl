@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.16.8](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.7...v4.16.8) (2023-12-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pino to ~8.17.0 ([#421](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/421)) ([1ea5fc5](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/1ea5fc5ec58b809198781fa05e8673df28a354b5))
+
 ## [4.16.7](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.6...v4.16.7) (2023-12-01)
 
 
