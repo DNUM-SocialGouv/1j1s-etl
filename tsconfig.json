@@ -12,7 +12,6 @@
       "ES2021"
     ],
     "paths": {
-      "@api/*": ["apps/api/*"],
       "@cli/*": ["apps/cli/*"],
       "@gestion-des-contacts/*": ["apps/gestion-des-contacts/*"],
       "@evenements/*": ["apps/evenements/*"],
