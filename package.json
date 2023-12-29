@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/DNUM-SocialGouv/1j1s-orchestrateur-transform-load#readme",
   "dependencies": {
-    "@nestjs/common": "~10.2.0",
+    "@nestjs/common": "~10.3.0",
     "@nestjs/config": "~3.1.0",
-    "@nestjs/core": "~10.2.0",
-    "@nestjs/platform-express": "~10.2.0",
+    "@nestjs/core": "~10.3.0",
+    "@nestjs/platform-express": "~10.3.0",
     "axios": "~1.6.0",
     "basic-ftp": "~5.0.2",
     "csv-writer": "~1.6.0",
@@ -47,7 +47,7 @@
     "node-stream-zip": "~1.15.0",
     "pino": "~8.17.0",
     "pino-sentry": "~0.14.0",
-    "reflect-metadata": "~0.1.13",
+    "reflect-metadata": "^0.1.14",
     "rxjs": "~7.8.0",
     "source-map-support": "~0.5.21",
     "turndown": "~7.1.2"
