@@ -109,7 +109,7 @@ export class ChargerOffresDeStageDomainService {
 			.map((offreDeStageAMettreAJour) =>
 				new UnJeune1Solution.OffreDeStageAMettreAJour(
 					offreDeStageAMettreAJour.recupererAttributs(),
-					offresDeStageExistantes.find((offreDeStageExistante) => offreDeStageExistante.identifiantSource === offreDeStageAMettreAJour.identifiantSource)!.id
+					offresDeStageExistantes.find((offreDeStageExistante) => offreDeStageExistante.identifiantSource === offreDeStageAMettreAJour.identifiantSource).id
 				)
 			);
 	}

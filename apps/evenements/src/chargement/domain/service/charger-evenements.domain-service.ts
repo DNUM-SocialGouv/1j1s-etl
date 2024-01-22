@@ -37,7 +37,7 @@ export class ChargerEvenenementsDomainService {
 			!evenementsACharger.find(evenementACharger => evenementACharger.idSource === evenementExistant.idSource),
 		).map(evenementAMettreAJour => ({
 			...evenementAMettreAJour,
-			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
+			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource).id,
 		}));
 	}
 
@@ -48,7 +48,7 @@ export class ChargerEvenenementsDomainService {
 			),
 		).map(evenementAMettreAJour => ({
 			...evenementAMettreAJour,
-			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource)!.id,
+			id: evenementsExistants.find(v => v.idSource === evenementAMettreAJour.idSource).id,
 		}));
 	}
 
