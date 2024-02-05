@@ -1,6 +1,12 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  create:
+    branches: [ "renovate/**" ]
 
 jobs:
   Install:
@@ -16,6 +22,7 @@ jobs:
 
   Test:
     needs: Install
+    if: "!contains(github.event.head_commit.message, 'WIP')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
