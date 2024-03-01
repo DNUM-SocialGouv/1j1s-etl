@@ -1,9 +1,7 @@
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Pays } from "@shared/src/domain/service/pays";
-import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
-import { FluxTransformation } from "@stages/src/transformation/domain/model/flux";
 import { Hellowork } from "@stages/src/transformation/domain/model/hellowork";
 
 type SalaireDetail = {
@@ -18,7 +16,6 @@ export class Convertir {
 	constructor(
 		private readonly dateService: DateService,
 		private readonly pays: Pays,
-		private readonly loggerStrategy: LoggerStrategy,
 	) {
 		this.correspondanceDomaines = new Map();
 		this.correspondanceDomaines.set(Hellowork.Domaine.MARKETING, UnJeune1Solution.Domaine.MARKETING);
@@ -84,10 +81,10 @@ export class Convertir {
 		this.correspondanceDomaines.set(Hellowork.Domaine.FERROVIAIRE, UnJeune1Solution.Domaine.LOGISTIQUE);
 	}
 
-	public depuisHellowork(offreDeStage: Hellowork.OffreDeStage, flux: FluxTransformation): UnJeune1Solution.OffreDeStage {
+	public depuisHellowork(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.OffreDeStage {
 		const maintenant = this.dateService.maintenant().toISOString();
 
-		const salaire = this.mapToRemuneration(offreDeStage.salary_details, flux);
+		const salaire = this.mapToRemuneration(offreDeStage.salary_details);
 		return {
 			dateDeDebutMax: undefined,
 			dateDeDebutMin: undefined,
@@ -126,13 +123,12 @@ export class Convertir {
 		};
 	}
 
-	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails, flux: FluxTransformation): SalaireDetail {
-		const periodeSalaire = Object.values(UnJeune1Solution.PeriodeSalaire);
+	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails): SalaireDetail {
+		const periodesSalaire = Object.values(UnJeune1Solution.PeriodeSalaire);
 		const salaryMax = salaryDetails?.salary_max?.amount;
 		const salaryMin = salaryDetails?.salary_min?.amount;
-		const isPeriodeSalaireCorrect = periodeSalaire.includes(salaryDetails.periode as UnJeune1Solution.PeriodeSalaire);
 
-		if (isPeriodeSalaireCorrect && salaryMax && salaryMin) {
+		if (periodesSalaire.includes(salaryDetails.periode as UnJeune1Solution.PeriodeSalaire) && salaryMax && salaryMin) {
 			const salaryMaxWithPoint = salaryMax.replace(",", ".");
 			const salaryMinWithPoint = salaryMin.replace(",", ".");
 
@@ -141,13 +137,6 @@ export class Convertir {
 				salaireMax: Number(salaryMaxWithPoint),
 				salaireMin: Number(salaryMinWithPoint),
 			};
-		}
-
-		if (!isPeriodeSalaireCorrect) {
-			this.loggerStrategy.get(flux.nom).fatal({
-				msg: "Erreur lors de la transformation de la rémunération d‘une offre de stage",
-				extra: { salaryDetails: salaryDetails },
-			});
 		}
 
 		return { periodeSalaire: undefined, salaireMax: undefined, salaireMin: undefined };

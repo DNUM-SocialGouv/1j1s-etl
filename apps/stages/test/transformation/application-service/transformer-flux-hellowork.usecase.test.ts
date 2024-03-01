@@ -16,7 +16,6 @@ import {
 	OffreDeStageHelloworkFixtureBuilder,
 } from "@stages/test/transformation/fixture/offre-de-stage-hellowork.fixture-builder";
 import Source = UnJeune1Solution.Source;
-import { Logger, LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
 let expectedOffreDeStage: Array<UnJeune1Solution.OffreDeStage>;
@@ -29,20 +28,13 @@ let offreDeStageRepository: StubbedType<OffreDeStageRepository>;
 let convertisseurDePays: StubbedType<Pays>;
 let convertirOffreDeStage: Convertir;
 let transformFluxHellowork: TransformerFluxHellowork;
-let loggerStrategy: StubbedType<LoggerStrategy>;
-let logger: StubbedType<Logger>;
 
 describe("TransformerFluxHelloworkTest", () => {
 	beforeEach(() => {
 		dateService = stubClass(DateService);
-		loggerStrategy = stubInterface<LoggerStrategy>(sinon);
 		offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
 		convertisseurDePays = stubInterface<Pays>(sinon);
-
-		logger = stubInterface<Logger>(sinon);
-		loggerStrategy.get.returns(logger);
-
-		convertirOffreDeStage = new Convertir(dateService, convertisseurDePays, loggerStrategy);
+		convertirOffreDeStage = new Convertir(dateService, convertisseurDePays);
 		transformFluxHellowork = new TransformerFluxHellowork(offreDeStageRepository, convertirOffreDeStage);
 
 		dateService.maintenant.returns(dateEcriture);
@@ -136,15 +128,15 @@ describe("TransformerFluxHelloworkTest", () => {
 		context("Lorsque la geolocalisation n'est pas renseigné", () => {
 			it("je sauvegarde la localisation sans la longitude et la latitude", async () => {
 				offreDeStageRepository.recuperer.resolves({
-						source: {
-							job: [OffreDeStageHelloworkFixtureBuilder.build({
-								city: "Marseille",
-								postalcode: 13000,
-								country: "France",
-								geoloc: undefined,
-							})],
-						},
-					});
+					source: {
+						job: [OffreDeStageHelloworkFixtureBuilder.build({
+							city: "Marseille",
+							postalcode: 13000,
+							country: "France",
+							geoloc: undefined,
+						})],
+					},
+				});
 
 				const offreDeStageExpected = OffreDeStageFixtureBuilder.build({
 					localisation: {
@@ -241,7 +233,7 @@ describe("TransformerFluxHelloworkTest", () => {
 				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
 			});
 
-			it("lorsque la periode de rémunération ne fait pas partie des valeurs valides, ne renvoie pas les champs de salaire et log l‘information", async () => {
+			it("lorsque la periode de rémunération ne fait pas partie des valeurs valides, ne renvoie pas les champs de salaire", async () => {
 				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
 					salaireMax: undefined,
 					salaireMin: undefined,
@@ -266,23 +258,7 @@ describe("TransformerFluxHelloworkTest", () => {
 
 				await transformFluxHellowork.executer(flux);
 
-				expect(loggerStrategy.get).to.have.been.calledOnceWith(nomDuFlux);
-				expect(logger.fatal).to.have.been.calledOnceWith({
-					msg: "Erreur lors de la transformation de la rémunération d‘une offre de stage",
-					extra:{
-						salaryDetails: {
-							salary_max: {
-								amount: "1833,00",
-							},
-							salary_min: {
-								amount: "1750,00",
-							},
-							periode: "WEEKLY",
-						},
-					},
-				});
-
-				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).firstArg as Array<UnJeune1Solution.OffreDeStage>;
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
 				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMin);
 				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
 				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);

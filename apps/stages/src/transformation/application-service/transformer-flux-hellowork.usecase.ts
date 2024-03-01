@@ -17,7 +17,7 @@ export class TransformerFluxHellowork implements Usecase {
 		const contenuDuFlux = await this.offreDeStageRepository.recuperer<Hellowork.Contenu>(flux);
 
 		const contenuTransforme: Array<UnJeune1Solution.OffreDeStage>
-			= contenuDuFlux.source.job.map((job: Hellowork.OffreDeStage) => this.convertirOffreDeStage.depuisHellowork(job, flux));
+			= contenuDuFlux.source.job.map((job: Hellowork.OffreDeStage) => this.convertirOffreDeStage.depuisHellowork(job));
 
 		await this.offreDeStageRepository.sauvegarder(contenuTransforme, flux);
 	}

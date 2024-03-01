@@ -45,6 +45,7 @@ let contactCejRepository: HttpMinioContactCejRepository;
 describe("HttpMinioContactCejRepositoryTest", () => {
 	beforeEach(() => {
 		clock = sinon.useFakeTimers(date);
+		logger = stubInterface<Logger>(sinon);
 		fileSystemClient = stubInterface<FileSystemClient>(sinon);
 		dateService = new DateService();
 		configuration = stubInterface<Configuration>(sinon);
