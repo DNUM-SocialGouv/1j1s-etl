@@ -1,9 +1,11 @@
 import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { Shared } from "@shared/src";
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
 import { Pays } from "@shared/src/domain/service/pays";
+import { LoggerStrategy } from "@shared/src/infrastructure/configuration/logger";
 
 import {
 	TransformerFluxHellowork,
@@ -30,16 +32,29 @@ import {
 import {
 	Convertir as ConvertirStagefrDecompresse,
 } from "@stages/src/transformation/domain/service/stagefr-decompresse/convertir.domain-service";
+import {
+	Configuration,
+} from "@stages/src/transformation/infrastructure/configuration/configuration";
+import {
+	StagesTransformationLoggerStrategy,
+} from "@stages/src/transformation/infrastructure/configuration/logger-strategy";
 import { Gateways } from "@stages/src/transformation/infrastructure/gateway";
 
 @Module({
 	imports: [Gateways, Shared],
 	providers: [
 		{
+			provide: "LoggerStrategy",
+			inject: [ConfigService],
+			useFactory: (configurationService: ConfigService): StagesTransformationLoggerStrategy => {
+				return new StagesTransformationLoggerStrategy(configurationService.get<Configuration>("stagesTransformation"));
+			},
+		},
+		{
 			provide: ConvertirHellowork,
-			inject: [DateService, "Pays"],
-			useFactory: (dateService: DateService, pays: Pays): ConvertirHellowork => {
-				return new ConvertirHellowork(dateService, pays);
+			inject: [DateService, "Pays", "LoggerStrategy"],
+			useFactory: (dateService: DateService, pays: Pays, loggerStrategy: LoggerStrategy): ConvertirHellowork => {
+				return new ConvertirHellowork(dateService, pays, loggerStrategy);
 			},
 		},
 		{
