@@ -11,12 +11,12 @@ export namespace Hellowork {
 
 	export type SalaryDetails = {
 		salary_max?: {
-			amount?: string
+			amount?: string | number
 		}
 		salary_min?: {
-			amount?: string
+			amount?: string | number
 		}
-		periode?: string
+		period?: string
 	}
 
 	export type OffreDeStage = {

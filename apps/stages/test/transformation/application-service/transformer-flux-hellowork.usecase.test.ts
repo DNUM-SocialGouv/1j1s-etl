@@ -110,7 +110,7 @@ describe("TransformerFluxHelloworkTest", () => {
 								salary_min: {
 									amount: "1750,00",
 								},
-								periode: "MONTHLY",
+								period: "MONTHLY",
 							},
 						})],
 					},
@@ -175,7 +175,7 @@ describe("TransformerFluxHelloworkTest", () => {
 		});
 
 		context("salaire", () => {
-			it("lorsque le salaire min et max comportent des virgules, renvoie les champs de salaire correctement", async () => {
+			it("lorsque le salaire min et max sont des strings et comportent des virgules, renvoie les champs de salaire correctement", async () => {
 				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
 					salaireMax: 156.79,
 					salaireMin: 20.29,
@@ -192,7 +192,38 @@ describe("TransformerFluxHelloworkTest", () => {
 								salary_min: {
 									amount: "20,29",
 								},
-								periode: "YEARLY",
+								period: "YEARLY",
+							},
+						})],
+					},
+				});
+
+				await transformFluxHellowork.executer(flux);
+
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
+				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
+				expect(offreDeStageASauvegarder[0].salaireMin).to.have.deep.equal(expectedOffreDeStage.salaireMin);
+				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
+			});
+
+			it("lorsque le salaire min et max sont des numbers, renvoie les champs de salaire correctement", async () => {
+				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
+					salaireMax: 156,
+					salaireMin: 20,
+					periodeSalaire: UnJeune1Solution.PeriodeSalaire.YEARLY,
+				});
+
+				offreDeStageRepository.recuperer.resolves({
+					source: {
+						job: [OffreDeStageHelloworkFixtureBuilder.build({
+							salary_details: {
+								salary_max: {
+									amount: 156,
+								},
+								salary_min: {
+									amount: 20,
+								},
+								period: "YEARLY",
 							},
 						})],
 					},
@@ -219,7 +250,7 @@ describe("TransformerFluxHelloworkTest", () => {
 							salary_details: {
 								salary_max: undefined,
 								salary_min: undefined,
-								periode: UnJeune1Solution.PeriodeSalaire.YEARLY,
+								period: UnJeune1Solution.PeriodeSalaire.YEARLY,
 							},
 						})],
 					},
@@ -250,7 +281,7 @@ describe("TransformerFluxHelloworkTest", () => {
 								salary_min: {
 									amount: "1750,00",
 								},
-								periode: "WEEKLY",
+								period: "WEEKLY",
 							},
 						})],
 					},

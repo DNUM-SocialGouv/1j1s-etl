@@ -24,7 +24,7 @@ export class OffreDeStageHelloworkFixtureBuilder {
 				salary_min: {
 					amount: "1750,00",
 				},
-				periode: "MONTHLY",
+				period: "MONTHLY",
 			},
 			...offreDeStage,
 		};

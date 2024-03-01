@@ -128,14 +128,14 @@ export class Convertir {
 		const salaryMax = salaryDetails?.salary_max?.amount;
 		const salaryMin = salaryDetails?.salary_min?.amount;
 
-		if (periodesSalaire.includes(salaryDetails.periode as UnJeune1Solution.PeriodeSalaire) && salaryMax && salaryMin) {
-			const salaryMaxWithPoint = salaryMax.replace(",", ".");
-			const salaryMinWithPoint = salaryMin.replace(",", ".");
+		if (periodesSalaire.includes(salaryDetails?.period as UnJeune1Solution.PeriodeSalaire) && salaryMax && salaryMin) {
+			const isSalaryMaxNumber = typeof salaryMax === "number";
+			const isSalaryMinNumber = typeof salaryMin === "number";
 
 			return {
-				periodeSalaire: salaryDetails.periode as UnJeune1Solution.PeriodeSalaire,
-				salaireMax: Number(salaryMaxWithPoint),
-				salaireMin: Number(salaryMinWithPoint),
+				periodeSalaire: salaryDetails.period as UnJeune1Solution.PeriodeSalaire,
+				salaireMax: isSalaryMaxNumber ? salaryMax : Number(salaryMax.replace(",", ".")),
+				salaireMin: isSalaryMinNumber ? salaryMin : Number(salaryMin.replace(",", ".")),
 			};
 		}
 
