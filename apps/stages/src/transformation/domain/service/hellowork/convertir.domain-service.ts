@@ -124,11 +124,10 @@ export class Convertir {
 	}
 
 	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails): SalaireDetail {
-		const periodesSalaire = Object.values(UnJeune1Solution.PeriodeSalaire);
 		const salaryMax = salaryDetails?.salary_max?.amount;
 		const salaryMin = salaryDetails?.salary_min?.amount;
 
-		if (periodesSalaire.includes(salaryDetails?.period as UnJeune1Solution.PeriodeSalaire) && salaryMax && salaryMin) {
+		if (salaryMax && salaryMin) {
 			const isSalaryMaxNumber = typeof salaryMax === "number";
 			const isSalaryMinNumber = typeof salaryMin === "number";
 

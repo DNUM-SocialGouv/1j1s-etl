@@ -263,37 +263,6 @@ describe("TransformerFluxHelloworkTest", () => {
 				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
 				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
 			});
-
-			it("lorsque la periode de rémunération ne fait pas partie des valeurs valides, ne renvoie pas les champs de salaire", async () => {
-				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
-				});
-
-				offreDeStageRepository.recuperer.resolves({
-					source: {
-						job: [OffreDeStageHelloworkFixtureBuilder.build({
-							salary_details: {
-								salary_max: {
-									amount: "1833,00",
-								},
-								salary_min: {
-									amount: "1750,00",
-								},
-								period: "WEEKLY",
-							},
-						})],
-					},
-				});
-
-				await transformFluxHellowork.executer(flux);
-
-				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
-				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMin);
-				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
-				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
-			});
 		});
 	});
 });
