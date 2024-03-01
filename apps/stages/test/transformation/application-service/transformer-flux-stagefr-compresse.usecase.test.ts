@@ -154,7 +154,7 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 
 		it("je le sauvegarde au format 1Jeune1Solution", async () => {
 			await usecase.executer(flux);
-			const offreDeStageToSave = offreDeStageRepository.sauvegarder.getCall(0).firstArg as Array<UnJeune1Solution.OffreDeStage>
+			const offreDeStageToSave = offreDeStageRepository.sauvegarder.getCall(0).firstArg as Array<UnJeune1Solution.OffreDeStage>;
 			expect(offreDeStageToSave[0].salaireMin).to.equal(undefined);
 			expect(offreDeStageToSave[0].salaireMax).to.equal(undefined);
 			expect(offreDeStageToSave[0].periodeSalaire).to.equal(undefined);
