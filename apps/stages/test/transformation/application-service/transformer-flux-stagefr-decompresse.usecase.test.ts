@@ -37,6 +37,9 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 		beforeEach(() => {
 			const offreDeStage1Jeune1Solution = OffreDeStageFixtureBuilder.build({ source: UnJeune1Solution.Source.STAGEFR_DECOMPRESSE });
 			delete offreDeStage1Jeune1Solution.remunerationBase;
+			delete offreDeStage1Jeune1Solution.salaireMin;
+			delete offreDeStage1Jeune1Solution.salaireMax;
+			delete offreDeStage1Jeune1Solution.periodeSalaire;
 			delete offreDeStage1Jeune1Solution.dureeEnJour;
 			delete offreDeStage1Jeune1Solution.dureeEnJourMax;
 			delete offreDeStage1Jeune1Solution.employeur?.description;

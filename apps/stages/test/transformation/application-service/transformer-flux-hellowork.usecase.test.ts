@@ -18,7 +18,7 @@ import {
 import Source = UnJeune1Solution.Source;
 
 const dateEcriture = new Date("2022-01-01T00:00:00.000Z");
-let resultatTransformation: Array<UnJeune1Solution.OffreDeStage>;
+let expectedOffreDeStage: Array<UnJeune1Solution.OffreDeStage>;
 let nomDuFlux: string;
 let dossierDHistorisation: string;
 let flux: FluxTransformation;
@@ -28,13 +28,32 @@ let offreDeStageRepository: StubbedType<OffreDeStageRepository>;
 let convertisseurDePays: StubbedType<Pays>;
 let convertirOffreDeStage: Convertir;
 let transformFluxHellowork: TransformerFluxHellowork;
+
 describe("TransformerFluxHelloworkTest", () => {
+	beforeEach(() => {
+		dateService = stubClass(DateService);
+		offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
+		convertisseurDePays = stubInterface<Pays>(sinon);
+		convertirOffreDeStage = new Convertir(dateService, convertisseurDePays);
+		transformFluxHellowork = new TransformerFluxHellowork(offreDeStageRepository, convertirOffreDeStage);
+
+		dateService.maintenant.returns(dateEcriture);
+		convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
+
+		dossierDHistorisation = "history";
+		nomDuFlux = "source";
+		flux = new FluxTransformation(
+			nomDuFlux,
+			dossierDHistorisation,
+			".xml",
+			".json",
+		);
+	});
+
 	context("Lorsque je transforme le flux en provenance de hellowork", () => {
 		context("Lorsque tout est renseigné", () => {
 			beforeEach(() => {
-				dossierDHistorisation = "history";
-				nomDuFlux = "source";
-				resultatTransformation = [OffreDeStageFixtureBuilder.build({
+				expectedOffreDeStage = [OffreDeStageFixtureBuilder.build({
 					description: "Description de l'offre",
 					employeur: {
 						nom: "Nom de l'entreprise",
@@ -56,28 +75,19 @@ describe("TransformerFluxHelloworkTest", () => {
 					urlDeCandidature: "https://url-de-candidature.com",
 					dateDeDebutMax: undefined,
 					dateDeDebutMin: undefined,
+					salaireMax: 1833,
+					salaireMin: 1750,
+					periodeSalaire: UnJeune1Solution.PeriodeSalaire.MONTHLY,
 				})];
 
-				delete resultatTransformation[0].remunerationBase;
-				delete resultatTransformation[0].dureeEnJour;
-				delete resultatTransformation[0].dureeEnJourMax;
-				delete resultatTransformation[0].teletravailPossible;
-
-				flux = new FluxTransformation(
-					nomDuFlux,
-					dossierDHistorisation,
-					".xml",
-					".json",
-				);
-
-				dateService = stubClass(DateService);
-				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
-				convertisseurDePays = stubInterface<Pays>(sinon);
-				convertirOffreDeStage = new Convertir(dateService, convertisseurDePays);
-				transformFluxHellowork = new TransformerFluxHellowork(offreDeStageRepository, convertirOffreDeStage);
+				delete expectedOffreDeStage[0].remunerationBase;
+				delete expectedOffreDeStage[0].dureeEnJour;
+				delete expectedOffreDeStage[0].dureeEnJourMax;
+				delete expectedOffreDeStage[0].teletravailPossible;
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
+
 				offreDeStageRepository.recuperer.resolves({
 					source: {
 						job: [OffreDeStageHelloworkFixtureBuilder.build({
@@ -93,6 +103,15 @@ describe("TransformerFluxHelloworkTest", () => {
 							link: "https://url-de-candidature.com",
 							id: 15788,
 							geoloc: "15.5,16.78",
+							salary_details: {
+								salary_max: {
+									amount: "1833,00",
+								},
+								salary_min: {
+									amount: "1750,00",
+								},
+								periode: "MONTHLY",
+							},
 						})],
 					},
 				});
@@ -102,19 +121,24 @@ describe("TransformerFluxHelloworkTest", () => {
 				await transformFluxHellowork.executer(flux);
 
 				expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-				expect(offreDeStageRepository.sauvegarder.getCall(0).args).to.have.deep.members([resultatTransformation, flux]);
+				expect(offreDeStageRepository.sauvegarder.getCall(0).args).to.have.deep.members([expectedOffreDeStage, flux]);
 			});
 		});
 
 		context("Lorsque la geolocalisation n'est pas renseigné", () => {
-			beforeEach(() => {
-				dossierDHistorisation = "history";
-				nomDuFlux = "source";
-				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					dateDeDebutMin: undefined,
-					dateDeDebutMax: undefined,
-					source: Source.HELLOWORK,
-					identifiantSource: "15788",
+			it("je sauvegarde la localisation sans la longitude et la latitude", async () => {
+				offreDeStageRepository.recuperer.resolves({
+						source: {
+							job: [OffreDeStageHelloworkFixtureBuilder.build({
+								city: "Marseille",
+								postalcode: 13000,
+								country: "France",
+								geoloc: undefined,
+							})],
+						},
+					});
+
+				const offreDeStageExpected = OffreDeStageFixtureBuilder.build({
 					localisation: {
 						ville: "Marseille",
 						codePostal: "13000",
@@ -122,108 +146,122 @@ describe("TransformerFluxHelloworkTest", () => {
 						latitude: undefined,
 						longitude: undefined,
 					},
-				})];
-
-				delete resultatTransformation[0].remunerationBase;
-				delete resultatTransformation[0].dureeEnJour;
-				delete resultatTransformation[0].dureeEnJourMax;
-				delete resultatTransformation[0].teletravailPossible;
-				delete resultatTransformation[0].employeur.description;
-				delete resultatTransformation[0].employeur.siteUrl;
-
-				flux = new FluxTransformation(
-					nomDuFlux,
-					dossierDHistorisation,
-					".xml",
-					".json",
-				);
-
-				dateService = stubClass(DateService);
-				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
-				convertisseurDePays = stubInterface<Pays>(sinon);
-				convertirOffreDeStage = new Convertir(dateService, convertisseurDePays);
-				transformFluxHellowork = new TransformerFluxHellowork(offreDeStageRepository, convertirOffreDeStage);
-
-				dateService.maintenant.returns(dateEcriture);
-				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				const offreHellowork = OffreDeStageHelloworkFixtureBuilder.build({
-					city: "Marseille",
-					postalcode: 13000,
-					country: "France",
-					id: 15788,
 				});
-				delete offreHellowork.geoloc;
-				
-				offreDeStageRepository.recuperer.resolves({
-					source: {
-						job: [offreHellowork],
-					},
-				});
-			});
 
-			it("je le sauvegarde sans la longitude et la latitude", async () => {
 				await transformFluxHellowork.executer(flux);
 
-				expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-				expect(offreDeStageRepository.sauvegarder.getCall(0).args).to.have.deep.members([resultatTransformation, flux]);
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
+				expect(offreDeStageASauvegarder[0].localisation).to.have.deep.equal(offreDeStageExpected.localisation);
 			});
 		});
 
 		context("Lorsque le domaine n'est pas renseigné", () => {
-			beforeEach(() => {
-				dossierDHistorisation = "history";
-				nomDuFlux = "source";
-				resultatTransformation = [OffreDeStageFixtureBuilder.build({
-					dateDeDebutMin: undefined,
-					dateDeDebutMax: undefined,
-					source: Source.HELLOWORK,
+			it("je sauvegarde avec le domaine par défaut", async () => {
+				offreDeStageRepository.recuperer.resolves({
+					source: {
+						job: [OffreDeStageHelloworkFixtureBuilder.build({ seodomain: undefined })],
+					},
+				});
+
+				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
 					domaines: [{ nom: UnJeune1Solution.Domaine.NON_APPLICABLE }],
-					identifiantSource: "15788",
-				}, {
-					latitude: undefined,
-					longitude: undefined,
-				})];
+				});
 
-				delete resultatTransformation[0].remunerationBase;
-				delete resultatTransformation[0].dureeEnJour;
-				delete resultatTransformation[0].dureeEnJourMax;
-				delete resultatTransformation[0].teletravailPossible;
-				delete resultatTransformation[0].employeur.description;
-				delete resultatTransformation[0].employeur.siteUrl;
-				delete resultatTransformation[0].localisation.region;
-				delete resultatTransformation[0].localisation.departement;
+				await transformFluxHellowork.executer(flux);
 
-				flux = new FluxTransformation(
-					nomDuFlux,
-					dossierDHistorisation,
-					".xml",
-					".json",
-				);
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
+				expect(offreDeStageASauvegarder[0].domaines).to.have.deep.equal(expectedOffreDeStage.domaines);
+			});
+		});
 
-				dateService = stubClass(DateService);
-				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
-				convertisseurDePays = stubInterface<Pays>(sinon);
-				convertirOffreDeStage = new Convertir(dateService, convertisseurDePays);
-				transformFluxHellowork = new TransformerFluxHellowork(offreDeStageRepository, convertirOffreDeStage);
-
-				dateService.maintenant.returns(dateEcriture);
-				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
-				const offreHellowork = OffreDeStageHelloworkFixtureBuilder.build();
-				delete offreHellowork.geoloc;
-				delete offreHellowork.seodomain;
+		context("salaire", () => {
+			it("lorsque le salaire min et max comportent des virgules, renvoie les champs de salaire correctement", async () => {
+				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
+					salaireMax: 156.79,
+					salaireMin: 20.29,
+					periodeSalaire: UnJeune1Solution.PeriodeSalaire.YEARLY,
+				});
 
 				offreDeStageRepository.recuperer.resolves({
 					source: {
-						job: [offreHellowork],
+						job: [OffreDeStageHelloworkFixtureBuilder.build({
+							salary_details: {
+								salary_max: {
+									amount: "156,79",
+								},
+								salary_min: {
+									amount: "20,29",
+								},
+								periode: "YEARLY",
+							},
+						})],
 					},
 				});
-			});
 
-			it("je le sauvegarde avec le domaine par défaut", async () => {
 				await transformFluxHellowork.executer(flux);
 
-				expect(offreDeStageRepository.recuperer).to.have.been.calledOnce;
-				expect(offreDeStageRepository.sauvegarder.getCall(0).args[0]).to.have.deep.members(resultatTransformation);
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
+				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
+				expect(offreDeStageASauvegarder[0].salaireMin).to.have.deep.equal(expectedOffreDeStage.salaireMin);
+				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
+			});
+
+			it("lorsque le salaire min et max ne sont pas fournis, ne renvoie pas les champs de salaire", async () => {
+				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
+					salaireMax: undefined,
+					salaireMin: undefined,
+					periodeSalaire: undefined,
+				});
+
+				offreDeStageRepository.recuperer.resolves({
+					source: {
+						job: [OffreDeStageHelloworkFixtureBuilder.build({
+							salary_details: {
+								salary_max: undefined,
+								salary_min: undefined,
+								periode: UnJeune1Solution.PeriodeSalaire.YEARLY,
+							},
+						})],
+					},
+				});
+
+				await transformFluxHellowork.executer(flux);
+
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
+				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMin);
+				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
+				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
+			});
+
+			it("lorsque la periode de rémunération ne fait pas partie des valeurs valides, ne renvoie pas les champs de salaire", async () => {
+				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
+					salaireMax: undefined,
+					salaireMin: undefined,
+					periodeSalaire: undefined,
+				});
+
+				offreDeStageRepository.recuperer.resolves({
+					source: {
+						job: [OffreDeStageHelloworkFixtureBuilder.build({
+							salary_details: {
+								salary_max: {
+									amount: "1833,00",
+								},
+								salary_min: {
+									amount: "1750,00",
+								},
+								periode: "WEEKLY",
+							},
+						})],
+					},
+				});
+
+				await transformFluxHellowork.executer(flux);
+
+				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
+				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMin);
+				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
+				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
 			});
 		});
 	});

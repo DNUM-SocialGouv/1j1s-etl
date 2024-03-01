@@ -4,6 +4,12 @@ import { Pays } from "@shared/src/domain/service/pays";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { Hellowork } from "@stages/src/transformation/domain/model/hellowork";
 
+type SalaireDetail = {
+	periodeSalaire: UnJeune1Solution.PeriodeSalaire
+	salaireMin: UnJeune1Solution.OffreDeStage["salaireMin"]
+	salaireMax: UnJeune1Solution.OffreDeStage["salaireMax"]
+}
+
 export class Convertir {
 	private readonly correspondanceDomaines: Map<Hellowork.Domaine, UnJeune1Solution.Domaine>;
 
@@ -78,6 +84,7 @@ export class Convertir {
 	public depuisHellowork(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.OffreDeStage {
 		const maintenant = this.dateService.maintenant().toISOString();
 
+		const salaire = this.mapToRemuneration(offreDeStage.salary_details);
 		return {
 			dateDeDebutMax: undefined,
 			dateDeDebutMin: undefined,
@@ -89,7 +96,9 @@ export class Convertir {
 			},
 			identifiantSource: offreDeStage.id.toString(),
 			localisation: this.mapLocalisation(offreDeStage),
-			// TODO (BRUJ 29-09-2023): rajouter la rémunération en string
+			salaireMax: salaire.salaireMax,
+			salaireMin: salaire.salaireMin,
+			periodeSalaire: salaire.periodeSalaire,
 			source: UnJeune1Solution.Source.HELLOWORK,
 			sourceCreatedAt: offreDeStage.date,
 			sourceUpdatedAt: offreDeStage.date,
@@ -112,5 +121,24 @@ export class Convertir {
 			latitude: offreDeStage.geoloc ? Number(offreDeStage.geoloc.split(",")[0]) : undefined,
 			longitude: offreDeStage.geoloc ? Number(offreDeStage.geoloc.split(",")[1]) : undefined,
 		};
+	}
+
+	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails): SalaireDetail {
+		const periodesSalaire = Object.values(UnJeune1Solution.PeriodeSalaire);
+		const salaryMax = salaryDetails?.salary_max?.amount;
+		const salaryMin = salaryDetails?.salary_min?.amount;
+
+		if (periodesSalaire.includes(salaryDetails.periode as UnJeune1Solution.PeriodeSalaire) && salaryMax && salaryMin) {
+			const salaryMaxWithPoint = salaryMax.replace(",", ".");
+			const salaryMinWithPoint = salaryMin.replace(",", ".");
+
+			return {
+				periodeSalaire: salaryDetails.periode as UnJeune1Solution.PeriodeSalaire,
+				salaireMax: Number(salaryMaxWithPoint),
+				salaireMin: Number(salaryMinWithPoint),
+			};
+		}
+		// TODO (BRUJ 29/02/2024): trouver un moyen pour appeler le logger ?
+		return { periodeSalaire: undefined, salaireMax: undefined, salaireMin: undefined };
 	}
 }
