@@ -17,7 +17,15 @@ export class OffreDeStageHelloworkFixtureBuilder {
 			link: "http://url.de.candidature.com",
 			id: 15788,
 			geoloc: "15.5,16.78",
-			salary: "1000-2000 EUR par mois",
+			salary_details: {
+				salary_max: {
+					amount: "1833,00",
+				},
+				salary_min: {
+					amount: "1750,00",
+				},
+				period: "MONTHLY",
+			},
 			...offreDeStage,
 		};
 	}

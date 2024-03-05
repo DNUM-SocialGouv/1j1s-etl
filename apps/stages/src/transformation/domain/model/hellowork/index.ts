@@ -1,13 +1,23 @@
 import { Domaine as _Domaine } from "@stages/src/transformation/domain/model/hellowork/domaine";
 
 export namespace Hellowork {
-	export type Contenu ={
+	export type Contenu = {
 		source: {
 			job: Array<OffreDeStage>
 		}
 	}
 
 	export import Domaine = _Domaine
+
+	export type SalaryDetails = {
+		salary_max?: {
+			amount?: string | number
+		}
+		salary_min?: {
+			amount?: string | number
+		}
+		period?: string
+	}
 
 	export type OffreDeStage = {
 		id: number;
@@ -28,6 +38,6 @@ export namespace Hellowork {
 		function?: string
 		seodomain?: _Domaine
 		category?: string
-		salary?: string
+		salary_details?: SalaryDetails
 	}
 }

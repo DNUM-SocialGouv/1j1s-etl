@@ -15,6 +15,7 @@ import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/
 import {
 	OffreDeStageStagefrCompresseFixtureBuilder,
 } from "@stages/test/transformation/fixture/offre-de-stage-stagefr-compresse.fixture-builder";
+import RemunerationPeriode = UnJeune1Solution.RemunerationPeriode;
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 
@@ -39,6 +40,9 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 				{
 					identifiantSource: "100",
 					source: UnJeune1Solution.Source.STAGEFR_COMPRESSE,
+					remunerationPeriode: RemunerationPeriode.MONTHLY,
+					remunerationMax: 900,
+					remunerationMin: 900,
 				},
 				{ latitude: 10, longitude: 30 },
 			);
@@ -50,7 +54,28 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 			delete offreDeStage1Jeune1Solution.employeur?.description;
 			delete offreDeStage1Jeune1Solution.employeur?.siteUrl;
 
-			offresDeStageStagefrCompresse = [OffreDeStageStagefrCompresseFixtureBuilder.build()];
+			offresDeStageStagefrCompresse = [OffreDeStageStagefrCompresseFixtureBuilder.build({
+				title: "Titre de l'offre",
+				employer: "Nom de l'entreprise",
+				description: "Description de l'offre",
+				post_date: "2022-01-01T00:00:00.000Z",
+				url: "http://url.de.candidature.com",
+				logo: "http://url.du.logo",
+				cpc: "",
+				guid: 100,
+				salary: "900",
+				contract_time: "90",
+				location: {
+					location: "Montpellier",
+					country: "fr",
+					location_raw: "34",
+					location_parent: "france",
+					geo_lng: 30,
+					geo_lat: 10,
+				},
+				category: "cuisine",
+				contract_type: "stage",
+			})];
 
 			offresDeStage1Jeune1Solution = [offreDeStage1Jeune1Solution];
 
@@ -86,6 +111,53 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 
 			expect(offreDeStageRepository.sauvegarder).to.have.been.calledOnce;
 			expect(offreDeStageRepository.sauvegarder.getCall(0).firstArg).to.have.deep.members(offresDeStage1Jeune1Solution);
+		});
+	});
+
+	context("Lorsque la rémunération n‘est pas présente, ne rempli pas la periode de rémunération", () => {
+		beforeEach(() => {
+			const offreDeStage1Jeune1Solution = OffreDeStageFixtureBuilder.build(
+				{
+					remunerationPeriode: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+				},
+			);
+
+			offresDeStageStagefrCompresse = [OffreDeStageStagefrCompresseFixtureBuilder.build({
+				salary: undefined,
+			})];
+
+			offresDeStage1Jeune1Solution = [offreDeStage1Jeune1Solution];
+
+			offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
+			offreDeStageRepository
+				.recuperer
+				.withArgs(flux)
+				.resolves({ jobs: { job: offresDeStageStagefrCompresse } });
+
+			dateService = stubInterface<DateService>(sinon);
+			dateService.maintenant.returns(now);
+
+			assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
+			assainisseurDeTexte.nettoyer.withArgs("Titre de l'offre").returns("Titre de l'offre");
+			assainisseurDeTexte.nettoyer.withArgs("Nom de l'entreprise").returns("Nom de l'entreprise");
+			assainisseurDeTexte.nettoyer.withArgs("Description de l'offre").returns("Description de l'offre");
+
+			convertir = new Convertir(dateService, assainisseurDeTexte);
+
+			usecase = new TransformerFluxStagefrCompresse(
+				offreDeStageRepository,
+				convertir,
+			);
+		});
+
+		it("je le sauvegarde au format 1Jeune1Solution", async () => {
+			await usecase.executer(flux);
+			const offreDeStageToSave = offreDeStageRepository.sauvegarder.getCall(0).firstArg as Array<UnJeune1Solution.OffreDeStage>;
+			expect(offreDeStageToSave[0].remunerationMin).to.equal(undefined);
+			expect(offreDeStageToSave[0].remunerationMax).to.equal(undefined);
+			expect(offreDeStageToSave[0].remunerationPeriode).to.equal(undefined);
 		});
 	});
 });

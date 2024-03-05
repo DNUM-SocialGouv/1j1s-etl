@@ -4,6 +4,12 @@ import { Pays } from "@shared/src/domain/service/pays";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { Hellowork } from "@stages/src/transformation/domain/model/hellowork";
 
+type RemunerationDetail = {
+	remunerationPeriode: UnJeune1Solution.RemunerationPeriode
+	remunerationMin: UnJeune1Solution.OffreDeStage["remunerationMin"]
+	remunerationMax: UnJeune1Solution.OffreDeStage["remunerationMax"]
+}
+
 export class Convertir {
 	private readonly correspondanceDomaines: Map<Hellowork.Domaine, UnJeune1Solution.Domaine>;
 
@@ -78,6 +84,7 @@ export class Convertir {
 	public depuisHellowork(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.OffreDeStage {
 		const maintenant = this.dateService.maintenant().toISOString();
 
+		const remuneration = this.mapToRemuneration(offreDeStage.salary_details);
 		return {
 			dateDeDebutMax: undefined,
 			dateDeDebutMin: undefined,
@@ -89,7 +96,9 @@ export class Convertir {
 			},
 			identifiantSource: offreDeStage.id.toString(),
 			localisation: this.mapLocalisation(offreDeStage),
-			// TODO (BRUJ 29-09-2023): rajouter la rémunération en string
+			remunerationMax: remuneration.remunerationMax,
+			remunerationMin: remuneration.remunerationMin,
+			remunerationPeriode: remuneration.remunerationPeriode,
 			source: UnJeune1Solution.Source.HELLOWORK,
 			sourceCreatedAt: offreDeStage.date,
 			sourceUpdatedAt: offreDeStage.date,
@@ -112,5 +121,23 @@ export class Convertir {
 			latitude: offreDeStage.geoloc ? Number(offreDeStage.geoloc.split(",")[0]) : undefined,
 			longitude: offreDeStage.geoloc ? Number(offreDeStage.geoloc.split(",")[1]) : undefined,
 		};
+	}
+
+	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails): RemunerationDetail {
+		const salaryMax = salaryDetails?.salary_max?.amount;
+		const salaryMin = salaryDetails?.salary_min?.amount;
+
+		if (salaryMax && salaryMin) {
+			const isSalaryMaxNumber = typeof salaryMax === "number";
+			const isSalaryMinNumber = typeof salaryMin === "number";
+
+			return {
+				remunerationPeriode: salaryDetails.period as UnJeune1Solution.RemunerationPeriode,
+				remunerationMax: isSalaryMaxNumber ? salaryMax : Number(salaryMax.replace(",", ".")),
+				remunerationMin: isSalaryMinNumber ? salaryMin : Number(salaryMin.replace(",", ".")),
+			};
+		}
+
+		return { remunerationPeriode: undefined, remunerationMax: undefined, remunerationMin: undefined };
 	}
 }

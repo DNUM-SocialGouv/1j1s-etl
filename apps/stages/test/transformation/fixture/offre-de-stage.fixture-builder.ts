@@ -37,6 +37,9 @@ export class OffreDeStageFixtureBuilder {
 			source: UnJeune1Solution.Source.JOBTEASER,
 			employeur: { ...defaultEmployeur, ...employeur },
 			localisation: { ...defaultLocalisation, ...localisation },
+			remunerationMax: 900,
+			remunerationMin: 900,
+			remunerationPeriode: UnJeune1Solution.RemunerationPeriode.MONTHLY,
 		};
 
 		return { ...defaults, ...offreDeStage };
