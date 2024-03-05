@@ -75,9 +75,9 @@ describe("TransformerFluxHelloworkTest", () => {
 					urlDeCandidature: "https://url-de-candidature.com",
 					dateDeDebutMax: undefined,
 					dateDeDebutMin: undefined,
-					salaireMax: 1833,
-					salaireMin: 1750,
-					periodeSalaire: UnJeune1Solution.PeriodeSalaire.MONTHLY,
+					remunerationMax: 1833,
+					remunerationMin: 1750,
+					remunerationPeriode: UnJeune1Solution.RemunerationPeriode.MONTHLY,
 				})];
 
 				delete expectedOffreDeStage[0].remunerationBase;
@@ -174,12 +174,12 @@ describe("TransformerFluxHelloworkTest", () => {
 			});
 		});
 
-		context("salaire", () => {
-			it("lorsque le salaire min et max sont des strings et comportent des virgules, renvoie les champs de salaire correctement", async () => {
+		context("rémunération", () => {
+			it("lorsque la rémunération min et max sont des strings et comportent des virgules, renvoie les champs de rémunération correctement", async () => {
 				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
-					salaireMax: 156.79,
-					salaireMin: 20.29,
-					periodeSalaire: UnJeune1Solution.PeriodeSalaire.YEARLY,
+					remunerationMax: 156.79,
+					remunerationMin: 20.29,
+					remunerationPeriode: UnJeune1Solution.RemunerationPeriode.YEARLY,
 				});
 
 				offreDeStageRepository.recuperer.resolves({
@@ -201,16 +201,16 @@ describe("TransformerFluxHelloworkTest", () => {
 				await transformFluxHellowork.executer(flux);
 
 				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
-				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
-				expect(offreDeStageASauvegarder[0].salaireMin).to.have.deep.equal(expectedOffreDeStage.salaireMin);
-				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
+				expect(offreDeStageASauvegarder[0].remunerationMax).to.have.deep.equal(expectedOffreDeStage.remunerationMax);
+				expect(offreDeStageASauvegarder[0].remunerationMin).to.have.deep.equal(expectedOffreDeStage.remunerationMin);
+				expect(offreDeStageASauvegarder[0].remunerationPeriode).to.have.deep.equal(expectedOffreDeStage.remunerationPeriode);
 			});
 
-			it("lorsque le salaire min et max sont des numbers, renvoie les champs de salaire correctement", async () => {
+			it("lorsque la rémunération min et max sont des numbers, renvoie les champs de rémunération correctement", async () => {
 				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
-					salaireMax: 156,
-					salaireMin: 20,
-					periodeSalaire: UnJeune1Solution.PeriodeSalaire.YEARLY,
+					remunerationMax: 156,
+					remunerationMin: 20,
+					remunerationPeriode: UnJeune1Solution.RemunerationPeriode.YEARLY,
 				});
 
 				offreDeStageRepository.recuperer.resolves({
@@ -232,16 +232,16 @@ describe("TransformerFluxHelloworkTest", () => {
 				await transformFluxHellowork.executer(flux);
 
 				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
-				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
-				expect(offreDeStageASauvegarder[0].salaireMin).to.have.deep.equal(expectedOffreDeStage.salaireMin);
-				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
+				expect(offreDeStageASauvegarder[0].remunerationMax).to.have.deep.equal(expectedOffreDeStage.remunerationMax);
+				expect(offreDeStageASauvegarder[0].remunerationMin).to.have.deep.equal(expectedOffreDeStage.remunerationMin);
+				expect(offreDeStageASauvegarder[0].remunerationPeriode).to.have.deep.equal(expectedOffreDeStage.remunerationPeriode);
 			});
 
-			it("lorsque le salaire min et max ne sont pas fournis, ne renvoie pas les champs de salaire", async () => {
+			it("lorsque la rémunération min et max ne sont pas fournis, ne renvoie pas les champs de rémunération", async () => {
 				const expectedOffreDeStage = OffreDeStageFixtureBuilder.build({
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				});
 
 				offreDeStageRepository.recuperer.resolves({
@@ -250,7 +250,7 @@ describe("TransformerFluxHelloworkTest", () => {
 							salary_details: {
 								salary_max: undefined,
 								salary_min: undefined,
-								period: UnJeune1Solution.PeriodeSalaire.YEARLY,
+								period: UnJeune1Solution.RemunerationPeriode.YEARLY,
 							},
 						})],
 					},
@@ -259,9 +259,9 @@ describe("TransformerFluxHelloworkTest", () => {
 				await transformFluxHellowork.executer(flux);
 
 				const offreDeStageASauvegarder = offreDeStageRepository.sauvegarder.getCall(0).args[0] as Array<UnJeune1Solution.OffreDeStage>;
-				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMin);
-				expect(offreDeStageASauvegarder[0].salaireMax).to.have.deep.equal(expectedOffreDeStage.salaireMax);
-				expect(offreDeStageASauvegarder[0].periodeSalaire).to.have.deep.equal(expectedOffreDeStage.periodeSalaire);
+				expect(offreDeStageASauvegarder[0].remunerationMax).to.have.deep.equal(expectedOffreDeStage.remunerationMin);
+				expect(offreDeStageASauvegarder[0].remunerationMax).to.have.deep.equal(expectedOffreDeStage.remunerationMax);
+				expect(offreDeStageASauvegarder[0].remunerationPeriode).to.have.deep.equal(expectedOffreDeStage.remunerationPeriode);
 			});
 		});
 	});

@@ -47,9 +47,9 @@ describe("TransformerFluxJobteaserTest", () => {
 						siteUrl: "http://site.de.l.entreprise",
 					},
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 					teletravailPossible: undefined,
 				})];
 
@@ -111,9 +111,9 @@ describe("TransformerFluxJobteaserTest", () => {
 					dureeEnJour: 180,
 					dureeEnJourMax: undefined,
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				})];
 
 				flux = new FluxTransformation(
@@ -195,9 +195,9 @@ describe("TransformerFluxJobteaserTest", () => {
 					},
 					dureeEnJourMax: undefined,
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				})];
 
 				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
@@ -274,9 +274,9 @@ describe("TransformerFluxJobteaserTest", () => {
 					},
 					dureeEnJourMax: undefined,
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				})];
 
 				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
@@ -356,9 +356,9 @@ describe("TransformerFluxJobteaserTest", () => {
 					dureeEnJourMax: undefined,
 					dureeEnJour: undefined,
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				})];
 
 				flux = new FluxTransformation(
@@ -437,9 +437,9 @@ describe("TransformerFluxJobteaserTest", () => {
 						siteUrl: "http://site.de.l.entreprise",
 					},
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 					teletravailPossible: undefined,
 				})];
 
@@ -520,9 +520,9 @@ describe("TransformerFluxJobteaserTest", () => {
 					},
 					teletravailPossible: undefined,
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				})];
 
 				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
@@ -602,9 +602,9 @@ describe("TransformerFluxJobteaserTest", () => {
 					dureeEnJour: 150,
 					dureeEnJourMax: undefined,
 					remunerationBase: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
-					periodeSalaire: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
 				})];
 
 				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");

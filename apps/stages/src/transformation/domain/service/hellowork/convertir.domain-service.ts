@@ -4,10 +4,10 @@ import { Pays } from "@shared/src/domain/service/pays";
 import { UnJeune1Solution } from "@stages/src/transformation/domain/model/1jeune1solution";
 import { Hellowork } from "@stages/src/transformation/domain/model/hellowork";
 
-type SalaireDetail = {
-	periodeSalaire: UnJeune1Solution.PeriodeSalaire
-	salaireMin: UnJeune1Solution.OffreDeStage["salaireMin"]
-	salaireMax: UnJeune1Solution.OffreDeStage["salaireMax"]
+type RemunerationDetail = {
+	remunerationPeriode: UnJeune1Solution.RemunerationPeriode
+	remunerationMin: UnJeune1Solution.OffreDeStage["remunerationMin"]
+	remunerationMax: UnJeune1Solution.OffreDeStage["remunerationMax"]
 }
 
 export class Convertir {
@@ -84,7 +84,7 @@ export class Convertir {
 	public depuisHellowork(offreDeStage: Hellowork.OffreDeStage): UnJeune1Solution.OffreDeStage {
 		const maintenant = this.dateService.maintenant().toISOString();
 
-		const salaire = this.mapToRemuneration(offreDeStage.salary_details);
+		const remuneration = this.mapToRemuneration(offreDeStage.salary_details);
 		return {
 			dateDeDebutMax: undefined,
 			dateDeDebutMin: undefined,
@@ -96,9 +96,9 @@ export class Convertir {
 			},
 			identifiantSource: offreDeStage.id.toString(),
 			localisation: this.mapLocalisation(offreDeStage),
-			salaireMax: salaire.salaireMax,
-			salaireMin: salaire.salaireMin,
-			periodeSalaire: salaire.periodeSalaire,
+			remunerationMax: remuneration.remunerationMax,
+			remunerationMin: remuneration.remunerationMin,
+			remunerationPeriode: remuneration.remunerationPeriode,
 			source: UnJeune1Solution.Source.HELLOWORK,
 			sourceCreatedAt: offreDeStage.date,
 			sourceUpdatedAt: offreDeStage.date,
@@ -123,7 +123,7 @@ export class Convertir {
 		};
 	}
 
-	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails): SalaireDetail {
+	private mapToRemuneration(salaryDetails: Hellowork.SalaryDetails): RemunerationDetail {
 		const salaryMax = salaryDetails?.salary_max?.amount;
 		const salaryMin = salaryDetails?.salary_min?.amount;
 
@@ -132,12 +132,12 @@ export class Convertir {
 			const isSalaryMinNumber = typeof salaryMin === "number";
 
 			return {
-				periodeSalaire: salaryDetails.period as UnJeune1Solution.PeriodeSalaire,
-				salaireMax: isSalaryMaxNumber ? salaryMax : Number(salaryMax.replace(",", ".")),
-				salaireMin: isSalaryMinNumber ? salaryMin : Number(salaryMin.replace(",", ".")),
+				remunerationPeriode: salaryDetails.period as UnJeune1Solution.RemunerationPeriode,
+				remunerationMax: isSalaryMaxNumber ? salaryMax : Number(salaryMax.replace(",", ".")),
+				remunerationMin: isSalaryMinNumber ? salaryMin : Number(salaryMin.replace(",", ".")),
 			};
 		}
 
-		return { periodeSalaire: undefined, salaireMax: undefined, salaireMin: undefined };
+		return { remunerationPeriode: undefined, remunerationMax: undefined, remunerationMin: undefined };
 	}
 }

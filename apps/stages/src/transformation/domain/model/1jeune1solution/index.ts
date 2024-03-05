@@ -19,9 +19,9 @@ export namespace UnJeune1Solution {
 		localisation?: Localisation
 		employeur?: Employeur
 		remunerationBase?: number
-		salaireMin?: number
-		salaireMax?: number
-		periodeSalaire?: PeriodeSalaire
+		remunerationMin?: number
+		remunerationMax?: number
+		remunerationPeriode?: RemunerationPeriode
 		source: Source
 		teletravailPossible?: boolean
 	}
@@ -53,7 +53,7 @@ export namespace UnJeune1Solution {
 		WELCOME_TO_THE_JUNGLE = "welcome to the jungle",
 	}
 
-	export enum PeriodeSalaire {
+	export enum RemunerationPeriode {
 		HOURLY = "HOURLY",
 		MONTHLY = "MONTHLY",
 		YEARLY = "YEARLY",

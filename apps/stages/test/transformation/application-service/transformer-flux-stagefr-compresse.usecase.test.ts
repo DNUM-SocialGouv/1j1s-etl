@@ -15,7 +15,7 @@ import { OffreDeStageFixtureBuilder } from "@stages/test/transformation/fixture/
 import {
 	OffreDeStageStagefrCompresseFixtureBuilder,
 } from "@stages/test/transformation/fixture/offre-de-stage-stagefr-compresse.fixture-builder";
-import PeriodeSalaire = UnJeune1Solution.PeriodeSalaire;
+import RemunerationPeriode = UnJeune1Solution.RemunerationPeriode;
 
 const now = new Date("2022-06-01T00:00:00.000Z");
 
@@ -40,9 +40,9 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 				{
 					identifiantSource: "100",
 					source: UnJeune1Solution.Source.STAGEFR_COMPRESSE,
-					periodeSalaire: PeriodeSalaire.MONTHLY,
-					salaireMax: 900,
-					salaireMin: 900,
+					remunerationPeriode: RemunerationPeriode.MONTHLY,
+					remunerationMax: 900,
+					remunerationMin: 900,
 				},
 				{ latitude: 10, longitude: 30 },
 			);
@@ -114,13 +114,13 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 		});
 	});
 
-	context("Lorsque la rémunération n‘est pas présente, ne rempli pas la periode de salaire", () => {
+	context("Lorsque la rémunération n‘est pas présente, ne rempli pas la periode de rémunération", () => {
 		beforeEach(() => {
 			const offreDeStage1Jeune1Solution = OffreDeStageFixtureBuilder.build(
 				{
-					periodeSalaire: undefined,
-					salaireMax: undefined,
-					salaireMin: undefined,
+					remunerationPeriode: undefined,
+					remunerationMax: undefined,
+					remunerationMin: undefined,
 				},
 			);
 
@@ -155,9 +155,9 @@ describe("TransformerFluxStagefrCompresseTest", () => {
 		it("je le sauvegarde au format 1Jeune1Solution", async () => {
 			await usecase.executer(flux);
 			const offreDeStageToSave = offreDeStageRepository.sauvegarder.getCall(0).firstArg as Array<UnJeune1Solution.OffreDeStage>;
-			expect(offreDeStageToSave[0].salaireMin).to.equal(undefined);
-			expect(offreDeStageToSave[0].salaireMax).to.equal(undefined);
-			expect(offreDeStageToSave[0].periodeSalaire).to.equal(undefined);
+			expect(offreDeStageToSave[0].remunerationMin).to.equal(undefined);
+			expect(offreDeStageToSave[0].remunerationMax).to.equal(undefined);
+			expect(offreDeStageToSave[0].remunerationPeriode).to.equal(undefined);
 		});
 	});
 });
