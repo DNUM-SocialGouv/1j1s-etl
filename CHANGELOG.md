@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.17.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.14...v4.17.0) (2024-03-05)
+
+
+### Features
+
+* **stages:** ajout remunerationMin remunerationMax et remunerationPeriode ([#461](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/461)) ([b9a34c4](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/b9a34c4bce671c5567b9f7e82ab07b93f293f4a1))
+
 ## [4.16.14](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.16.13...v4.16.14) (2024-02-19)
 
 
