@@ -13,15 +13,15 @@
       "size": "XL"
     },
     {
-      "command": "0 4 * * * npm run cli -- extract hellowork",
+      "command": "30 4 * * * npm run cli -- extract hellowork",
       "size": "XL"
     },
     {
-      "command": "30 4 * * * npm run cli -- transform hellowork",
+      "command": "40 4 * * * npm run cli -- transform hellowork",
       "size": "XL"
     },
     {
-      "command": "45 4 * * * npm run cli -- load hellowork",
+      "command": "50 4 * * * npm run cli -- load hellowork",
       "size": "XL"
     },
     {
@@ -73,7 +73,7 @@
       "size": "XL"
     },
     {
-      "command": "0 1 * * 1 npm run cli -- send-contacts cej",
+      "command": "15 4 * * 1 npm run cli -- send-contacts cej",
       "size": "XL"
     },
     {
