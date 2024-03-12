@@ -68,6 +68,12 @@ Les valeurs possibles sont les suivantes :
 
 Utilisez par défaut la valeur `M` et augmentez si besoin.
 
+### Periode d'inactivité des instances Scalingo
+
+Dans le but d'économiser des ressources, certaines instances de tests sont désactivées pendant la nuit (ex: main-cms).
+
+Comme le fichier `cron.json` ne dépend pas de l'environnement, il faut s'assurer de déclencher les jobs à un moment où les instances nécessaires sont disponibles.
+
 ## Pour finir
 
 Déployez votre nouvelle version de votre code sur Scalingo. Si le fichier `cron.json` est correctement renseigné, vous
