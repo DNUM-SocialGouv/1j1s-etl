@@ -8,7 +8,11 @@ export class OffreDeStageFixtureBuilder {
 		dureeEnJourMax: 180,
 		domaines: ["non renseigné"],
 		identifiantSource: "Identifiant source",
+		// TODO (SULI 18-03-2024): remunerationBase à supprimer une fois migration terminée
 		remunerationBase: 900,
+		remunerationMin: 900,
+		remunerationMax: 900,
+		remunerationPeriode: "MONTHLY",
 		sourceCreatedAt: "2022-01-01T00:00:00.000Z",
 		sourceUpdatedAt: "2022-01-01T00:00:00.000Z",
 		sourcePublishedAt: "2022-01-01T00:00:00.000Z",

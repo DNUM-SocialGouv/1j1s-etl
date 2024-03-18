@@ -15,6 +15,9 @@ export namespace UnJeune1Solution {
 		localisation?: Localisation,
 		employeur?: Employeur,
 		remunerationBase?: number,
+		remunerationMin?: number,
+		remunerationMax?: number,
+		remunerationPeriode?: string,
 		source?: string,
 		teletravailPossible?: boolean
 	}
@@ -52,6 +55,9 @@ export namespace UnJeune1Solution {
 		public readonly localisation?: Localisation;
 		public readonly employeur?: Employeur;
 		public readonly remunerationBase?: number;
+		public readonly remunerationMin?: number;
+		public readonly remunerationMax?: number;
+		public readonly remunerationPeriode?: string;
 		public readonly source?: string;
 		public readonly teletravailPossible?: boolean;
 
@@ -73,6 +79,9 @@ export namespace UnJeune1Solution {
 			this.remunerationBase = attributs.remunerationBase;
 			this.source = attributs.source;
 			this.teletravailPossible = attributs.teletravailPossible;
+			this.remunerationMin = attributs.remunerationMin;
+			this.remunerationMax = attributs.remunerationMax;
+			this.remunerationPeriode = attributs.remunerationPeriode;
 		}
 
 		public recupererAttributs(): Readonly<AttributsDOffreDeStage> {
@@ -92,6 +101,9 @@ export namespace UnJeune1Solution {
 				localisation: this.localisation,
 				employeur: this.employeur,
 				remunerationBase: this.remunerationBase,
+				remunerationMin: this.remunerationMin,
+				remunerationMax: this.remunerationMax,
+				remunerationPeriode: this.remunerationPeriode,
 				source: this.source,
 				teletravailPossible: this.teletravailPossible,
 			};
