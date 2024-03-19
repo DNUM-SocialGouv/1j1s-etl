@@ -49,36 +49,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 					}),
 				];
 
-				offreDeStageAPublier = new UnJeune1Solution.OffreDeStageAPublier({
-					titre: "Titre de l'offre",
-					description: "Description de l'offre",
-					dureeEnJour: 90,
-					dureeEnJourMax: 180,
-					domaines: ["non renseigné"],
-					identifiantSource: "Identifiant source",
-					remunerationBase: 900,
-					sourceCreatedAt: "2022-01-01T00:00:00.000Z",
-					sourceUpdatedAt: "2022-01-01T00:00:00.000Z",
-					sourcePublishedAt: "2022-01-01T00:00:00.000Z",
-					dateDeDebutMin: "2022-06-01T00:00:00.000Z",
-					dateDeDebutMax: "2022-06-01T00:00:00.000Z",
-					teletravailPossible: true,
-					urlDeCandidature: "http://url.de.candidature.com",
-					source: "jobteaser",
-					employeur: {
-						description: "Entreprise leader de son domaine",
-						nom: "Nom de l'entreprise",
-						logoUrl: "http://url.du.logo",
-						siteUrl: "http://site.de.l.entreprise",
-					},
-					localisation: {
-						ville: "Montpellier",
-						codePostal: "34",
-						departement: "Hérault",
-						region: "Occitanie",
-						pays: "France",
-					},
-				});
+				offreDeStageAPublier = OffreDeStageFixtureBuilder.buildOffreDeStageAPublier();
 
 				offresDeStagesExistantes = [];
 
@@ -149,36 +120,7 @@ describe("ChargerOffresDeStageDomainServiceTest", () => {
 			beforeEach(() => {
 				offresDeStagesMisesAJour = [OffreDeStageFixtureBuilder.buildOffreDeStage()];
 
-				offreDeStageAPublier = new UnJeune1Solution.OffreDeStageAPublier({
-					titre: "Titre de l'offre",
-					description: "Description de l'offre",
-					dureeEnJour: 90,
-					dureeEnJourMax: 180,
-					domaines: ["non renseigné"],
-					identifiantSource: "Identifiant source",
-					remunerationBase: 900,
-					sourceCreatedAt: "2022-01-01T00:00:00.000Z",
-					sourceUpdatedAt: "2022-01-01T00:00:00.000Z",
-					sourcePublishedAt: "2022-01-01T00:00:00.000Z",
-					dateDeDebutMax: "2022-06-01T00:00:00.000Z",
-					dateDeDebutMin: "2022-06-01T00:00:00.000Z",
-					teletravailPossible: true,
-					urlDeCandidature: "http://url.de.candidature.com",
-					source: "jobteaser",
-					employeur: {
-						description: "Entreprise leader de son domaine",
-						nom: "Nom de l'entreprise",
-						logoUrl: "http://url.du.logo",
-						siteUrl: "http://site.de.l.entreprise",
-					},
-					localisation: {
-						ville: "Montpellier",
-						codePostal: "34",
-						departement: "Hérault",
-						region: "Occitanie",
-						pays: "France",
-					},
-				});
+				offreDeStageAPublier = OffreDeStageFixtureBuilder.buildOffreDeStageAPublier();
 
 				offresDeStagesExistantes = [];
 
