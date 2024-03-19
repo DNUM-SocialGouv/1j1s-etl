@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.18.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.17.1...v4.18.0) (2024-03-19)
+
+
+### Features
+
+* **stages:** ajout des remuneration min max et periode sur le chargement ([#468](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/468)) ([9428ec7](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/9428ec79970e5e21cd227f764aa2426dcd587299))
+
 ## [4.17.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.17.0...v4.17.1) (2024-03-12)
 
 
