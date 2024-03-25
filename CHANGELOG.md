@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.18.1](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.18.0...v4.18.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency i18n-iso-countries to ~7.11.0 ([#471](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/471)) ([820e2f3](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/820e2f3e4a707ee5c6e7f90ca008978bf8630acf))
+
 ## [4.18.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.17.1...v4.18.0) (2024-03-19)
 
 
