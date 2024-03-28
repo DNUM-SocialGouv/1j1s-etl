@@ -80,7 +80,6 @@ describe("TransformerFluxHelloworkTest", () => {
 					remunerationPeriode: UnJeune1Solution.RemunerationPeriode.MONTHLY,
 				})];
 
-				delete expectedOffreDeStage[0].remunerationBase;
 				delete expectedOffreDeStage[0].dureeEnJour;
 				delete expectedOffreDeStage[0].dureeEnJourMax;
 				delete expectedOffreDeStage[0].teletravailPossible;

@@ -18,7 +18,6 @@ export namespace UnJeune1Solution {
 		dureeEnJourMax?: number
 		localisation?: Localisation
 		employeur?: Employeur
-		remunerationBase?: number
 		remunerationMin?: number
 		remunerationMax?: number
 		remunerationPeriode?: RemunerationPeriode

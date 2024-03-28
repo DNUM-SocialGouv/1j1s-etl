@@ -28,8 +28,6 @@ export class Convertir {
 				longitude: offreDeStage.location.geo_lng ? offreDeStage.location.geo_lng : 0,
 				latitude: offreDeStage.location.geo_lat ? offreDeStage.location.geo_lat : 0,
 			},
-			// TODO (BRUJ 29/02/2024): supprimer remunerationBase à la fin de la maj des champs de rémunération
-			remunerationBase: Number(offreDeStage.salary) || undefined,
 			remunerationMin: Number(offreDeStage.salary) || undefined,
 			remunerationMax: Number(offreDeStage.salary) || undefined,
 			remunerationPeriode: Number(offreDeStage.salary) ? RemunerationPeriode.MONTHLY : undefined,
