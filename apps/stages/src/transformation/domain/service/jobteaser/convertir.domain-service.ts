@@ -81,7 +81,6 @@ export class Convertir {
 			sourceCreatedAt: offreDeStage.date_created,
 			sourceUpdatedAt: offreDeStage.date_created,
 			sourcePublishedAt: maintenant,
-			remunerationBase: undefined,
 			remunerationMin: undefined,
 			remunerationMax: undefined,
 			remunerationPeriode: undefined,

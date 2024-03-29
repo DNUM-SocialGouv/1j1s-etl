@@ -36,7 +36,6 @@ describe("TransformerFluxStagefrDecompresseTest", () => {
 	context("Lorsque je souhaite transformer le flux stagefr decompressé et que tout va bien", () => {
 		beforeEach(() => {
 			const offreDeStage1Jeune1Solution = OffreDeStageFixtureBuilder.build({ source: UnJeune1Solution.Source.STAGEFR_DECOMPRESSE });
-			delete offreDeStage1Jeune1Solution.remunerationBase;
 			delete offreDeStage1Jeune1Solution.remunerationMin;
 			delete offreDeStage1Jeune1Solution.remunerationMax;
 			delete offreDeStage1Jeune1Solution.remunerationPeriode;

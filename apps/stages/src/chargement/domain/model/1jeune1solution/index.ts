@@ -14,7 +14,6 @@ export namespace UnJeune1Solution {
 		dureeEnJourMax?: number,
 		localisation?: Localisation,
 		employeur?: Employeur,
-		remunerationBase?: number,
 		remunerationMin?: number,
 		remunerationMax?: number,
 		remunerationPeriode?: string,
@@ -54,7 +53,6 @@ export namespace UnJeune1Solution {
 		public readonly dureeEnJourMax?: number;
 		public readonly localisation?: Localisation;
 		public readonly employeur?: Employeur;
-		public readonly remunerationBase?: number;
 		public readonly remunerationMin?: number;
 		public readonly remunerationMax?: number;
 		public readonly remunerationPeriode?: string;
@@ -76,7 +74,6 @@ export namespace UnJeune1Solution {
 			this.dureeEnJourMax = attributs.dureeEnJourMax;
 			this.localisation = attributs.localisation;
 			this.employeur = attributs.employeur;
-			this.remunerationBase = attributs.remunerationBase;
 			this.source = attributs.source;
 			this.teletravailPossible = attributs.teletravailPossible;
 			this.remunerationMin = attributs.remunerationMin;
@@ -100,7 +97,6 @@ export namespace UnJeune1Solution {
 				dureeEnJourMax: this.dureeEnJourMax,
 				localisation: this.localisation,
 				employeur: this.employeur,
-				remunerationBase: this.remunerationBase,
 				remunerationMin: this.remunerationMin,
 				remunerationMax: this.remunerationMax,
 				remunerationPeriode: this.remunerationPeriode,
