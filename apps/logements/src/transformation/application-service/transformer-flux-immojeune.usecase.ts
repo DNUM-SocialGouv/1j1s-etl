@@ -1,3 +1,4 @@
+import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation as FluxImmojeune } from "@logements/src/transformation/domain/model/flux";
 import { Immojeune } from "@logements/src/transformation/domain/model/immojeune";
 import {
@@ -16,8 +17,12 @@ export class TransformerFluxImmojeune implements Usecase {
 
 	public async executer(flux: FluxImmojeune): Promise<void> {
 		const contenu = await this.repository.recuperer<Array<Immojeune.AnnonceDeLogement>>(flux);
+		const annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement> = [];
 
-		const annoncesDeLogement = contenu.map(value => this.convertir.depuisImmojeune(value));
+		contenu.forEach(value => {
+			if(value.title === "") return;
+			annoncesDeLogement.push(this.convertir.depuisImmojeune(value));
+		});
 
 		await this.repository.sauvegarder(annoncesDeLogement, flux);
 	}

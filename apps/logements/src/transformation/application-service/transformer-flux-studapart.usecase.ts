@@ -1,3 +1,4 @@
+import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { FluxTransformation as FluxImmojeune } from "@logements/src/transformation/domain/model/flux";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
 import {
@@ -16,8 +17,13 @@ export class TransformerFluxStudapart implements Usecase {
 
 	public async executer(flux: FluxImmojeune): Promise<void> {
 		const contenu = await this.repository.recuperer<Studapart.Contenu>(flux);
+		const annoncesDeLogement: Array<UnJeune1Solution.AnnonceDeLogement> = [];
 
-		const annoncesDeLogement = contenu.unjeuneunesolution.item.map(studapartLogement => this.convertir.depuisStudapartVersUnJeuneUneSolution(studapartLogement));
+		contenu.unjeuneunesolution.item.forEach(studapartLogement => {
+			if(studapartLogement.title === "") return;
+
+			annoncesDeLogement.push(this.convertir.depuisStudapartVersUnJeuneUneSolution(studapartLogement));
+		});
 
 		await this.repository.sauvegarder(annoncesDeLogement, flux);
 	}

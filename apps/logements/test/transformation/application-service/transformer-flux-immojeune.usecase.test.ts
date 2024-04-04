@@ -69,6 +69,20 @@ describe("TransformerFluxImmojeuneTest", () => {
 			);
 		});
 
+		context("Et que le titre est vide", () => {
+			it("ne sauvegarde pas l‘annonce de logement", async () => {
+				repository.recuperer.resolves([
+					AnnonceDeLogementImmojeuneFixtureBuilder.build({
+						title: "",
+					}),
+				]);
+
+				await usecase.executer(flux);
+
+				expect(repository.sauvegarder).to.have.been.calledWith([], new FluxTransformation("flux", "old", ".json", ".json"));
+			});
+		});
+
 		context("Et que le titre et la description contiennent des balises html", () => {
 			it("retourne le titre et la description avec des balises markdown", async () => {
 				assainisseurDeTexte.nettoyer.withArgs("<h1>Le titre de l'annonce</h1>").returns("Le titre de l'annonce\n===========================");

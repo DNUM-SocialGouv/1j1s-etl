@@ -35,6 +35,18 @@ describe("TransformerFluxStudapartUseCaseTest", () => {
 			usecase = new TransformerFluxStudapart(repository, convertir);
 		});
 
+		context("Et que le titre est vide", () => {
+			it("ne sauvegarde pas l‘annonce de logement", async () => {
+				repository.recuperer.resolves(AnnonceDeLogementStudapartContenuFixtureBuilder.build(
+					[AnnonceDeLogementStudapartFixtureBuilder.build({ title: "" })]
+				));
+
+				await usecase.executer(fluxTransformation);
+
+				expect(repository.sauvegarder).to.have.been.calledWith([], fluxTransformation);
+			});
+		});
+
 		it("je sauvegarde une liste de logement UnJeuneUneSolution", async () => {
 			await usecase.executer(fluxTransformation);
 
