@@ -17,7 +17,9 @@ export class TransformerFluxImmojeune implements Usecase {
 	public async executer(flux: FluxImmojeune): Promise<void> {
 		const contenu = await this.repository.recuperer<Array<Immojeune.AnnonceDeLogement>>(flux);
 
-		const annoncesDeLogement = contenu.map(value => this.convertir.depuisImmojeune(value));
+		const annoncesDeLogement = contenu
+			.filter(logement => logement.title !== "")
+			.map(value => this.convertir.depuisImmojeune(value));
 
 		await this.repository.sauvegarder(annoncesDeLogement, flux);
 	}

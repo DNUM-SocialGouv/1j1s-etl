@@ -17,8 +17,10 @@ export class TransformerFluxStudapart implements Usecase {
 	public async executer(flux: FluxImmojeune): Promise<void> {
 		const contenu = await this.repository.recuperer<Studapart.Contenu>(flux);
 
-		const annoncesDeLogement = contenu.unjeuneunesolution.item.map(studapartLogement => this.convertir.depuisStudapartVersUnJeuneUneSolution(studapartLogement));
+		const annonceDeLogements = contenu.unjeuneunesolution.item
+			.filter(logement => logement.title !== "")
+			.map(studapartLogement => this.convertir.depuisStudapartVersUnJeuneUneSolution(studapartLogement));
 
-		await this.repository.sauvegarder(annoncesDeLogement, flux);
+		await this.repository.sauvegarder(annonceDeLogements, flux);
 	}
 }
