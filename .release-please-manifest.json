@@ -2,5 +2,5 @@
   "packages": {
     "package-name": "release-please-action"
   },
-  ".": "4.18.2"
+  ".": "4.18.3"
 }
