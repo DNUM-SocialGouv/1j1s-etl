@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.0](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.18.3...v4.19.0) (2024-04-09)
+
+
+### Features
+
+* **logements:** ne pas autoriser les offres sans titre ([#479](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/479)) ([9a7db89](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/9a7db8927008681c5a3cad5018364bf159699d59))
+
 ## [4.18.3](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.18.2...v4.18.3) (2024-04-08)
 
 
