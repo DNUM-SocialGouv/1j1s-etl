@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { expect } from "chai";
 import nock from "nock";
-import sinon from "sinon";
+import { expect, sinon } from "@test/library";
 
 import { HttpClient, StrapiClient } from "@logements/src/chargement/infrastructure/gateway/client/http.client";
 import {

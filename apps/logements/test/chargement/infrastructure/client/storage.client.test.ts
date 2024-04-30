@@ -1,17 +1,16 @@
-import { expect } from "chai";
 import { Client } from "minio";
 
-import { sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
+import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { Configuration } from "@logements/src/chargement/infrastructure/configuration/configuration";
 import {
-	EcritureFluxErreur,
-	LectureFluxErreur,
-	MinioStorageClient,
-	StorageClient,
+    EcritureFluxErreur,
+    LectureFluxErreur,
+    MinioStorageClient,
+    StorageClient,
 } from "@logements/src/chargement/infrastructure/gateway/client/storage.client";
 import {
-	AnnonceDeLogementFixtureBuilder,
+    AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/chargement/fixture/annonce-de-logement.fixture-builder";
 import { ConfigurationFixtureBuilder } from "@logements/test/chargement/fixture/configuration.fixture";
 
