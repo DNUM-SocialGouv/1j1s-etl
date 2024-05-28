@@ -27,7 +27,8 @@ export class Convertir {
 	constructor(
 		private readonly assainisseurDeTexte: AssainisseurDeTexte,
 		private readonly dateService: DateService,
-	) {}
+	) {
+	}
 
 	depuisStudapartVersUnJeuneUneSolution(studapartLogement: Studapart.AnnonceDeLogement): UnJeune1Solution.AnnonceDeLogement {
 		return {
@@ -62,7 +63,7 @@ export class Convertir {
 			servicesInclus: this.depuisOptionLogements(studapartLogement.options),
 			servicesOptionnels: [],
 			prixHT: 0,
-			prix: Number(studapartLogement.min_rent_with_charges),
+			prix: studapartLogement.min_rent_with_charges ? Number(studapartLogement.min_rent_with_charges) : Number(studapartLogement.full_property_rent_with_charges),
 			devise: new Devise("EUR").value,
 			charge: Number(studapartLogement.charges),
 			garantie: this.depuisGarantie(studapartLogement.rooms),
@@ -93,26 +94,33 @@ export class Convertir {
 
 	private depuisTypeDeBien(typeDeBien: Studapart.TypeDeBien): UnJeune1Solution.TypeBien {
 		switch (typeDeBien) {
-			case "apartment": return UnJeune1Solution.TypeBien.APPARTEMENT;
-			case "house": return UnJeune1Solution.TypeBien.MAISON;
-			default: return UnJeune1Solution.TypeBien.NON_RENSEIGNE;
+			case "apartment":
+				return UnJeune1Solution.TypeBien.APPARTEMENT;
+			case "house":
+				return UnJeune1Solution.TypeBien.MAISON;
+			default:
+				return UnJeune1Solution.TypeBien.NON_RENSEIGNE;
 		}
 	}
 
 	private depuisTypeDAnnonce(typeDannonce: Studapart.TypeDAnnonce): UnJeune1Solution.Type {
 		switch (typeDannonce) {
-			case "service": return UnJeune1Solution.Type.LOGEMENT_CONTRE_SERVICES;
-			case "homestay": return UnJeune1Solution.Type.LOGEMENT_CHEZ_L_HABITANT;
-			case "rental": return UnJeune1Solution.Type.LOCATION;
-			default: return UnJeune1Solution.Type.NON_RENSEIGNE;
+			case "service":
+				return UnJeune1Solution.Type.LOGEMENT_CONTRE_SERVICES;
+			case "homestay":
+				return UnJeune1Solution.Type.LOGEMENT_CHEZ_L_HABITANT;
+			case "rental":
+				return UnJeune1Solution.Type.LOCATION;
+			default:
+				return UnJeune1Solution.Type.NON_RENSEIGNE;
 		}
 	}
 
 	private depuisGarantie(rooms?: Array<Studapart.Room>): number {
-		if(!rooms) {
+		if (!rooms) {
 			return 0;
 		}
-		if(rooms.length > 1) {
+		if (rooms.length > 1) {
 			return this.extraireValeurMinimumDeLaGarantieDesChambres(rooms);
 		} else {
 			return Number(rooms[0].deposit);
@@ -124,7 +132,7 @@ export class Convertir {
 	}
 
 	private depuisOptionLogements(optionsLogement?: Studapart.OptionsLogement): Array<UnJeune1Solution.ServiceInclus> {
-		if(optionsLogement) {
+		if (optionsLogement) {
 			return Object
 				.entries(optionsLogement)
 				.filter(([key, studapartBoolean]) => key !== undefined && studapartBoolean.value)

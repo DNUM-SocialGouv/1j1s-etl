@@ -20,6 +20,7 @@ export namespace Studapart {
         property_type: TypeDeBien
         surface: string
         min_rent_with_charges: string
+        full_property_rent_with_charges: string
         charges: string
         rooms?: Array<Room>
         floor_number?: string

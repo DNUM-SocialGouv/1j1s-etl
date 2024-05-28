@@ -23,7 +23,7 @@ describe("TransformerFluxStudapartUseCaseTest", () => {
 
 	let usecase: TransformerFluxStudapart;
 
-	context("Lorsque je récupérer le flux venant de studapart, je le convertis et le sauvegarde", () => {
+	context("Lorsque je récupére le flux venant de studapart, je le convertis et le sauvegarde", () => {
 		beforeEach(() => {
 			repository = stubInterface<AnnonceDeLogementRepository>(sinon);
 			repository.recuperer.resolves(AnnonceDeLogementStudapartContenuFixtureBuilder.build(

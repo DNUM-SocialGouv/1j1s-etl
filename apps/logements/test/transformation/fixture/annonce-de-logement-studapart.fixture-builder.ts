@@ -25,6 +25,7 @@ export class AnnonceDeLogementStudapartFixtureBuilder {
 			property_type: "apartment",
 			surface: "28",
 			min_rent_with_charges: "1030",
+			full_property_rent_with_charges: "1200",
 			charges: "80",
 			rooms: [{ deposit: "2500" }],
 			floor_number: "1",
