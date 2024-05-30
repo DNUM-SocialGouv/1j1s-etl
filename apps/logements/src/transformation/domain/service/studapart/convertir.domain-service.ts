@@ -85,7 +85,7 @@ export class Convertir {
 	}
 
 	private estMeuble(studapartLogement: Studapart.AnnonceDeLogement): boolean {
-		return studapartLogement.furnished.value;
+		return studapartLogement.furnished === 1;
 	}
 
 	private depuisEtage(studapartLogement: Studapart.AnnonceDeLogement): number {
@@ -135,7 +135,7 @@ export class Convertir {
 		if (optionsLogement) {
 			return Object
 				.entries(optionsLogement)
-				.filter(([key, studapartBoolean]) => key !== undefined && studapartBoolean.value)
+				.filter(([key, optionIsIncludedValue]) => key !== undefined && optionIsIncludedValue > 0)
 				.map(([key]) => ({ nom: optionsLogementTraduitEnUnJeuneUneSolution[key] }));
 		} else return [];
 	}

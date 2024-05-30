@@ -7,10 +7,10 @@ import { Studapart } from "@logements/src/transformation/domain/model/studapart"
 import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 import {
-	AnnonceDeLogementFixtureBuilder,
+  AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
 import {
-	AnnonceDeLogementStudapartFixtureBuilder,
+  AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
@@ -141,26 +141,25 @@ describe("StudapartTest", () => {
 
 	context("Lorsque je reçois une annonce studapart de type service, avec toutes les options", () => {
 		it("je retourne un logement UnJeuneUneSolution avec tous les services inclus", () => {
-			const trueValueFromStudapart = new StudapartBoolean("1");
-			const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build(
-				{
-					announcement_type: "service",
-					options: {
-						tv: trueValueFromStudapart,
-						basement: trueValueFromStudapart,
-						dish_washer: trueValueFromStudapart,
-						oven: trueValueFromStudapart,
-						dryer: trueValueFromStudapart,
-						elevator: trueValueFromStudapart,
-						garage: trueValueFromStudapart,
-						terrace: trueValueFromStudapart,
-						optic_fiber: trueValueFromStudapart,
-						guardian: trueValueFromStudapart,
-						micro_wave: trueValueFromStudapart,
-						refrigerator: trueValueFromStudapart,
-						washing_machine: trueValueFromStudapart,
-						fitness_room: trueValueFromStudapart,
-						swimming_pool: trueValueFromStudapart,
+          const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build(
+                {
+                    announcement_type: "service",
+                    options: {
+                        tv: 1,
+                        basement: 1,
+                        dish_washer: 1,
+                        oven: 1,
+                        dryer: 1,
+                        elevator: 1,
+                        garage: 1,
+                        terrace: 1,
+                        optic_fiber: 1,
+                        guardian: 1,
+                        micro_wave: 1,
+                        refrigerator: 1,
+                        washing_machine: 1,
+                        fitness_room: 1,
+                        swimming_pool: 1,
 					},
 				},
 			);
