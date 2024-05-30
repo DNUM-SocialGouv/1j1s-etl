@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.6](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.5...v4.19.6) (2024-05-30)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies (minor) ([#501](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/501)) ([cbc77e0](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/cbc77e06d633df090566e44fcde1cea693453f65))
+
 ## [4.19.5](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.4...v4.19.5) (2024-05-16)
 
 
