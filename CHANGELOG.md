@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.8](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.7...v4.19.8) (2024-06-04)
+
+
+### Bug Fixes
+
+* **logement:** studapart utiliser le loyer global quand le loyer mini… ([#505](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/505)) ([b078cb6](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/b078cb6d875a980da1b4610123936ea257c79879))
+
 ## [4.19.7](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.6...v4.19.7) (2024-06-03)
 
 
