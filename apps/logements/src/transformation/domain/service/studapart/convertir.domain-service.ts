@@ -4,6 +4,7 @@ import { Studapart } from "@logements/src/transformation/domain/model/studapart"
 import { Devise } from "@shared/src/domain/model/devise.value-object";
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
+import BooleanStudapart = Studapart.BooleanStudapart;
 
 const optionsLogementTraduitEnUnJeuneUneSolution: Record<string, UnJeune1Solution.ServiceInclus.Nom> = {
 	tv: UnJeune1Solution.ServiceInclus.Nom.TV,
@@ -85,7 +86,7 @@ export class Convertir {
 	}
 
 	private estMeuble(studapartLogement: Studapart.AnnonceDeLogement): boolean {
-		return studapartLogement.furnished === 1;
+		return studapartLogement.furnished === BooleanStudapart.TRUE;
 	}
 
 	private depuisEtage(studapartLogement: Studapart.AnnonceDeLogement): number {
@@ -135,7 +136,7 @@ export class Convertir {
 		if (optionsLogement) {
 			return Object
 				.entries(optionsLogement)
-				.filter(([key, optionIsIncludedValue]) => key !== undefined && optionIsIncludedValue > 0)
+				.filter(([key, optionIsIncludedValue]) => key !== undefined && optionIsIncludedValue === BooleanStudapart.TRUE)
 				.map(([key]) => ({ nom: optionsLogementTraduitEnUnJeuneUneSolution[key] }));
 		} else return [];
 	}

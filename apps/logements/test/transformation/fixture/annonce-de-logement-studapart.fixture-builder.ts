@@ -1,4 +1,5 @@
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
+import BooleanStudapart = Studapart.BooleanStudapart;
 
 export class AnnonceDeLogementStudapartContenuFixtureBuilder {
 	public static build(annonceDeLogements: Array<Studapart.AnnonceDeLogement>): Studapart.Contenu {
@@ -30,7 +31,7 @@ export class AnnonceDeLogementStudapartFixtureBuilder {
 			availability_date: "01/01/2023",
 			energy_consumption: "2.21GW",
 			greenhouse_gases_emission: "B",
-			furnished: 1,
+			furnished: BooleanStudapart.TRUE,
 			address: "1 rue de rivoli",
 			city: "Paris",
 			country: "France",
@@ -40,21 +41,21 @@ export class AnnonceDeLogementStudapartFixtureBuilder {
 			pictures: ["https://some.picture.url", "https://some.picture2.url"],
 			rooms_count: "1",
 			options: {
-				tv: 1,
-				basement: 0,
-				dish_washer: 0,
-				oven: 0,
-				dryer: 0,
-				elevator: 0,
-				garage: 0,
-				terrace: 0,
-				optic_fiber: 0,
-				guardian: 0,
-				micro_wave: 0,
-				refrigerator: 0,
-				washing_machine: 0,
-				fitness_room: 0,
-				swimming_pool: 0,
+				tv: BooleanStudapart.TRUE,
+				basement: BooleanStudapart.FALSE,
+				dish_washer: BooleanStudapart.FALSE,
+				oven: BooleanStudapart.FALSE,
+				dryer: BooleanStudapart.FALSE,
+				elevator: BooleanStudapart.FALSE,
+				garage: BooleanStudapart.FALSE,
+				terrace: BooleanStudapart.FALSE,
+				optic_fiber: BooleanStudapart.FALSE,
+				guardian: BooleanStudapart.FALSE,
+				micro_wave: BooleanStudapart.FALSE,
+				refrigerator: BooleanStudapart.FALSE,
+				washing_machine: BooleanStudapart.FALSE,
+				fitness_room: BooleanStudapart.FALSE,
+				swimming_pool: BooleanStudapart.FALSE,
 			},
 		};
 

@@ -25,7 +25,7 @@ export namespace Studapart {
 		availability_date: string
 		energy_consumption: ConsommationEnergetique
 		greenhouse_gases_emission: EmissionDeGazAEffetDeSerre
-		furnished: 0 | 1
+		furnished: BooleanStudapart
 		address: string
 		city: string
 		country: string
@@ -45,20 +45,25 @@ export namespace Studapart {
 	}
 
 	export type OptionsLogement = {
-		tv?: number
-		basement?: number
-		dish_washer?: number
-		oven?: number
-		dryer?: number
-		elevator?: number
-		garage?: number
-		terrace?: number
-		optic_fiber?: number
-		guardian?: number
-		micro_wave?: number
-		refrigerator?: number
-		washing_machine?: number
-		fitness_room?: number
-		swimming_pool?: number
+		tv?: BooleanStudapart
+		basement?: BooleanStudapart
+		dish_washer?: BooleanStudapart
+		oven?: BooleanStudapart
+		dryer?: BooleanStudapart
+		elevator?: BooleanStudapart
+		garage?: BooleanStudapart
+		terrace?: BooleanStudapart
+		optic_fiber?: BooleanStudapart
+		guardian?: BooleanStudapart
+		micro_wave?: BooleanStudapart
+		refrigerator?: BooleanStudapart
+		washing_machine?: BooleanStudapart
+		fitness_room?: BooleanStudapart
+		swimming_pool?: BooleanStudapart
+	}
+
+	export enum BooleanStudapart {
+		TRUE = 1,
+		FALSE = 0,
 	}
 }

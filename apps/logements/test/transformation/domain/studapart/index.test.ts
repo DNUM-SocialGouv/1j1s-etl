@@ -4,7 +4,6 @@ import { expect, sinon, SinonFakeTimers, StubbedType, stubInterface } from "@tes
 
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
-import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 import {
   AnnonceDeLogementFixtureBuilder,
@@ -15,6 +14,7 @@ import {
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
+import BooleanStudapart = Studapart.BooleanStudapart;
 
 Settings.defaultZone = "Europe/London";
 
@@ -145,21 +145,21 @@ describe("StudapartTest", () => {
                 {
                     announcement_type: "service",
                     options: {
-                        tv: 1,
-                        basement: 1,
-                        dish_washer: 1,
-                        oven: 1,
-                        dryer: 1,
-                        elevator: 1,
-                        garage: 1,
-                        terrace: 1,
-                        optic_fiber: 1,
-                        guardian: 1,
-                        micro_wave: 1,
-                        refrigerator: 1,
-                        washing_machine: 1,
-                        fitness_room: 1,
-                        swimming_pool: 1,
+                        tv: BooleanStudapart.TRUE,
+                        basement: BooleanStudapart.TRUE,
+                        dish_washer: BooleanStudapart.TRUE,
+                        oven: BooleanStudapart.TRUE,
+                        dryer: BooleanStudapart.TRUE,
+                        elevator: BooleanStudapart.TRUE,
+                        garage: BooleanStudapart.TRUE,
+                        terrace: BooleanStudapart.TRUE,
+                        optic_fiber: BooleanStudapart.TRUE,
+                        guardian: BooleanStudapart.TRUE,
+                        micro_wave: BooleanStudapart.TRUE,
+                        refrigerator: BooleanStudapart.TRUE,
+                        washing_machine: BooleanStudapart.TRUE,
+                        fitness_room: BooleanStudapart.TRUE,
+                        swimming_pool: BooleanStudapart.TRUE,
 					},
 				},
 			);
