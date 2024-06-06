@@ -1,5 +1,5 @@
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
-import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
+import BooleanStudapart = Studapart.BooleanStudapart;
 
 export class AnnonceDeLogementStudapartContenuFixtureBuilder {
 	public static build(annonceDeLogements: Array<Studapart.AnnonceDeLogement>): Studapart.Contenu {
@@ -15,7 +15,6 @@ export class AnnonceDeLogementStudapartFixtureBuilder {
 	public static build(
 		annonceDeLogement?: Partial<Studapart.AnnonceDeLogement>,
 	): Studapart.AnnonceDeLogement {
-		const falseValueFromStudapart = new StudapartBoolean("0");
 		const defaults: Studapart.AnnonceDeLogement = {
 			id: "identifiant-source",
 			url_redirection: "https://some.url",
@@ -32,7 +31,7 @@ export class AnnonceDeLogementStudapartFixtureBuilder {
 			availability_date: "01/01/2023",
 			energy_consumption: "2.21GW",
 			greenhouse_gases_emission: "B",
-			furnished: new StudapartBoolean("1"),
+			furnished: BooleanStudapart.TRUE,
 			address: "1 rue de rivoli",
 			city: "Paris",
 			country: "France",
@@ -42,21 +41,21 @@ export class AnnonceDeLogementStudapartFixtureBuilder {
 			pictures: ["https://some.picture.url", "https://some.picture2.url"],
 			rooms_count: "1",
 			options: {
-				tv: new StudapartBoolean("1"),
-				basement: falseValueFromStudapart,
-				dish_washer: falseValueFromStudapart,
-				oven: falseValueFromStudapart,
-				dryer: falseValueFromStudapart,
-				elevator: falseValueFromStudapart,
-				garage: falseValueFromStudapart,
-				terrace: falseValueFromStudapart,
-				optic_fiber: falseValueFromStudapart,
-				guardian: falseValueFromStudapart,
-				micro_wave: falseValueFromStudapart,
-				refrigerator: falseValueFromStudapart,
-				washing_machine: falseValueFromStudapart,
-				fitness_room: falseValueFromStudapart,
-				swimming_pool: falseValueFromStudapart,
+				tv: BooleanStudapart.TRUE,
+				basement: BooleanStudapart.FALSE,
+				dish_washer: BooleanStudapart.FALSE,
+				oven: BooleanStudapart.FALSE,
+				dryer: BooleanStudapart.FALSE,
+				elevator: BooleanStudapart.FALSE,
+				garage: BooleanStudapart.FALSE,
+				terrace: BooleanStudapart.FALSE,
+				optic_fiber: BooleanStudapart.FALSE,
+				guardian: BooleanStudapart.FALSE,
+				micro_wave: BooleanStudapart.FALSE,
+				refrigerator: BooleanStudapart.FALSE,
+				washing_machine: BooleanStudapart.FALSE,
+				fitness_room: BooleanStudapart.FALSE,
+				swimming_pool: BooleanStudapart.FALSE,
 			},
 		};
 

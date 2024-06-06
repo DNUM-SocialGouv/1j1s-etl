@@ -4,17 +4,17 @@ import { expect, sinon, SinonFakeTimers, StubbedType, stubInterface } from "@tes
 
 import { UnJeune1Solution } from "@logements/src/transformation/domain/model/1jeune1solution";
 import { Studapart } from "@logements/src/transformation/domain/model/studapart";
-import { StudapartBoolean } from "@logements/src/transformation/domain/model/studapart/studapart-boolean.value-object";
 import { Convertir } from "@logements/src/transformation/domain/service/studapart/convertir.domain-service";
 import {
-	AnnonceDeLogementFixtureBuilder,
+  AnnonceDeLogementFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement.fixture-builder";
 import {
-	AnnonceDeLogementStudapartFixtureBuilder,
+  AnnonceDeLogementStudapartFixtureBuilder,
 } from "@logements/test/transformation/fixture/annonce-de-logement-studapart.fixture-builder";
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
 import { DateService } from "@shared/src/domain/service/date.service";
+import BooleanStudapart = Studapart.BooleanStudapart;
 
 Settings.defaultZone = "Europe/London";
 
@@ -141,26 +141,25 @@ describe("StudapartTest", () => {
 
 	context("Lorsque je reçois une annonce studapart de type service, avec toutes les options", () => {
 		it("je retourne un logement UnJeuneUneSolution avec tous les services inclus", () => {
-			const trueValueFromStudapart = new StudapartBoolean("1");
-			const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build(
-				{
-					announcement_type: "service",
-					options: {
-						tv: trueValueFromStudapart,
-						basement: trueValueFromStudapart,
-						dish_washer: trueValueFromStudapart,
-						oven: trueValueFromStudapart,
-						dryer: trueValueFromStudapart,
-						elevator: trueValueFromStudapart,
-						garage: trueValueFromStudapart,
-						terrace: trueValueFromStudapart,
-						optic_fiber: trueValueFromStudapart,
-						guardian: trueValueFromStudapart,
-						micro_wave: trueValueFromStudapart,
-						refrigerator: trueValueFromStudapart,
-						washing_machine: trueValueFromStudapart,
-						fitness_room: trueValueFromStudapart,
-						swimming_pool: trueValueFromStudapart,
+          const annonceDeLogementStudapart: Studapart.AnnonceDeLogement = AnnonceDeLogementStudapartFixtureBuilder.build(
+                {
+                    announcement_type: "service",
+                    options: {
+                        tv: BooleanStudapart.TRUE,
+                        basement: BooleanStudapart.TRUE,
+                        dish_washer: BooleanStudapart.TRUE,
+                        oven: BooleanStudapart.TRUE,
+                        dryer: BooleanStudapart.TRUE,
+                        elevator: BooleanStudapart.TRUE,
+                        garage: BooleanStudapart.TRUE,
+                        terrace: BooleanStudapart.TRUE,
+                        optic_fiber: BooleanStudapart.TRUE,
+                        guardian: BooleanStudapart.TRUE,
+                        micro_wave: BooleanStudapart.TRUE,
+                        refrigerator: BooleanStudapart.TRUE,
+                        washing_machine: BooleanStudapart.TRUE,
+                        fitness_room: BooleanStudapart.TRUE,
+                        swimming_pool: BooleanStudapart.TRUE,
 					},
 				},
 			);
