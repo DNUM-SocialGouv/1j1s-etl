@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.9](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.8...v4.19.9) (2024-06-10)
+
+
+### Bug Fixes
+
+* **logement:** mise à jour des services des logements studapart et location meuble ([#508](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/508)) ([2b1037e](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2b1037e25ce3c8f82208de7187a61cbb4a1c0d9c))
+
 ## [4.19.8](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.7...v4.19.8) (2024-06-04)
 
 
