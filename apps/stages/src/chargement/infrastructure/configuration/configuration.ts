@@ -73,7 +73,7 @@ export class ConfigurationFactory extends ConfigurationValidator {
 				NAME: getOrDefault("INTERNSHIPS_JOBTEASER_NAME", "jobteaser"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("INTERNSHIPS_JOBTEASER_TRANSFORMED_FILE_EXTENSION"),
 			},
-			LOGGER_LOG_LEVEL: getOrDefault("LOAD_LOG_LEVEL", "debug") as LogLevel,
+			LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),

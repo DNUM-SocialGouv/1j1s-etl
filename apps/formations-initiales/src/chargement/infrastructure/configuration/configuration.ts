@@ -62,7 +62,7 @@ export class ConfigurationFactory extends ConfigurationValidator {
 				NAME: getOrError("FORMATIONS_INITIALES_ONISEP_NAME"),
 				TRANSFORMED_FILE_EXTENSION: getOrError("FORMATIONS_INITIALES_ONISEP_TRANSFORMED_FILE_EXTENSION"),
 			},
-			LOGGER_LOG_LEVEL: getOrDefault("LOAD_LOG_LEVEL", "debug") as LogLevel,
+			LOGGER_LOG_LEVEL: getOrDefault("APPLICATION_LOGGER_LOG_LEVEL", "debug") as LogLevel,
 			MINIO: {
 				ACCESS_KEY: getOrError("MINIO_ACCESS_KEY"),
 				PORT: Number(getOrDefault("MINIO_PORT", DEFAULT_MINIO_PORT)),
