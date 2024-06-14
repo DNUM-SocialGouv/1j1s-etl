@@ -78,12 +78,3 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-
-  Versioning:
-    needs: [Build, Test, Integration, Lint]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: googleapis/release-please-action@v4
-        with:
-          release-type: node
-          manifest-file: .release-please-manifest.json
