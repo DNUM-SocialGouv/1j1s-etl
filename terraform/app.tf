@@ -8,8 +8,8 @@ module "etl_app" {
 
   containers = {
     web = {
-      size   = "S"
-      amount = "0"
+      size       = "S"
+      amount     = "0"
       autoscaler = null
     }
   }

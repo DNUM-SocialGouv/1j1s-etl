@@ -16,7 +16,8 @@ jobs:
   # Quand le job est exécuté sur une pull request le "plan" s'éxécute sur la recette
   # sauf si la pull request est générée par release-please, auquel cas le "plan" s'éxécute sur la production
   terraform_plan:
-    uses: DNUM-SocialGouv/1j1s-front/.github/workflows/terraform-template.yml@main
+    # uses: DNUM-SocialGouv/1j1s-front/.github/workflows/terraform-template.yml@main
+    uses: ./.github/workflows/opentofu-template.yml
     secrets: inherit
     with:
       plan: true
