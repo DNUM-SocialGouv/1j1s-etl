@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.19.11](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.10...v4.19.11) (2024-06-14)
+
+
+### 🐛 Corrections de bogues
+
+* **ci:** migrate recette & prod to OpenTofu ([e9dccd0](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/e9dccd0ec41889ea78a9890c169e04522dfd7baa))
+* **ci:** migration release-please config file to v4 ([80086ec](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/80086ec5c8bcf053cb1d3b260b895e691d16ae4f))
+* **ci:** remove unused env var in .env.scalingo file ([3b20024](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/3b20024294eda30c208aafe07f2d07cef8d9aafb))
+
+
+### 👷 Autres changements
+
+* **ci:** better Changelog with release please ([0dd8ec3](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/0dd8ec3156ec8f8111685a1d179caee7faaade51))
+* **ci:** change release-please repo ([b3f3616](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/b3f361607705d0d139acbfda0454c46afa20acef))
+* **ci:** manage Scalingo app with Terraform ([#415](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/415)) ([11209a2](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/11209a2866e6d2761d9ed54faa1e49ad7e6fa93c))
+* **ci:** move release-please to its own workflow ([e05bf27](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/e05bf27c149bdf4b3797f7a03ad96df817ada11b))
+
 ## [4.19.10](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.9...v4.19.10) (2024-06-12)
 
 
