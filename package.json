@@ -42,7 +42,7 @@
     "i18n-iso-countries": "~7.11.0",
     "luxon": "~3.4.0",
     "meilisearch": "~0.41.0",
-    "minio": "~7.1.0",
+    "minio": "~8.0.0",
     "nest-commander": "~3.14.0",
     "node-stream-zip": "~1.15.0",
     "pino": "~9.2.0",
