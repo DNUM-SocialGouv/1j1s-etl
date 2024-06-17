@@ -1,8 +1,8 @@
+import { LifecycleRule } from "minio";
 import { Command, CommandRunner, Option } from "nest-commander";
 
 import { CommandLog } from "@maintenance/src/infrastructure/configuration/log.decorator";
 import {
-	LifecycleRule,
 	MinioAdminStorageRepository,
 } from "@maintenance/src/infrastructure/gateway/repository/minio-admin-storage.repository";
 

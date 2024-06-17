@@ -1,4 +1,4 @@
-import { Client, Lifecycle } from "minio";
+import { Client, LifecycleConfig } from "minio";
 
 export class MinioAdminStorageRepository {
 	private static REGION = "none";
@@ -12,30 +12,11 @@ export class MinioAdminStorageRepository {
 		}
 	}
 
-	public setBucketLifecycle(bucketName: string, rules: LifecycleRules): Promise<void> {
+	public setBucketLifecycle(bucketName: string, rules: LifecycleConfig): Promise<void> {
 		return this.minioClient.setBucketLifecycle(bucketName, rules);
-	}
-
-	public getRulesOnBucket(bucketName: string): Promise<Lifecycle> {
-		return this.minioClient.getBucketLifecycle(bucketName);
 	}
 
 	private bucketExists(bucketName: string): Promise<boolean> {
 		return this.minioClient.bucketExists(bucketName);
 	}
-}
-
-export type LifecycleRules = {
-	Rule: Array<LifecycleRule>
-}
-
-export type LifecycleRule = {
-	Expiration: {
-		Days: number
-	},
-	ID: string,
-	Filter: {
-		Prefix: string
-	},
-	Status: "Enabled" | "Disabled"
 }
