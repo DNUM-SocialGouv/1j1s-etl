@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.19.13](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.12...v4.19.13) (2024-07-15)
+
+
+### 👷 Autres changements
+
+* **deps:** Revert mocha update ([1619092](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/1619092b3fbded5c3b15926fd4b2e1fac7a1e595))
+* **deps:** update all non-major devdedependencies ([2e61a0a](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2e61a0a42fd80a6de05135bb611673eb0b36dd38))
+
 ## [4.19.12](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.11...v4.19.12) (2024-07-10)
 
 
