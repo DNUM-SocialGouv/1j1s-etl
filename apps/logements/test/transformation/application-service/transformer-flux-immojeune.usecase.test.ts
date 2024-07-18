@@ -310,5 +310,21 @@ describe("TransformerFluxImmojeuneTest", () => {
 				]);
 			});
 		});
+
+		context("Et que les charges sont inférieures à 0", () => {
+			it("retourne une charge à undefined", async () => {
+				const annonceImmojeuneRecuperee = [AnnonceDeLogementImmojeuneFixtureBuilder.build({ charges: -5 })];
+				assainisseurDeTexte.nettoyer.withArgs("La description de l'annonce").returns("La description de l'annonce");
+				assainisseurDeTexte.nettoyer.withArgs("Le titre de l'annonce").returns("Le titre de l'annonce");
+				repository.recuperer.resolves(annonceImmojeuneRecuperee);
+
+				await usecase.executer(flux);
+
+				expect(repository.sauvegarder.getCall(0).args).to.have.deep.members([
+					[AnnonceDeLogementFixtureBuilder.build({ charge: undefined })],
+					new FluxTransformation("flux", "old", ".json", ".json"),
+				]);
+			});
+		});
 	});
 });
