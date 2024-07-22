@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.19.14](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.13...v4.19.14) (2024-07-22)
+
+
+### 🐛 Corrections de bogues
+
+* **immojeune:** refuse les charges négatives ([#527](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/527)) ([9eeb537](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/9eeb537259f0911cc5fc5fd5b54f0a06c0e2149c))
+
+
+### 👷 Autres changements
+
+* **deps:** update npm to v10.8.2 ([#520](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/520)) ([514d888](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/514d888093b1d3cf274ad4777c549d24579a60b5))
+
 ## [4.19.13](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.12...v4.19.13) (2024-07-15)
 
 
