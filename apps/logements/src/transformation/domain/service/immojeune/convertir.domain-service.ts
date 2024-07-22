@@ -28,7 +28,7 @@ export class Convertir {
 			identifiantSource: annonceDeLogement.externalId.toString(),
 			titre: this.assainisseurDeTexte.nettoyer(annonceDeLogement.title),
 			description: this.assainisseurDeTexte.nettoyer(annonceDeLogement.description),
-			charge: annonceDeLogement.charges,
+			charge: this.refuserMontantNegatif(annonceDeLogement.charges),
 			devise: new Devise(annonceDeLogement.currency).value,
 			garantie: this.refuserMontantNegatif(annonceDeLogement.deposit),
 			prix: annonceDeLogement.totalPricing,
