@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.15](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.14...v4.19.15) (2024-07-23)
+
+
+### 👷 Autres changements
+
+* **deps:** update all non-major devdedependencies ([ca6e5a8](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ca6e5a809fbf9278ccdbf77105c59e0abf2048a2))
+
 ## [4.19.14](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.13...v4.19.14) (2024-07-22)
 
 
