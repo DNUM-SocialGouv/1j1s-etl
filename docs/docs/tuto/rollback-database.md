@@ -5,7 +5,12 @@ sidebar_position: 1
 
 # Rollback de base de données
 
-_20 Avril 2023_
+_20 Avril 2023 (mis à jour le 24 Juillet 2024)_
+
+:::info Contexte
+Il est parfois nécessaire, pour annuler des transactions incorrectes ou non désirées, restaurer l'intégrité des données et garantir la cohérence du système après une erreur ou une défaillance de réaliser un rollback de la base de donnée. 
+:::
+
 
 ## Accéder au dashboard de la base de données
 
@@ -15,7 +20,7 @@ c'est déjà fait pour les environnements de production).
 Maintenant, vous allez peut-être vouloir créer une back-up manuellement. Pour ce faire, il faut se rendre sur Scalingo, 
 là où les ressources d'une application sont détaillées :
 
-![img](../assets/onglet-scalingo-app.png)
+![1j1s-scalingo](../assets/onglet-scalingo-app.png)
 
 Ensuite, cliquez sur le bouton `Go to dashboard` à côté de l'addon correspondant à votre base de données. Cela va ouvrir
  une fenêtre avec le dashboard correspondant à votre base de données.
@@ -26,11 +31,11 @@ Ensuite, cliquez sur le bouton `Go to dashboard` à côté de l'addon correspond
 
 Maintenant, vous avez le dashboard ci-dessous devant les yeux :
 
-![img](../assets/dashboard-bdd.png)
+![1j1s-bdd](../assets/dashboard-bdd.png)
 
 Rendez vous sur l'onglet `Backups`, en haut à droite :
 
-![img](../assets/backups.png)
+![1j1s-backup](../assets/backups.png)
 
 Pour créer votre backup, il vous suffit maintenant d'appuyer sur le bouton `Make manual backup`. Vous le verrez 
 apparaître dans la liste des backups disponibles sur la droite de l'interface. Téléchargez cette sauvegarde via le 

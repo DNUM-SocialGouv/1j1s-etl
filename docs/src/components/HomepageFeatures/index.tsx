@@ -10,37 +10,32 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Facile d\'utilisation',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Une documentation complète dans une mise en page moderne et facile d'accès,
-        voilà les objectifs de la documentation 1jeune1solution. <br /> Avez-vous déjà essayé la recherche ?
-      </>
-    ),
-  },
-  {
-    title: 'Facile de contribuer',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Il manque quelque chose ? <br />
-        vous avez trouvé une erreur ? <br />
-        A vous de le corriger
-        en proposant un ajout ou un correctif dans le dossier <code>docs</code> du projet.
-      </>
-    ),
-  },
-  {
-    title: 'Extensible par nature',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Grâce aux plugins, les documentations de tous les dépôts de code source 1jeune1solution
-        sont réunis, mais en plus les pages sont illustrées et riche de multiples intégrations.
-      </>
-    ),
-  },
+  	Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+		description: (
+			<>
+        Toutes les informations à connaitre sur le projet Front permettant d'améliorer l'apparence visuelle et la lisibilité des informations affichées sur 1Jeune1Solution mais également certains éléments comme le tracking ou l'affichage des données en provenance du CMS. 
+			</>
+		),
+		title: 'Le projet 1J1S-Front',
+	},
+	{
+		Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+		description: (
+			<>
+        Toutes les informations à connaitre sur le projet ETL permettant l'extraction, la transformation et le chargement de données provenant de multiples sources telles que les offres de logements étudiant.
+			</>
+		),
+		title: 'Le projet 1J1S-ETL',
+	},
+	{
+		Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+		description: (
+			<>
+        Toutes les informations à connaitre sur le projet CMS, qui permet la mise en place du système de gestion de contenu à destination des chargés de déploiement. Ils auront la main pour créer, modifier et publier du contenu web tels que les articles ou les services jeunes. 
+			</>
+		),
+		title: 'Le projet 1J1S-CMS',
+	}, 
 ];
 
 function Feature({title, Svg, description}: FeatureItem) {

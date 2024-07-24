@@ -5,10 +5,12 @@ sidebar_position: 5
 
 # Lorsque le flux ne se mets plus à jour
 
-_20 Avril 2023_
+_20 Avril 2023 (mis à jour le 24 Juillet 2024)_
 
-## Détail de l’erreur
+:::info Contexte
 Le flux ne se met plus à jour sur Strapi ou plusieurs offres sont toujours disponibles pour le flux mais ces dernières sont peut être obsolètes.
+:::
+
 
 ## Analyse de l’erreur
 Vérifier si les tâches crons fonctionnent : 

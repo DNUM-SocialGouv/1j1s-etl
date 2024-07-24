@@ -5,12 +5,18 @@ sidebar_position: 1
 
 # Architecture de l'ETL
 
-_10 Mars 2023_
+_10 Mars 2023 (mis à jour le 24 Juillet 2024)_
+
+## Architecture globale
+![1j1s-etl-global](./assets/1j1s-etl-schema.png)
 
 ## Introduction
 
+:::info Contexte
 Ce projet a été réalisé en suivant au mieux les principes du [Domain-Driven Design](https://alexsoyes.com/ddd-domain-driven-design/).
+:::
 C'est pourquoi nous avons identifié des contextes métier indépendants les uns des autres comme représentés ci-dessous :
+
 
 **Au 10/03/2023 :**
 

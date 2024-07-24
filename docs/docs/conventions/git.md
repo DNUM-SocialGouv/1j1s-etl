@@ -12,6 +12,7 @@ _20 Avril 2023_
 ### Convention
 
 Nous allons nous baser sur la convention "[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)".
+![1J1S git convention](../assets/1j1s-git-convention.png)
 
 ### Langue
 

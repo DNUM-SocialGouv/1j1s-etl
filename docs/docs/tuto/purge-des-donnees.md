@@ -5,19 +5,19 @@ sidebar_position: 2
 
 # Purge des données
 
-_20 Avril 2023_
+_20 Avril 2023 (mis à jour le 24 Juillet 2024)_
 
-## Contexte d'utilisation
+:::info Contexte
+Des données sont corrompues et que l'origine est introuvable, il convient peut être d'effectuer une purge des données.
+:::
 
-- Lorsque des données sont corrompues et que l'origine est introuvable. 
+:::danger Pré-requis
+Avoir un token permettant l'accèes à l'application sur scalingo
+:::
 
-## Prérequis
+## Procédure de purge
 
- * Avoir un token permettant l'accèes à l'application sur scalingo
-
-## Conseils
-
-### Variables d'environnements
+### Vérifier les variables d'environnements
 
 ```env
 
@@ -25,7 +25,7 @@ SCALINGO_APP=${APP_NAME}
 
 ```
 
-## Commande à lancer
+### Commandes à exécuter
 
 Vous avez la possibilité de supprimer l'ensemble des données des contextes suivants :
 
