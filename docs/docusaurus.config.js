@@ -102,6 +102,18 @@ const config = {
             target: '_self',
           },
           {
+            "href": "https://dnum-socialgouv.github.io/1j1s-cms/docs/architecture",
+            "label": "CMS",
+            "position": "left",
+            "target": "_self"
+          },
+          {
+            "label": "Design System",
+            "position": "left",
+            "target": "_parent",
+            "to": "./storybook"
+          },
+          {
             type: 'docsVersionDropdown',
             position: 'right',
           },

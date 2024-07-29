@@ -1,11 +1,16 @@
 ---
 sidebar_label: Les Scheduled tasks, comment ça marche ?
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Utiliser les Scheduled Tasks Scalingo
 
-_20 Avril 2023_
+_20 Avril 2023 (mis à jour le 24 Juillet 2024)_
+
+:::info Contexte
+Une scheduled task (ou tâche planifiée) est une opération programmée pour s'exécuter automatiquement à des moments prédéfinis ou selon des intervalles spécifiques. Par exemple transférer les données du CEJ vers vers un serveur externe.
+:::
+![1j1s-cron](../assets/1j1s-cron.png)
 
 ## Démarrage
 

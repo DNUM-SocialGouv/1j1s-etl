@@ -1,15 +1,18 @@
 ---
 sidebar_label: Comment créer un nouveau bucket sur Minio
-sidebar_position: 7
+sidebar_position: 4
 ---
 
 # Comment créer un nouveau bucket sur Minio
 
-_01 Août 2023_
+_01 Août 2023 (mis à jour le 24 Juillet 2024)_
 
-
-## Contexte
+:::info Contexte
 Lors de la création d'une nouvelle étape d'Extract / Transform / Load, il faut créer les buckets correspondants sur Minio qui accueilleront les fichiers correspondants.
+:::
+
+
+## Cas d'usage
 
 Exemple pour les différentes étapes d'ETL des annonces de logements, je dois créer les buckets suivants : 
 ```

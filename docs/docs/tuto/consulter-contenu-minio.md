@@ -5,10 +5,13 @@ sidebar_position: 3
 
 # Comment consulter le contenu du dépôt MinIO
 
-_20 Avril 2023_
+_20 Avril 2023 (mis à jour le 24 Juillet 2024)_
 
+:::info Contexte
 Nous utilisons l'interface `Amazon Web Services Command Line Interface (CLI)` afin de pouvoir consulter
 le contenu du dépôt de fichier MinIO que nous utilisons sur le projet.
+:::
+![MinIO](../assets/1j1s-minio.png)
 
 ## Installation
 

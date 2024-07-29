@@ -5,11 +5,12 @@ sidebar_position: 0
 
 # Que faire si tout se passe mal après une mise en production ?
 
-_20 Avril 2023_
+_20 Avril 2023 (mis à jour le 24 Juillet 2024)_
 
-
+:::info Contexte
 Si demain, vous êtes amenés à faire une mise en production et que d'avance ça devait mal se passer, pas de panique ! 
 Ce ne sera qu'une nouvelle mise en production de ratée dans la longue et triste histoire des mises en production ratées.
+:::
 
 ## Pense-bête
 
