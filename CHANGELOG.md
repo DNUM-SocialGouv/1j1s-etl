@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.19](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.18...v4.19.19) (2024-08-08)
+
+
+### 🐛 Corrections de bogues
+
+* **deps:** update dependency minio to v8 ([#493](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/493)) ([2d657b9](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/2d657b9d267026efacff56c751800e4a14e236e4))
+
 ## [4.19.18](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.17...v4.19.18) (2024-08-07)
 
 
