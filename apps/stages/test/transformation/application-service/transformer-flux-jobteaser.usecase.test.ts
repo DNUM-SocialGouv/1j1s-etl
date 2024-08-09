@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 import { expect, sinon, StubbedClass, StubbedType, stubClass, stubInterface } from "@test/library";
 
 import { AssainisseurDeTexte } from "@shared/src/domain/service/assainisseur-de-texte";
@@ -64,7 +66,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -126,7 +128,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -204,7 +206,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -282,7 +284,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -368,7 +370,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -444,7 +446,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -488,6 +490,127 @@ describe("TransformerFluxJobteaserTest", () => {
 			});
 		});
 
+		context("Lorsqu'il y a une date de début renseignée", () => {
+			let dateDebutJobTeaserFiltree: Date;
+			let dateDebutJobTeaserAcceptee: Date;
+
+			beforeEach(() => {
+				dateDebutJobTeaserFiltree = DateTime.fromJSDate(dateEcriture).minus({ "month": 1, "days": 1 }).toJSDate();
+				dateDebutJobTeaserAcceptee = DateTime.fromJSDate(dateEcriture).minus({ "month": 1 }).toJSDate();
+
+				dossierDHistorisation = "history";
+				nomDuFlux = "source";
+
+				flux = new FluxTransformation(nomDuFlux, dossierDHistorisation, ".xml", ".json");
+
+				dateService = stubClass(DateService);
+				offreDeStageRepository = stubInterface<OffreDeStageRepository>(sinon);
+				convertisseurDePays = stubInterface<Pays>(sinon);
+				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
+				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
+
+				dateService.maintenant.returns(dateEcriture);
+				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
+				assainisseurDeTexte.nettoyer.callsFake((input: string) => (input + "-nettoyé"));
+			});
+
+			it("filtre l’offre expirée", async () => {
+				// Given
+				const fluxJobteaser = {
+					jobs: {
+						job: [OffreDeStageJobteaserFixtureBuilder.build({
+							title: "Titre de l’offre filtrée",
+							mission: "<p>Contenu</p>",
+							company: {
+								description: "<h1>Description de l'entreprise filtrée</h1>",
+								name: "Nom de l'entreprise",
+								logo: "http://url.du.logo",
+								domain: "Domaine d'activité de l'entreprise",
+								website: "http://site.de.l.entreprise",
+							},
+							domains: {
+								domain: [Jobteaser.Domaine.AGRONOMIE_BIOLOGIE, Jobteaser.Domaine.MEDIA],
+							},
+							start_date: dateDebutJobTeaserFiltree.toISOString(),
+							contract: {
+								duration: {
+									amount: "180",
+									type: undefined,
+								},
+								name: "Internship",
+							},
+						})],
+					},
+				};
+
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
+
+				// When
+				await transformFluxJobteaser.executer(flux);
+
+				// Then
+				resultatTransformation = [];
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.sauvegarder.getCall(0).args).to.have.deep.members([resultatTransformation, flux]);
+			});
+
+			it("sauvegarde l’offre à jour", async () => {
+				// Given
+				const fluxJobteaser = {
+					jobs: {
+						job: [OffreDeStageJobteaserFixtureBuilder.build({
+							title: "Titre de l’offre acceptée",
+							mission: "<p>Contenu</p>",
+							company: {
+								description: "<h1>Description de l'entreprise acceptée</h1>",
+								name: "Nom de l'entreprise",
+								logo: "http://url.du.logo",
+								domain: "Domaine d'activité de l'entreprise",
+								website: "http://site.de.l.entreprise",
+							},
+							start_date: dateDebutJobTeaserAcceptee.toISOString(),
+							contract: {
+								duration: {
+									amount: "180",
+									type: undefined,
+								},
+								name: "Internship",
+							},
+						})],
+					},
+				};
+				delete fluxJobteaser.jobs.job[0].contract?.duration;
+
+				offreDeStageRepository.recuperer.resolves(fluxJobteaser);
+
+				// When
+				await transformFluxJobteaser.executer(flux);
+
+				// Then
+				resultatTransformation = [OffreDeStageFixtureBuilder.build({
+					titre: "Titre de l’offre acceptée",
+					dateDeDebutMax: dateDebutJobTeaserAcceptee.toISOString(),
+					dateDeDebutMin: dateDebutJobTeaserAcceptee.toISOString(),
+					description: "<p>Contenu</p>-nettoyé",
+					dureeEnJour: undefined,
+					dureeEnJourMax: undefined,
+					employeur: {
+						description: "<h1>Description de l'entreprise acceptée</h1>-nettoyé",
+						nom: "Nom de l'entreprise-nettoyé",
+						logoUrl: "http://url.du.logo",
+						siteUrl: "http://site.de.l.entreprise",
+					},
+					remunerationMax: undefined,
+					remunerationMin: undefined,
+					remunerationPeriode: undefined,
+					teletravailPossible: undefined,
+				})];
+				expect(offreDeStageRepository.recuperer).to.have.been.called;
+				expect(offreDeStageRepository.sauvegarder.getCall(0).args).to.have.deep.members([resultatTransformation, flux]);
+			});
+		});
+
 		context("Lorsqu'il n'y a pas de correspondance pour un domaine Jobteaser", () => {
 			beforeEach(() => {
 				dossierDHistorisation = "history";
@@ -525,7 +648,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
@@ -606,7 +729,7 @@ describe("TransformerFluxJobteaserTest", () => {
 				convertisseurDePays = stubInterface<Pays>(sinon);
 				assainisseurDeTexte = stubInterface<AssainisseurDeTexte>(sinon);
 				convertirOffreDeStage = new Convertir(dateService, assainisseurDeTexte, convertisseurDePays);
-				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+				transformFluxJobteaser = new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 
 				dateService.maintenant.returns(dateEcriture);
 				convertisseurDePays.versFormatISOAlpha2.withArgs("France").returns("FR");
