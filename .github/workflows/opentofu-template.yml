@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Installation de OpenTofu
-        uses: opentofu/setup-opentofu@v1.0.3
+        uses: opentofu/setup-opentofu@v1.0.4
         with:
           tofu_version: "1.7.2"
 
