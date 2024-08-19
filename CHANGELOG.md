@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.19.20](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.19...v4.19.20) (2024-08-14)
+
+
+### 🐛 Corrections de bogues
+
+* **deps:** update dependency axios to v1.7.4 [security] ([#541](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/541)) ([754c694](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/754c69420684cbfc56d88f5a008569deb98132ee))
+
+
+### 👷 Autres changements
+
+* **deps:** update opentofu/setup-opentofu action to v1.0.4 ([#540](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/540)) ([e0f7241](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/e0f724121d75717dc0e5d8e46a1842ad27646c1a))
+
 ## [4.19.19](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.18...v4.19.19) (2024-08-08)
 
 
