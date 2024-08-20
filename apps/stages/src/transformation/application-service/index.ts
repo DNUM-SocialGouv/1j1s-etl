@@ -65,9 +65,9 @@ import { Gateways } from "@stages/src/transformation/infrastructure/gateway";
 		},
 		{
 			provide: TransformerFluxJobteaser,
-			inject: ["OffreDeStageRepository", ConvertirJobteaser],
-			useFactory: (offreDeStageRepository: OffreDeStageRepository, convertirOffreDeStage: ConvertirJobteaser): TransformerFluxJobteaser => {
-				return new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage);
+			inject: ["OffreDeStageRepository", ConvertirJobteaser, DateService],
+			useFactory: (offreDeStageRepository: OffreDeStageRepository, convertirOffreDeStage: ConvertirJobteaser, dateService: DateService): TransformerFluxJobteaser => {
+				return new TransformerFluxJobteaser(offreDeStageRepository, convertirOffreDeStage, dateService);
 			},
 		},
 		{
