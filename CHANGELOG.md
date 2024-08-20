@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.21](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.20...v4.19.21) (2024-08-20)
+
+
+### 🐛 Corrections de bogues
+
+* **jobteaser:** rejette les stages dont la dateDebut est antérieure à … ([#539](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/539)) ([8c11b5b](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/8c11b5b8f34047eedccb56014e21244a62732d04))
+
 ## [4.19.20](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.19...v4.19.20) (2024-08-14)
 
 
