@@ -54,6 +54,7 @@ export namespace UnJeune1Solution {
 
 	export enum RemunerationPeriode {
 		HOURLY = "HOURLY",
+		DAILY = "DAILY",
 		MONTHLY = "MONTHLY",
 		YEARLY = "YEARLY",
 	}
