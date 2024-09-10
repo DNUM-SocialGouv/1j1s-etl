@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.24](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.23...v4.19.24) (2024-09-10)
+
+
+### 🐛 Corrections de bogues
+
+* **hellowork:** ajoute la rémunération quotidienne ([#549](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/549)) ([cb08e28](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/cb08e28ab664511e9d2c39e620de8359aa530ab1))
+
 ## [4.19.23](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.22...v4.19.23) (2024-09-02)
 
 
