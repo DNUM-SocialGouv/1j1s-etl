@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.19.26](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.25...v4.19.26) (2024-09-13)
+
+
+### 🐛 Corrections de bogues
+
+* **deps:** update all non-major dependencies (minor) ([#545](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/545)) ([a6eddf5](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/a6eddf59a5f8ddd59c9ae131fdc9e9d8a8050f5c))
+
+
+### 👷 Autres changements
+
+* **deps:** update dependency sinon to v19 ([#554](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/554)) ([3244313](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/3244313b8c9fa723ab7d345c44a62a72a5e2fc70))
+
 ## [4.19.25](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.24...v4.19.25) (2024-09-11)
 
 
