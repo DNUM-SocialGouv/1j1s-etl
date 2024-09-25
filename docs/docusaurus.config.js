@@ -102,7 +102,7 @@ const config = {
             target: '_self',
           },
           {
-            "href": "https://dnum-socialgouv.github.io/1j1s-cms/docs/architecture",
+            "href": "https://dnum-socialgouv.github.io/1j1s-main-cms/docs/architecture",
             "label": "CMS",
             "position": "left",
             "target": "_self"
