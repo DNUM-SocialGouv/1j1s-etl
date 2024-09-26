@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.27](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.26...v4.19.27) (2024-09-25)
+
+
+### 📚 Documentation
+
+* corrige le lien de redirection vers la doc cms ([#555](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/555)) ([368f72c](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/368f72c7ea6819e29ed27738c1ef2ce7b71bf3cb))
+
 ## [4.19.26](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.25...v4.19.26) (2024-09-13)
 
 
