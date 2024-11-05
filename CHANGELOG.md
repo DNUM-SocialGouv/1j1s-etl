@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.30](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.29...v4.19.30) (2024-11-02)
+
+
+### 👷 Autres changements
+
+* **deps:** lock file maintenance ([b094cf8](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/b094cf8a02ec20d5d6296eee2704b26d80199802))
+
 ## [4.19.29](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.28...v4.19.29) (2024-10-25)
 
 
