@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.31](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.30...v4.19.31) (2024-11-13)
+
+
+### 👷 Autres changements
+
+* **deps:** update dependency @types/node to v22 ([#561](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/561)) ([09006fe](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/09006fe715c84c31dc09a9cba8cb345d408f2b20))
+
 ## [4.19.30](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.29...v4.19.30) (2024-11-02)
 
 
