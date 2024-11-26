@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.19.32](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.31...v4.19.32) (2024-11-26)
+
+
+### 🐛 Corrections de bogues
+
+* **deps:** update all (except meilisearch) non-major dependencies (minor) ([#553](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/553)) ([e5f730c](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/e5f730c6e02715b3330870baef4fc5b6318800f0))
+* **deps:** update all non-major dependencies to v3.6.3 (patch) ([#568](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/568)) ([7a3d756](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/7a3d756f5107b1812f1f2cb86acc8b68c472f617))
+
 ## [4.19.31](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.30...v4.19.31) (2024-11-13)
 
 
