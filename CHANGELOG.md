@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.19.33](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.32...v4.19.33) (2024-12-02)
+
+
+### 👷 Autres changements
+
+* **deps:** lock file maintenance ([#570](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/570)) ([ef20e65](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ef20e6586a93bcd14acb9e2391c9c067268e761e))
+* **deps:** update npm to v10.9.1 ([#567](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/567)) ([ed43dd5](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ed43dd5d3e1499a1d42baaa877ec37a0112e9915))
+
 ## [4.19.32](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.31...v4.19.32) (2024-11-26)
 
 
