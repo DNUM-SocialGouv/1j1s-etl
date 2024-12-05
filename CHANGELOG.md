@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.34](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.33...v4.19.34) (2024-12-05)
+
+
+### 👷 Autres changements
+
+* **deps:** update npm to v10.9.2 ([#572](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/572)) ([18dab0a](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/18dab0a19edc6979e8dda9299b51200be0ecfc37))
+
 ## [4.19.33](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.32...v4.19.33) (2024-12-02)
 
 
