@@ -89,8 +89,8 @@
     "reflect-metadata": "^0.2.0"
   },
   "engines": {
-    "node": "18.18.2",
-    "npm": "10.9.2"
+    "node": "22",
+    "npm": "11"
   },
   "nyc": {
     "extension": [
