@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.19.35](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.34...v4.19.35) (2024-12-17)
+
+
+### 👷 Autres changements
+
+* **deps:** update all non-major devdedependencies (minor) ([#523](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/523)) ([8dc002e](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/8dc002ed2a0f640b1b928f97de46daa6621691d0))
+* **deps:** update dependency mocha to v11 ([#571](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/571)) ([7e99bda](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/7e99bdaf8e921e569ab4b6f1c39c9750faed334f))
+* **deps:** update npm to v11 ([#577](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/577)) ([ba7f14a](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/ba7f14aa26dca13d3709cfcd8d1a0281449d023d))
+* **deps:** update opentofu/setup-opentofu action to v1.0.5 ([#575](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/575)) ([50a80c5](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/50a80c5b6e5aa8071e0dc23b03d576451f5f5ad8))
+
 ## [4.19.34](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.33...v4.19.34) (2024-12-05)
 
 
