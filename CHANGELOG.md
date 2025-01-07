@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.37](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.36...v4.19.37) (2025-01-07)
+
+
+### 🐛 Corrections de bogues
+
+* **nvmrc:** utilise la version 22 de node ([#583](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/583)) ([24eaf53](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/24eaf53a9fb2a32fbefd7d61e92ef656b2cb8c68))
+
 ## [4.19.36](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.35...v4.19.36) (2025-01-06)
 
 
