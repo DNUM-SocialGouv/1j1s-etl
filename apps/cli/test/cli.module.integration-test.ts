@@ -471,7 +471,7 @@ describe("CliModuleTest", () => {
 						ID: bucketName,
 						Status: "Enabled",
 						Expiration: { Days: defaultDaysAfterExpiration },
-						RuleFilter: { Prefix: "" },
+						Filter: { Prefix: "" },
 					}],
 				};
 				expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
@@ -495,7 +495,7 @@ describe("CliModuleTest", () => {
 							ID: bucketName,
 							Status: "Enabled",
 							Expiration: { Days: daysAfterExpiration },
-							RuleFilter: { Prefix: "" },
+							Filter: { Prefix: "" },
 						}],
 					};
 					expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;
@@ -518,7 +518,7 @@ describe("CliModuleTest", () => {
 							ID: bucketName,
 							Status: "Enabled",
 							Expiration: { Days: -daysAfterExpiration },
-							RuleFilter: { Prefix: "" },
+							Filter: { Prefix: "" },
 						}],
 					};
 					expect(minioAdminStorageClient.createBucket).to.have.been.calledOnce;

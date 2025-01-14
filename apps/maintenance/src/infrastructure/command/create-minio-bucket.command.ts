@@ -55,7 +55,7 @@ export class CreateMinioBucketCommand extends CommandRunner {
 			ID: bucketName,
 			Status: "Enabled",
 			Expiration: { Days: daysAfterExpiration },
-			RuleFilter: { Prefix: "" },
+			Filter: { Prefix: "" },
 		};
 	}
 }
