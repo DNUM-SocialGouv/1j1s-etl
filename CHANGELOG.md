@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.19.38](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.37...v4.19.38) (2025-02-19)
+
+
+### 👷 Autres changements
+
+* **deps:** lock file maintenance ([#582](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/582)) ([a0628c9](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/a0628c9b3acb1adc0c7b9ba6de6ed0ea5d6034cd))
+* **deps:** update all non-major devdedependencies (minor) ([#588](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/588)) ([202f310](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/202f310f605a2d89aaf76da97319310cdaa56cd4))
+* **deps:** update dependency mocha to v11.0.2 ([#589](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/589)) ([4ae930b](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/4ae930b29c7b75dc4e49090e4931f99690764ca6))
+
 ## [4.19.37](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.36...v4.19.37) (2025-01-07)
 
 
