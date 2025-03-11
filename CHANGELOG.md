@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.19.38](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.37...v4.19.38) (2025-03-11)
+
+
+### 🐛 Corrections de bogues
+
+* **deps:** update dependency axios to ~1.8.0 [security] ([86e20f8](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/86e20f84dd22b12c50506a6b36f15b0e4b2f7383))
+
+
+### 👷 Autres changements
+
+* **deps:** lock file maintenance ([#582](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/582)) ([a0628c9](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/a0628c9b3acb1adc0c7b9ba6de6ed0ea5d6034cd))
+* **deps:** lock file maintenance ([#593](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/593)) ([57a7677](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/57a76773cc42736dca8986d9618b66df7de71cfa))
+* **deps:** update all non-major devdedependencies (minor) ([#588](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/588)) ([202f310](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/202f310f605a2d89aaf76da97319310cdaa56cd4))
+* **deps:** update dependency mocha to v11.0.2 ([#589](https://github.com/DNUM-SocialGouv/1j1s-etl/issues/589)) ([4ae930b](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/4ae930b29c7b75dc4e49090e4931f99690764ca6))
+* **deps:** update dependency typescript to ~5.8.0 ([6b806f2](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/6b806f25c6010eb67adcd32fde215814773facca))
+* upgrade node version to 22.14.0 ([fc6dd05](https://github.com/DNUM-SocialGouv/1j1s-etl/commit/fc6dd054e67aaff18c4783594065d1693f1f58b1))
+
 ## [4.19.37](https://github.com/DNUM-SocialGouv/1j1s-etl/compare/v4.19.36...v4.19.37) (2025-01-07)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "1j1s-etl",
-  "version": "4.19.37",
+  "version": "4.19.38",
   "description": "Dépôt qui regroupe les opérations de transformation et de chargement des données issues de flux pour les stages du site 1j1s",
   "main": "start.ts",
   "directories": {
