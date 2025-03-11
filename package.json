@@ -38,7 +38,7 @@
     "axios": "~1.8.0",
     "basic-ftp": "~5.0.2",
     "csv-writer": "~1.6.0",
-    "fast-xml-parser": "~4.5.0",
+    "fast-xml-parser": "~5.0.0",
     "i18n-iso-countries": "~7.13.0",
     "luxon": "~3.5.0",
     "meilisearch": "~0.41.0",
