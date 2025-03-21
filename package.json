@@ -74,7 +74,7 @@
     "chai": "~4.5.0",
     "chai-as-promised": "~7.1.1",
     "dotenv": "~16.4.0",
-    "eslint": "~8.57.0",
+    "eslint": "~9.23.0",
     "eslint-plugin-simple-import-sort": "~12.1.0",
     "mocha": "11.1.0",
     "nest-commander-testing": "~3.4.0",
