@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Télécharger le code source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Installation de OpenTofu
         uses: opentofu/setup-opentofu@v1.0.5
