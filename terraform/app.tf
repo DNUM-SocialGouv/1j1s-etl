@@ -1,6 +1,6 @@
 module "etl_app" {
   source  = "scalingo-community/app/scalingo"
-  version = "0.3.2"
+  version = "0.5.0"
 
   stack = "scalingo-22"
 
