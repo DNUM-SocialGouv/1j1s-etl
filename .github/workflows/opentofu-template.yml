@@ -47,7 +47,7 @@ jobs:
       - name: Installation de OpenTofu
         uses: opentofu/setup-opentofu@v1.0.5
         with:
-          tofu_version: "1.7.2"
+          tofu_version: "v1.7.10"
 
       - name: Exposer tous les secrets comme des variables d'environnement
         if: ${{ (inputs.validate == true) || (inputs.plan == true) || (inputs.apply == true) }}
